@@ -33,26 +33,6 @@ public class Style {
         Image Pirate_JUNCTION_TILE = new Image ("patrick.jpg");
         Image Pirate_GAMEBOARD_TILE = new Image ("patrick.jpg");
     }
-    public MouseTrapImages() {
-        Image MouseTrap_PLAYER_ONE = new Image("patrick.jpg");
-        Image MouseTrap_PLAYER_TWO = new Image("patrick.jpg");
-        Image MouseTrap_PLAYER_THREE = new Image("patrick.jpg");
-        Image MouseTrap_PLAYER_FOUR = new Image("patrick.jpg");
-        Image MouseTrap_STRAIGHT_TILE = new Image("patrick.jpg");
-        Image MouseTrap_CORNER_TILE = new Image("patrick.jpg");
-        Image MouseTrap_JUNCTION_TILE = new Image("patrick.jpg");
-        Image MouseTrap_GAMEBOARD_TILE = new Image("patrick.jpg");
-    }
-    public CarsImages() {
-        Image Cars_PLAYER_ONE = new Image("patrick.jpg");
-        Image Cars_PLAYER_TWO = new Image("patrick.jpg");
-        Image Cars_PLAYER_THREE = new Image("patrick.jpg");
-        Image Cars_PLAYER_FOUR = new Image("patrick.jpg");
-        Image Cars_STRAIGHT_TILE = new Image("patrick.jpg");
-        Image Cars_CORNER_TILE = new Image("patrick.jpg");
-        Image Cars_JUNCTION_TILE = new Image("patrick.jpg");
-        Image Cars_GAMEBOARD_TILE = new Image("patrick.jpg");
-    }
     public Image getSTRAIGHT_TILE(){
         return STRAIGHT_TILE;
     }
