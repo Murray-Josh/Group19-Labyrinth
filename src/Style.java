@@ -24,17 +24,11 @@ public class Style {
 
 
     public PirateImages(){
-        Image Pirate_PLAYER_ONE = new Image ("patrick.jpg");
-        Image Pirate_PLAYER_TWO = new Image ("patrick.jpg");
-        Image Pirate_PLAYER_THREE = new Image ("patrick.jpg");
-        Image Pirate_PLAYER_FOUR = new Image ("patrick.jpg");
-        Image Pirate_STRAIGHT_TILE = new Image ("patrick.jpg");
-        Image Pirate_CORNER_TILE = new Image ("patrick.jpg");
-        Image Pirate_JUNCTION_TILE = new Image ("patrick.jpg");
-        Image Pirate_GAMEBOARD_TILE = new Image ("patrick.jpg");
+        Image PiratePlayer1Icon = new Image ("patrick.jpg")
+        Image PirateCornerPiece = new Image ("patrick.jpg")
     }
-    public Image getSTRAIGHT_TILE(){
-        return STRAIGHT_TILE;
+    public Image getPlayer_ONE(){
+        return PLAYER_ONE;
     }
     public Image getCORNER_TILE(){
         return CORNER_TILE;
