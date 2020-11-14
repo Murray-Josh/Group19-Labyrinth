@@ -1,6 +1,7 @@
 //automatically did this - needs changing
 import javafx.scene.image.Image;
 
+import javax.swing.text.GapContent;
 import javax.swing.text.html.ImageView;
 
 /**
@@ -23,13 +24,22 @@ public class Style {
 
 
     public PirateImages(){
-        ImageView PiratePlayer1Icon = new ImageView("patrick.jpg")
-        ImageView PirateCornerPiece = new ImageView("patrick.jpg")
+        Image PiratePlayer1Icon = new Image ("patrick.jpg")
+        Image PirateCornerPiece = new Image ("patrick.jpg")
     }
-    public void getPlayer1Icon(){
-
+    public Image getPlayer_ONE(){
+        return PLAYER_ONE;
     }
-    public void setPlayer1Icon(){
-
+    public Image getCORNER_TILE(){
+        return CORNER_TILE;
+    }
+    public Image getJUNCTION_TILE(){
+        return JUNCTION_TILE;
+    }
+    public Image getGOAL_TILE(){
+        return GOAL_TILE;
+    }
+    public Image getGAMEBOARD_BORDER(){
+        return GAMEBOARD_BORDER;
     }
 }
