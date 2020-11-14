@@ -1,8 +1,13 @@
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Random;
 
+/**
+ * A Gameboard  for players to play on
+ *
+ * @author Joshua Murray
+ * @version 1.0
+ */
 public class Gameboard {
     private ArrayList<Player> players;
     private double size;
@@ -11,43 +16,89 @@ public class Gameboard {
     Random rand = new Random();
     private final static int rotationLock = 45;
 
+    /**
+     * Constructs a new Gameboard
+     *
+     * @param size    Game board size
+     * @param style   Style of the game
+     * @param players List of players in game
+     */
     public Gameboard(int size, Style style, ArrayList<Player> players) {
         setPlayers(players);
         setSize(size);
         generateBoard(size);
         setStyle(style);
         board = new Tile[(int) Math.sqrt(size)][(int) Math.sqrt(size)];
-
     }
 
+    /**
+     * Set players in game
+     *
+     * @param players List of players in game
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
+    /**
+     * Gets players in game
+     *
+     * @return List of players in game
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Set size of Gameboard
+     *
+     * @param size Size of Gameboard
+     */
     public void setSize(int size) {
         this.size = size;
     }
 
+    /**
+     * Get size of Gameboard
+     *
+     * @return size of Gameboard
+     */
     public double getSize() {
         return size;
     }
 
+    /**
+     * Set style of game
+     *
+     * @param style style of game
+     */
     public void setStyle(Style style) {
         this.style = style;
     }
 
+    /**
+     * Get style of game
+     *
+     * @return style of game
+     */
     public Style getStyle() {
         return style;
     }
 
-    private boolean isFixed(){
+    /**
+     * Checks whether tile should be fixed
+     * Currently only returns false
+     * @return Boolean of fixed or not
+     */
+    private boolean isFixed() {
         return false;
-
     }
+
+    /**
+     * Generates Gameboard from size
+     *
+     * @param size Size of Gameboard
+     */
     private void generateBoard(int size) {
         double numRows = Math.sqrt(size);
         double numColumns = Math.sqrt(size);
@@ -61,5 +112,4 @@ public class Gameboard {
             board[y] = column;
         }
     }
-
 }
