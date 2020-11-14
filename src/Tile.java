@@ -1,5 +1,4 @@
-/**
- * A tile that can be placed on the gameboard or in the silk bag.
+/*** A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
  * @version 1.0
