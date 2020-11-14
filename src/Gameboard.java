@@ -14,7 +14,7 @@ public class Gameboard {
     private final Tile[][] board;
     private Style style;
     Random rand = new Random();
-    private final static int rotationLock = 45;
+    private final static int ROTATION_LOCK = 45;
 
     /**
      * Constructs a new Gameboard
@@ -106,7 +106,7 @@ public class Gameboard {
             Tile[] column = new Tile[(int) numColumns];
             for (int x = 0; x < numColumns; x++) {
                 TileType tileType = "";
-                int randAngle = (rand.nextInt(4) * rotationLock);
+                int randAngle = (rand.nextInt(4) * ROTATION_LOCK);
                 column[x] = new Tile(new Coordinate(x, y), tileType, getStyle(), randAngle, isFixed());
             }
             board[y] = column;
