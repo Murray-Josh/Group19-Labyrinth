@@ -32,4 +32,20 @@ public class Style {
     public void setPlayer1Icon(){
 
     }
+
+    public Image getPLAYER_ONE(){
+        return PLAYER_ONE;
+    }
+
+    public Image getPLAYER_TWO(){
+        return PLAYER_TWO;
+    }
+
+    public Image getPLAYER_THREE(){
+        return PLAYER_THREE;
+    }
+
+    public Image getPLAYER_FOUR(){
+        return PLAYER_FOUR;
+    }
 }
