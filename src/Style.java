@@ -1,9 +1,6 @@
 //automatically did this - needs changing
 import javafx.scene.image.Image;
 
-import javax.swing.text.GapContent;
-import javax.swing.text.html.ImageView;
-
 /**
  *
  *
@@ -22,7 +19,7 @@ public class Style {
     private Image GOAL_TILE;
     private Image GAMEBOARD_BORDER;
 
-    public void PirateImages() {
+    public Image PirateImages() {
         Image Pirate_PLAYER_ONE = new Image("patrick.jpg");
         Image Pirate_PLAYER_TWO = new Image("patrick.jpg");
         Image Pirate_PLAYER_THREE = new Image("patrick.jpg");
@@ -32,7 +29,7 @@ public class Style {
         Image Pirate_JUNCTION_TILE = new Image("patrick.jpg");
         Image Pirate_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
-    public void  MouseTrapImages() {
+    public Image MouseTrapImages() {
         Image MouseTrap_PLAYER_ONE = new Image("patrick.jpg");
         Image MouseTrap_PLAYER_TWO = new Image("patrick.jpg");
         Image MouseTrap_PLAYER_THREE = new Image("patrick.jpg");
@@ -42,7 +39,7 @@ public class Style {
         Image MouseTrap_JUNCTION_TILE = new Image("patrick.jpg");
         Image MouseTrap_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
-    public void Image CarsImages() {
+    public Image CarsImages() {
         Image Cars_PLAYER_ONE = new Image("patrick.jpg");
         Image Cars_PLAYER_TWO = new Image("patrick.jpg");
         Image Cars_PLAYER_THREE = new Image("patrick.jpg");
@@ -51,10 +48,8 @@ public class Style {
         Image Cars_CORNER_TILE = new Image("patrick.jpg");
         Image Cars_JUNCTION_TILE = new Image("patrick.jpg");
         Image Cars_GAMEBOARD_TILE = new Image("patrick.jpg");
-    }
-    public Image getPlayer_ONE(){
-        return PLAYER_ONE;
-    }
+
+
     public Image getCORNER_TILE(){
         return CORNER_TILE;
     }
