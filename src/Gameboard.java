@@ -88,6 +88,7 @@ public class Gameboard {
     /**
      * Checks whether tile should be fixed
      * Currently only returns false
+     *
      * @return Boolean of fixed or not
      */
     private boolean isFixed() {
@@ -113,7 +114,7 @@ public class Gameboard {
     /**
      * Outputs board as a string in a grid format
      */
-    public void boardToString(){
+    public void boardToString() {
         for (int y = 0; y < size[1]; y++) {
             System.out.println("\n");
             StringBuilder s = new StringBuilder();

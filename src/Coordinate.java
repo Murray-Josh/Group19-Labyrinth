@@ -1,5 +1,6 @@
 /**
  * A 2 dimension grid coordinate consisting of an X and Y value
+ *
  * @author Joseph Omar
  * @version 1.0
  */
@@ -9,6 +10,7 @@ public class Coordinate {
 
     /**
      * Constructs a new Coordinate object
+     *
      * @param x x Coordinate
      * @param y y Coordinate
      */
@@ -19,6 +21,7 @@ public class Coordinate {
 
     /**
      * Set the x coordinate
+     *
      * @param x x Coordinate
      */
     public void setX(int x) {
@@ -27,6 +30,7 @@ public class Coordinate {
 
     /**
      * Set the y coordinate
+     *
      * @param y y coordinate
      */
     public void setY(int y) {
@@ -35,6 +39,7 @@ public class Coordinate {
 
     /**
      * Gets the x coordinate
+     *
      * @return x coordinate
      */
     public int getX() {
@@ -43,6 +48,7 @@ public class Coordinate {
 
     /**
      * gets the y coordinate
+     *
      * @return y coordinate
      */
     public int getY() {
@@ -51,6 +57,7 @@ public class Coordinate {
 
     /**
      * Sets both the x and y coordinates to new values
+     *
      * @param x x coordinate
      * @param y y coordinate
      */

@@ -1,8 +1,6 @@
-package com.Tiles;
-
 import java.util.ArrayList;
 
-public class TileType {
+public abstract class TileType {
 
     private Boolean NORTH;
     private Boolean SOUTH;

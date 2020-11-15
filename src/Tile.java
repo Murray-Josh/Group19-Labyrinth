@@ -13,22 +13,24 @@ public class Tile {
 
     /**
      * Constructs a new Tile.
+     *
      * @param coordinate Tile's Coordinate
-     * @param type Tile's TileType
-     * @param style Tile's Style
-     * @param angle Tile's Angle of rotation
-     * @param fixed If the is fixed or not
+     * @param type       Tile's TileType
+     * @param style      Tile's Style
+     * @param angle      Tile's Angle of rotation
+     * @param fixed      If the is fixed or not
      */
     public Tile(Coordinate coordinate, TileType type, Style style, double angle, boolean fixed) {
-    setCoordinate(coordinate);
-    setType(type);
-    setStyle(style);
-    setAngle(angle);
-    setFixed(fixed);
+        setCoordinate(coordinate);
+        setType(type);
+        setStyle(style);
+        setAngle(angle);
+        setFixed(fixed);
     }
 
     /**
      * Sets the Coordinate
+     *
      * @param coordinate New Coordinate
      */
     public void setCoordinate(Coordinate coordinate) {
@@ -37,6 +39,7 @@ public class Tile {
 
     /**
      * Sets the TileType
+     *
      * @param type New TileType
      */
     public void setType(TileType type) {
@@ -45,6 +48,7 @@ public class Tile {
 
     /**
      * Set's the Tile's new Style
+     *
      * @param style New Style
      */
     public void setStyle(Style style) {
@@ -53,6 +57,7 @@ public class Tile {
 
     /**
      * Sets the Angle of rotation
+     *
      * @param angle New angle
      */
     public void setAngle(double angle) {
@@ -68,6 +73,7 @@ public class Tile {
 
     /**
      * Sets the tile fixed value
+     *
      * @param fixed Whether the tile is fixed or not
      */
     public void setFixed(boolean fixed) {
@@ -90,10 +96,11 @@ public class Tile {
 
     /**
      * Sets the tiles onFire value
+     *
      * @param onFire Whether or not the tile is on fire
      */
     public void setOnFire(boolean onFire) {
-        this.onFire =onFire;
+        this.onFire = onFire;
     }
 
     /**
@@ -105,6 +112,7 @@ public class Tile {
 
     /**
      * Get's the tile's Coordinate
+     *
      * @return Coordinate of tile
      */
     public Coordinate getCoordinate() {
@@ -113,6 +121,7 @@ public class Tile {
 
     /**
      * Gets the tile's TileType
+     *
      * @return TileType of tile
      */
     public TileType getType() {
@@ -121,6 +130,7 @@ public class Tile {
 
     /**
      * Gets the tile's Style
+     *
      * @return Style of tile
      */
     public Style getStyle() {
@@ -129,6 +139,7 @@ public class Tile {
 
     /**
      * Gets the tile's angle of rotation
+     *
      * @return Rotation angle of tile
      */
     public double getAngle() {
@@ -137,6 +148,7 @@ public class Tile {
 
     /**
      * Gets if the tile is fixed
+     *
      * @return Fixed value of tile
      */
     public boolean isFixed() {
@@ -145,6 +157,7 @@ public class Tile {
 
     /**
      * Gets if the tile is on fire
+     *
      * @return Fixed value of tile
      */
     public boolean isOnFire() {

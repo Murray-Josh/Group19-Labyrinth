@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * This class represents the Silk Bag: an array list and its methods.
+ *
  * @author Jordy Martinson
  * @version 0.7
  */
@@ -14,6 +15,7 @@ public class SilkBag {
 
     /**
      * Adds an object to the bag
+     *
      * @param obj the object to be added
      */
     private void enqueue(Object obj) {
@@ -35,23 +37,23 @@ public class SilkBag {
         double boardSize = 25; //Gameboard size
 
         //placeholders
-        Coordinate coord = new Coordinate(0, 0);
+        Coordinate coordinate = new Coordinate(0, 0);
         Style style = new Style();
 
         int[] angleArray = new int[]{0, 90, 180, 270};
-        TileType[] typeArray = new TileType[]{corner, straight, junction}; // need tiletype class
-        Effect[] effectArray = new TileType[]{fire, ice, doublemove, backtrack}; // need effect class
+        TileType[] typeArray = new TileType[]{new CornerTile(), new StraightTile(), new JunctionTile()}; // need TileType class
+        Effect[] effectArray = new Effect[]{Fire(), Ice(), DoubleMove(), Backtrack()}; // need effect class
 
         for (int i = 0; i < boardSize; i++) {
             int randAngle = random.nextInt(angleArray.length);
             int randType = random.nextInt(typeArray.length);
-            Tile newTile = new Tile(coord, typeArray[randType], style, angleArray[randAngle], false);
+            Tile newTile = new Tile(coordinate, typeArray[randType], style, angleArray[randAngle], false);
             enqueue(newTile);
         }
 
         for (int j = 0; j < EFFECTS; j++) {
             int randEffect = random.nextInt(effectArray.length);
-            Effect newEffect = new Effect(effectArray[randEffect]);
+            Effect newEffect = effectArray[randEffect];
             enqueue(newEffect);
         }
         Collections.shuffle(bagList);

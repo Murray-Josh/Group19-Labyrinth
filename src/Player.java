@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Player {
     private PlayerProfile profile;
-    private Coordinate coord;
-    private ArrayList<TileEffect> hand;
+    private Coordinate coordinate;
+    private ArrayList<Effect> hand;
     private Style style;
     private int playerNum;
     private int currentDirection;
@@ -11,7 +11,7 @@ public class Player {
 
     public Player(PlayerProfile profile, Coordinate coord, Style style, int playerNum) {
         setProfile(profile);
-        setCoord(coord);
+        setCoordinate(coord);
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(0);
@@ -26,23 +26,23 @@ public class Player {
         return profile;
     }
 
-    public void setCoord(Coordinate coord) {
-        this.coord = coord;
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
-    public Coordinate getCoord() {
-        return coord;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    private void setHand(ArrayList<TileEffect> hand) {
+    private void setHand(ArrayList<Effect> hand) {
         this.hand = hand;
     }
 
-    public void addToHand(TileEffect effect) {
+    public void addToHand(Effect effect) {
         hand.add(effect);
     }
 
-    public ArrayList<TileEffect> getHand() {
+    public ArrayList<Effect> getHand() {
         return hand;
     }
 

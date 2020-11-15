@@ -1,4 +1,5 @@
 //automatically did this - needs changing
+
 import javafx.scene.image.Image;
 
 /**
@@ -32,6 +33,7 @@ public class Style {
         Image Pirate_JUNCTION_TILE = new Image("patrick.jpg");
         Image Pirate_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
+
     public void MouseTrapImages() {
         Image MouseTrap_PLAYER_ONE = new Image("patrick.jpg");
         Image MouseTrap_PLAYER_TWO = new Image("patrick.jpg");
@@ -42,6 +44,7 @@ public class Style {
         Image MouseTrap_JUNCTION_TILE = new Image("patrick.jpg");
         Image MouseTrap_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
+
     public void CarsImages() {
         Image Cars_PLAYER_ONE = new Image("patrick.jpg");
         Image Cars_PLAYER_TWO = new Image("patrick.jpg");
@@ -53,32 +56,35 @@ public class Style {
         Image Cars_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
 
-    public Image getCORNER_TILE(){
+    public Image getCORNER_TILE() {
         return CORNER_TILE;
     }
-    public Image getJUNCTION_TILE(){
+
+    public Image getJUNCTION_TILE() {
         return JUNCTION_TILE;
     }
-    public Image getGOAL_TILE(){
+
+    public Image getGOAL_TILE() {
         return GOAL_TILE;
     }
-    public Image getGAMEBOARD_BORDER(){
+
+    public Image getGAMEBOARD_BORDER() {
         return GAMEBOARD_BORDER;
     }
 
-    public Image getPLAYER_ONE(){
+    public Image getPLAYER_ONE() {
         return PLAYER_ONE;
     }
 
-    public Image getPLAYER_TWO(){
+    public Image getPLAYER_TWO() {
         return PLAYER_TWO;
     }
 
-    public Image getPLAYER_THREE(){
+    public Image getPLAYER_THREE() {
         return PLAYER_THREE;
     }
 
-    public Image getPLAYER_FOUR(){
+    public Image getPLAYER_FOUR() {
         return PLAYER_FOUR;
     }
 }
