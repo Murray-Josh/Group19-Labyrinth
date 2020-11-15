@@ -10,8 +10,8 @@ import java.util.Random;
  */
 public class Gameboard {
     private ArrayList<Player> players;
-    private double size;
-    private final Tile[][] board;
+    private int[] size;
+    private Tile[][] board;
     private Style style;
     Random rand = new Random();
     private final static int ROTATION_LOCK = 45;
@@ -23,12 +23,12 @@ public class Gameboard {
      * @param style   Style of the game
      * @param players List of players in game
      */
-    public Gameboard(int size, Style style, ArrayList<Player> players) {
+    public Gameboard(int[] size, Style style, ArrayList<Player> players) {
         setPlayers(players);
         setSize(size);
         generateBoard(size);
         setStyle(style);
-        board = new Tile[(int) Math.sqrt(size)][(int) Math.sqrt(size)];
+        //board = new Tile[size[0]][size[1]];
     }
 
     /**
@@ -54,7 +54,7 @@ public class Gameboard {
      *
      * @param size Size of Gameboard
      */
-    public void setSize(int size) {
+    public void setSize(int[] size) {
         this.size = size;
     }
 
@@ -63,7 +63,7 @@ public class Gameboard {
      *
      * @return size of Gameboard
      */
-    public double getSize() {
+    public int[] getSize() {
         return size;
     }
 
@@ -99,17 +99,28 @@ public class Gameboard {
      *
      * @param size Size of Gameboard
      */
-    private void generateBoard(int size) {
-        double numRows = Math.sqrt(size);
-        double numColumns = Math.sqrt(size);
-        for (int y = 0; y < numRows; y++) {
-            Tile[] column = new Tile[(int) numColumns];
-            for (int x = 0; x < numColumns; x++) {
-                TileType tileType = "";
+    private void generateBoard(int[] size) {
+        board = new Tile[size[0]][size[1]];
+        for (int y = 0; y < size[1]; y++) {
+            for (int x = 0; x < size[0]; x++) {
+                TileType tileType = new TileType();
                 int randAngle = (rand.nextInt(4) * ROTATION_LOCK);
-                column[x] = new Tile(new Coordinate(x, y), tileType, getStyle(), randAngle, isFixed());
+                board[y][x] = new Tile(new Coordinate(x, y), tileType, style, randAngle, isFixed());
             }
-            board[y] = column;
+        }
+    }
+
+    /**
+     * Outputs board as a string in a grid format
+     */
+    public void boardToString(){
+        for (int y = 0; y < size[1]; y++) {
+            System.out.println("\n");
+            StringBuilder s = new StringBuilder();
+            for (int x = 0; x < size[0]; x++) {
+                s.append(board[x][y]).append(" | ");
+            }
+            System.out.println(s);
         }
     }
 }
