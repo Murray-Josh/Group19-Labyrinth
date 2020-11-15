@@ -2,7 +2,7 @@
 import javafx.scene.image.Image;
 
 /**
- *
+ * attatching images to objects
  *
  * @author Aaron Davies and Isabelle Ludwig
  * @version 1.0
@@ -19,7 +19,10 @@ public class Style {
     private Image GOAL_TILE;
     private Image GAMEBOARD_BORDER;
 
-    public Image PirateImages() {
+
+    // void because they're just setters, not actually returning an image
+    //doesnt need the description aka pirate_(player_one) - it does that automatically with the new method
+    public void PirateImages() {
         Image Pirate_PLAYER_ONE = new Image("patrick.jpg");
         Image Pirate_PLAYER_TWO = new Image("patrick.jpg");
         Image Pirate_PLAYER_THREE = new Image("patrick.jpg");
@@ -29,7 +32,7 @@ public class Style {
         Image Pirate_JUNCTION_TILE = new Image("patrick.jpg");
         Image Pirate_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
-    public Image MouseTrapImages() {
+    public void MouseTrapImages() {
         Image MouseTrap_PLAYER_ONE = new Image("patrick.jpg");
         Image MouseTrap_PLAYER_TWO = new Image("patrick.jpg");
         Image MouseTrap_PLAYER_THREE = new Image("patrick.jpg");
@@ -39,7 +42,7 @@ public class Style {
         Image MouseTrap_JUNCTION_TILE = new Image("patrick.jpg");
         Image MouseTrap_GAMEBOARD_TILE = new Image("patrick.jpg");
     }
-    public Image CarsImages() {
+    public void CarsImages() {
         Image Cars_PLAYER_ONE = new Image("patrick.jpg");
         Image Cars_PLAYER_TWO = new Image("patrick.jpg");
         Image Cars_PLAYER_THREE = new Image("patrick.jpg");
@@ -48,7 +51,7 @@ public class Style {
         Image Cars_CORNER_TILE = new Image("patrick.jpg");
         Image Cars_JUNCTION_TILE = new Image("patrick.jpg");
         Image Cars_GAMEBOARD_TILE = new Image("patrick.jpg");
-
+    }
 
     public Image getCORNER_TILE(){
         return CORNER_TILE;
