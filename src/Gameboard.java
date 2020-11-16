@@ -104,9 +104,10 @@ public class Gameboard {
         board = new Tile[size[0]][size[1]];
         for (int y = 0; y < size[1]; y++) {
             for (int x = 0; x < size[0]; x++) {
-                TileType tileType = new TileType();
                 int randAngle = (rand.nextInt(4) * ROTATION_LOCK);
-                board[y][x] = new Tile(new Coordinate(x, y), tileType, style, randAngle, isFixed());
+                TileType[] typeArray = new TileType[]{new CornerTile(), new StraightTile(), new JunctionTile()};
+                int randType = rand.nextInt(typeArray.length);
+                board[y][x] = new Tile(new Coordinate(x, y), typeArray[randType], style, randAngle, isFixed());
             }
         }
     }
@@ -119,7 +120,7 @@ public class Gameboard {
             System.out.println("\n");
             StringBuilder s = new StringBuilder();
             for (int x = 0; x < size[0]; x++) {
-                s.append(board[x][y]).append(" | ");
+                s.append((board[x][y]).getType().toString()).append(" | ");
             }
             System.out.println(s);
         }
