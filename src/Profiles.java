@@ -1,5 +1,5 @@
 /**
- * PlayerProfile.java
+ * Profiles.java
  * @version 1.0.0
  * @author Martin Samm
  */
@@ -13,24 +13,13 @@ import org.j
 /**
  * Stores all player's profile in an arraylist
  */
-public class Profile {
+public class Profiles {
 	private static ArrayList<PlayerProfile> list = new ArrayList<>(); 
 	/**
 	 * Create new list of profiles
 	 */
-	public Profile() {
+	public Profiles() {
 		
-	}
-	
-	public static void main(String[] args) {
-//		Profile list = new Profile();
-//		PlayerProfile p1 = new PlayerProfile("Jeremy");
-//		list.addProfile(p1);
-//		list.removeProfile(p1);
-//		System.out.println(list.getProfile(p1));
-		readProfiles("Profiles.txt");
-		System.out.println(list);
-		writeToFile("listOfProfiles.txt");
 	}
 	/**
 	 * Add new player profile to list
