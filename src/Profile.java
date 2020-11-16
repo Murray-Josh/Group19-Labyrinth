@@ -81,7 +81,12 @@ public class Profile {
 		return p1;
 		
 	}
-	
+	/**
+	* Reads a file containing a list of profiles
+	* NOTE: The structure of the file should be written as:
+	*  "wins losses games name"
+	* @param filename String
+	*/
 	public static void readProfiles(String filename) {
 		File file = new File(filename);
 		Scanner in = null;
