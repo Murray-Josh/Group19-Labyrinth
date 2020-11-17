@@ -27,7 +27,7 @@ public class Profiles {
 	 */
 	public void addProfile(PlayerProfile p) {
 		list.add(p);
-		if (list.isEmpty() != true) {
+		if (!list.isEmpty()) {
 			list.sort(Comparator.comparing(PlayerProfile::getNumOfWins).reversed());
 		}
 	}
