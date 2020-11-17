@@ -8,8 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
-import org.j
 /**
  * Stores all player's profile in an arraylist
  */
@@ -27,6 +27,9 @@ public class Profiles {
 	 */
 	public void addProfile(PlayerProfile p) {
 		list.add(p);
+		if (list.isEmpty() != true) {
+			list.sort(Comparator.comparing(PlayerProfile::getNumOfWins).reversed());
+		}
 	}
 	/**
 	 * Remove player profile to list
@@ -47,6 +50,20 @@ public class Profiles {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Finds a specific player profile in a list using int
+	 * @param i int
+	 * @return PlayerProfile, null if PlayerProfile not found
+	 */
+	public PlayerProfile getProfile(int i) {
+		try {
+			return list.get(i);
+		} catch (Exception e) {
+			System.out.println("Cannot return value");
+			return null;
+		}
 	}
 	
 	private static void readProfiles(Scanner in) {
@@ -111,6 +128,13 @@ public class Profiles {
 			System.out.println("File '" + filename + "' could not be completed");
 		}
 		
+	}
+	
+	/**
+	 * Gets size of Profile array
+	 */
+	public int getArraySize() {
+		return list.size();
 	}
 
 }
