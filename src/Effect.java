@@ -6,7 +6,7 @@ public class Effect {
  * @author Walid Mohamed
  */
 
-public class Effects {
+public class Effects extends Holdable {
         private EffectType type;
         private boolean onFire;
         private boolean isFrozen;

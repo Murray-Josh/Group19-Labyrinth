@@ -3,7 +3,7 @@
  * @author Joseph Omar
  * @version 1.0
  */
-public class Tile {
+public class Tile extends Holdable {
     private Coordinate coordinate;
     private TileType type;
     private Style style;
