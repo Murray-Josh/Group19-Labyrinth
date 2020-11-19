@@ -39,7 +39,7 @@ public class SilkBag implements Serializable {
 
         //placeholders
         Coordinate coordinate = new Coordinate(0, 0);
-        Style style = new Style();
+        Style style = null;
 
         int[] angleArray = new int[]{0, 90, 180, 270};
         TileType[] typeArray = new TileType[]{new CornerTile(), new StraightTile(), new JunctionTile()}; // need TileType class
