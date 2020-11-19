@@ -1,4 +1,3 @@
-
 /**
  * PlayerProfile.java
  *
@@ -7,11 +6,13 @@
  */
 
 
+import java.io.Serializable;
+
 /**
  * stores wins, losses, number of games played
- *  and name of each individual player
+ * and name of each individual player
  */
-public class PlayerProfile {
+public class PlayerProfile implements Serializable {
     private int numWins;
     private int numLosses;
     private int numGames;
@@ -19,6 +20,7 @@ public class PlayerProfile {
 
     /**
      * Creates a new player profile
+     *
      * @param name Name of player
      */
     public PlayerProfile(String name) {
@@ -34,6 +36,7 @@ public class PlayerProfile {
 
     /**
      * Assign new number of wins
+     *
      * @param num int
      */
     public void setNumOfWins(int num) {
@@ -49,6 +52,7 @@ public class PlayerProfile {
 
     /**
      * Assign new number of losses
+     *
      * @param num int
      */
     public void setNumOfLosses(int num) {
@@ -64,6 +68,7 @@ public class PlayerProfile {
 
     /**
      * Assign new number of games
+     *
      * @param num int
      */
     public void setNumOfGames(int num) {
@@ -79,6 +84,7 @@ public class PlayerProfile {
 
     /**
      * Assign new name to player profile
+     *
      * @param name String
      */
     public void setName(String name) {

@@ -1,5 +1,5 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.lang.Math;
 import java.util.Random;
 
 /**
@@ -8,13 +8,13 @@ import java.util.Random;
  * @author Joshua Murray
  * @version 1.0
  */
-public class Gameboard {
+public class Gameboard implements Serializable {
+    private final static int ROTATION_LOCK = 45;
+    Random rand = new Random();
     private ArrayList<Player> players;
     private int[] size;
     private Tile[][] board;
     private Style style;
-    Random rand = new Random();
-    private final static int ROTATION_LOCK = 45;
 
     /**
      * Constructs a new Gameboard
@@ -32,15 +32,6 @@ public class Gameboard {
     }
 
     /**
-     * Set players in game
-     *
-     * @param players List of players in game
-     */
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
-    /**
      * Gets players in game
      *
      * @return List of players in game
@@ -50,12 +41,12 @@ public class Gameboard {
     }
 
     /**
-     * Set size of Gameboard
+     * Set players in game
      *
-     * @param size Size of Gameboard
+     * @param players List of players in game
      */
-    public void setSize(int[] size) {
-        this.size = size;
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
     /**
@@ -68,12 +59,12 @@ public class Gameboard {
     }
 
     /**
-     * Set style of game
+     * Set size of Gameboard
      *
-     * @param style style of game
+     * @param size Size of Gameboard
      */
-    public void setStyle(Style style) {
-        this.style = style;
+    public void setSize(int[] size) {
+        this.size = size;
     }
 
     /**
@@ -83,6 +74,15 @@ public class Gameboard {
      */
     public Style getStyle() {
         return style;
+    }
+
+    /**
+     * Set style of game
+     *
+     * @param style style of game
+     */
+    public void setStyle(Style style) {
+        this.style = style;
     }
 
     /**

@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -6,7 +7,7 @@ import java.util.ArrayList;
  * @author Joshua Murray
  * @version 1.0
  */
-public class Player {
+public class Player implements Serializable {
     private PlayerProfile profile;
     private Coordinate coordinate;
     private ArrayList<Effect> hand;
@@ -33,15 +34,6 @@ public class Player {
     }
 
     /**
-     * Sets the profile
-     *
-     * @param profile Profile of player
-     */
-    private void setProfile(PlayerProfile profile) {
-        this.profile = profile;
-    }
-
-    /**
      * Gets players profile
      *
      * @return Players profile
@@ -51,12 +43,12 @@ public class Player {
     }
 
     /**
-     * Sets coordinates of player on gameboard
+     * Sets the profile
      *
-     * @param coordinate Coordinate object for player
+     * @param profile Profile of player
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    private void setProfile(PlayerProfile profile) {
+        this.profile = profile;
     }
 
     /**
@@ -69,12 +61,12 @@ public class Player {
     }
 
     /**
-     * Sets the card hand of a player
+     * Sets coordinates of player on gameboard
      *
-     * @param hand Players hand
+     * @param coordinate Coordinate object for player
      */
-    private void setHand(ArrayList<Effect> hand) {
-        this.hand = hand;
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     /**
@@ -96,21 +88,21 @@ public class Player {
     }
 
     /**
+     * Sets the card hand of a player
+     *
+     * @param hand Players hand
+     */
+    private void setHand(ArrayList<Effect> hand) {
+        this.hand = hand;
+    }
+
+    /**
      * Sets the style
      *
      * @param style Style of player piece
      */
     public void setStyle(Style style) {
         this.style = style;
-    }
-
-    /**
-     * Sets players number
-     *
-     * @param playerNum Players number
-     */
-    private void setPlayerNum(int playerNum) {
-        this.playerNum = playerNum;
     }
 
     /**
@@ -123,12 +115,12 @@ public class Player {
     }
 
     /**
-     * Sets direction the player is facing
+     * Sets players number
      *
-     * @param currentDirection Direction player is facing
+     * @param playerNum Players number
      */
-    public void setCurrentDirection(int currentDirection) {
-        this.currentDirection = currentDirection;
+    private void setPlayerNum(int playerNum) {
+        this.playerNum = playerNum;
     }
 
     /**
@@ -141,12 +133,12 @@ public class Player {
     }
 
     /**
-     * Sets effects on player
+     * Sets direction the player is facing
      *
-     * @param activeEffect Effects to be active on player
+     * @param currentDirection Direction player is facing
      */
-    public void setActiveEffect(PlayerEffect activeEffect) {
-        this.activeEffect = activeEffect;
+    public void setCurrentDirection(int currentDirection) {
+        this.currentDirection = currentDirection;
     }
 
     /**
@@ -156,5 +148,14 @@ public class Player {
      */
     public PlayerEffect getActiveEffect() {
         return activeEffect;
+    }
+
+    /**
+     * Sets effects on player
+     *
+     * @param activeEffect Effects to be active on player
+     */
+    public void setActiveEffect(PlayerEffect activeEffect) {
+        this.activeEffect = activeEffect;
     }
 }

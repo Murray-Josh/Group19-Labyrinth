@@ -1,9 +1,11 @@
+import java.io.Serializable;
+
 /*** A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
  * @version 1.0
  */
-public class Tile extends Holdable {
+public class Tile extends Holdable implements Serializable {
     private Coordinate coordinate;
     private TileType type;
     private Style style;
@@ -29,55 +31,10 @@ public class Tile extends Holdable {
     }
 
     /**
-     * Sets the Coordinate
-     *
-     * @param coordinate New Coordinate
-     */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    /**
-     * Sets the TileType
-     *
-     * @param type New TileType
-     */
-    public void setType(TileType type) {
-        this.type = type;
-    }
-
-    /**
-     * Set's the Tile's new Style
-     *
-     * @param style New Style
-     */
-    public void setStyle(Style style) {
-        this.style = style;
-    }
-
-    /**
-     * Sets the Angle of rotation
-     *
-     * @param angle New angle
-     */
-    public void setAngle(double angle) {
-        this.angle = angle;
-    }
-
-    /**
      * Makes the tile fixed
      */
     public void setFixed() {
         this.fixed = true;
-    }
-
-    /**
-     * Sets the tile fixed value
-     *
-     * @param fixed Whether the tile is fixed or not
-     */
-    public void setFixed(boolean fixed) {
-        this.fixed = fixed;
     }
 
     /**
@@ -92,15 +49,6 @@ public class Tile extends Holdable {
      */
     public void setOnFire() {
         this.onFire = true;
-    }
-
-    /**
-     * Sets the tiles onFire value
-     *
-     * @param onFire Whether or not the tile is on fire
-     */
-    public void setOnFire(boolean onFire) {
-        this.onFire = onFire;
     }
 
     /**
@@ -120,12 +68,30 @@ public class Tile extends Holdable {
     }
 
     /**
+     * Sets the Coordinate
+     *
+     * @param coordinate New Coordinate
+     */
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    /**
      * Gets the tile's TileType
      *
      * @return TileType of tile
      */
     public TileType getType() {
         return this.type;
+    }
+
+    /**
+     * Sets the TileType
+     *
+     * @param type New TileType
+     */
+    public void setType(TileType type) {
+        this.type = type;
     }
 
     /**
@@ -138,12 +104,30 @@ public class Tile extends Holdable {
     }
 
     /**
+     * Set's the Tile's new Style
+     *
+     * @param style New Style
+     */
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    /**
      * Gets the tile's angle of rotation
      *
      * @return Rotation angle of tile
      */
     public double getAngle() {
         return this.angle;
+    }
+
+    /**
+     * Sets the Angle of rotation
+     *
+     * @param angle New angle
+     */
+    public void setAngle(double angle) {
+        this.angle = angle;
     }
 
     /**
@@ -156,12 +140,30 @@ public class Tile extends Holdable {
     }
 
     /**
+     * Sets the tile fixed value
+     *
+     * @param fixed Whether the tile is fixed or not
+     */
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
+
+    /**
      * Gets if the tile is on fire
      *
      * @return Fixed value of tile
      */
     public boolean isOnFire() {
         return this.onFire;
+    }
+
+    /**
+     * Sets the tiles onFire value
+     *
+     * @param onFire Whether or not the tile is on fire
+     */
+    public void setOnFire(boolean onFire) {
+        this.onFire = onFire;
     }
 
 

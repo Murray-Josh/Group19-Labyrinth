@@ -20,24 +20,6 @@ public class Coordinate {
     }
 
     /**
-     * Set the x coordinate
-     *
-     * @param x x Coordinate
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
-     * Set the y coordinate
-     *
-     * @param y y coordinate
-     */
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
      * Gets the x coordinate
      *
      * @return x coordinate
@@ -47,12 +29,30 @@ public class Coordinate {
     }
 
     /**
+     * Set the x coordinate
+     *
+     * @param x x Coordinate
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
      * gets the y coordinate
      *
      * @return y coordinate
      */
     public int getY() {
         return this.y;
+    }
+
+    /**
+     * Set the y coordinate
+     *
+     * @param y y coordinate
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 
     /**

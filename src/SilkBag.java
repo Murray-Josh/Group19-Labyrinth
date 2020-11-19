@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -8,17 +9,17 @@ import java.util.Random;
  * @author Jordy Martinson
  * @version 0.7
  */
-public class SilkBag {
+public class SilkBag implements Serializable {
+    private static final double EFFECTS = 10; // Additional effects tiles on top of placeable ones
     private ArrayList<Object> bagList = new ArrayList<Object>();
     private Random random = new Random();
-    private static final double EFFECTS = 10; // Additional effects tiles on top of placeable ones
 
     /**
      * Adds an object to the bag
      *
      * @param obj the object to be added
      */
-    private void enqueue(Object obj) {
+    private void enqueue(Holdable obj) {
         bagList.add(obj);
     }
 

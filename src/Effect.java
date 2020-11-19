@@ -1,30 +1,31 @@
-public class Effect {
-  
-  /**
+import java.io.Serializable;
+
+/**
  * Effects.java
- * @version 1.0.0
+ *
  * @author Walid Mohamed
+ * @version 1.0.0
  */
 
-public class Effects extends Holdable {
-        private EffectType type;
-        private boolean onFire;
-        private boolean isFrozen;
-        private boolean doubleMovement;
-        private boolean backMovement;
+public class Effect extends Holdable implements Serializable {
+    private EffectType type;
+    private boolean onFire;
+    private boolean isFrozen;
+    private boolean doubleMovement;
+    private boolean backMovement;
 
-    public Effects(EffectType type, boolean onFire, boolean isFrozen, boolean doubleMovement, boolean backMovement) {
+    public Effect(EffectType type, boolean onFire, boolean isFrozen, boolean doubleMovement, boolean backMovement) {
         setEffectType(type);
         setStyle(style);
         setFixed(fixed);
     }
 
-    public void setOnFire(boolean onFire) {
-        this.onFire = onFire;
-    }
-
     public boolean isOnFire() {
         return this.onFire;
+    }
+
+    public void setOnFire(boolean onFire) {
+        this.onFire = onFire;
     }
 
     public void setIsFrozen(boolean isFrozen) {
@@ -43,16 +44,16 @@ public class Effects extends Holdable {
         return this.doubleMovement;
     }
 
-    public void setBackMovement(boolean backMovement) {
-        this.backMovement = backMovement;
-    }
-
     public boolean isBackMovement() {
         return this.backMovement;
     }
 
+    public void setBackMovement(boolean backMovement) {
+        this.backMovement = backMovement;
+    }
+
 }
- // I understand that I'm missing the class hierachies stuff I will get to this immediately
+// I understand that I'm missing the class hierachies stuff I will get to this immediately
 // after this meeting e.g. separating the tile effects from the player effects & implementing how long
 // the effects will last for etc ...
 }
