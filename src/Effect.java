@@ -1,31 +1,62 @@
 import java.io.Serializable;
 
 /**
- * Effects.java
- *
- * @author Walid Mohamed
+ * Effect.java
  * @version 1.0.0
+ * @author Walid Mohamed
  */
 
-public class Effect extends Holdable implements Serializable {
-    private EffectType type;
-    private boolean onFire;
-    private boolean isFrozen;
-    private boolean doubleMovement;
-    private boolean backMovement;
+public class Effect {
+        protected boolean onFire;
+        protected boolean isFrozen;
+        protected boolean doubleMovement;
+        protected boolean backMovement;
 
-    public Effect(EffectType type, boolean onFire, boolean isFrozen, boolean doubleMovement, boolean backMovement) {
-        setEffectType(type);
-        setStyle(style);
-        setFixed(fixed);
+    public Effect(boolean onFire, boolean isFrozen, boolean doubleMovement, boolean backMovement) {
+        if (backMovement) this.backMovement = true;
+        else {
+            this.backMovement = false;
+        }
+        if (doubleMovement) this.doubleMovement = true;
+        else {
+            this.doubleMovement = false;
+        }
+        if (isFrozen) this.isFrozen = true;
+        else {
+            this.isFrozen = false;
+        }
+        if (onFire) this.onFire = true;
+        else {
+            this.onFire = false;
+        }
     }
 
-    public boolean isOnFire() {
-        return this.onFire;
+    public Effect(boolean doubleMovement, boolean backMovement) {
+    }
+
+    static class PlayerEffect extends Effect{
+
+
+        public PlayerEffect( boolean doubleMovement, boolean backMovement) {
+            super(doubleMovement, backMovement);
+        }
+    }
+
+    static class TileEffect extends Effect{
+
+
+        public TileEffect(boolean onFire, boolean isFrozen) {
+            super(onFire, isFrozen);
+        }
     }
 
     public void setOnFire(boolean onFire) {
         this.onFire = onFire;
+        System.out.print("This tile is on fire");
+    }
+
+    public boolean isOnFire() {
+        return this.onFire;
     }
 
     public void setIsFrozen(boolean isFrozen) {
@@ -44,14 +75,13 @@ public class Effect extends Holdable implements Serializable {
         return this.doubleMovement;
     }
 
-    public boolean isBackMovement() {
-        return this.backMovement;
-    }
-
     public void setBackMovement(boolean backMovement) {
         this.backMovement = backMovement;
     }
 
+    public boolean isBackMovement() {
+        return this.backMovement;
+    }
 }
 // I understand that I'm missing the class hierachies stuff I will get to this immediately
 // after this meeting e.g. separating the tile effects from the player effects & implementing how long
