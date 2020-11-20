@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 /**
  * Gives the Images for the Pirate Style
-* @author Aaron Davies, Isabelle Ludwig & Joseph Omar
-* @version 1.0
+ *
+ * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
+ * @version 1.0
  */
 public class PirateStyle extends Style implements Serializable {
     static {
         PLAYER_ONE = new Image("patrick.jpg");
-       PLAYER_TWO = new Image("patrick.jpg");
+        PLAYER_TWO = new Image("patrick.jpg");
         PLAYER_THREE = new Image("patrick.jpg");
         PLAYER_FOUR = new Image("patrick.jpg");
         STRAIGHT_TILE = new Image("patrick.jpg");

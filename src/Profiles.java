@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Stores all player's profile in an arraylist
  */
 public class Profiles {
-    private static ArrayList<PlayerProfile> list = new ArrayList<>();
+    private static final ArrayList<PlayerProfile> list = new ArrayList<>();
 
     /**
      * Create new list of profiles
@@ -51,7 +51,8 @@ public class Profiles {
     /**
      * Reads a file containing a list of profiles
      * NOTE: The structure of the file should be written as:
-     *  "wins losses games name"
+     * "wins losses games name"
+     *
      * @param filename String
      */
     public static void readProfiles(String filename) {
@@ -70,7 +71,8 @@ public class Profiles {
     /**
      * Reads all PlayerProfiles on string and
      * NOTE: The structure of the file will be written as:
-     *  "wins losses games name"
+     * "wins losses games name"
+     *
      * @param filename String
      */
     public static void writeToFile(String filename) {
@@ -91,6 +93,7 @@ public class Profiles {
 
     /**
      * Add new player profile to list
+     *
      * @param p PlayerProfile
      */
     public void addProfile(PlayerProfile p) {
@@ -102,6 +105,7 @@ public class Profiles {
 
     /**
      * Remove player profile to list
+     *
      * @param p PlayerProfile
      */
     public void removeProfile(PlayerProfile p) {
@@ -110,6 +114,7 @@ public class Profiles {
 
     /**
      * Finds a specific player profile in a list
+     *
      * @param p PlayerProfile
      * @return PlayerProfile, null if PlayerProfile not found
      */
@@ -124,6 +129,7 @@ public class Profiles {
 
     /**
      * Finds a specific player profile in a list using int
+     *
      * @param i int
      * @return PlayerProfile, null if PlayerProfile not found
      */

@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
  * @version 2.0
- *
+ * <p>
  * Styles may need more images than the ones originally thought of for example:
  * Icons for the sprites on the selection screen
  * Icons for the SilkBag/hand menus
@@ -19,18 +19,19 @@ import java.io.Serializable;
  */
 public abstract class Style implements Serializable {
 
-    protected static  Image PLAYER_ONE = null;
-    protected static  Image PLAYER_TWO = null;
-    protected static  Image PLAYER_THREE = null;
-    protected static  Image PLAYER_FOUR = null;
-    protected static  Image STRAIGHT_TILE = null;
-    protected static  Image CORNER_TILE = null;
-    protected static  Image JUNCTION_TILE = null;
-    protected static  Image GOAL_TILE = null;
-    protected static  Image GAMEBOARD = null;
+    protected static Image PLAYER_ONE = null;
+    protected static Image PLAYER_TWO = null;
+    protected static Image PLAYER_THREE = null;
+    protected static Image PLAYER_FOUR = null;
+    protected static Image STRAIGHT_TILE = null;
+    protected static Image CORNER_TILE = null;
+    protected static Image JUNCTION_TILE = null;
+    protected static Image GOAL_TILE = null;
+    protected static Image GAMEBOARD = null;
 
     /**
      * Gets the image corresponding to the player number of a player
+     *
      * @param playerNumber The number of the player 1-4
      * @return The players sprite
      */
@@ -51,39 +52,47 @@ public abstract class Style implements Serializable {
 
     /**
      * Gets the Corner Tile Image
+     *
      * @return Corner Tile Image
      */
-    public static Image getCornerTile(){
-            return CORNER_TILE;
-        }
+    public static Image getCornerTile() {
+        return CORNER_TILE;
+    }
+
     /**
      * Gets the Straight Tile Image
+     *
      * @return Straight Tile Image
      */
-        public static Image getStraightTile() {
-            return STRAIGHT_TILE;
-        }
+    public static Image getStraightTile() {
+        return STRAIGHT_TILE;
+    }
+
     /**
      * Gets the Goal Tile Image
+     *
      * @return Goal Tile Image
      */
-        public static Image getGoalTile() {
+    public static Image getGoalTile() {
         return GOAL_TILE;
-        }
+    }
+
     /**
      * Gets the Junction Tile Image
+     *
      * @return Junction Tile Image
      */
-        public  static Image getJunctionTile() {
-            return JUNCTION_TILE;
-        }
+    public static Image getJunctionTile() {
+        return JUNCTION_TILE;
+    }
 
     /**
      * Gets the Gameboard Border Image
+     *
      * @return Gameboard Border Image
      */
     public static Image getGameboardImage() {
-            return GAMEBOARD;
-        }
+        return GAMEBOARD;
+    }
 
 }

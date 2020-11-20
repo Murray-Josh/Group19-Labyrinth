@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Gives the Images for the Car Style
+ *
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
  * @version 1.0
  */

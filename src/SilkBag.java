@@ -11,8 +11,8 @@ import java.util.Random;
  */
 public class SilkBag implements Serializable {
     private static final double EFFECTS = 10; // Additional effects tiles on top of placeable ones
-    private ArrayList<Object> bagList = new ArrayList<Object>();
-    private Random random = new Random();
+    private final ArrayList<Object> bagList = new ArrayList<Object>();
+    private final Random random = new Random();
 
     /**
      * Adds an object to the bag

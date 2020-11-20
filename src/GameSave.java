@@ -33,14 +33,14 @@ public class GameSave {
     }
 
     public static Object[] loadGame(File filename) throws IOException, ClassNotFoundException {
-        Object toReturn[] = new Object[2];
+        Object[] toReturn = new Object[2];
         if (!filename.exists()) {
             throw new NullPointerException("The file located at <" + filename + "> does not exist.");
         } else {
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            toReturn[0] = (Gameboard) objectInputStream.readObject();
-            toReturn[1] = (SilkBag) objectInputStream.readObject();
+            toReturn[0] = objectInputStream.readObject();
+            toReturn[1] = objectInputStream.readObject();
         }
         return toReturn;
     }
