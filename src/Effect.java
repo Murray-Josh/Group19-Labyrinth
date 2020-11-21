@@ -32,6 +32,7 @@ public class Effect {
 
     public void setIsFrozen(boolean isFrozen) {
         this.isFrozen = isFrozen;
+        System.out.println("This tile is frozen");
     }
 
     public boolean isFrozen() {
@@ -40,6 +41,7 @@ public class Effect {
 
     public void setDoubleMovement(boolean doubleMovement) {
         this.doubleMovement = doubleMovement;
+        System.out.println("Double movement is in effect");
     }
 
     public boolean DoubleMovement() {
@@ -52,10 +54,10 @@ public class Effect {
 
     public void setBackMovement(boolean backMovement) {
         this.backMovement = backMovement;
+        System.out.println("Back movement is in effect");
     }
 
     static class PlayerEffect extends Effect {
-
 
         public PlayerEffect(boolean doubleMovement, boolean backMovement) {
             super(doubleMovement, backMovement);
@@ -63,14 +65,9 @@ public class Effect {
     }
 
     static class TileEffect extends Effect {
-
-
+        
         public TileEffect(boolean onFire, boolean isFrozen) {
             super(onFire, isFrozen);
         }
     }
-}
-// I understand that I'm missing the class hierachies stuff I will get to this immediately
-// after this meeting e.g. separating the tile effects from the player effects & implementing how long
-// the effects will last for etc ...
 }
