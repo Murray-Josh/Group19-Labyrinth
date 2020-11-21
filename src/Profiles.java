@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Stores all player's profile in an arraylist
  */
 public class Profiles {
-    private static final ArrayList<PlayerProfile> list = new ArrayList<>();
+    private static ArrayList<PlayerProfile> list = new ArrayList<>();
 
     /**
      * Create new list of profiles

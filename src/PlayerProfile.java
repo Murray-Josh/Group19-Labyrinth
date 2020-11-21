@@ -1,7 +1,7 @@
 /**
  * PlayerProfile.java
  *
- * @version 1.0.0
+ * @version 2.0.0
  * @author Martin Samm
  */
 
@@ -12,11 +12,13 @@ import java.io.Serializable;
  * stores wins, losses, number of games played
  * and name of each individual player
  */
-public class PlayerProfile implements Serializable {
+public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
+    private static final int PERCENTAGE_MULTIPLIER = 100;
     private int numWins;
     private int numLosses;
     private int numGames;
     private String name;
+    private int winPercentage;
 
     /**
      * Creates a new player profile
@@ -75,8 +77,9 @@ public class PlayerProfile implements Serializable {
         numGames = num;
     }
 
+
     /**
-     * @return name of player profile
+     * @return name of the player profile
      */
     public String getName() {
         return name;
@@ -92,6 +95,16 @@ public class PlayerProfile implements Serializable {
     }
 
     /**
+     * Return's the Player Profile's win percentage
+     *
+     * @return Win Percentage
+     */
+    public int getWinPercentage() {
+        calculateWinPercentage();
+        return this.winPercentage;
+    }
+
+    /**
      * Convert player profile to readable String
      */
     public String toString() {
@@ -99,6 +112,29 @@ public class PlayerProfile implements Serializable {
         s += " | Wins: " + getNumOfWins();
         s += " | Losses: " + getNumOfLosses();
         s += " | Games: " + getNumOfGames();
+        s += " | Win Percentage: " + getWinPercentage() + "%";
         return s;
+    }
+
+    /**
+     * Calculates the win percentage based on the number of wins and the number of games
+     */
+    public void calculateWinPercentage() {
+        if (getNumOfWins() > 0 || getNumOfGames() > 0) {
+            this.winPercentage = (this.getNumOfWins() / this.getNumOfGames()) * PERCENTAGE_MULTIPLIER;
+        } else {
+            this.winPercentage = 0;
+        }
+    }
+
+    /**
+     * Compares this profile to another profile
+     *
+     * @param comparisonProfile Profile being compared to
+     * @return 0 if equal, >0 if better, <0 if worse.
+     */
+    @Override
+    public int compareTo(PlayerProfile comparisonProfile) {
+        return this.getNumOfWins() - comparisonProfile.getNumOfWins();
     }
 }
