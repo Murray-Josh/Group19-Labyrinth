@@ -41,7 +41,7 @@ public class Effect {
 
     public void setDoubleMovement(boolean doubleMovement) {
         this.doubleMovement = doubleMovement;
-        System.out.println("double movement is in effect");
+        System.out.println("Double movement is in effect");
     }
 
     public boolean DoubleMovement() {
@@ -54,7 +54,7 @@ public class Effect {
 
     public void setBackMovement(boolean backMovement) {
         this.backMovement = backMovement;
-        System.out.println("back movement is in effect");
+        System.out.println("Back movement is in effect");
     }
 
     static class PlayerEffect extends Effect {
