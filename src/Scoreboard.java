@@ -18,7 +18,6 @@ public class Scoreboard {
         } catch (Exception e) {
             // exit scoreboard page and show error popup
         }
-
     }
 
 
