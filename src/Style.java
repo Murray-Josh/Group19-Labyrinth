@@ -1,8 +1,5 @@
 //automatically did this - needs changing
-
 import javafx.scene.image.Image;
-
-import java.io.Serializable;
 
 /**
  * Template for a Style type that can be chosen when starting a game.
@@ -17,6 +14,12 @@ import java.io.Serializable;
  * effect variations of players
  * Menu backrounds?
  */
+
+/**
+ * icons
+ * create three classes to split up the stuff into to make it easier to access from other classes ie make it more customisable later on...
+ */
+public class Style {
 public abstract class Style implements Serializable {
 
     protected static Image PLAYER_ONE = null;
@@ -94,5 +97,16 @@ public abstract class Style implements Serializable {
     public static Image getGameboardImage() {
         return GAMEBOARD;
     }
+
+    private static Image PLAYER_ONE;
+    private static Image PLAYER_TWO;
+    private static Image PLAYER_THREE;
+    private static Image PLAYER_FOUR;
+    private static Image STRAIGHT_TILE;
+    private static Image CORNER_TILE;
+    private static Image JUNCTION_TILE;
+    private static Image GOAL_TILE;
+    private static Image GAMEBOARD_BORDER;
+
 
 }
