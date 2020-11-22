@@ -3,7 +3,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * Saves objects to file
+ * @author Joseph Omar
+ * @version 2.0.0
  */
 public class Save {
     private static final String extension = ".labyrinth";
@@ -11,7 +13,7 @@ public class Save {
      * Saves the gameboard and it's tiles, the players and their current hands, positions and active effects and the silk bag.
      *
      * @param obj Objects to be saved
-     * @throws IOException If the file cannot be written
+     * @throws IOException If the file cannot be written+
      */
     private static void saveGame(Object[] obj) throws IOException {
         /* Create a file name using the date and time of the save */
