@@ -16,10 +16,17 @@ public abstract class Style implements Serializable {
     protected static Image PLAYER_THREE = null;
     protected static Image PLAYER_FOUR = null;
     protected static Image STRAIGHT_TILE = null;
+    protected static Image STRAIGHT_FIRE = null;
+    protected static Image STRAIGHT_ICE = null;
     protected static Image CORNER_TILE = null;
+    protected static Image CORNER_FIRE = null;
+    protected static Image CORNER_ICE = null;
     protected static Image JUNCTION_TILE = null;
+    protected static Image JUNCTION_FIRE = null;
+    protected static Image JUNCTION_ICE = null;
     protected static Image GOAL_TILE = null;
     protected static Image GAMEBOARD = null;
+
 
     /**
      * Gets the image corresponding to the player number of a player
@@ -52,6 +59,25 @@ public abstract class Style implements Serializable {
     }
 
     /**
+     * Gets the Corner Fire Image
+     *
+     * @return Corner Fire Image
+     */
+    public static Image getCornerFire() {
+        return CORNER_FIRE;
+    }
+
+    /**
+     * Gets the Corner Ice Image
+     *
+     * @return Corner Ice Image
+     */
+    public static Image getCornerIce() {
+        return CORNER_ICE;
+    }
+
+
+    /**
      * Gets the Straight Tile Image
      *
      * @return Straight Tile Image
@@ -59,6 +85,25 @@ public abstract class Style implements Serializable {
     public static Image getStraightTile() {
         return STRAIGHT_TILE;
     }
+
+    /**
+     * Gets the Straight Fire Image
+     *
+     * @return Straight Fire Image
+     */
+    public static Image getStraightFire() {
+        return STRAIGHT_FIRE;
+    }
+
+    /**
+     * Gets the Straight Ice Image
+     *
+     * @return Straight Ice Image
+     */
+    public static Image getStraightIce() {
+        return STRAIGHT_ICE;
+    }
+
 
     /**
      * Gets the Goal Tile Image
@@ -77,6 +122,25 @@ public abstract class Style implements Serializable {
     public static Image getJunctionTile() {
         return JUNCTION_TILE;
     }
+
+    /**
+     * Gets the Junction Fire Image
+     *
+     * @return Junction Fire Image
+     */
+    public static Image getJunctionFire() {
+        return JUNCTION_FIRE;
+    }
+
+    /**
+     * Gets the Junction Ice Image
+     *
+     * @return Junction Ice Image
+     */
+    public static Image getJunctionIce() {
+        return JUNCTION_ICE;
+    }
+
 
     /**
      * Gets the Gameboard Border Image

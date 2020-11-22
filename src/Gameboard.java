@@ -11,12 +11,12 @@ import java.util.Random;
 public class Gameboard implements Serializable {
     private final static int ROTATION_LOCK = 45;
     Random rand = new Random();
+    GoalTile goal = new GoalTile();
+    Tile goalTile;
     private ArrayList<Player> players;
     private int[] size;
     private Tile[][] board;
     private Style style;
-    GoalTile goal = new GoalTile();
-    Tile goalTile;
 
 
     /**
@@ -94,11 +94,7 @@ public class Gameboard implements Serializable {
      * @return Boolean of fixed or not
      */
     private boolean isFixed(int x, int y) {
-        if ((x == size[0]) && (y == 0) || (x == size[0]) && (y == size[1]) || (x == 0) && (y == 0) || (x == 0) && (y == size[1])) {
-            return true;
-        } else {
-            return false;
-        }
+        return (x == size[0]) && (y == 0) || (x == size[0]) && (y == size[1]) || (x == 0) && (y == 0) || (x == 0) && (y == size[1]);
     }
 
     /**

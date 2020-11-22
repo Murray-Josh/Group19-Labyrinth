@@ -4,11 +4,13 @@ import java.util.Date;
 
 /**
  * Saves objects to file
+ *
  * @author Joseph Omar
  * @version 2.0.0
  */
 public class Save {
     private static final String extension = ".labyrinth";
+
     /**
      * Saves the gameboard and it's tiles, the players and their current hands, positions and active effects and the silk bag.
      *
