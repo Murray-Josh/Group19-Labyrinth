@@ -3,6 +3,7 @@
 
 #.idea
 /.idea
+/.idea/
 
 # Log file
 *.log
@@ -16,3 +17,4 @@
 *.rar
 *.xml
 *.iml
+

@@ -15,6 +15,9 @@ public class Gameboard implements Serializable {
     private int[] size;
     private Tile[][] board;
     private Style style;
+    GoalTile goal = new GoalTile();
+    Tile goalTile;
+
 
     /**
      * Constructs a new Gameboard
@@ -87,12 +90,15 @@ public class Gameboard implements Serializable {
 
     /**
      * Checks whether tile should be fixed
-     * Currently only returns false
      *
      * @return Boolean of fixed or not
      */
-    private boolean isFixed() {
-        return false;
+    private boolean isFixed(int x, int y) {
+        if ((x == size[0]) && (y == 0) || (x == size[0]) && (y == size[1]) || (x == 0) && (y == 0) || (x == 0) && (y == size[1])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -102,12 +108,18 @@ public class Gameboard implements Serializable {
      */
     private void generateBoard(int[] size) {
         board = new Tile[size[0]][size[1]];
+        int middleY = size[1] / 2;
+        int middleX = size[0] / 2;
+        Tile goalTile = new Tile(new Coordinate(middleX, middleY), goal, style, 0, true);
+        board[middleY][middleX] = goalTile;
         for (int y = 0; y < size[1]; y++) {
             for (int x = 0; x < size[0]; x++) {
-                int randAngle = (rand.nextInt(4) * ROTATION_LOCK);
-                TileType[] typeArray = new TileType[]{new CornerTile(), new StraightTile(), new JunctionTile()};
-                int randType = rand.nextInt(typeArray.length);
-                board[y][x] = new Tile(new Coordinate(x, y), typeArray[randType], style, randAngle, isFixed());
+                if (board[y][x] == null) {
+                    int randAngle = (rand.nextInt(4) * ROTATION_LOCK);
+                    TileType[] typeArray = new TileType[]{new CornerTile(), new StraightTile(), new JunctionTile()};
+                    int randType = rand.nextInt(typeArray.length);
+                    board[y][x] = new Tile(new Coordinate(x, y), typeArray[randType], style, randAngle, isFixed(x, y));
+                }
             }
         }
     }
