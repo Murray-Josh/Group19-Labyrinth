@@ -1,152 +1,131 @@
-/**
- * Profiles.java
- *
- * @version 1.0.0
- * @author Martin Samm
- */
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Scanner;
 
 /**
- * Stores all player's profile in an arraylist
+ * Profiles static class: Creates, stores, loads, saves and manages all the PlayerProfiles of the people that are playing/have played the game
+ *
+ * @author Martin Samm & Joseph Omar
+ * @version 2.0.0
  */
 public class Profiles {
-    private static ArrayList<PlayerProfile> list = new ArrayList<>();
+    private static ArrayList<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
 
     /**
-     * Create new list of profiles
-     */
-    public Profiles() {
-
-    }
-
-    private static void readProfiles(Scanner in) {
-        while (in.hasNextLine()) {
-            String curLine = in.nextLine();
-            Scanner line = new Scanner(curLine);
-            list.add(readProfile(line));
-            line.close();
-        }
-    }
-
-    private static PlayerProfile readProfile(Scanner in) {
-        int numWins = in.nextInt();
-        int numLosses = in.nextInt();
-        int numGames = in.nextInt();
-        String name = in.next();
-        PlayerProfile p1 = new PlayerProfile(name);
-        p1.setNumOfWins(numWins);
-        p1.setNumOfLosses(numLosses);
-        p1.setNumOfGames(numGames);
-        return p1;
-
-    }
-
-    /**
-     * Reads a file containing a list of profiles
-     * NOTE: The structure of the file should be written as:
-     * "wins losses games name"
+     * Refreshes the list of profiles
      *
-     * @param filename String
+     * @throws IOException            If Players.profile does not exist in the application root directory or cannot be written to
+     * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public static void readProfiles(String filename) {
-        File file = new File(filename);
-        Scanner in = null;
-        try {
-            in = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot find " + filename);
-            System.exit(0);
-        }
-        readProfiles(in);
-        in.close();
+    public static void refresh() throws IOException, ClassNotFoundException {
+        saveProfiles();
+        loadProfiles();
     }
 
     /**
-     * Reads all PlayerProfiles on string and
-     * NOTE: The structure of the file will be written as:
-     * "wins losses games name"
+     * Loads the profiles from Players.profile
      *
-     * @param filename String
+     * @throws IOException            If Players.profile does not exist in the application root directory
+     * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public static void writeToFile(String filename) {
-        try {
-            FileWriter file = new FileWriter(filename);
-            for (int i = 0; i < list.size(); i++) {
-                file.write(list.get(i).getNumOfWins() + " ");
-                file.write(list.get(i).getNumOfLosses() + " ");
-                file.write(list.get(i).getNumOfGames() + " ");
-                file.write(list.get(i).getName() + "\n");
-            }
-            file.close();
-        } catch (IOException e) {
-            System.out.println("File '" + filename + "' could not be completed");
+    public static void loadProfiles() throws IOException, ClassNotFoundException {
+        File filename = new File("Players.profile");
+        if (!filename.exists()) {
+            throw new NullPointerException("The file located at <" + filename + "> does not exist.");
+        } else {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            profiles = (ArrayList<PlayerProfile>) objectInputStream.readObject();
         }
+    }
 
+    /**
+     * Saves the profiles to Players.profile and creates the file if one does not already exist.
+     *
+     * @throws IOException If the file cannot be written
+     */
+    private static void saveProfiles() throws IOException {
+        File file = new File("players.profile");
+        if (file.exists()) {
+            file.renameTo(new File(file.toString() + ".old"));
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(profiles);
+        objectOutputStream.close();
+        fileOutputStream.close();
     }
 
     /**
      * Add new player profile to list
      *
-     * @param p PlayerProfile
+     * @param profile PlayerProfile
+     * @throws IOException            If Players.profile does not exist in the application root directory or cannot be written to
+     * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public void addProfile(PlayerProfile p) {
-        list.add(p);
-        if (!list.isEmpty()) {
-            list.sort(Comparator.comparing(PlayerProfile::getNumOfWins).reversed());
+    public static void addProfile(PlayerProfile profile) throws IOException, ClassNotFoundException {
+        profiles.add(profile);
+        if (!(profiles.isEmpty())) {
+            profiles.sort(Comparator.comparing(PlayerProfile::getNumOfWins).reversed());
         }
+        refresh();
     }
 
     /**
      * Remove player profile to list
      *
-     * @param p PlayerProfile
+     * @param profile PlayerProfile
+     * @throws NullPointerException   If the supplied PlayerProfile does not exist in Profiles
+     * @throws IOException            If Players.profile does not exist in the application root directory or cannot be written to
+     * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public void removeProfile(PlayerProfile p) {
-        list.remove(p);
+    public static void removeProfile(PlayerProfile profile) throws NullPointerException, IOException, ClassNotFoundException {
+        if (exists(profile)) {
+            profiles.remove(profile);
+            refresh();
+        } else {
+            throw new NullPointerException("The specified PlayerProfile does not exist");
+        }
     }
 
     /**
-     * Finds a specific player profile in a list
+     * Checks if a supplied profile exists in profiles
      *
-     * @param p PlayerProfile
-     * @return PlayerProfile, null if PlayerProfile not found
+     * @param profile The profile to be checked
+     * @return If the profile exists in profiles
      */
-    public PlayerProfile getProfile(PlayerProfile p) {
-        for (int i = 0; i < list.size(); i++) {
-            if (p == list.get(i)) {
-                return p;
-            }
-        }
-        return null;
+    public static boolean exists(PlayerProfile profile) {
+        return profiles.contains(profile);
     }
 
     /**
-     * Finds a specific player profile in a list using int
+     * Finds a specific player profile in a list using an index
      *
-     * @param i int
+     * @param index Index of the Profile
      * @return PlayerProfile, null if PlayerProfile not found
+     * @throws IndexOutOfBoundsException When the supplied index does not refer to a PlayerProfile
      */
-    public PlayerProfile getProfile(int i) {
-        try {
-            return list.get(i);
-        } catch (Exception e) {
-            System.out.println("Cannot return value");
-            return null;
-        }
+    public static PlayerProfile getProfile(int index) throws IndexOutOfBoundsException {
+        return profiles.get(index);
     }
 
     /**
      * Gets size of Profile array
      */
-    public int getArraySize() {
-        return list.size();
+    public static int getArraySize() {
+        return profiles.size();
+    }
+
+    /**
+     * Gets all the saved profiles
+     *
+     * @return All saved profiles
+     * @throws IOException            If the file cannot be written to or cannot be found
+     * @throws ClassNotFoundException If the classes in the file are not in this application
+     */
+    public static ArrayList<PlayerProfile> get() throws IOException, ClassNotFoundException {
+        refresh();
+        return profiles;
     }
 
 }

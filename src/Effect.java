@@ -65,7 +65,7 @@ public class Effect {
     }
 
     static class TileEffect extends Effect {
-        
+
         public TileEffect(boolean onFire, boolean isFrozen) {
             super(onFire, isFrozen);
         }

@@ -12,7 +12,7 @@ public class Scoreboard {
 
     public static void loadProfiles() {
         try {
-            profiles = GameSave.loadProfiles();
+            profiles = Profiles.get();
             Collections.sort(profiles);
             Collections.reverse(profiles);
         } catch (Exception e) {
