@@ -12,8 +12,12 @@ import java.util.Scanner;
  * Opens the cswebcat website and outputs a message .
  */
 public class FindMessage {
-
-	public static void main(String[] args){
+	/**
+	 * Returns the message of the day as a string
+	 * @return String message
+	 */
+	public String getMessage(){
+		String message = "";
 		try {
 //			String temp = "cab";
 			URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
@@ -28,16 +32,16 @@ public class FindMessage {
 			URL uri = new URL("http://cswebcat.swansea.ac.uk/message?solution=" + text);
 //			java.awt.Desktop.getDesktop().browse(uri);
 			Scanner inurl = new Scanner(uri.openStream());
-			String message = "";
 			while(inurl.hasNext()){
 				message += inurl.next() + " ";
 			}
 			inurl.close();
-			System.out.println(message);
+//			System.out.println(message);
 		} catch (Exception e){
 			System.out.println("Cannot print");
+			return null;
 		}
-
+		return message;
 	}
 	/**
 	 * Solves the puzzle to help find the correct website
@@ -83,8 +87,7 @@ public class FindMessage {
 			}
 		move++;
 		}
-		String newText = new String(arrayList);
-		return newText;
+		return new String(arrayList);
 	}
 
 }
