@@ -3,29 +3,37 @@
  * @version 1.0.0
  * @author Martin Samm
  */
-import java.io.IOException;
-import java.net.URI;
+//import java.io.IOException;
+//import java.net.URI;
 import java.net.URL;
 import java.util.Scanner;
 
 /**
- * Opens the cswebcat website and diects the user to a message of the day.
+ * Opens the cswebcat website and outputs a message .
  */
 public class FindMessage {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		try {
 //			String temp = "cab";
 			URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
 			Scanner in = new Scanner(url.openStream());
 			String temp = in.next();
 			in.close();
-			System.out.println(temp);
+//			System.out.println(temp);
 			String text = solve(temp);
 //			System.out.println(text);
-			URI uri = new URI("http://cswebcat.swansea.ac.uk/message?solution=" + text);
-			System.out.println(uri.toString());
-			java.awt.Desktop.getDesktop().browse(uri);
+//			URI uri = new URI("http://cswebcat.swansea.ac.uk/message?solution=" + text);
+//			System.out.println(uri.toString());
+			URL uri = new URL("http://cswebcat.swansea.ac.uk/message?solution=" + text);
+//			java.awt.Desktop.getDesktop().browse(uri);
+			Scanner inurl = new Scanner(uri.openStream());
+			String message = "";
+			while(inurl.hasNext()){
+				message += inurl.next() + " ";
+			}
+			inurl.close();
+			System.out.println(message);
 		} catch (Exception e){
 			System.out.println("Cannot print");
 		}
@@ -65,7 +73,7 @@ public class FindMessage {
 				} else if ((i+1) % 2 == 0 && arrayList[i] == alphabet[j]){
 					if (j+move >= alphabet.length){
 						int temp = j + move - alphabet.length;
-						arrayList[i] = alphabet[0 + temp];
+						arrayList[i] = alphabet[temp];
 						break;
 					} else {
 						arrayList[i] = alphabet[j+move];
