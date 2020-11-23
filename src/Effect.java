@@ -21,40 +21,11 @@ public class Effect {
     public Effect(boolean doubleMovement, boolean backMovement) {
     }
 
-    public boolean isOnFire() {
-        return this.onFire;
+    public Effect(boolean isFrozen) {
     }
-
-    public void setOnFire(boolean onFire) {
-        this.onFire = onFire;
-        System.out.print("This tile is on fire");
-    }
-
-    public void setIsFrozen(boolean isFrozen) {
-        this.isFrozen = isFrozen;
-        System.out.println("This tile is frozen");
-    }
-
-    public boolean isFrozen() {
-        return this.isFrozen;
-    }
-
-    public void setDoubleMovement(boolean doubleMovement) {
-        this.doubleMovement = doubleMovement;
-        System.out.println("Double movement is in effect");
-    }
-
-    public boolean DoubleMovement() {
-        return this.doubleMovement;
-    }
-
-    public boolean isBackMovement() {
-        return this.backMovement;
-    }
-
-    public void setBackMovement(boolean backMovement) {
-        this.backMovement = backMovement;
-        System.out.println("Back movement is in effect");
+    
+    public Effect() {
+        
     }
 
     static class PlayerEffect extends Effect {
@@ -62,12 +33,18 @@ public class Effect {
         public PlayerEffect(boolean doubleMovement, boolean backMovement) {
             super(doubleMovement, backMovement);
         }
+
+        public PlayerEffect(boolean doubleMovement) {
+        }
     }
 
     static class TileEffect extends Effect {
 
         public TileEffect(boolean onFire, boolean isFrozen) {
             super(onFire, isFrozen);
+        }
+
+        public TileEffect(boolean onFire) {
         }
     }
 }
