@@ -26,7 +26,7 @@ public class CarStyle extends Style implements Serializable {
         JUNCTION_TILE = new Image("cars_junction.png");
         JUNCTION_FIRE = new Image("cars_junction_fire.png");
         JUNCTION_ICE = new Image("cars_junction_ice.png");
-        GAMEBOARD = new Image("cars_gameboard");
+        GAMEBOARD = new Image("cars_boarder.png");
 
     }
 }
