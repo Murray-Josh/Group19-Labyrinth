@@ -8,7 +8,7 @@
     -fx-background-color: #384E92;
 }
 .separator {
-	-fx-backgroud-color: WHITE;
+	-fx-background-color: WHITE;
 }
 .rollover-button-small {
 	-fx-font-size: 13px;
@@ -21,4 +21,17 @@
 }
 .pane-main{
 	-fx-background-color: #2C2C3E;
+}
+
+.label {
+	-fx-text-fill: WHITE;
+	-fx-background-color: transparent;
+	-fx-font-family: roboto light;
+	-fx-font-size: 16;
+}
+.label-small {
+	-fx-text-fill: WHITE;
+	-fx-background-color: transparent;
+	-fx-font-family: roboto light;
+	-fx-font-size: 13;
 }

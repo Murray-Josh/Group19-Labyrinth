@@ -16,6 +16,7 @@ import java.util.Random;
  */
 public class Gameboard implements Serializable {
     private final static int ROTATION_LOCK = 45;
+    private final SilkBag silkBag;
     Random rand = new Random();
     GoalTile goal = new GoalTile();
     Tile goalTile;
@@ -23,7 +24,6 @@ public class Gameboard implements Serializable {
     private int[] size;
     private Tile[][] board;
     private Style style;
-    private final SilkBag silkBag;
 
 
     /**

@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class FindMessage {
     /**
      * Solves the puzzle to help find the correct website
+     *
      * @param text String
      * @return Decrypted text
      */
@@ -28,6 +29,7 @@ public class FindMessage {
 
     /**
      * Decrypt the original text into a valid string
+     *
      * @param text String
      * @return Decrypted text
      */
@@ -64,9 +66,10 @@ public class FindMessage {
 
     /**
      * Returns the message of the day as a string
+     *
      * @return String message
      */
-    public String getMessage() {
+    public static String getMessage() {
         String message = "";
         try {
 //			String temp = "cab";
@@ -81,11 +84,11 @@ public class FindMessage {
 //			System.out.println(uri.toString());
             URL uri = new URL("http://cswebcat.swansea.ac.uk/message?solution=" + text);
 //			java.awt.Desktop.getDesktop().browse(uri);
-            Scanner inurl = new Scanner(uri.openStream());
-            while (inurl.hasNext()) {
-                message += inurl.next() + " ";
+            Scanner inURL = new Scanner(uri.openStream());
+            while (inURL.hasNext()) {
+                message += inURL.next() + " ";
             }
-            inurl.close();
+            inURL.close();
 //			System.out.println(message);
         } catch (Exception e) {
             System.out.println("Cannot print");
