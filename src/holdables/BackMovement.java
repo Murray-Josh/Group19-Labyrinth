@@ -1,17 +1,13 @@
 package holdables;
 
+import players.Player;
+
 public class BackMovement extends PlayerEffect {
 
-    protected BackMovement(boolean backMovement) {
-        super(backMovement);
-    }
-    public boolean isBackMovement() {
-        return this.backMovement;
-    }
-
-    public void setBackMovement(boolean backMovement) {
-        this.backMovement = backMovement;
-        System.out.println("Back movement is in effect");
+    public void apply(Player player) {
+        /*
+        code that applies the effect to the player goes here, i'm talking to you logic people
+         */
     }
 
 }

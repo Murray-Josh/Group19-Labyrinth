@@ -4,15 +4,15 @@ package players;
  */
 
 
-
 import java.io.Serializable;
 
 /**
  * stores wins, losses, number of games played
  * and name of each individual player
  * * @version 2.0.0
-        * @author Martin Samm
-        */
+ *
+ * @author Martin Samm
+ */
 public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     private static final int PERCENTAGE_MULTIPLIER = 100;
     private int numWins;

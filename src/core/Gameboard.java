@@ -23,7 +23,7 @@ public class Gameboard implements Serializable {
     private int[] size;
     private Tile[][] board;
     private Style style;
-    private SilkBag silkBag;
+    private final SilkBag silkBag;
 
 
     /**

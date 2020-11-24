@@ -1,11 +1,10 @@
 package holdables;
 
-public class PlayerEffect extends Effect {
+import players.Player;
 
-    public PlayerEffect(boolean doubleMovement, boolean backMovement) {
-        super(doubleMovement, backMovement);
-    }
-
-    public PlayerEffect(boolean doubleMovement) {
-    }
+public abstract class PlayerEffect extends Effect {
+    public abstract void apply(Player player);
+    /*
+    If there is ANY common code between backmovement and doublemovement, put the method in THIS CLASS!!
+     */
 }

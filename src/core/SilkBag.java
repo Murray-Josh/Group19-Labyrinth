@@ -1,6 +1,6 @@
 package core;
 
-import holdables.*;
+import holdables.Holdable;
 import players.Player;
 
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @version 0.9
  */
 public class SilkBag implements Serializable {
-    private ArrayList<Holdable> bagList = new ArrayList<Holdable>();
+    private final ArrayList<Holdable> bagList = new ArrayList<Holdable>();
 
     /**
      * Adds an object to the bag
@@ -28,7 +28,7 @@ public class SilkBag implements Serializable {
      * Removes the first object from the bag
      */
     public void dequeue(Player p) {
-        p.addToHand(bagList.get(0));
+        Player.addToHand(bagList.get(0));
         bagList.remove(0);
     }
 }

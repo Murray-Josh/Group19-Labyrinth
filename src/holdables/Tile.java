@@ -35,10 +35,6 @@ public class Tile extends Holdable implements Serializable {
         setFixed(fixed);
     }
 
-    public Tile(Coordinate coordinate, GoalTile goal, Style style, int angle, boolean fixed) {
-        super();
-    }
-
     /**
      * Makes the tile fixed
      */

@@ -1,11 +1,11 @@
 package holdables;
 
-public class TileEffect extends Effect {
+public abstract class TileEffect extends Effect {
+    protected final static int RANGE = 3;
 
-    public TileEffect(boolean onFire, boolean isFrozen) {
-        super(onFire, isFrozen);
-    }
+    public abstract void apply(Tile tile);
 
-    public TileEffect(boolean isFrozen) {
-    }
+        /*
+    If there is ANY common code between FireEffect and IceEffect, put the method in THIS CLASS!!
+     */
 }

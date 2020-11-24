@@ -1,17 +1,13 @@
 package holdables;
 
+import players.Player;
+
 public class DoubleMovement extends PlayerEffect {
 
-    protected DoubleMovement(boolean doubleMovement) {
-        super(doubleMovement);
-    }
-    public void setDoubleMovement(boolean doubleMovement) {
-        this.doubleMovement = doubleMovement;
-        System.out.println("Double movement is in effect");
-    }
-
-    public boolean DoubleMovement() {
-        return this.doubleMovement;
+    public void apply(Player player) {
+        /*
+        code that applies the effect to the player goes here, i'm talking to you logic people
+         */
     }
 
 }

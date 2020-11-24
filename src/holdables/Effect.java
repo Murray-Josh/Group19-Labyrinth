@@ -27,6 +27,6 @@ public class Effect {
     }
 
     public Effect() {
-        
+
     }
 }

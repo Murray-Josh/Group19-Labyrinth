@@ -1,0 +1,24 @@
+.rollover-button {
+	-fx-font-size: 16px;
+    -fx-font-family: roboto light;
+	-fx-text-fill: WHITE;
+    -fx-background-color: transparent;
+}
+.rollover-button:hover {
+    -fx-background-color: #384E92;
+}
+.separator {
+	-fx-backgroud-color: WHITE;
+}
+.rollover-button-small {
+	-fx-font-size: 13px;
+    -fx-font-family: roboto light;
+	-fx-text-fill: WHITE;
+    -fx-background-color: transparent;
+}
+.rollover-button-small:hover {
+    -fx-background-color: #384E92;
+}
+.pane-main{
+	-fx-background-color: #2C2C3E;
+}
