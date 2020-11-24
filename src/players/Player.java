@@ -1,7 +1,8 @@
 package players;
+import holdables.PlayerEffect;
 
 import core.Coordinate;
-import holdables.Effect;
+import holdables.Holdable;
 import styles.Style;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     private PlayerProfile profile;
     private Coordinate coordinate;
-    private ArrayList<Effect> hand;
+    private static ArrayList<Holdable> hand;
     private Style style;
     private int playerNum;
     private int currentDirection;
@@ -39,9 +40,6 @@ public class Player implements Serializable {
 
     }
 
-    public void addToHand(Effect effect) {
-        hand.add(effect);
-    }
 
     /**
      * Gets players profile
@@ -84,14 +82,17 @@ public class Player implements Serializable {
      *
      * @param effect Holdables.Effect card
      */
+    public static void addToHand(Holdable holdable) {
+        hand.add(holdable);
 
+    }
 
     /**
      * Gets the current card hand of player
      *
      * @return Card hand of player
      */
-    public ArrayList<Effect> getHand() {
+    public ArrayList<Holdable> getHand() {
         return hand;
     }
 
@@ -100,7 +101,7 @@ public class Player implements Serializable {
      *
      * @param hand Players hand
      */
-    private void setHand(ArrayList<Effect> hand) {
+    private void setHand(ArrayList<Holdable> hand) {
         this.hand = hand;
     }
 

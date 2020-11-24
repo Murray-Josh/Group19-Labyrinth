@@ -1,3 +1,5 @@
+package holdables;
+
 public class TileEffect extends Effect {
 
     public TileEffect(boolean onFire, boolean isFrozen) {
