@@ -1,10 +1,11 @@
 package holdables;
 
-public class FireEffect extends Effect.TileEffect {
+public class FireEffect extends TileEffect {
 
-    protected FireEffect(boolean onFire) {
-        super(onFire);
+    public FireEffect(boolean onFire, boolean isFrozen) {
+        super(onFire, isFrozen);
     }
+
     public boolean isOnFire() {
         return this.onFire;
     }
