@@ -1,7 +1,7 @@
 package holdables;
 
-public class DoubleMovement extends Effect.PlayerEffect {
-    
+public class DoubleMovement extends PlayerEffect {
+
     protected DoubleMovement(boolean doubleMovement) {
         super(doubleMovement);
     }
