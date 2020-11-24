@@ -1,4 +1,4 @@
-package menus;
+package core;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,13 +28,14 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void changeScene(String fxmlPath) {
+    public void changeScene(String fxmlPath, String title) {
         Scene scene;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlPath"));
             Parent root = fxmlLoader.load();
             scene = new Scene(root);
             stage.hide();
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="99.0" prefWidth="340.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.AddProfileDialog">
+    <children>
+        <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+            <buttons>
+                <Button fx:id="cmdAdd" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdAddClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Create" />
+                <Button fx:id="cmdCancel" cancelButton="true" mnemonicParsing="false" onAction="#cmdCancelClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Cancel" />
+            </buttons>
+            <padding>
+                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+            </padding>
+        </ButtonBar>
+      <TextField fx:id="txtName" layoutX="19.0" layoutY="14.0" prefWidth="305.0" promptText="Nickname" styleClass="textbox-main" stylesheets="@../../resources/Misc/main.css" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="Roboto Light" size="13.0" />
+         </font></TextField>
+    </children>
+</AnchorPane>
