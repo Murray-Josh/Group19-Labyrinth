@@ -1,6 +1,6 @@
 package holdables;
 
-public class BackMovement extends Effect.PlayerEffect {
+public class BackMovement extends PlayerEffect {
 
     protected BackMovement(boolean backMovement) {
         super(backMovement);
