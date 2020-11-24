@@ -25,28 +25,8 @@ public class Effect {
 
     public Effect(boolean isFrozen) {
     }
-    
+
     public Effect() {
         
-    }
-
-    static class PlayerEffect extends Effect {
-
-        public PlayerEffect(boolean doubleMovement, boolean backMovement) {
-            super(doubleMovement, backMovement);
-        }
-
-        public PlayerEffect(boolean doubleMovement) {
-        }
-    }
-
-    static class TileEffect extends Effect {
-
-        public TileEffect(boolean onFire, boolean isFrozen) {
-            super(onFire, isFrozen);
-        }
-
-        public TileEffect(boolean onFire) {
-        }
     }
 }
