@@ -12,9 +12,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controls and handles the LoadGame scene
@@ -30,7 +30,7 @@ public class LoadGameController {
     @FXML
     private Button cmdCancel;
     @FXML
-    private ListView lstSaves;
+    private ListView<File> lstSaves;
 
     private File selected;
 
@@ -39,7 +39,6 @@ public class LoadGameController {
      */
     public LoadGameController() {
         lstSaves.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        setListData();
     }
 
     /**
@@ -52,14 +51,8 @@ public class LoadGameController {
         if (!dir.exists()) {
             dir.mkdir();
         }
-        File[] dirFilteredContents = dir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".labyrinth");
-            }
-        });
-        List<File> dirContentsList = Arrays.asList(dirFilteredContents);
-        return dirContentsList;
+        File[] dirFilteredContents = dir.listFiles((dir1, name) -> name.endsWith(".labyrinth"));
+        return Arrays.asList(Objects.requireNonNull(dirFilteredContents));
     }
 
     /**
@@ -86,7 +79,7 @@ public class LoadGameController {
      * @param mouseEvent
      */
     public void lstSavesClick(MouseEvent mouseEvent) {
-        selected = (File) lstSaves.getSelectionModel().getSelectedItem();
+        selected = lstSaves.getSelectionModel().getSelectedItem();
     }
 
     /**
@@ -100,5 +93,9 @@ public class LoadGameController {
         } else {
             Logic.createGame(selected);
         }
+    }
+
+    public void cmdCancelClick(ActionEvent actionEvent) {
+        Main.changeScene("MainMenu.fxml", "Labyrinth");
     }
 }

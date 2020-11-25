@@ -27,7 +27,7 @@
         <ListView fx:id="lstSaves" layoutX="46.0" layoutY="39.0" onMouseClicked="#lstSavesClick" prefHeight="200.0"
                   prefWidth="736.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css"
                   AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0">
+                  AnchorPane.topAnchor="0.0" >
             <padding>
                 <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
             </padding>
