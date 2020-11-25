@@ -1,0 +1,17 @@
+5,9
+15
+0,0,corner,0
+2,0,junction,0
+4,0,corner,1
+0,2,junction,3
+2,2,corner,2
+4,2,junction,1
+0,4,junction,3
+2,4,goal,0
+4,4,junction,1
+0,6,junction,3
+2,6,straight,0
+4,6,junction,1
+0,8,corner,3
+2,8,junction,2
+4,8,corner,2
