@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.LoadGameController">
-   <children>
-      <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <buttons>
-            <Button fx:id="cmdRefresh" layoutX="521.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdRefreshClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Refresh" />
-            <Button fx:id="cmdLoad" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdLoadClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Load Save" />
-          <Button fx:id="cmdCancel" cancelButton="true" mnemonicParsing="false" onAction="#cmdCancelClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Cancel" />
-        </buttons>
-         <padding>
-            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-         </padding>
-      </ButtonBar>
-      <ListView fx:id="lstSaves" layoutX="46.0" layoutY="39.0" onMouseClicked="#lstSavesClick" prefHeight="200.0" prefWidth="736.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <padding>
-            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-         </padding></ListView>
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="700.0" styleClass="pane-main"
+            stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="fxml.LoadGameController">
+    <children>
+        <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0"
+                   prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <buttons>
+                <Button fx:id="cmdRefresh" layoutX="521.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#cmdRefreshClick" styleClass="rollover-button-small"
+                        stylesheets="@../../resources/Misc/main.css" text="Refresh"/>
+                <Button fx:id="cmdLoad" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdLoadClick"
+                        styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css"
+                        text="Load Save"/>
+                <Button fx:id="cmdCancel" cancelButton="true" mnemonicParsing="false" onAction="#cmdCancelClick"
+                        styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Cancel"/>
+            </buttons>
+            <padding>
+                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+            </padding>
+        </ButtonBar>
+        <ListView fx:id="lstSaves" layoutX="46.0" layoutY="39.0" onMouseClicked="#lstSavesClick" prefHeight="200.0"
+                  prefWidth="736.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css"
+                  AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+            </padding>
+        </ListView>
+    </children>
 </AnchorPane>

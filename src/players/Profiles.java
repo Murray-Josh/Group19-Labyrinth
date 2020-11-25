@@ -25,7 +25,7 @@ public class Profiles {
         try {
             saveProfiles();
         } catch (IOException e) {
-            Main.showError(e.getMessage(),"IO Exception", "Error", true);
+            Main.showError(e.getMessage(), "IO Exception", "Error", true);
         }
         try {
             loadProfiles();

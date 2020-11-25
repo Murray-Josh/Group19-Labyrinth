@@ -23,7 +23,7 @@ public class AddProfileDialogController {
         } else {
             try {
                 Profiles.addProfile(profile);
-            } catch (Exception e ) {
+            } catch (Exception e) {
                 Main.showError("The profile could not be added. Please verify integrity of game files and path of player.profiles", "Could Not Save Profile", "Create a Profile", false);
             }
         }

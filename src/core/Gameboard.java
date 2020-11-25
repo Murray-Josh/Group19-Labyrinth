@@ -76,9 +76,9 @@ public class Gameboard implements Serializable {
         readGameboardFixed(Fixed);
     }
 
-    private void readGameboardFixed(Scanner line){
+    private void readGameboardFixed(Scanner line) {
         int fixed = line.nextInt();
-        for(int i = 0; i < fixed; i++){
+        for (int i = 0; i < fixed; i++) {
             line.useDelimiter(",");
             int x = line.nextInt();
             int y = line.nextInt();
@@ -179,5 +179,6 @@ public class Gameboard implements Serializable {
     /**
      * Outputs board as a string in a grid format
      */
-    public void boardToString(){}
+    public void boardToString() {
+    }
 }

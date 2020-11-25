@@ -28,7 +28,7 @@ public class SilkBag implements Serializable {
      * Removes the first object from the bag
      */
     public void dequeue(Player p) {
-        p.addToHand(bagList.get(0));
+        Player.addToHand(bagList.get(0));
         bagList.remove(0);
     }
 }

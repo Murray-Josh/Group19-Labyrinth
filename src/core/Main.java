@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,22 +20,11 @@ public class Main extends Application {
         launch(args);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Labyrinth - Group 19");
-        stage.setResizable(false);
-        stage.show();
-    }
-
     public static void changeScene(String fxmlPath, String title) {
         Scene scene;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(new URL("file:./../" + fxmlPath));
+            Parent root = FXMLLoader.load(new URL("file:./../" + fxmlPath));
             scene = new Scene(root);
             stage.hide();
             stage.setTitle(title);
@@ -54,11 +42,13 @@ public class Main extends Application {
         alert.setHeaderText(heading);
         alert.getDialogPane().getStylesheets().add("/../resources/Misc/dialog.css");
     }
+
     /**
      * Displays an Error Dialog containing the passed messages
-     * @param msg Message to be displayed
+     *
+     * @param msg     Message to be displayed
      * @param heading The Heading to be displayed
-     * @param title The title of the dialog box window
+     * @param title   The title of the dialog box window
      */
     public static void showError(String msg, String heading, String title, boolean exit) {
         Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
@@ -66,6 +56,19 @@ public class Main extends Application {
         alert.setHeaderText(heading);
         alert.getDialogPane().getStylesheets().add("/../resources/Misc/dialog.css");
         Optional<ButtonType> result = alert.showAndWait();
-        if (exit && result.get() == ButtonType.OK) {System.exit(0); };
+        if (exit && result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Labyrinth - Group 19");
+        stage.setResizable(false);
+        stage.show();
     }
 }
