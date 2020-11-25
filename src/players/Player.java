@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     private static ArrayList<Holdable> hand;
     private PlayerProfile profile;
-    private Coordinate coordinate;
+    private ArrayList<Coordinate> coordinateArray;
     private Style style;
     private int playerNum;
     private int currentDirection;
@@ -33,17 +33,17 @@ public class Player implements Serializable {
      */
     public Player(PlayerProfile profile, Coordinate coord, Style style, int playerNum) {
         setProfile(profile);
-        setCoordinate(coord);
+        coordinateArray = new ArrayList<Coordinate>();
+        setCoordinate(coord, 0);
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(0);
-
     }
 
     /**
      * Adds an effect card to players hand
      *
-     * @param effect Holdables.Effect card
+     * @param holdable Holdables.Effect card
      */
     public static void addToHand(Holdable holdable) {
         hand.add(holdable);
@@ -73,17 +73,17 @@ public class Player implements Serializable {
      *
      * @return Coordinates of player
      */
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinate getCoordinate(int i) {
+        return coordinateArray.get(i);
     }
 
     /**
      * Sets coordinates of player on gameboard
      *
-     * @param coordinate Core.Coordinate object for player
+     * @param coord object for player
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(Coordinate coord, int i) {
+        coordinateArray.set(i, coord);
     }
 
     /**
