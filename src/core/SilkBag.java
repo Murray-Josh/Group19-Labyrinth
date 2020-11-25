@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * This class represents the Silk Bag: an array list and its methods.
  *
  * @author Jordy Martinson
- * @version 0.9
+ * @version 1.0
  */
 public class SilkBag implements Serializable {
     private final ArrayList<Holdable> bagList = new ArrayList<Holdable>();
@@ -28,7 +28,7 @@ public class SilkBag implements Serializable {
      * Removes the first object from the bag
      */
     public void dequeue(Player p) {
-        Player.addToHand(bagList.get(0));
+        p.addToHand(bagList.get(0));
         bagList.remove(0);
     }
 }

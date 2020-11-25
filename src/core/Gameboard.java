@@ -4,9 +4,12 @@ import holdables.*;
 import players.Player;
 import styles.Style;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A Core.Gameboard  for players to play on
@@ -39,8 +42,51 @@ public class Gameboard implements Serializable {
         generateBoard(size);
         setStyle(style);
         silkBag = new SilkBag();
-        //board = new Holdables.Tile[size[0]][size[1]];
+        //board = new Holdables.Tile[size[0]][size[1}
     }
+
+    /*	private static Queue<ClosedShape> readDataFile(Scanner file) {
+		Queue<ClosedShape> shapeQueue = new Queue<ClosedShape>();
+		while (file.hasNextLine()) {
+			String data = file.nextLine();
+			//reads in the individual bits of information from the lines
+			Scanner scanner = new Scanner(data);
+			String shape = scanner.next();*/
+
+    public Gameboard(String fileName) {
+        File file = new File(fileName);
+        Scanner in = null;
+        try {
+            in = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot find " + fileName);
+            System.exit(0);
+        }
+        readGameboardSize(in);
+        in.close();
+    }
+
+
+    private void readGameboardSize(Scanner line) {
+        line.useDelimiter(",");
+        size[0] = line.nextInt();
+        size[1] = line.nextInt();
+
+
+        String nextLine = line.nextLine();
+        Scanner Fixed = new Scanner(nextLine);
+        readGameboardFixed(Fixed);
+    }
+
+    private void readGameboardFixed(Scanner line){
+        int fixed = line.nextInt();
+        for(int i = 0; i <= fixed; i++){
+            String nextLine = new Scanner(newLine);
+            fixed = new Scanner(nextLine)
+            fixed.de
+        }
+    }
+
 
     /**
      * Gets players in game
@@ -131,14 +177,5 @@ public class Gameboard implements Serializable {
     /**
      * Outputs board as a string in a grid format
      */
-    public void boardToString() {
-        for (int y = 0; y < size[1]; y++) {
-            System.out.println("\n");
-            StringBuilder s = new StringBuilder();
-            for (int x = 0; x < size[0]; x++) {
-                s.append((board[x][y]).getType().toString()).append(" | ");
-            }
-            System.out.println(s);
-        }
-    }
+    public void boardToString(){}
 }
