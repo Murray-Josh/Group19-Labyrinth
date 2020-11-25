@@ -1,0 +1,41 @@
+ .dialog-pane{
+	-fx-background-color: #2C2C3E;
+ }
+
+/**Costumization of The Bar where the buttons are located**/
+.dialog-pane > .button-bar > .container {
+  -fx-background-color:black;
+}
+
+.dialog-pane > .content.label {
+	-fx-text-fill: WHITE;
+	-fx-background-color: transparent;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
+
+}
+
+/**Costumization of DialogPane Header**/
+.dialog-pane:header .header-panel {
+	-fx-background-color: #2C2C3E;
+}
+
+.dialog-pane:header .header-panel .label{
+	-fx-text-fill: WHITE;
+	-fx-background-color: transparent;
+	-fx-font-family: roboto light;
+	-fx-font-size: 18px;
+}
+
+
+/**Costumization of Buttons**/
+.dialog-pane .button{
+	-fx-font-size: 13px;
+    -fx-font-family: roboto light;
+	-fx-text-fill: WHITE;
+    -fx-background-color: transparent;
+ }
+
+.dialog-pane .button:hover{     
+    -fx-background-color: #384E92;
+ }

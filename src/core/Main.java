@@ -5,11 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -46,10 +48,12 @@ public class Main extends Application {
         }
     }
 
-    public void showConformation(String msg, String heading, String title) {
-//
+    public static void showConformation(String msg, String heading, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, msg, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(heading);
+        alert.getDialogPane().getStylesheets().add("/../resources/Misc/dialog.css");
     }
-
     /**
      * Displays an Error Dialog containing the passed messages
      * @param msg Message to be displayed
@@ -57,11 +61,11 @@ public class Main extends Application {
      * @param title The title of the dialog box window
      */
     public static void showError(String msg, String heading, String title, boolean exit) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         alert.setTitle(title);
         alert.setHeaderText(heading);
-        alert.setContentText(msg);
-        alert.showAndWait();
-        if (exit) {System.exit(0); };
+        alert.getDialogPane().getStylesheets().add("/../resources/Misc/dialog.css");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (exit && result.get() == ButtonType.OK) {System.exit(0); };
     }
 }

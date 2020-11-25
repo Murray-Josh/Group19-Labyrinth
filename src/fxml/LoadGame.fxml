@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.LoadGame">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.LoadGameController">
    <children>
       <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <buttons>
