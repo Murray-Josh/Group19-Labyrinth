@@ -1,5 +1,7 @@
 package players;
 
+import core.Main;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,7 +13,7 @@ import java.util.Comparator;
  * @version 2.0.0
  */
 public class Profiles {
-    private static ArrayList<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
+    private static ArrayList<PlayerProfile> profiles;
 
     /**
      * Refreshes the list of profiles
@@ -20,8 +22,18 @@ public class Profiles {
      * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
     public static void refresh() throws IOException, ClassNotFoundException {
-        saveProfiles();
-        loadProfiles();
+        try {
+            saveProfiles();
+        } catch (IOException e) {
+            Main.showError(e.getMessage(),"IO Exception", "Error", true);
+        }
+        try {
+            loadProfiles();
+        } catch (IOException e) {
+            Main.showError(e.getMessage(), "IO Exception", "Error", true);
+        } catch (ClassNotFoundException e) {
+            Main.showError(e.getMessage(), "Class Not Found", "Error", true);
+        }
     }
 
     /**
@@ -33,7 +45,7 @@ public class Profiles {
     public static void loadProfiles() throws IOException, ClassNotFoundException {
         File filename = new File("Players.profile");
         if (!filename.exists()) {
-            throw new NullPointerException("The file located at <" + filename + "> does not exist.");
+            throw new IOException("The file located at <" + filename + "> does not exist.");
         } else {
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
