@@ -8,7 +8,7 @@
 # Log file
 *.log
 
-# Package Files #
+# Package GameboardOne #
 *.war
 *.nar
 *.ear

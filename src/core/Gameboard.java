@@ -71,8 +71,6 @@ public class Gameboard implements Serializable {
         line.useDelimiter(",");
         size[0] = line.nextInt();
         size[1] = line.nextInt();
-
-
         String nextLine = line.nextLine();
         Scanner Fixed = new Scanner(nextLine);
         readGameboardFixed(Fixed);
@@ -80,11 +78,15 @@ public class Gameboard implements Serializable {
 
     private void readGameboardFixed(Scanner line){
         int fixed = line.nextInt();
-        for(int i = 0; i <= fixed; i++){
-            String nextLine = new Scanner(newLine);
-            fixed = new Scanner(nextLine)
-            fixed.de
+        for(int i = 0; i < fixed; i++){
+            line.useDelimiter(",");
+            int x = line.nextInt();
+            int y = line.nextInt();
+            String tile = line.next();
+            int turn = line.nextInt();
         }
+        line.close();
+
     }
 
 
