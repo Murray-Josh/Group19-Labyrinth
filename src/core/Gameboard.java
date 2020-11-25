@@ -15,7 +15,7 @@ import java.util.Scanner;
  * A Core.Gameboard  for players to play on
  *
  * @author Joshua Murray
- * @version 1.0
+ * @version 2.0
  */
 public class Gameboard implements Serializable {
     private final static int ROTATION_LOCK = 45;
@@ -24,7 +24,7 @@ public class Gameboard implements Serializable {
     GoalTile goal = new GoalTile();
     Tile goalTile;
     private ArrayList<Player> players;
-    private int[] size;
+    private static int[] size;
     private Tile[][] board;
     private Style style;
 
@@ -44,15 +44,11 @@ public class Gameboard implements Serializable {
         silkBag = new SilkBag();
         //board = new Holdables.Tile[size[0]][size[1}
     }
-
-    /*	private static Queue<ClosedShape> readDataFile(Scanner file) {
-		Queue<ClosedShape> shapeQueue = new Queue<ClosedShape>();
-		while (file.hasNextLine()) {
-			String data = file.nextLine();
-			//reads in the individual bits of information from the lines
-			Scanner scanner = new Scanner(data);
-			String shape = scanner.next();*/
-
+	
+	
+	/**
+ 	* Reads a given file to help create the gameboard and assign fixed properties to each tile
+ 	*/
     public Gameboard(String fileName) {
         File file = new File(fileName);
         Scanner in = null;
@@ -67,27 +63,59 @@ public class Gameboard implements Serializable {
     }
 
 
-    private void readGameboardSize(Scanner line) {
-        line.useDelimiter(",");
-        size[0] = line.nextInt();
-        size[1] = line.nextInt();
-        String nextLine = line.nextLine();
-        Scanner Fixed = new Scanner(nextLine);
-        readGameboardFixed(Fixed);
+    /**
+	 * Reads each line in a file to create a gemeboard
+	 * @param line Scanner
+	 */
+    private static void readGameboard(Scanner line) {
+    	String sizes = line.next();
+    	Scanner readSize = new Scanner(sizes);
+    	readGameBoardSize(readSize);
+    	readSize.close();
+    	System.out.print("" + size[0]);
+        readGameboardFixed(line);
     }
+    
+    /**
+     * Instantiates the size of the gameboard
+     * @param in Scanner
+     */
+    private static void readGameBoardSize(Scanner in) {
+    	in.useDelimiter(",");
+    	size[0] = in.nextInt();
+    	size[1] = in.nextInt();
+	}
 
-    private void readGameboardFixed(Scanner line) {
+    /**
+     * Reads the number of fixed tile inside a file to be added onto the gameboard
+     * @param line Scanner
+     */
+	private static void readGameboardFixed(Scanner line){
         int fixed = line.nextInt();
-        for (int i = 0; i < fixed; i++) {
-            line.useDelimiter(",");
-            int x = line.nextInt();
-            int y = line.nextInt();
-            String tile = line.next();
-            int turn = line.nextInt();
+        System.out.println(" " + size[1] + " " + fixed);
+        for(int i = 0; i < fixed; i++){
+        	String tile = line.next();
+        	Scanner tileDetails = new Scanner(tile);
+        	readGameboardTile(tileDetails);
         }
         line.close();
+        
+        
 
     }
+	/**
+	 * Reads each fixed tile for the gameboard
+	 * @param line Scanner
+	 */
+	private static void readGameboardTile(Scanner line) {
+        line.useDelimiter(",");
+        int x = line.nextInt();
+        int y = line.nextInt();
+        String tileType = line.next();
+        int turn = line.nextInt();
+    	System.out.println(x + " " + y + " " + tileType + " " + turn);
+		
+	}
 
 
     /**
