@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.SetUpGame"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="675.0" prefWidth="450.0" styleClass="pane-main" stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.SetUpGame">
+    <children>
+    <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <buttons>
+            <Button fx:id="cmdStart" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdStartClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Start" />
+            <Button fx:id="cmdBack" cancelButton="true" mnemonicParsing="false" onAction="#cmdBackClick" styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Back" />
+        </buttons>
+        <padding>
+            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+        </padding>
+    </ButtonBar>
+      <Pane layoutX="72.0" layoutY="175.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="108.0" fitWidth="422.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" smooth="false">
+               <image>
+                  <Image url="@../../resources/Main_Menu_Style/title.png" />
+               </image></ImageView>
+            <ChoiceBox fx:id="choStyle" layoutX="14.0" layoutY="582.0" prefHeight="39.0" prefWidth="201.0" styleClass="textbox-main" stylesheets="@../../resources/Misc/main.css" />
+            <Label layoutX="14.0" layoutY="562.0" styleClass="label-medium" stylesheets="@../../resources/Misc/main.css" text="Theme" />
+         </children></Pane>
+    </children>
 </AnchorPane>

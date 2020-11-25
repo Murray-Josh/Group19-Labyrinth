@@ -35,6 +35,12 @@
 	-fx-font-family: roboto light;
 	-fx-font-size: 13px;
 }
+.label-medium {
+	-fx-text-fill: WHITE;
+	-fx-background-color: transparent;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
+}
 .textbox-main {
     -fx-background-color: transparent;
 	-fx-border-color: #221B3C;
