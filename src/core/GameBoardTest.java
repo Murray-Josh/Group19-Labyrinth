@@ -19,7 +19,10 @@ public class GameBoardTest extends Application {
         Gameboard2 gameboardTest = new Gameboard2("resources/file/GameboardOne");
 
         primaryStage.setTitle("Game Board Test");
-        Image image = new Image("Cars_Style/cars_junction.png");
+        Image startImage = new Image("Pirate_Style/pirate_corner.png");
+        Image fixedImage = new Image("Pirate_Style/pirate_junction.png");
+        Image normalImage = new Image("Cars_Style/cars_junction.png");
+        
         //Image image = CarStyle.getCornerTile();
         GridPane gridPane = new GridPane();
 
@@ -32,7 +35,17 @@ public class GameBoardTest extends Application {
                 System.out.println(gameboardTest.getTile(x, y).getAngle());
 
                 ImageView iv1 = new ImageView();
-                iv1.setImage(image);
+                
+                if(gameboardTest.isStart(gameboardTest.getTile(x,y).getCoordinate().getX(), gameboardTest.getTile(x,y).getCoordinate().getY())) {
+                    iv1.setImage(startImage);
+                }
+                else if(gameboardTest.getTile(x, y).isFixed()) {
+                    iv1.setImage(fixedImage);
+                }
+                else {
+                    iv1.setImage(normalImage);
+                }
+                
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
