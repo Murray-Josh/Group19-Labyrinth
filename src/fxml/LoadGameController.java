@@ -1,7 +1,9 @@
 package fxml;
 
+import core.ErrorMsg;
 import core.Logic;
 import core.Main;
+import core.Title;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static fxml.StageController.*;
+
 /**
  * Controls and handles the LoadGame scene
  *
@@ -23,6 +27,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class LoadGameController {
+    private static final Title title = Title.SAVE;
     @FXML
     private Button cmdRefresh;
     @FXML
@@ -89,13 +94,17 @@ public class LoadGameController {
      */
     public void cmdLoadClick(ActionEvent actionEvent) {
         if (selected == null && lstSaves.getSelectionModel().getSelectedItem() == null) {
-            Main.showError("A Save file is needed for loading a game from file. Please select a Save to load.", "No Save Selected", "Load Save", false);
+            showError(ErrorMsg.SAVE_NOT_SELECTED, title, false);
         } else {
             Logic.createGame(selected);
         }
     }
 
+    /**
+     * goes back to the main menu
+     * @param actionEvent
+     */
     public void cmdCancelClick(ActionEvent actionEvent) {
-        Main.changeScene("MainMenu.fxml", "Labyrinth");
+        home();
     }
 }

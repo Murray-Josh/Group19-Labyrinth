@@ -19,7 +19,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     private int numLosses;
     private int numGames;
     private String name;
-    private int winPercentage;
+    private double winPercentage;
 
     /**
      * Creates a new player profile
@@ -100,7 +100,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      *
      * @return Win Percentage
      */
-    public int getWinPercentage() {
+    public double getWinPercentage() {
         calculateWinPercentage();
         return this.winPercentage;
     }
@@ -137,5 +137,14 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     @Override
     public int compareTo(PlayerProfile comparisonProfile) {
         return this.getNumOfWins() - comparisonProfile.getNumOfWins();
+    }
+
+    /**
+     * If this profile matches another profile
+     * @param p Profile to be checked against
+     * @return If the names match or not
+     */
+    public boolean equals(PlayerProfile p) {
+       return this.getName().equals(p.getName());
     }
 }

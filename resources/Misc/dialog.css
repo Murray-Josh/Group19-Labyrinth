@@ -39,3 +39,11 @@
 .dialog-pane .button:hover{     
     -fx-background-color: #384E92;
  }
+
+ .dialog-pane .text-field{
+    -fx-background-color: transparent;
+ 	-fx-border-color: #221B3C;
+ 	-fx-font-family: roboto light;
+ 	-fx-font-size: 13px;
+ 	-fx-text-fill: white;
+ }

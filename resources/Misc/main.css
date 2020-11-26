@@ -48,6 +48,13 @@
 	-fx-font-size: 13px;
 	-fx-text-fill: white;
 }
+.text-field {
+    -fx-background-color: transparent;
+	-fx-border-color: #221B3C;
+	-fx-font-family: roboto light;
+	-fx-font-size: 13px;
+	-fx-text-fill: white;
+}
 .border {
 	-fx-border-color: #221B3C;
 }

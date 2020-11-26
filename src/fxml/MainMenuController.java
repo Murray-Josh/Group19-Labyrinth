@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import menus.FindMessage;
+import core.FindMessage;
 
 public class MainMenuController {
     @FXML

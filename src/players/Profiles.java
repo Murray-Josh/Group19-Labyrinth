@@ -1,10 +1,17 @@
 package players;
 
+import core.ErrorMsg;
 import core.Main;
+import core.Title;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextInputDialog;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
+
+import static fxml.StageController.*;
 
 /**
  * Players.Profiles static class: Creates, stores, loads, saves and manages all the PlayerProfiles of the people that are playing/have played the game
@@ -21,18 +28,18 @@ public class Profiles {
      * @throws IOException            If Players.profile does not exist in the application root directory or cannot be written to
      * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public static void refresh() throws IOException, ClassNotFoundException {
+    public static void refresh() {
         try {
             saveProfiles();
         } catch (IOException e) {
-            Main.showError(e.getMessage(), "IO Exception", "Error", true);
+            showError(ErrorMsg.SAVE_WRITE_ERROR, Title.ERROR, false);
         }
         try {
             loadProfiles();
         } catch (IOException e) {
-            Main.showError(e.getMessage(), "IO Exception", "Error", true);
+            showError(ErrorMsg.PROFILE_FILE_NOT_FOUND, Title.ERROR, false);
         } catch (ClassNotFoundException e) {
-            Main.showError(e.getMessage(), "Class Not Found", "Error", true);
+            showError(ErrorMsg.PROFILE_READ_ERROR, Title.ERROR, false);
         }
     }
 
@@ -59,7 +66,7 @@ public class Profiles {
      * @throws IOException If the file cannot be written
      */
     private static void saveProfiles() throws IOException {
-        File file = new File("players.profile");
+        File file = new File("labyrinth.profiles");
         if (file.exists()) {
             file.renameTo(new File(file.toString() + ".old"));
         }
@@ -90,15 +97,13 @@ public class Profiles {
      *
      * @param profile Players.PlayerProfile
      * @throws NullPointerException   If the supplied Players.PlayerProfile does not exist in Players.Profiles
-     * @throws IOException            If Players.profile does not exist in the application root directory or cannot be written to
-     * @throws ClassNotFoundException If an object class that is in Players.profile is not in the application or is not serializable
      */
-    public static void removeProfile(PlayerProfile profile) throws NullPointerException, IOException, ClassNotFoundException {
+    public static void removeProfile(PlayerProfile profile) throws NullPointerException {
         if (exists(profile)) {
             profiles.remove(profile);
             refresh();
         } else {
-            throw new NullPointerException("The specified Players.PlayerProfile does not exist");
+            throw new NullPointerException("The specified profile does not exist");
         }
     }
 
@@ -140,6 +145,81 @@ public class Profiles {
     public static ArrayList<PlayerProfile> get() throws IOException, ClassNotFoundException {
         refresh();
         return profiles;
+    }
+
+    /**
+     * Creates and displays a Dialog box that allows the user to add a profile
+     */
+    public static void addProfileDialog() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Add a Profile");
+        dialog.setContentText("Nickname: ");
+        dialog.setHeaderText(null);
+        dialog.setGraphic(null);
+        dialog.getEditor();
+        dialog.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        Optional<String> result = dialog.showAndWait();
+        try {
+            if (result.isPresent()) {
+                PlayerProfile newProfile = new PlayerProfile(result.get());
+                if (profileExists(newProfile)) {
+                    showError(ErrorMsg.PROFILE_ADD_ERROR, Title.CREATE_PROFILE, false);
+                    addProfileDialog();
+                } else {
+                    addProfile(newProfile);
+                    showConfirmation("The profile '" + newProfile.getName() + "' has been created.", "Profile Creation Successful", "Create a Profile");
+                }
+            } else {
+                home();
+            }
+        } catch (Exception e) {
+            showError(ErrorMsg.PROFILE_WRITE_ERROR, Title.CREATE_PROFILE, false);
+            home();
+        }
+
+    }
+
+    /**
+     * Creates and displays a dialog box that allows the user to delete a profile
+     */
+    public static void deleteProfileDialog() {
+        refresh();
+        ChoiceDialog<PlayerProfile> dialog = new ChoiceDialog<PlayerProfile>();
+        dialog.setGraphic(null);
+        dialog.setHeaderText(null);
+        dialog.setContentText("Delete Profile: ");
+        dialog.getItems().addAll(profiles);
+        dialog.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        Optional<PlayerProfile> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            delete(result.get());
+            showConfirmation("The profile '" + result.get().getName() + "' has been deleted.", "Delete Successful", "Delete Profile");
+        } else {
+            deleteProfileDialog();
+        }
+    }
+
+    /**
+     * Deletes the specified profile
+     * @param profile
+     */
+    private static void delete(PlayerProfile profile) {
+        profiles.remove(profile);
+        refresh();
+    }
+
+    /**
+     * Checks a profile against all profiles that exist.
+     * @param profile Profile to check
+     * @return If the profile already exists
+     */
+    public static boolean profileExists(PlayerProfile profile) throws IOException, ClassNotFoundException {
+        refresh();
+        boolean toReturn = false;
+        for (PlayerProfile p : profiles) {
+            if (p.equals(profile)) { toReturn = true; }
+        }
+        return toReturn;
     }
 
 }

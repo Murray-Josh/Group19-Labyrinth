@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 
-public class CarStyle extends Style implements Serializable {
+public final class CarStyle extends Style implements Serializable {
     static {
         PLAYER_ONE = new Image("Cars_Style/cars_player_one.png");
         PLAYER_TWO = new Image("Cars_Style/cars_player_two.png");

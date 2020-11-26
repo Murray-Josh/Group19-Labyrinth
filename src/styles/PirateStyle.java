@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
  * @version 1.0
  */
-public class PirateStyle extends Style implements Serializable {
+public final class PirateStyle extends Style implements Serializable {
     static {
         PLAYER_ONE = new Image("pirate_player_one.png");
         PLAYER_TWO = new Image("pirate_player_two.png");

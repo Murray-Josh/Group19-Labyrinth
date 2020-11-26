@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 
-public class MouseTrapStyle extends Style implements Serializable {
+public final class MouseTrapStyle extends Style implements Serializable {
     static {
         PLAYER_ONE = new Image("patrick.jpg");
         PLAYER_TWO = new Image("patrick.jpg");

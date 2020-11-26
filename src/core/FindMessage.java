@@ -1,4 +1,4 @@
-package menus; /**
+package core; /**
  * Menus.FindMessage.java
  *
  * @version 1.0.0

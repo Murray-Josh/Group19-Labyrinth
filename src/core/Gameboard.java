@@ -19,10 +19,10 @@ import java.util.Scanner;
  */
 public class Gameboard implements Serializable {
     private final static int ROTATION_LOCK = 45;
-    private final SilkBag silkBag;
+    private SilkBag silkBag;
     Random rand = new Random();
-    GoalTile goal = new GoalTile();
-    Tile goalTile;
+   private GoalTile goal = new GoalTile();
+    private Tile goalTile;
     private ArrayList<Player> players;
     private static int[] size;
     private Tile[][] board;
@@ -58,7 +58,7 @@ public class Gameboard implements Serializable {
             System.out.println("Cannot find " + fileName);
             System.exit(0);
         }
-        readGameboardSize(in);
+        readGameboard(in);
         in.close();
     }
 
