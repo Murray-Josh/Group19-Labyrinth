@@ -61,6 +61,7 @@ public class Gameboard2 implements Serializable {
         if (unfixed > 0) {
             readUnfixed(unfixed, in);
         }
+        setStartCoords(in);
     }
 
     /**
@@ -148,6 +149,32 @@ public class Gameboard2 implements Serializable {
             }
         }
     }
+   
+    /**
+     * Reads file and determines start location for all players
+     * Then sets each player's start
+     * @param in Scanner to read from
+     */
+    private void setStartCoords(Scanner in) {
+
+//        players.add(new Player(new PlayerProfile("a"), new Coordinate(0,0), getStyle(), 1));
+//        players.add(new Player(new PlayerProfile("b"), new Coordinate(0,0), getStyle(), 2));
+//        players.add(new Player(new PlayerProfile("c"), new Coordinate(0,0), getStyle(), 3));
+//        players.add(new Player(new PlayerProfile("d"), new Coordinate(0,0), getStyle(), 4));
+
+        in.useDelimiter(",");
+        for(int i = 0; i < MAX_PLAYERS; i++) {
+            String cLine = in.nextLine();
+            String[] coordArray = cLine.split(",");
+            Coordinate playCoord = new Coordinate(Integer.parseInt(coordArray[1]), Integer.parseInt(coordArray[2]));
+            startCoords[i] = playCoord;
+        }
+
+        for(int j = 0; j < players.size(); j++) {
+            players.get(j).setStart(startCoords[j]);
+        }
+    }
+    
 
     /**
      * Takes in a string value of tiletype and outputs object
@@ -265,9 +292,35 @@ public class Gameboard2 implements Serializable {
     public Tile getTile(int x, int y) {
         return board[x][y];
     }
+    
+    /**
+     *  Returns true if tile is a start tile
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return if tile is a start tile
+     */
+    public boolean isStart(int x, int y) {
+        boolean result = false;
+        for(int i = 0; i < startCoords.length; i++) {
+            if (getTile(x, y).getCoordinate().getX() == startCoords[i].getX()) {
+                if (getTile(x, y).getCoordinate().getY() == startCoords[i].getY()) {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
 
+    //just for testing
     public static void main(String[] args) {
         Gameboard2 g = new Gameboard2("src/file/GBOne");
         g.boardToString();
+//        System.out.println(g.isStart(0,0));
+//        System.out.println(g.isStart(4,8));
+//        System.out.println(g.isStart(2,5));
+//        System.out.println(g.isStart(4,5));
+//        System.out.println(g.isStart(8,8));
+//        System.out.println(g.startCoords[0].getX() + ", " + g.startCoords[0].getY());
+//        System.out.println(g.startCoords[1].getX() + ", " + g.startCoords[0].getY());
     }
 }
