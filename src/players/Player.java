@@ -33,8 +33,7 @@ public class Player implements Serializable {
      */
     public Player(PlayerProfile profile, Coordinate coord, Style style, int playerNum) {
         setProfile(profile);
-        coordinateArray = new ArrayList<Coordinate>();
-        setCoordinate(coord, 0);
+        setStart(coord);
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(0);
@@ -84,6 +83,15 @@ public class Player implements Serializable {
      */
     public void setCoordinate(Coordinate coord, int i) {
         coordinateArray.set(i, coord);
+    }
+    
+     /**
+     * Sets the player's initial position
+     * @param coord
+     */
+    public void setStart(Coordinate coord) {
+        coordinateArray = new ArrayList<>();
+        coordinateArray.add(coord);
     }
 
     /**
