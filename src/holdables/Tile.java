@@ -36,6 +36,21 @@ public class Tile extends Holdable implements Serializable {
     }
 
     /**
+     * Constructs a new Holdables.Tile.
+     *
+     * @param type       Holdables.Tile's Holdables.TileType
+     * @param style      Holdables.Tile's Styles.Style
+     * @param angle      Holdables.Tile's Angle of rotation
+     * @param fixed      If the is fixed or not
+     */
+    public Tile(TileType type, Style style, double angle, boolean fixed) {
+        setType(type);
+        setStyle(style);
+        setAngle(angle);
+        setFixed(fixed);
+    }
+
+    /**
      * Makes the tile fixed
      */
     public void setFixed() {

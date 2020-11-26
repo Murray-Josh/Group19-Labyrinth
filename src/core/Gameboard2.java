@@ -50,6 +50,7 @@ public class Gameboard2 implements Serializable {
 
     /**
      * Reads file and calls methods to break it down
+     *
      * @param in
      */
     private void readGameboard(Scanner in) {
@@ -57,82 +58,133 @@ public class Gameboard2 implements Serializable {
         int fixed = Integer.parseInt(in.nextLine());
         readFixed(fixed, in);
         int unfixed = Integer.parseInt(in.nextLine());
-        readUnfixed(unfixed, in);
+        if (unfixed > 0) {
+            readUnfixed(unfixed, in);
+        }
     }
 
     /**
      * Reads board size
+     *
      * @param sLine
      * @return
      */
     private int[] readSize(String sLine) {
-        String[] sizeStrArray = sLine.split(", ");
+
+        String[] sizeStrArray = sLine.split(",");
         size[0] = Integer.parseInt(sizeStrArray[0]);
         size[1] = Integer.parseInt(sizeStrArray[1]);
+
+
         board = new Tile[size[0]][size[1]];
         return size;
     }
 
     /**
      * Reads fixed files and places onto board where coordinates dictate
+     *
      * @param fixed
      * @param in
      */
     private void readFixed(int fixed, Scanner in) {
-        in.useDelimiter(", ");
-        for(int i = 0; i < fixed; i++)
-        {
+        in.useDelimiter(",");
+
+        for (int i = 0; i < fixed; i++) {
             String tLine = in.nextLine();
-            String[] fixedArray = tLine.split(", ");
+            String[] fixedArray = tLine.split(",");
             int x = Integer.parseInt(fixedArray[0]);
             int y = Integer.parseInt(fixedArray[1]);
             String fTile = fixedArray[2];
+            TileType fTileType = readTileType(fTile);
             int turn = Integer.parseInt(fixedArray[3]);
 
-            Tile newTile = new Tile(new Coordinate(x, y), fTile, getStyle(), turn, true);
+            Tile newTile = new Tile(new Coordinate(x, y), fTileType, getStyle(), turn, true);
+            /* Potentially redundant code
             if (fTile.equals("goal")) {
-                newTile.setType(goal);
+                newTile.setType(new GoalTile());
                 goalTile = newTile;
             }
+             */
             board[x][y] = newTile;
             board[x][y].setFixed();
+
+
         }
     }
 
     /**
      * Goes through each unfixed tile and draws from them randomly, ensuring tiles are not drawn twice
      * Then places on empty board or into bag if already a tile there
+     *
      * @param unfixed
      * @param in
      */
     private void readUnfixed(int unfixed, Scanner in) {
-        ArrayList<String> tempList = new ArrayList<>();
+        ArrayList<TileType> tempList = new ArrayList<>();
 
-        for(int i = 0; i < unfixed; i++) {
+        for (int i = 0; i < unfixed; i++) {
             String unfTLine = in.nextLine();
-            tempList.add(unfTLine);
+            TileType unfTLineType = readTileType(unfTLine);
+            tempList.add(unfTLineType);
         }
 
         // The spec mentions filling the board then placing the remaining tiles in the bag
         // Could be worth doing it that way specifically
         int[] angleArray = new int[]{0, 90, 180, 270};
-
         for (int j = 0; j < size[1]; j++) {
             for (int k = 0; k < size[0]; k++) {
-                int randTile = rand.nextInt(tempList.size());
+                int randTile;
+                if (tempList.size() >= 1) {
+                    randTile = rand.nextInt(tempList.size());
+                } else {
+                    randTile = 0;
+                }
                 int randAngle = rand.nextInt(angleArray.length);
-
                 Tile newTile = new Tile(tempList.get(randTile), style, angleArray[randAngle], false);
-                if(!isFixed(j, k)) {
+
+                if (!isFixed(j, k)) {
                     newTile.setCoordinate(new Coordinate(j, k));
                     board[j][k] = newTile;
-                }
-                else {
+                } else {
+
+
                     silkBag.enqueue(newTile);
                 }
                 tempList.remove(randTile);
             }
         }
+    }
+
+    /**
+     * Takes in a string value of tiletype and outputs object
+     *
+     * @param tileTypeString
+     * @return
+     */
+    private TileType readTileType(String tileTypeString) {
+        TileType tileTypeObject;
+
+        switch (tileTypeString) {
+            case "corner":
+                tileTypeObject = new CornerTile();
+                break;
+            case "junction":
+                tileTypeObject = new JunctionTile();
+                break;
+
+            case "straight":
+                tileTypeObject = new StraightTile();
+                break;
+
+            case "goal":
+                tileTypeObject = new GoalTile();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + tileTypeString);
+
+        }
+        return tileTypeObject;
+
     }
 
     /**
@@ -195,10 +247,9 @@ public class Gameboard2 implements Serializable {
      * @return Boolean of fixed or not
      */
     private boolean isFixed(int x, int y) {
-        if(!(board[x][y] == null)) {
+        if (!(board[x][y] == null)) {
             return board[x][y].isFixed();
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -216,6 +267,10 @@ public class Gameboard2 implements Serializable {
             }
             System.out.println(s);
         }
+    }
+
+    public Tile getTile(int x, int y) {
+        return board[x][y];
     }
 
     public static void main(String[] args) {
