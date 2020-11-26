@@ -70,11 +70,9 @@ public class Gameboard2 implements Serializable {
      * @return
      */
     private int[] readSize(String sLine) {
-
         String[] sizeStrArray = sLine.split(",");
         size[0] = Integer.parseInt(sizeStrArray[0]);
         size[1] = Integer.parseInt(sizeStrArray[1]);
-
 
         board = new Tile[size[0]][size[1]];
         return size;
@@ -107,8 +105,6 @@ public class Gameboard2 implements Serializable {
              */
             board[x][y] = newTile;
             board[x][y].setFixed();
-
-
         }
     }
 
@@ -131,8 +127,8 @@ public class Gameboard2 implements Serializable {
         // The spec mentions filling the board then placing the remaining tiles in the bag
         // Could be worth doing it that way specifically
         int[] angleArray = new int[]{0, 90, 180, 270};
-        for (int j = 0; j < size[1]; j++) {
-            for (int k = 0; k < size[0]; k++) {
+        for (int j = 0; j < size[0]; j++) {
+            for (int k = 0; k < size[1]; k++) {
                 int randTile;
                 if (tempList.size() >= 1) {
                     randTile = rand.nextInt(tempList.size());
@@ -146,8 +142,6 @@ public class Gameboard2 implements Serializable {
                     newTile.setCoordinate(new Coordinate(j, k));
                     board[j][k] = newTile;
                 } else {
-
-
                     silkBag.enqueue(newTile);
                 }
                 tempList.remove(randTile);
@@ -184,7 +178,6 @@ public class Gameboard2 implements Serializable {
 
         }
         return tileTypeObject;
-
     }
 
     /**
