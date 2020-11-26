@@ -31,7 +31,7 @@ public class Gameboard2 implements Serializable {
     private Random rand = new Random();
     private String goal = "goal";
     private Tile goalTile;
-    private ArrayList<Player> players = newArrayList<>();
+    private ArrayList<Player> players = new ArrayList<>();
     private int[] size = new int[2];
     private Tile[][] board;
     private Style style;
