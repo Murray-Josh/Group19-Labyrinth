@@ -35,6 +35,8 @@ public class Gameboard2 implements Serializable {
     private int[] size = new int[2];
     private Tile[][] board;
     private Style style;
+    private final int MAX_PLAYERS = 4;
+    private Coordinate[] startCoords = new Coordinate[4];
 
     public Gameboard2(String fileName) {
         Scanner in;
