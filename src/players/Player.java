@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     private static ArrayList<Holdable> hand;
     private PlayerProfile profile;
-    private final ArrayList<Coordinate> coordinateArray;
+    private ArrayList<Coordinate> coordinateArray;
     private Style style;
     private int playerNum;
     private int currentDirection;
