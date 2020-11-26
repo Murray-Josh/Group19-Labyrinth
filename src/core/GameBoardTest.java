@@ -36,7 +36,7 @@ public class GameBoardTest extends Application {
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
-                gridPane.add(iv1, y, x);
+                gridPane.add(iv1, x, y);
                 //gridPane.add(new Button("Button" + x + y), y, x, 1, 1);
             }
         }
