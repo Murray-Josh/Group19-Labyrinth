@@ -1,6 +1,6 @@
 package core;
 
-import holdables.Holdable;
+import holdables.*;
 import players.Player;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class SilkBag implements Serializable {
      *
      * @param obj the object to be added
      */
-    private void enqueue(Holdable obj) {
+    public void enqueue(Holdable obj) {
         bagList.add(obj);
     }
 
