@@ -15,11 +15,10 @@ import java.io.Serializable;
  */
 public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     private static final int PERCENTAGE_MULTIPLIER = 100;
-    private int numWins;
-    private int numLosses;
-    private int numGames;
+    private int wins;
+    private int losses;
+    private int games;
     private String name;
-    private double winPercentage;
 
     /**
      * Creates a new player profile
@@ -28,13 +27,30 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      */
     public PlayerProfile(String name) {
         this.name = name;
+        this.games = 0;
+        this.losses =0;
+        this.wins =0;
+    }
+
+    /**
+     * Creates a new player profile with the specified statistics
+     * @param name Name of the profile
+     * @param wins Number of wins
+     * @param losses Number of Losses
+     * @param games Number of Games
+     */
+    public PlayerProfile(String name, int wins, int losses, int games) {
+        this.name = name;
+        this.games = games;
+        this.losses =losses;
+        this.wins =wins;
     }
 
     /**
      * @return current amount of wins
      */
     public int getNumOfWins() {
-        return numWins;
+        return wins;
     }
 
     /**
@@ -43,14 +59,14 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      * @param num int
      */
     public void setNumOfWins(int num) {
-        numWins = num;
+        wins = num;
     }
 
     /**
      * @return current amount of losses
      */
     public int getNumOfLosses() {
-        return numLosses;
+        return losses;
     }
 
     /**
@@ -59,14 +75,14 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      * @param num int
      */
     public void setNumOfLosses(int num) {
-        numLosses = num;
+        losses = num;
     }
 
     /**
      * @return current number of games
      */
     public int getNumOfGames() {
-        return numGames;
+        return games;
     }
 
     /**
@@ -75,7 +91,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      * @param num int
      */
     public void setNumOfGames(int num) {
-        numGames = num;
+        games = num;
     }
 
 
@@ -100,32 +116,19 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      *
      * @return Win Percentage
      */
-    public double getWinPercentage() {
-        calculateWinPercentage();
-        return this.winPercentage;
+    public float getWinPercentage() {
+        if (wins != 0 && games != 0) {
+            return (wins * PERCENTAGE_MULTIPLIER / games);
+        } else {
+            return 0;
+        }
     }
 
     /**
      * Convert player profile to readable String
      */
     public String toString() {
-        String s = "Name: " + getName();
-        s += " | Wins: " + getNumOfWins();
-        s += " | Losses: " + getNumOfLosses();
-        s += " | Games: " + getNumOfGames();
-        s += " | Win Percentage: " + getWinPercentage() + "%";
-        return s;
-    }
-
-    /**
-     * Calculates the win percentage based on the number of wins and the number of games
-     */
-    public void calculateWinPercentage() {
-        if (getNumOfWins() > 0 || getNumOfGames() > 0) {
-            this.winPercentage = (this.getNumOfWins() / this.getNumOfGames()) * PERCENTAGE_MULTIPLIER;
-        } else {
-            this.winPercentage = 0;
-        }
+        return this.name;
     }
 
     /**

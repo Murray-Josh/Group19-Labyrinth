@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -77,7 +78,8 @@ public class StageController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, msg, ButtonType.OK);
         alert.setTitle(title);
         alert.setHeaderText(heading);
-        alert.getDialogPane().getStylesheets().add("fxml/resources/dialog.css");
+        alert.getDialogPane().getStylesheets().add("/resources/css/dialog.css");
+        alert.showAndWait();
     }
 
     /**
@@ -91,7 +93,7 @@ public class StageController {
         Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(), ButtonType.OK);
         alert.setTitle(title.toString());
         alert.setHeaderText(error.getHeader());
-        alert.getDialogPane().getStylesheets().add("../resources/css/dialog.css");
+        alert.getDialogPane().getStylesheets().add("/resources/css/dialog.css");
         Optional<ButtonType> result = alert.showAndWait();
         if (quit && result.get() == ButtonType.OK) {
             System.exit(0);
@@ -112,8 +114,8 @@ public class StageController {
      * changes the scene to the main menu
      */
     public static void home() {
-        changeScene(Window.HOME
-        );
+        stage.getIcons().add(new Image(StageController.class.getResourceAsStream("/resources/menu/Gun_Raccoon.png")));
+        changeScene(Window.HOME);
         stage.setOnCloseRequest(e -> Platform.exit());
     }
 }

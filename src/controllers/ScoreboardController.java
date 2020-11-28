@@ -53,7 +53,7 @@ public class ScoreboardController implements Initializable {
         alert.setTitle("Scoreboard");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.YES) {
-            Profiles.addProfileDialog();
+            Profiles.showCreate();
         } else {
             home();
         }
@@ -85,7 +85,7 @@ public class ScoreboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ArrayList<PlayerProfile> profiles = null;
         try {
-            profiles = Profiles.get();
+            profiles = Profiles.getProfiles();
         } catch (Exception e) {
             showError(ErrorMsg.PROFILE_LOAD_ERROR, Title.SCOREBOARD, false);
         } finally {

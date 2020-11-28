@@ -39,11 +39,11 @@ public class MainMenuController implements Initializable {
     }
 
     public void cmdDeleteProfileClick(MouseEvent mouseEvent) {
-        Profiles.deleteProfileDialog();
+        Profiles.showDelete();
     }
 
     public void cmdCreateProfileClick(MouseEvent mouseEvent) {
-        Profiles.addProfileDialog();
+        Profiles.showCreate();
     }
 
     public void cmdScoreboardClick(MouseEvent mouseEvent) {
