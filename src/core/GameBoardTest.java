@@ -6,10 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import styles.CarStyle;
+import styles.Style;
 
 /**
  * Gameboard Test when run creates a grid of junction tile images - WIP
- * Joshua Murray
+ * @author Joshua Murray
  */
 public class GameBoardTest extends Application {
 
@@ -17,13 +19,11 @@ public class GameBoardTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Gameboard2 gameboardTest = new Gameboard2("resources/file/GameboardOne");
-
+        CarStyle c = new CarStyle();
         primaryStage.setTitle("Game Board Test");
-        Image startImage = new Image("Pirate_Style/pirate_corner.png");
-        Image fixedImage = new Image("Pirate_Style/pirate_junction.png");
-        Image normalImage = new Image("Cars_Style/cars_junction.png");
-        
-        //Image image = CarStyle.getCornerTile();
+        Image startImage = c.getCornerFire();
+        Image fixedImage = c.getJunctionIce();
+        Image normalImage = c.getJunctionTile();
         GridPane gridPane = new GridPane();
 
         //gridPane.add(iv1, 0, 1);
