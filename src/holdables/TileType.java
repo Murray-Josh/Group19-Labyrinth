@@ -29,4 +29,9 @@ public abstract class TileType {
     public String toString() {
         return this.getClass().getName();
     }
+
+    public static boolean canMoveNorth(){return NORTH;}
+    public static boolean canMoveEast(){return EAST;}
+    public static boolean canMoveSouth(){return SOUTH;}
+    public static boolean canMoveWest(){return WEST;}
 }

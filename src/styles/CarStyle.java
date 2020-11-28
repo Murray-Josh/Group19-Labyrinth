@@ -30,7 +30,7 @@ public class CarStyle extends Style implements Serializable {
     }
 
     /**
-     * Gets each images and assignes them to the style class
+     * Gets each images and assigns them to the style class
      */
     public CarStyle() {
         super(PLAYER_ONE,PLAYER_TWO,PLAYER_THREE,PLAYER_FOUR,STRAIGHT_TILE,STRAIGHT_FIRE,
