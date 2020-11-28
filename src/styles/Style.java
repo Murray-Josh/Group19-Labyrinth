@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Create three classes to split up the stuff into to make it easier to access from other classes
  * @author Issi Ludwig & Martin Samm
- * @version 2.0
+ * @version 3.0
  */
 public abstract class Style implements Serializable {
 

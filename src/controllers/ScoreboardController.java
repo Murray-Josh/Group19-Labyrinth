@@ -1,22 +1,25 @@
-package fxml;
+package controllers;
 
-import core.ErrorMsg;
-import core.Main;
-import core.Title;
-import javafx.beans.property.*;
+import constants.ErrorMsg;
+import constants.Title;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import players.PlayerProfile;
 import players.Profiles;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-import static fxml.StageController.previousScene;
-import static fxml.StageController.*;
+import static controllers.StageController.*;
 
-public class ScoreboardController {
+public class ScoreboardController implements Initializable {
     @FXML
     private TableView tblTable;
     @FXML
@@ -26,7 +29,7 @@ public class ScoreboardController {
     @FXML
     private TableColumn<PlayerProfile, Integer> colWins;
     @FXML
-    private TableColumn<PlayerProfile,Integer> colLosses;
+    private TableColumn<PlayerProfile, Integer> colLosses;
     @FXML
     private TableColumn<PlayerProfile, Double> colPercentage;
     @FXML
@@ -34,29 +37,11 @@ public class ScoreboardController {
 
     /**
      * Goes back to the main menu
+     *
      * @param actionEvent
      */
     public void cmdBackClick(ActionEvent actionEvent) {
         home();
-    }
-
-    /**
-     * Initialises a Scoreboard
-     */
-    public ScoreboardController() {
-        ArrayList<PlayerProfile> profiles = null;
-        try {
-            profiles = Profiles.get();
-        } catch (Exception e) {
-            showError(ErrorMsg.PROFILE_LOAD_ERROR, Title.SCOREBOARD, false);
-            home();
-        } finally {
-            if (profiles == null) {
-                nullListHandler();
-            } else {
-                populate(profiles);
-            }
-        }
     }
 
     /**
@@ -70,12 +55,13 @@ public class ScoreboardController {
         if (result.get() == ButtonType.YES) {
             Profiles.addProfileDialog();
         } else {
-             home();
+            home();
         }
     }
 
     /**
      * Populates the scoreboard with profiles
+     *
      * @param profiles Profiles to be added to the scoreboard table
      */
     private void populate(ArrayList<PlayerProfile> profiles) {
@@ -87,4 +73,27 @@ public class ScoreboardController {
         tblTable.getItems().addAll(profiles);
     }
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ArrayList<PlayerProfile> profiles = null;
+        try {
+            profiles = Profiles.get();
+        } catch (Exception e) {
+            showError(ErrorMsg.PROFILE_LOAD_ERROR, Title.SCOREBOARD, false);
+        } finally {
+            if (profiles == null) {
+                nullListHandler();
+            } else {
+                populate(profiles);
+            }
+        }
+    }
 }

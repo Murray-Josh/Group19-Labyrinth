@@ -1,8 +1,7 @@
 package players;
 
-import core.ErrorMsg;
-import core.Main;
-import core.Title;
+import constants.ErrorMsg;
+import constants.Title;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
 
-import static fxml.StageController.*;
+import static controllers.StageController.*;
 
 /**
  * Players.Profiles static class: Creates, stores, loads, saves and manages all the PlayerProfiles of the people that are playing/have played the game
@@ -157,7 +156,7 @@ public class Profiles {
         dialog.setHeaderText(null);
         dialog.setGraphic(null);
         dialog.getEditor();
-        dialog.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        dialog.getDialogPane().getStylesheets().add("css/dialog.css");
         Optional<String> result = dialog.showAndWait();
         try {
             if (result.isPresent()) {
@@ -189,7 +188,7 @@ public class Profiles {
         dialog.setHeaderText(null);
         dialog.setContentText("Delete Profile: ");
         dialog.getItems().addAll(profiles);
-        dialog.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        dialog.getDialogPane().getStylesheets().add("css/dialog.css");
         Optional<PlayerProfile> result = dialog.showAndWait();
         if (result.isPresent()) {
             delete(result.get());

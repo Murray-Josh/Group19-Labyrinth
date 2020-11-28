@@ -1,24 +1,24 @@
-package fxml;
+package controllers;
 
-import core.ErrorMsg;
+import constants.ErrorMsg;
+import constants.Title;
 import core.Logic;
-import core.Main;
-import core.Title;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
-import static fxml.StageController.*;
+import java.util.ResourceBundle;
+import static controllers.StageController.*;
 
 /**
  * Controls and handles the LoadGame scene
@@ -26,7 +26,7 @@ import static fxml.StageController.*;
  * @author Joseph Omar
  * @version 1.0
  */
-public class LoadGameController {
+public class LoadGameController implements Initializable {
     private static final Title title = Title.SAVE;
     @FXML
     private Button cmdRefresh;
@@ -39,12 +39,7 @@ public class LoadGameController {
 
     private File selected;
 
-    /**
-     * Initialises the window, loading a list of save files and putting them into a listview
-     */
-    public LoadGameController() {
-        lstSaves.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    }
+
 
     /**
      * Finds all the files in the save folder that have the extension .labyrinth and adds them to a list
@@ -52,7 +47,7 @@ public class LoadGameController {
      * @return List of save files
      */
     private List<File> getSaves() {
-        File dir = new File("/saves");
+        File dir = new File("/../saves");
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -102,9 +97,19 @@ public class LoadGameController {
 
     /**
      * goes back to the main menu
+     *
      * @param actionEvent
      */
     public void cmdCancelClick(ActionEvent actionEvent) {
         home();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        /*
+        lstSaves.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        getSaves();
+        setListData();
+        */
     }
 }

@@ -1,11 +1,12 @@
-package core;
+package constants;
 
 /**
  * Enum defining window titles that get displayed via GUI
+ *
  * @author Joseph Omar
  * @version 1.0
  */
-public enum Title{
+public enum Title {
     /**
      * Main Menu
      */
@@ -41,13 +42,13 @@ public enum Title{
     /**
      * Critical Error (Only when the program exits after
      */
-    CRIT_ERROR("Labyrinth encountered a critical error")
-    ;
+    CRIT_ERROR("Labyrinth encountered a critical error");
 
     private final String TITLE;
 
     /**
      * Constructor
+     *
      * @param title Title of the Window
      */
     Title(String title) {
@@ -56,6 +57,7 @@ public enum Title{
 
     /**
      * Converts TITLE type to string
+     *
      * @return
      */
     @Override

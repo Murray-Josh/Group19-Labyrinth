@@ -1,9 +1,9 @@
-package fxml;
+package controllers;
 
-import core.ErrorMsg;
-import core.Main;
-import core.Title;
-import core.Window;
+import constants.ErrorMsg;
+import constants.Title;
+import constants.Window;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,8 +12,6 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Optional;
 
 public class StageController {
@@ -30,16 +28,18 @@ public class StageController {
 
     /**
      * Changes the scene to a specified Window
+     *
      * @param window {@link Window} to open
      */
     public static void changeScene(Window window) {
         Scene scene = null;
         try {
-            Parent root = FXMLLoader.load(new URL(window.getPath()));
+            Parent root = FXMLLoader.load(StageController.class.getResource(window.getPath()));
             scene = new Scene(root);
             setNewScene(scene, window.getTitle());
         } catch (IOException e) {
-            showError(ErrorMsg.FXML_NOT_FOUND,  Title.ERROR, false);
+            e.printStackTrace();
+            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
@@ -47,6 +47,7 @@ public class StageController {
 
     /**
      * Sets the scene on the stage to the specified scene
+     *
      * @param scene New scene to be shown
      * @param title Title of the window, as string
      * @throws IllegalStateException If the scene parameter is null
@@ -54,7 +55,7 @@ public class StageController {
     private static void setNewScene(Scene scene, String title) {
         if (scene != null) {
             previousScene = stage.getScene();
-            previousTitle=stage.getTitle();
+            previousTitle = stage.getTitle();
             stage.hide();
             stage.setTitle(title);
             stage.setScene(scene);
@@ -67,29 +68,30 @@ public class StageController {
 
     /**
      * Displays a Conformation Dialog containing the passes strings
-     * @param msg Message to be displayed
+     *
+     * @param msg     Message to be displayed
      * @param heading The Heading to be displayed
-     * @param title The title of the dialog box window
+     * @param title   The title of the dialog box window
      */
     public static void showConfirmation(String msg, String heading, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, msg, ButtonType.OK);
         alert.setTitle(title);
         alert.setHeaderText(heading);
-        alert.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        alert.getDialogPane().getStylesheets().add("fxml/resources/dialog.css");
     }
 
     /**
      * Displays an Error Dialog containing the passed strings
      *
      * @param error {@link ErrorMsg} template to use
+     * @param quit  Whether to quit the application
      * @parm title The title to use (member of {@link Title})
-     * @param quit Whether to quit the application
      */
     public static void showError(ErrorMsg error, Title title, boolean quit) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(),  ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(), ButtonType.OK);
         alert.setTitle(title.toString());
         alert.setHeaderText(error.getHeader());
-        alert.getDialogPane().getStylesheets().add("./Misc/dialog.css");
+        alert.getDialogPane().getStylesheets().add("../resources/css/dialog.css");
         Optional<ButtonType> result = alert.showAndWait();
         if (quit && result.get() == ButtonType.OK) {
             System.exit(0);
@@ -98,6 +100,7 @@ public class StageController {
 
     /**
      * Opens the main menu on startup
+     *
      * @param primaryStage
      */
     public static void start(Stage primaryStage) {
@@ -109,6 +112,8 @@ public class StageController {
      * changes the scene to the main menu
      */
     public static void home() {
-        changeScene(Window.HOME);
+        changeScene(Window.HOME
+        );
+        stage.setOnCloseRequest(e -> Platform.exit());
     }
 }

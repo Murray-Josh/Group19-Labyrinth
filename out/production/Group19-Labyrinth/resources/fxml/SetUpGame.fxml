@@ -6,7 +6,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="675.0" prefWidth="450.0" styleClass="pane-main"
-            stylesheets="@../../resources/Misc/main.css" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="fxml.SetUpGame">
+            stylesheets="@resources/main.css" xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="controllers.SetUpGameController">
     <children>
         <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0"
                    prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0"
@@ -14,9 +15,9 @@
             <buttons>
                 <Button fx:id="cmdStart" layoutX="436.0" layoutY="11.0" mnemonicParsing="false"
                         onAction="#cmdStartClick" styleClass="rollover-button-small"
-                        stylesheets="@../../resources/Misc/main.css" text="Start"/>
+                        stylesheets="@resources/main.css" text="Start"/>
                 <Button fx:id="cmdBack" cancelButton="true" mnemonicParsing="false" onAction="#cmdBackClick"
-                        styleClass="rollover-button-small" stylesheets="@../../resources/Misc/main.css" text="Back"/>
+                        styleClass="rollover-button-small" stylesheets="@/fxml/resources/main.css" text="Back"/>
             </buttons>
             <padding>
                 <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
@@ -28,13 +29,13 @@
                 <ImageView fitHeight="108.0" fitWidth="422.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true"
                            smooth="false">
                     <image>
-                        <Image url="@../../resources/Main_Menu_Style/title.png"/>
+                        <Image url="@resources/title.png"/>
                     </image>
                 </ImageView>
                 <ChoiceBox fx:id="choStyle" layoutX="14.0" layoutY="582.0" prefHeight="39.0" prefWidth="201.0"
-                           styleClass="textbox-main" stylesheets="@../../resources/Misc/main.css"/>
+                           styleClass="textbox-main" stylesheets="@resources/main.css"/>
                 <Label layoutX="14.0" layoutY="562.0" styleClass="label-medium"
-                       stylesheets="@../../resources/Misc/main.css" text="Theme"/>
+                       stylesheets="@resources/main.css" text="Theme"/>
             </children>
         </Pane>
     </children>

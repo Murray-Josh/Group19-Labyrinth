@@ -1,0 +1,53 @@
+.separator {
+	-fx-background-color: WHITE;
+}
+.button {
+	-fx-font-size: 13px;
+    -fx-font-family: roboto light;
+	-fx-text-fill: WHITE;
+    -fx-background-color: #2C2C3E;
+}
+.button:hover {
+    -fx-background-color: #384E92;
+}
+.hbox{
+	-fx-background-color: #2C2C3E;
+	-fx-text-fill: WHITE;
+    -fx-font-family: roboto light;
+    -fx-border-color: #221B3C;
+	}
+
+.label-large{
+	-fx-text-fill: WHITE;
+	-fx-background-color: #2C2C3E;
+	-fx-font-family: roboto light;
+	-fx-font-size: 16px;
+}
+.label-small {
+	-fx-text-fill: WHITE;
+	-fx-background-color: #2C2C3E;
+	-fx-font-family: roboto light;
+	-fx-font-size: 13px;
+}
+.label{
+	-fx-text-fill: WHITE;
+	-fx-background-color: #2C2C3E;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
+}
+.text-field, .choice-box {
+    -fx-background-color: #2C2C3E;
+	-fx-border-color: #221B3C;
+	-fx-font-family: roboto light;
+	-fx-font-size: 13px;
+	-fx-text-fill: white;
+}
+
+.border {
+	-fx-border-color: #221B3C;
+}
+
+.button-bar .container {
+	-fx-background-color: #2C2C3E;
+	-fx-border-color: #221B3C;
+}

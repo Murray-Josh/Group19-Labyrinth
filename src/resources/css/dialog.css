@@ -2,48 +2,50 @@
 	-fx-background-color: #2C2C3E;
  }
 
-/**Costumization of The Bar where the buttons are located**/
-.dialog-pane > .button-bar > .container {
-  -fx-background-color:black;
-}
+/**Customization of The Bar where the buttons are located**/
 
-.dialog-pane > .content.label {
+.dialog-pane .label {
 	-fx-text-fill: WHITE;
-	-fx-background-color: transparent;
+	-fx-background-color: #2C2C3E;
 	-fx-font-family: roboto light;
 	-fx-font-size: 14px;
-
 }
 
-/**Costumization of DialogPane Header**/
+/**Customization of DialogPane Header**/
 .dialog-pane:header .header-panel {
 	-fx-background-color: #2C2C3E;
 }
 
 .dialog-pane:header .header-panel .label{
 	-fx-text-fill: WHITE;
-	-fx-background-color: transparent;
+	-fx-text-fill: WHITE;
+	-fx-background-color: #2C2C3E;
 	-fx-font-family: roboto light;
 	-fx-font-size: 18px;
 }
 
 
-/**Costumization of Buttons**/
+/**Customization of Buttons**/
 .dialog-pane .button{
 	-fx-font-size: 13px;
     -fx-font-family: roboto light;
 	-fx-text-fill: WHITE;
-    -fx-background-color: transparent;
+    -fx-background-color: #2C2C3E;
  }
 
-.dialog-pane .button:hover{     
+.dialog-pane .button:hover{
     -fx-background-color: #384E92;
  }
 
  .dialog-pane .text-field{
-    -fx-background-color: transparent;
+    -fx-background-color: #2C2C3E;
  	-fx-border-color: #221B3C;
  	-fx-font-family: roboto light;
  	-fx-font-size: 13px;
  	-fx-text-fill: white;
+ }
+
+ .dialog-pane .button-bar .container{
+    -fx-background-color: #2C2C3E;
+    -fx-border-color: #221B3C;
  }
