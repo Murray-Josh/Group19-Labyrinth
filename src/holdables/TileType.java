@@ -1,5 +1,7 @@
 package holdables;
 
+import javafx.scene.image.Image;
+
 /**
  * Outline for a Holdables.TileType, which specifies the directions the player can go.
  *
@@ -29,4 +31,9 @@ public abstract class TileType {
     public String toString() {
         return this.getClass().getName();
     }
+
+    public static boolean canMoveNorth(){return NORTH;}
+    public static boolean canMoveEast(){return EAST;}
+    public static boolean canMoveSouth(){return SOUTH;}
+    public static boolean canMoveWest(){return WEST;}
 }
