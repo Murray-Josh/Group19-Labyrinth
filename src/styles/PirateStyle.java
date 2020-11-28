@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import java.io.Serializable;
 
 /**
- * Gives the Images for the Pirate Styles.Style test
+ * Gives the Images for the Pirate Styles.Style
  *
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
  * @version 3.0
