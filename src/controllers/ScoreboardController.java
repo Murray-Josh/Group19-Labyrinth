@@ -2,9 +2,7 @@ package controllers;
 
 import constants.ErrorMsg;
 import constants.Title;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +29,7 @@ public class ScoreboardController implements Initializable {
     @FXML
     private TableColumn<PlayerProfile, Integer> colLosses;
     @FXML
-    private TableColumn<PlayerProfile, Double> colPercentage;
+    private TableColumn<PlayerProfile, Float> colPercentage;
     @FXML
     private Button cmdBack;
 
@@ -65,12 +63,13 @@ public class ScoreboardController implements Initializable {
      * @param profiles Profiles to be added to the scoreboard table
      */
     private void populate(ArrayList<PlayerProfile> profiles) {
-        colNickname.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
-        colGames.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getNumOfGames()).asObject());
-        colWins.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getNumOfWins()).asObject());
-        colLosses.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getNumOfLosses()).asObject());
-        colPercentage.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getWinPercentage()).asObject());
         tblTable.getItems().addAll(profiles);
+        colNickname.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
+        colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfGames()).asObject());
+        colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfWins()).asObject());
+        colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfLosses()).asObject());
+        colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(data.getValue().getWinPercentage()).asObject());
+
     }
 
     /**
