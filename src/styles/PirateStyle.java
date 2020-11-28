@@ -31,6 +31,5 @@ public final class PirateStyle extends Style implements Serializable {
         super(PLAYER_ONE,PLAYER_TWO,PLAYER_THREE,PLAYER_FOUR,STRAIGHT_TILE,STRAIGHT_FIRE,
                 STRAIGHT_ICE,CORNER_TILE,CORNER_FIRE,CORNER_ICE,JUNCTION_TILE,JUNCTION_FIRE,
                 JUNCTION_ICE,GOAL_TILE,GAMEBOARD);
-
     }
 }

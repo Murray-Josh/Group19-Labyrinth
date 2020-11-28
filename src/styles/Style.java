@@ -9,7 +9,6 @@ import java.io.Serializable;
  * @author Issi Ludwig & Martin Samm
  * @version 2.0
  */
-
 public abstract class Style implements Serializable {
 
     protected static Image PLAYER_ONE;

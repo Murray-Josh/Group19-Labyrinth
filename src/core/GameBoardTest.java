@@ -25,7 +25,6 @@ public class GameBoardTest extends Application {
         Image fixedImage = c.getJunctionIce();
         Image normalImage = c.getJunctionTile();
         GridPane gridPane = new GridPane();
-
         //gridPane.add(iv1, 0, 1);
         //System.out.println(gameboardTest.getTile(4,0).getType().toString());
 
