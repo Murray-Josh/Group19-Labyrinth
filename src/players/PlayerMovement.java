@@ -15,13 +15,18 @@ import players.Player;
 public class PlayerMovement () {
     Tile nextMoveTile = null;
 
+
+
 //TODO gets current player position
     Tile currentTile = Gameboard.getTile(Player.getCoordinate().getX(),Player.getCoordinate().getY());
     //        (1,2)
     //  (0,1) (1,1) (2,1)
     //        (1,0)
 
-    if(currentTile.)
+
+    //if(currentTile.)
+
+
 
 //TODO check if tile is on fire
     if(nextMoveTile.isOnFire()){
@@ -29,18 +34,25 @@ public class PlayerMovement () {
         move there
     }
 
-    //currentPlayerPosition//
+
+    //currentPlayerPosition
 
 
+//not really sure where this came from but shes here now
     public Coordinate getCoordinate(int i) {
         return coordinateArray.get(i);
     }
 
-//TODO loop that checks who many tiles the player can still move
+
+
+//TODO loop that checks who many tiles the player can still move out of 4
     //Int count = 0;
     //Boolean hasUserClickedTile = false
     //while (hasUserClickedTile == false || count < 4) {}
 
+
+
+//TODO check if surrounding tiles are accessable from current tile
     if(nextMoveTi()){
         //block user from entering
     }else{
@@ -52,13 +64,11 @@ public class PlayerMovement () {
     while
 
 
-    /**
-    - find player coordinate
-    - check four next places
-            - check for fire
-    - listens for key input
-    - moves the player as many places as they can in that direction until they cant anymore or they've already moved 4 places
-    - it also needs to take into account effects, but i havent got around to fixing them yet
-     */
+
+
+//TODO take input from player - arrow keys or click on tile
+//TODO check for double move? - does that happen in this class or another??????????
+//TODO check for backwards movements for selected player - again does that happen in this class or another??????????
+// check if tile player wants to move to isnt being occupied by another player
 
 }
