@@ -153,7 +153,7 @@ public class Gameboard2 implements Serializable {
             }
         }
     }
-   
+
     /**
      * Reads file and determines start location for all players
      * Then sets each player's start
@@ -178,7 +178,7 @@ public class Gameboard2 implements Serializable {
             players.get(j).setStart(startCoords[j]);
         }
     }
-    
+
 
     /**
      * Takes in a string value of tiletype and outputs object
