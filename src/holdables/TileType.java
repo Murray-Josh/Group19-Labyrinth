@@ -1,5 +1,7 @@
 package holdables;
 
+import javafx.scene.image.Image;
+
 /**
  * Outline for a Holdables.TileType, which specifies the directions the player can go.
  *

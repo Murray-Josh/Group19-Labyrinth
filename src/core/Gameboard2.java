@@ -2,12 +2,13 @@ package core;
 
 import holdables.*;
 import players.Player;
+import styles.CarStyle;
+import styles.PirateStyle;
 import styles.Style;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Random;
 
@@ -40,6 +41,7 @@ public class Gameboard2 implements Serializable {
 
     public Gameboard2(String fileName) {
         Scanner in;
+        style = new PirateStyle() ;
         try {
             File file = new File(fileName);
             in = new Scanner(file);
@@ -293,6 +295,10 @@ public class Gameboard2 implements Serializable {
 
     public Tile getTile(int x, int y) {
         return board[x][y];
+    }
+
+    public void setTile(Tile tile, int x, int y) {
+        board[x][y] = tile;
     }
     
     /**

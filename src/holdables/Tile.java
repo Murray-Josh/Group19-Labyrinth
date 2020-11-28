@@ -1,6 +1,8 @@
 package holdables;
 
 import core.Coordinate;
+import javafx.scene.image.Image;
+import styles.CarStyle;
 import styles.Style;
 
 import java.io.Serializable;
@@ -184,6 +186,21 @@ public class Tile extends Holdable implements Serializable {
      */
     public void setOnFire(boolean onFire) {
         this.onFire = onFire;
+    }
+
+    public Image getImage(){
+        //String thisStyle = getStyle().toString();
+
+        switch (this.getType().toString()) {
+            case "holdables.CornerTile":
+                return Style.getCornerTile();
+            case "holdables.JunctionTile":
+                return Style.getJunctionTile();
+            case "holdables.StraightTile":
+                return Style.getStraightTile();
+            default:
+                return null;
+        }
     }
 
 
