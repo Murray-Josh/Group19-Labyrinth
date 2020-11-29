@@ -14,11 +14,11 @@ import java.io.Serializable;
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
-    private TileType type;
-    private Style style;
-    private double angle;
-    private boolean fixed;
-    private boolean onFire;
+    private TileType   type;
+    private Style      style;
+    private double     angle;
+    private boolean    fixed;
+    private boolean    onFire;
 
     /**
      * Constructs a new Holdables.Tile.
@@ -40,10 +40,10 @@ public class Tile implements Serializable, Holdable {
     /**
      * Constructs a new Holdables.Tile.
      *
-     * @param type       Holdables.Tile's Holdables.TileType
-     * @param style      Holdables.Tile's Styles.Style
-     * @param angle      Holdables.Tile's Angle of rotation
-     * @param fixed      If the is fixed or not
+     * @param type  Holdables.Tile's Holdables.TileType
+     * @param style Holdables.Tile's Styles.Style
+     * @param angle Holdables.Tile's Angle of rotation
+     * @param fixed If the is fixed or not
      */
     public Tile(TileType type, Style style, double angle, boolean fixed) {
         setType(type);
@@ -99,24 +99,6 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
-     * Gets the tile's Holdables.TileType
-     *
-     * @return Holdables.TileType of tile
-     */
-    public TileType getType() {
-        return this.type;
-    }
-
-    /**
-     * Sets the Holdables.TileType
-     *
-     * @param type New Holdables.TileType
-     */
-    public void setType(TileType type) {
-        this.type = type;
-    }
-
-    /**
      * Gets the tile's Styles.Style
      *
      * @return Styles.Style of tile
@@ -152,6 +134,66 @@ public class Tile implements Serializable, Holdable {
         this.angle = angle;
     }
 
+    public Image getImage() {
+        switch (this.getType()) {
+            case CORNER:
+                if (isOnFire()) {
+                    return Style.getCornerFire();
+                } else if (isFixed()) {
+                    return Style.getCornerIce();
+                } else {
+                    return Style.getCornerTile();
+                }
+            case JUNCTION:
+                if (isOnFire()) {
+                    return Style.getJunctionFire();
+                } else if (isFixed()) {
+                    return Style.getJunctionIce();
+                } else {
+                    return Style.getJunctionTile();
+                }
+            case STRAIGHT:
+                if (isOnFire()) {
+                    return Style.getStraightFire();
+                } else if (isFixed()) {
+                    return Style.getStraightIce();
+                } else {
+                    return Style.getStraightTile();
+                }
+            case GOAL:
+                return Style.getGoalTile();
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Gets the tile's Holdables.TileType
+     *
+     * @return Holdables.TileType of tile
+     */
+    public TileType getType() {
+        return this.type;
+    }
+
+    /**
+     * Sets the Holdables.TileType
+     *
+     * @param type New Holdables.TileType
+     */
+    public void setType(TileType type) {
+        this.type = type;
+    }
+
+    /**
+     * Gets if the tile is on fire
+     *
+     * @return Fixed value of tile
+     */
+    public boolean isOnFire() {
+        return this.onFire;
+    }
+
     /**
      * Gets if the tile is fixed
      *
@@ -171,70 +213,12 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
-     * Gets if the tile is on fire
-     *
-     * @return Fixed value of tile
-     */
-    public boolean isOnFire() {
-        return this.onFire;
-    }
-
-    /**
      * Sets the tiles onFire value
      *
      * @param onFire Whether or not the tile is on fire
      */
     public void setOnFire(boolean onFire) {
         this.onFire = onFire;
-    }
-
-    public Image getImage(){
-        //String thisStyle = getStyle().toString();
-
-        switch (this.getType().toString()) {
-            case "CORNER":
-                if (isOnFire()){
-                    return Style.getCornerFire();
-                }
-                else if (isFixed()){
-                    return Style.getCornerIce();
-                }
-                else {
-                    return Style.getCornerTile();
-                }
-            case "JUNCTION":
-                if (isOnFire()){
-                    return Style.getJunctionFire();
-                }
-                else if (isFixed()){
-                    return Style.getJunctionIce();
-                }
-                else {
-                    return Style.getJunctionTile();
-                }
-            case "STRAIGHT":
-                if (isOnFire()){
-                    return Style.getStraightFire();
-                }
-                else if (isFixed()){
-                    return Style.getStraightIce();
-                }
-                else {
-                    return Style.getStraightTile();
-                }
-            case "GOAL":
-                if (isOnFire()){
-                    return Style.getGoalTile();
-                }
-                else if (isFixed()){
-                    return Style.getGoalTile();
-                }
-                else {
-                    return Style.getGoalTile();
-                }
-            default:
-                return null;
-        }
     }
 
 

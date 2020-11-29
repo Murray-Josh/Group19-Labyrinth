@@ -58,7 +58,7 @@ public enum Title {
     /**
      * Converts TITLE type to string
      *
-     * @return
+     * @return Title as a string
      */
     @Override
     public String toString() {

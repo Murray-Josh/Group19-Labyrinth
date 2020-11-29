@@ -15,9 +15,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Controls all operations on the {@link Stage}
+ *
+ * @author Joseph Omar
+ * @version 2.0
+ */
 public class StageController {
-    private static Stage stage;
-    private static Scene previousScene;
+    private static Stage  stage;
+    private static Scene  previousScene;
     private static String previousTitle;
 
     /**
@@ -28,29 +34,11 @@ public class StageController {
     }
 
     /**
-     * Changes the scene to a specified Window
-     *
-     * @param window {@link Window} to open
-     */
-    public static void changeScene(Window window) {
-        Scene scene = null;
-        try {
-            Parent root = FXMLLoader.load(StageController.class.getResource(window.getPath()));
-            scene = new Scene(root);
-            setNewScene(scene, window.getTitle());
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Sets the scene on the stage to the specified scene
      *
      * @param scene New scene to be shown
      * @param title Title of the window, as string
+     *
      * @throws IllegalStateException If the scene parameter is null
      */
     private static void setNewScene(Scene scene, String title) {
@@ -83,24 +71,6 @@ public class StageController {
     }
 
     /**
-     * Displays an Error Dialog containing the passed strings
-     *
-     * @param error {@link ErrorMsg} template to use
-     * @param quit  Whether to quit the application
-     * @parm title The title to use (member of {@link Title})
-     */
-    public static void showError(ErrorMsg error, Title title, boolean quit) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(), ButtonType.OK);
-        alert.setTitle(title.toString());
-        alert.setHeaderText(error.getHeader());
-        alert.getDialogPane().getStylesheets().add("/resources/css/dialog.css");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (quit && result.get() == ButtonType.OK) {
-            System.exit(0);
-        }
-    }
-
-    /**
      * Opens the main menu on startup
      *
      * @param primaryStage
@@ -117,5 +87,43 @@ public class StageController {
         stage.getIcons().add(new Image(StageController.class.getResourceAsStream("/resources/menu/Gun_Raccoon.png")));
         changeScene(Window.HOME);
         stage.setOnCloseRequest(e -> Platform.exit());
+    }
+
+    /**
+     * Changes the scene to a specified Window
+     *
+     * @param window {@link Window} to open
+     */
+    public static void changeScene(Window window) {
+        Scene scene = null;
+        try {
+            Parent root = FXMLLoader.load(StageController.class.getResource(window.getPath()));
+            scene = new Scene(root);
+            setNewScene(scene, window.getTitle());
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Displays an Error Dialog containing the passed strings
+     *
+     * @param error {@link ErrorMsg} template to use
+     * @param quit  Whether to quit the application
+     *
+     * @parm title The title to use (member of {@link Title})
+     */
+    public static void showError(ErrorMsg error, Title title, boolean quit) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(), ButtonType.OK);
+        alert.setTitle(title.toString());
+        alert.setHeaderText(error.getHeader());
+        alert.getDialogPane().getStylesheets().add("/resources/css/dialog.css");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (quit && result.get() == ButtonType.OK) {
+            System.exit(0);
+        }
     }
 }

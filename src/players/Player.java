@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Player implements Serializable {
-    private static ArrayList<Holdable> hand;
-    private PlayerProfile profile;
-    private ArrayList<Coordinate> coordinateArray;
-    private Style style;
-    private int playerNum;
-    private int currentDirection;
-    private PlayerEffect activeEffect;
+    private static ArrayList<Holdable>   hand;
+    private        PlayerProfile         profile;
+    private        ArrayList<Coordinate> coordinateArray;
+    private        Style                 style;
+    private        int                   playerNum;
+    private        int                   currentDirection;
+    private        PlayerEffect          activeEffect;
 
     /**
      * Constructor for a player
@@ -37,6 +37,25 @@ public class Player implements Serializable {
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(0);
+    }
+
+    /**
+     * Sets the player's initial position
+     *
+     * @param coord
+     */
+    public void setStart(Coordinate coord) {
+        coordinateArray = new ArrayList<>();
+        coordinateArray.add(coord);
+    }
+
+    /**
+     * Sets the style
+     *
+     * @param style Styles.Style of player piece
+     */
+    public void setStyle(Style style) {
+        this.style = style;
     }
 
     /**
@@ -84,15 +103,6 @@ public class Player implements Serializable {
     public void setCoordinate(Coordinate coord, int i) {
         coordinateArray.set(i, coord);
     }
-    
-     /**
-     * Sets the player's initial position
-     * @param coord
-     */
-    public void setStart(Coordinate coord) {
-        coordinateArray = new ArrayList<>();
-        coordinateArray.add(coord);
-    }
 
     /**
      * Gets the current card hand of player
@@ -110,15 +120,6 @@ public class Player implements Serializable {
      */
     private void setHand(ArrayList<Holdable> hand) {
         Player.hand = hand;
-    }
-
-    /**
-     * Sets the style
-     *
-     * @param style Styles.Style of player piece
-     */
-    public void setStyle(Style style) {
-        this.style = style;
     }
 
     /**

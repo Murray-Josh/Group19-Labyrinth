@@ -1,8 +1,13 @@
 package holdables;
 
-import players.Player;
-
+/**
+ * Defines the Effect types
+ *
+ * @author Joseph Omar
+ * @version 3.0
+ */
 public interface Effect extends Holdable {
 
-    static void apply() {}
+    static void apply() {
+    }
 }

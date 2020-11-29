@@ -14,7 +14,7 @@ public enum Window {
 
 
     private final String PATH;
-    private final Title TITLE;
+    private final Title  TITLE;
 
     /**
      * Constructor for a window

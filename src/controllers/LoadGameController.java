@@ -18,7 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import static controllers.StageController.*;
+
+import static controllers.StageController.home;
+import static controllers.StageController.showError;
 
 /**
  * Controls and handles the LoadGame scene
@@ -27,32 +29,25 @@ import static controllers.StageController.*;
  * @version 1.0
  */
 public class LoadGameController implements Initializable {
-    private static final Title title = Title.SAVE;
+    private static final Title          title = Title.SAVE;
     @FXML
-    private Button cmdRefresh;
+    private              Button         cmdRefresh;
     @FXML
-    private Button cmdLoad;
+    private              Button         cmdLoad;
     @FXML
-    private Button cmdCancel;
+    private              Button         cmdCancel;
     @FXML
-    private ListView<File> lstSaves;
+    private              ListView<File> lstSaves;
 
     private File selected;
 
-
-
     /**
-     * Finds all the files in the save folder that have the extension .labyrinth and adds them to a list
+     * refreshes the list content
      *
-     * @return List of save files
+     * @param actionEvent
      */
-    private List<File> getSaves() {
-        File dir = new File("/../saves");
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        File[] dirFilteredContents = dir.listFiles((dir1, name) -> name.endsWith(".labyrinth"));
-        return Arrays.asList(Objects.requireNonNull(dirFilteredContents));
+    public void cmdRefreshClick(ActionEvent actionEvent) {
+        setListData();
     }
 
     /**
@@ -64,14 +59,18 @@ public class LoadGameController implements Initializable {
     }
 
     /**
-     * refreshes the list content
+     * Finds all the files in the save folder that have the extension .labyrinth and adds them to a list
      *
-     * @param actionEvent
+     * @return List of save files
      */
-    public void cmdRefreshClick(ActionEvent actionEvent) {
-        setListData();
+    private List<File> getSaves() {
+        File dir = new File("/../saves");
+        if (! dir.exists()) {
+            dir.mkdir();
+        }
+        File[] dirFilteredContents = dir.listFiles((dir1, name) -> name.endsWith(".labyrinth"));
+        return Arrays.asList(Objects.requireNonNull(dirFilteredContents));
     }
-
 
     /**
      * Handles the event that occurs when a list item is selected
@@ -83,7 +82,8 @@ public class LoadGameController implements Initializable {
     }
 
     /**
-     * Handles the event that occurs when load game is clicked. It checks if an item is selected and if it is, sends the selected save file to the Logic class
+     * Handles the event that occurs when load game is clicked. It checks if an item is selected and if it is, sends the
+     * selected save file to the Logic class
      *
      * @param actionEvent
      */

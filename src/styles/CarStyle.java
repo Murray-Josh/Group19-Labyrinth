@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Gives the Images for the CarStyles.Style
  *
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
- * @version 3.0
+ * @version 3.5
  */
 public class CarStyle extends Style implements Serializable {
     static {
@@ -33,8 +33,7 @@ public class CarStyle extends Style implements Serializable {
      * Gets each images and assigns them to the style class
      */
     public CarStyle() {
-        super(PLAYER_ONE,PLAYER_TWO,PLAYER_THREE,PLAYER_FOUR,STRAIGHT_TILE,STRAIGHT_FIRE,
-                STRAIGHT_ICE,CORNER_TILE,CORNER_FIRE,CORNER_ICE,JUNCTION_TILE,JUNCTION_FIRE,
-                JUNCTION_ICE,GOAL_TILE,GAMEBOARD);
+        super(PLAYER_ONE, PLAYER_TWO, PLAYER_THREE, PLAYER_FOUR, STRAIGHT_TILE, STRAIGHT_FIRE, STRAIGHT_ICE,
+                CORNER_TILE, CORNER_FIRE, CORNER_ICE, JUNCTION_TILE, JUNCTION_FIRE, JUNCTION_ICE, GOAL_TILE, GAMEBOARD);
     }
 }

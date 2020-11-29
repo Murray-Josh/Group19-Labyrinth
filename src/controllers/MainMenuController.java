@@ -12,55 +12,88 @@ import players.Profiles;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.*;
+import static controllers.StageController.changeScene;
 
+/**
+ * Controls the Main Menu {@link javafx.scene.Scene}
+ *
+ * @author Joseph Omar
+ * @version 2.1
+ */
 public class MainMenuController implements Initializable {
     @FXML
-    private Button cmdNew;
+    private Button    cmdNew;
     @FXML
-    private Button cmdLoad;
+    private Button    cmdLoad;
     @FXML
-    private Button cmdScoreboard;
+    private Button    cmdScoreboard;
     @FXML
-    private Button cmdMakeProfile;
+    private Button    cmdMakeProfile;
     @FXML
-    private Button cmdDeleteProfile;
+    private Button    cmdDeleteProfile;
     @FXML
-    private Button cmdQuit;
+    private Button    cmdQuit;
     @FXML
     private ImageView logo;
     @FXML
-    private Label msgDayMessage;
+    private Label     msgDayMessage;
 
-
-
+    /**
+     * Handles the Quit button click event
+     *
+     * @param mouseEvent
+     */
     public void quitClicked(MouseEvent mouseEvent) {
         System.exit(0);
     }
 
+    /**
+     * Handles the Delete Profile button click event
+     *
+     * @param mouseEvent
+     */
     public void cmdDeleteProfileClick(MouseEvent mouseEvent) {
         Profiles.showDelete();
     }
 
+    /**
+     * Handles the Create Profile button click event
+     *
+     * @param mouseEvent
+     */
     public void cmdCreateProfileClick(MouseEvent mouseEvent) {
         Profiles.showCreate();
     }
 
+    /**
+     * Handles the Scoreboard button click event
+     *
+     * @param mouseEvent
+     */
     public void cmdScoreboardClick(MouseEvent mouseEvent) {
         changeScene(Window.SCOREBOARD);
     }
 
+    /**
+     * Handles the Load button click event
+     *
+     * @param mouseEvent
+     */
     public void cmdLoadClick(MouseEvent mouseEvent) {
         changeScene(Window.LOAD);
     }
 
+    /**
+     * Handles the new game button click event
+     *
+     * @param mouseEvent
+     */
     public void cmdNewClick(MouseEvent mouseEvent) {
         changeScene(Window.SETUP);
     }
 
     /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
+     * Called to initialize a controller after its root element has been completely processed.
      *
      * @param location  The location used to resolve relative paths for the root object, or
      *                  <tt>null</tt> if the location is not known.
