@@ -99,7 +99,7 @@ public class PlayerMovement () {
     //   Tile nextMoveTile = null;
 
 
-//TODO gets current player position
+    //TODO gets current player position
     Tile currentTile = Gameboard.getTile(Player.getCoordinate().getX(),Player.getCoordinate().getY());
     //        (1,2)
     //  (0,1) (1,1) (2,1)
@@ -112,7 +112,7 @@ public class PlayerMovement () {
 
 //TODO check if tile is on fire
     if(nextMoveTile.isOnFire()){
-         //block user from e}else if (nextMoveTile.rotaion == 1 || ...){
+        //block user from e}else if (nextMoveTile.rotaion == 1 || ...){
         move there
     }
 
@@ -120,7 +120,7 @@ public class PlayerMovement () {
     //currentPlayerPosition
 
 
-//not really sure where this came from but shes here now
+    //not really sure where this came from but shes here now
     public Coordinate getCoordinate(int i) {
         return coordinateArray.get(i);
     }
@@ -139,11 +139,11 @@ public class PlayerMovement () {
         //block user from entering
     }else{
 
-        } if(nextMoveTile.rotation))
+    } if(nextMoveTile.rotation))
 
-    //    public Coordinate getCoordinate(int i) { return coordinateArray.get(i);  }
-        //    Boolean hasUserClickedTile = false;
-    while
+            //    public Coordinate getCoordinate(int i) { return coordinateArray.get(i);  }
+            //    Boolean hasUserClickedTile = false;
+            while
 
 
 
