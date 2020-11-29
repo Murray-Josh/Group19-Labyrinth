@@ -14,6 +14,13 @@ public abstract class TileType {
     protected static boolean EAST;
     protected static boolean WEST;
 
+    protected TileType(Boolean NORTH, Boolean SOUTH, Boolean EAST, Boolean WEST){
+        this.NORTH = NORTH;
+        this.SOUTH = SOUTH;
+        this.EAST = EAST;
+        this.WEST = WEST;
+    }
+
     /**
      * Gets an array of boolean which indicates the directions a player can go.
      *

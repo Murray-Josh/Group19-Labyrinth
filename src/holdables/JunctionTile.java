@@ -16,4 +16,8 @@ public class JunctionTile extends TileType {
         SOUTH = false;
         WEST = true;
     }
+    public JunctionTile(){
+        super(NORTH,EAST,SOUTH,WEST);
+    }
+
 }

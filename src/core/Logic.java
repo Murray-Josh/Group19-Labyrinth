@@ -6,6 +6,8 @@ public class Logic {
 
 
     public static void createGame(File selected) {
+        GameBoardTest gameBoardTest = new GameBoardTest();
+        //gameBoardTest.start();
     }
 
     public void StartGame() {

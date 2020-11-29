@@ -22,15 +22,14 @@ public class GameBoardTest extends Application {
     private Gameboard2 gameboardTest;
     private GridPane gridPane;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         gameboardTest = new Gameboard2("src/resources/file/GameboardOne");
         gridPane = new GridPane();
+        redraw();
 
-        CarStyle c = new CarStyle();
         primaryStage.setTitle("Game Board Test");
-        Image startImage = c.getCornerFire();
-        Image fixedImage = c.getJunctionIce();
 
         for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
             addButtonY(gridPane, gameboardTest.getSize()[0] + 1, y);
@@ -39,31 +38,6 @@ public class GameBoardTest extends Application {
             addButtonX(gridPane, x, gameboardTest.getSize()[1] + 1);
 
         }
-        for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
-
-            for (int x = 0; x < gameboardTest.getSize()[0]; x++) {
-                System.out.println(gameboardTest.getTile(x, y).getAngle());
-
-                ImageView iv1 = new ImageView();
-
-                if (gameboardTest.isStart(gameboardTest.getTile(x, y).getCoordinate().getX(), gameboardTest.getTile(x, y).getCoordinate().getY())) {
-                    iv1.setImage(startImage);
-                } else if (gameboardTest.getTile(x, y).isFixed()) {
-                    iv1.setImage(fixedImage);
-                } else {
-                    iv1.setImage(gameboardTest.getTile(x, y).getImage());
-                }
-
-                iv1.setFitHeight(100);
-                iv1.setFitWidth(100);
-                iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
-                gridPane.add(iv1, x, y);
-
-            }
-        }
-        System.out.println(gridPane.getChildren().get(1));
-
-
         Scene scene = new Scene(gridPane, 1280, 720);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -98,10 +72,10 @@ public class GameBoardTest extends Application {
         Button button = new Button();
         button.setOnMouseClicked(e -> {
             System.out.printf("Clicked on [%d, %d]%n", colIndex, rowIndex);
+
             tileMove(new Tile(new CornerTile(), gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
             redraw();
         });
-
         grid.add(button, colIndex, rowIndex);
     }
 
@@ -118,6 +92,7 @@ public class GameBoardTest extends Application {
 
         if (rowOrColumn.equals("Column")) {
             Tile newTile = tile;
+
             for (int y = 0; y < gameboard.getSize()[0]; y++) {
                 Tile tempTile = gameboard.getTile(num, y);
                 newTile.setCoordinate(new Coordinate(num, y));
@@ -155,28 +130,13 @@ public class GameBoardTest extends Application {
                 } else if (gameboardTest.getTile(x, y).isFixed()) {
                     iv1.setImage(fixedImage);
                 } else {
-                    //iv1.setImage(CarStyle.getCornerTile());
-
-                    switch (gameboardTest.getTile(x, y).getType().toString()) {
-                        case "holdables.CornerTile":
-                            iv1.setImage(CarStyle.getCornerTile());
-                            break;
-                        case "holdables.JunctionTile":
-                            iv1.setImage(CarStyle.getJunctionTile());
-                            break;
-
-                        case "holdables.StraightTile":
-                            iv1.setImage(CarStyle.getStraightTile());
-                            break;
-                    }
+                    iv1.setImage(gameboardTest.getTile(x, y).getImage());
                 }
-
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
-                gridPane.add(iv1, x, y);
-                //addPane(gridPane, x, y);
 
+                gridPane.add(iv1, x, y);
             }
         }
     }

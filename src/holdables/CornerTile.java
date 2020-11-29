@@ -16,4 +16,7 @@ public class CornerTile extends TileType {
         SOUTH = false;
         WEST = false;
     }
+    public CornerTile(){
+        super(NORTH,EAST,SOUTH,WEST);
+    }
 }
