@@ -68,7 +68,7 @@
 .table-view .column-header .label{
    -fx-text-fill: white;
    -fx-font-weight: bold; 
-   -fx-font-size: 18px
+   -fx-font-size: 18px;
    -fx-font-family:roboto light;
 }
 
@@ -95,10 +95,10 @@
     -fx-padding: 2;
 }
 .table-view .virtual-flow .scroll-bar:vertical .thumb{
-    -fx-background-color: #384E92
+    -fx-background-color: #384E92;
 }
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:transparent
+    -fx-background-color:transparent;
 }
 .button-bar {
 	-fx-background-color: #2C2C3E;
@@ -107,46 +107,47 @@
 
 .combo-box {
     -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
-     	 	-fx-border-color: #221B3C;
+	-fx-border-color: #221B3C;
+	-fx-text-fill: WHITE;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
 }
 
-.combo-box .list-cell {
+.combo-box-base {
     -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+	-fx-border-color: #221B3C;
+	-fx-text-fill: WHITE;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
 }
 
-.combo-box-popup .list-view {
-    -fx-background-color: #2C2C3E;
-     	-fx-border-color: #221B3C;
-     	 	-fx-font-family: roboto light;
-         	-fx-font-size: 13px;
-         	-fx-text-fill: white;
-}
-
-.combo-box-popup .list-view .list-cell {
-    -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
-}
-
-.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
-{
+.combo-box: hover {
     -fx-background-color: #384E92;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
 }
 
-.combo-box-popup .list-view .list-cell:filled:hover
-{
-    -fx-background-color: #384E92;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+.combo-box .list-view {
+    -fx-background-color: #2C2C3E;
+	-fx-border-color: #221B3C;
+	-fx-text-fill: WHITE;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
 }
+
+.combo-box .list-view .list-cell {
+    -fx-background-color: #2C2C3E;
+	-fx-border-color: transparent;
+	-fx-text-fill: WHITE;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
+}
+
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color: #384E92;
+	-fx-border-color: transparent;
+	-fx-text-fill: WHITE;
+	-fx-font-family: roboto light;
+	-fx-font-size: 14px;
+}
+
+.combo-box
+

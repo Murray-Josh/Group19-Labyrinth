@@ -115,6 +115,7 @@ public class Profiles {
         dialog.setContentText(null);
         dialog.setTitle(Title.DELETE_PROFILE.toString());
         dialog.getDialogPane().getStylesheets().add("./resources/css/dialog.css");
+
         dialog.getItems().addAll(profiles);
         Optional<PlayerProfile> result = dialog.showAndWait();
         if (result.isPresent()) {

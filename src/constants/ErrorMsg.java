@@ -17,7 +17,10 @@ public enum ErrorMsg {
     SAVE_READ_ERROR("The savegame selected could not be parsed\n", "Savegame Parse Error"),
     SAVE_LOAD_ERROR("The savegame selected could not be loaded\n", "Savegame Load Error"),
     SAVE_FILE_NOT_FOUND("The savegame selected could not be found\n", "Savegame File Path Error"),
-    SAVE_NOT_SELECTED("You have not selected a save file to load\n", "No Savegame Selected");
+    SAVE_NOT_SELECTED("You have not selected a save file to load\n", "No Savegame Selected"),
+    PROFILE_NOT_SELECTED("You need to select at least two profiles", "Not Enough Profiles Selected"),
+    PROFILE_NOT_VALID("You must select a profile", "Selected Profile Not Valid");
+
 
     private final String MESSAGE;
     private final String HEADER;
