@@ -4,6 +4,9 @@ import com.sun.media.jfxmedia.events.PlayerEvent;
 import com.sun.media.jfxmedia.events.PlayerStateEvent;
 import core.Coordinate;
 import players.Player;
+import styles.CarStyle;
+import styles.Style;
+import java.awt.event.KeyEvent;
 
 /**
  * Moves the players
@@ -13,8 +16,77 @@ import players.Player;
  */
 
 public class PlayerMovement () {
-    Tile nextMoveTile = null;
 
+    private int dx;
+    private int dy;
+    private int x;
+    private int y;
+
+
+
+
+//TODO load in image??
+
+    private void loadPlayer() {
+        Style.getPlayerImage();
+    }
+
+
+
+
+
+
+//could just if player presses up, check if that tile is accessible or not instead of checking all possible options - might be a lot faster
+
+    public void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            dx = -2;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            dx = 2;
+        }
+
+        if (key == KeyEvent.VK_UP) {
+            dy = -2;
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            dy = 2;
+        }
+    }
+
+
+    public void move() {
+        x += dx;
+        y += dy;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //   Tile nextMoveTile = null;
 
 
 //TODO gets current player position
@@ -52,7 +124,7 @@ public class PlayerMovement () {
 
 
 
-//TODO check if surrounding tiles are accessible from current tile
+//TODO check if surrounding tiles are accessible from current tile - there is a method that does this in tileType
     if(nextMoveTile()){
         //block user from entering
     }else{
@@ -72,6 +144,5 @@ public class PlayerMovement () {
 //TODO check if tile player wants to move to isn´t being occupied by another player
 
 
-//could just if player presses up, check if that tile is accessible or not instead of checking all possible options - might be a lot faster
 
 }
