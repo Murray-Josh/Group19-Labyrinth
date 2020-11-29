@@ -191,18 +191,18 @@ public class Gameboard2 implements Serializable {
 
         switch (tileTypeString) {
             case "corner":
-                tileTypeObject = new CornerTile();
+                tileTypeObject = TileType.CORNER;
                 break;
             case "junction":
-                tileTypeObject = new JunctionTile();
+                tileTypeObject = TileType.JUNCTION;
                 break;
 
             case "straight":
-                tileTypeObject = new StraightTile();
+                tileTypeObject = TileType.STRAIGHT;
                 break;
 
             case "goal":
-                tileTypeObject = new GoalTile();
+                tileTypeObject = TileType.GOAL;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);

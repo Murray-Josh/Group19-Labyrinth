@@ -1,7 +1,7 @@
 package core;
 
-import holdables.CornerTile;
 import holdables.Tile;
+import holdables.TileType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -58,7 +58,7 @@ public class GameBoardTest extends Application {
         button.setText("Row: " + rowIndex);
         button.setOnMouseClicked(e -> {
             System.out.printf("Clicked on [%d, %d]%n", colIndex, rowIndex);
-            tileMove(new Tile(new CornerTile(), gameboardTest.getStyle(), 90, false), gameboardTest, "Row", rowIndex);
+            tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Row", rowIndex);
             redraw();
         });
         grid.add(button, colIndex, rowIndex);
@@ -75,7 +75,7 @@ public class GameBoardTest extends Application {
         Button button = new Button();
         button.setText("Column: " + colIndex);
         button.setOnMouseClicked(e -> {
-            tileMove(new Tile(new CornerTile(), gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
+            tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
             redraw();
         });
         grid.add(button, colIndex, rowIndex);
@@ -137,7 +137,7 @@ public class GameBoardTest extends Application {
     public void redraw() {
         CarStyle c = new CarStyle();
         Image startImage = c.getCornerFire();
-        Image fixedImage = c.getJunctionIce();
+        //Image fixedImage = c.getJunctionIce();
         for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
 
             for (int x = 0; x < gameboardTest.getSize()[0]; x++) {
@@ -154,7 +154,9 @@ public class GameBoardTest extends Application {
                      */
                 } else {
                     iv1.setImage(gameboardTest.getTile(x, y).getImage());
+
                 }
+                System.out.println(gameboardTest.getTile(x,y).getType());
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());

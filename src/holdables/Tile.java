@@ -192,12 +192,46 @@ public class Tile implements Serializable, Holdable {
         //String thisStyle = getStyle().toString();
 
         switch (this.getType().toString()) {
-            case "holdables.CornerTile":
-                return Style.getCornerTile();
-            case "holdables.JunctionTile":
-                return Style.getJunctionTile();
-            case "holdables.StraightTile":
-                return Style.getStraightTile();
+            case "CORNER":
+                if (isOnFire()){
+                    return Style.getCornerFire();
+                }
+                else if (isFixed()){
+                    return Style.getCornerIce();
+                }
+                else {
+                    return Style.getCornerTile();
+                }
+            case "JUNCTION":
+                if (isOnFire()){
+                    return Style.getJunctionFire();
+                }
+                else if (isFixed()){
+                    return Style.getJunctionIce();
+                }
+                else {
+                    return Style.getJunctionTile();
+                }
+            case "STRAIGHT":
+                if (isOnFire()){
+                    return Style.getStraightFire();
+                }
+                else if (isFixed()){
+                    return Style.getStraightIce();
+                }
+                else {
+                    return Style.getStraightTile();
+                }
+            case "GOAL":
+                if (isOnFire()){
+                    return Style.getGoalTile();
+                }
+                else if (isFixed()){
+                    return Style.getGoalTile();
+                }
+                else {
+                    return Style.getGoalTile();
+                }
             default:
                 return null;
         }
