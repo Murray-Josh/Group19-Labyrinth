@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import styles.CarStyle;
 
@@ -38,6 +39,8 @@ public class GameBoardTest extends Application {
             addButtonX(gridPane, x, gameboardTest.getSize()[1] + 1);
 
         }
+
+
         Scene scene = new Scene(gridPane, 1280, 720);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -52,12 +55,12 @@ public class GameBoardTest extends Application {
      */
     private void addButtonY(GridPane grid, int colIndex, int rowIndex) {
         Button button = new Button();
+        button.setText("Row: " + rowIndex);
         button.setOnMouseClicked(e -> {
             System.out.printf("Clicked on [%d, %d]%n", colIndex, rowIndex);
             tileMove(new Tile(new CornerTile(), gameboardTest.getStyle(), 90, false), gameboardTest, "Row", rowIndex);
             redraw();
         });
-
         grid.add(button, colIndex, rowIndex);
     }
 
@@ -70,13 +73,29 @@ public class GameBoardTest extends Application {
      */
     private void addButtonX(GridPane grid, int colIndex, int rowIndex) {
         Button button = new Button();
+        button.setText("Column: " + colIndex);
         button.setOnMouseClicked(e -> {
-            System.out.printf("Clicked on [%d, %d]%n", colIndex, rowIndex);
-
             tileMove(new Tile(new CornerTile(), gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
             redraw();
         });
         grid.add(button, colIndex, rowIndex);
+    }
+
+
+    private void addPane(GridPane grid, int colIndex, int rowIndex) {
+        Pane pane = new Pane();
+        pane.setOnMouseClicked(e -> {
+            System.out.println("Clicked on [" + colIndex + "," + rowIndex + "]");
+
+            Tile effectSet = gameboardTest.getTile(colIndex, rowIndex);
+            effectSet.setOnFire();
+            gameboardTest.setTile(effectSet, colIndex, rowIndex);
+            redraw();
+
+
+        });
+        grid.add(pane, colIndex, rowIndex);
+
     }
 
     /**
@@ -125,10 +144,14 @@ public class GameBoardTest extends Application {
 
                 ImageView iv1 = new ImageView();
 
+
                 if (gameboardTest.isStart(gameboardTest.getTile(x, y).getCoordinate().getX(), gameboardTest.getTile(x, y).getCoordinate().getY())) {
                     iv1.setImage(startImage);
+                    /*
                 } else if (gameboardTest.getTile(x, y).isFixed()) {
                     iv1.setImage(fixedImage);
+
+                     */
                 } else {
                     iv1.setImage(gameboardTest.getTile(x, y).getImage());
                 }
@@ -137,6 +160,8 @@ public class GameBoardTest extends Application {
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
 
                 gridPane.add(iv1, x, y);
+                addPane(gridPane, x, y);
+
             }
         }
     }

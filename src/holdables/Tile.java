@@ -1,7 +1,9 @@
 package holdables;
 
 import core.Coordinate;
-import styles.shit.Style1;
+import javafx.scene.image.Image;
+import styles.CarStyle;
+import styles.Style;
 
 import java.io.Serializable;
 
@@ -13,7 +15,7 @@ import java.io.Serializable;
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
     private TileType type;
-    private Style1 style;
+    private Style style;
     private double angle;
     private boolean fixed;
     private boolean onFire;
@@ -27,7 +29,7 @@ public class Tile implements Serializable, Holdable {
      * @param angle      Holdables.Tile's Angle of rotation
      * @param fixed      If the is fixed or not
      */
-    public Tile(Coordinate coordinate, TileType type, Style1 style, double angle, boolean fixed) {
+    public Tile(Coordinate coordinate, TileType type, Style style, double angle, boolean fixed) {
         setCoordinate(coordinate);
         setType(type);
         setStyle(style);
@@ -43,7 +45,7 @@ public class Tile implements Serializable, Holdable {
      * @param angle      Holdables.Tile's Angle of rotation
      * @param fixed      If the is fixed or not
      */
-    public Tile(TileType type, Style1 style, double angle, boolean fixed) {
+    public Tile(TileType type, Style style, double angle, boolean fixed) {
         setType(type);
         setStyle(style);
         setAngle(angle);
@@ -119,7 +121,7 @@ public class Tile implements Serializable, Holdable {
      *
      * @return Styles.Style of tile
      */
-    public Style1 getStyle() {
+    public Style getStyle() {
         return this.style;
     }
 
@@ -128,7 +130,7 @@ public class Tile implements Serializable, Holdable {
      *
      * @param style New Styles.Style
      */
-    public void setStyle(Style1 style) {
+    public void setStyle(Style style) {
         this.style = style;
     }
 
@@ -186,6 +188,20 @@ public class Tile implements Serializable, Holdable {
         this.onFire = onFire;
     }
 
+    public Image getImage(){
+        //String thisStyle = getStyle().toString();
+
+        switch (this.getType().toString()) {
+            case "holdables.CornerTile":
+                return Style.getCornerTile();
+            case "holdables.JunctionTile":
+                return Style.getJunctionTile();
+            case "holdables.StraightTile":
+                return Style.getStraightTile();
+            default:
+                return null;
+        }
+    }
 
 
 }
