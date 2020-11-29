@@ -7,9 +7,9 @@ package constants;
  * @version 1.0
  */
 public enum Window {
-    HOME("/fxml/MainMenu.fxml", Title.MAIN),
-    LOAD("/fxml/LoadGame.fxml", Title.LOAD),
-    SCOREBOARD("/fxml/Scoreboard.fxml", Title.SCOREBOARD),
+    HOME("../resources/fxml/MainMenu.fxml", Title.MAIN),
+    LOAD("../resources/fxml/LoadGame.fxml", Title.LOAD),
+    SCOREBOARD("../resources/fxml/Scoreboard.fxml", Title.SCOREBOARD),
     SETUP("SetUpGame.fxml", Title.SETUP);
 
 
