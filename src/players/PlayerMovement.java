@@ -6,6 +6,7 @@ import core.Coordinate;
 import players.Player;
 import styles.CarStyle;
 import styles.Style;
+import holdables.Tile;
 import java.awt.event.KeyEvent;
 
 /**
@@ -44,19 +45,19 @@ public class PlayerMovement () {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT && tileAccess() == true){
+        if (key == KeyEvent.VK_LEFT && tileAccessable() == true){
             dx = -1;
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT && tileAccessable() == true) {
             dx = 1;
         }
 
-        if (key == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP && tileAccessable() == true) {
             dy = -1;
         }
 
-        if (key == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_DOWN && tileAccessable() == true) {
             dy = 1;
         }
     }
@@ -75,11 +76,11 @@ public class PlayerMovement () {
         return y;
     }
 
-    private boolean tileAccess(){
-        if (tilesAlign){
+    private boolean tileAccessable(){
+        if (tilesAlign && Tile.isOnFire() == false){
             return true;
-        } else if{
-
+        } else {
+            return false;
         }
     }
 
