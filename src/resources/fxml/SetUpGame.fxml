@@ -7,7 +7,7 @@
 
 <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="428.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SetUpGameController">
     <children>
-      <VBox prefHeight="507.0" prefWidth="426.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="507.0" prefWidth="426.0" styleClass="hbox" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="108.0" fitWidth="398.0" pickOnBounds="true" smooth="false">
                <image>
@@ -133,7 +133,7 @@
             </HBox>
          </children>
       </VBox>
-        <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: #221B3C;" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <buttons>
                 <Button fx:id="cmdStart" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdStartClick" text="Start" />
                 <Button fx:id="cmdBack" cancelButton="true" mnemonicParsing="false" onAction="#cmdBackClick" text="Back" />

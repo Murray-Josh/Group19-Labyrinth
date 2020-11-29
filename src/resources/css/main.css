@@ -105,49 +105,36 @@
 	-fx-border-color: #221B3C;
 }
 
-.combo-box {
-    -fx-background-color: #2C2C3E;
-	-fx-border-color: #221B3C;
-	-fx-text-fill: WHITE;
+// Background color of the whole context menu
+.choice-box .context-menu { -fx-background-color: #2C2C3E;; }
+// Focused item background color in the list
+.choice-box .menu-item:focused { -fx-background-color: #384E92; }
+// Text color of non-focused items in the list
+.choice-box .menu-item > .label { 
+-fx-text-fill: WHITE;
 	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
-}
-
-.combo-box-base {
-    -fx-background-color: #2C2C3E;
-	-fx-border-color: #221B3C;
-	-fx-text-fill: WHITE;
+	-fx-font-size: 14px; }
+// Text color of focused item in the list
+.choice-box .menu-item:focused > .label { -fx-text-fill: WHITE;
 	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
+	-fx-font-size: 14px; }
+	
+.choice-box {
+	    -fx-background-color: #2C2C3E;
+     	-fx-border-color: #221B3C;
+     	 	-fx-font-family: roboto light;
+         	-fx-font-size: 13px;
+         	-fx-text-fill: white;
+			-fx-mark-color: white;
 }
 
-.combo-box: hover {
-    -fx-background-color: #384E92;
+.choice-box:disabled, .combo-box-base:disabled {
+	-fx-opacity: 1.0;
+}
+.choicebox > .label:disabled {
+	-fx-opacity: 1.0;
 }
 
-.combo-box .list-view {
-    -fx-background-color: #2C2C3E;
-	-fx-border-color: #221B3C;
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
+.label:disabled {
+	-fx-opacity: 1.0;
 }
-
-.combo-box .list-view .list-cell {
-    -fx-background-color: #2C2C3E;
-	-fx-border-color: transparent;
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
-}
-
-.combo-box .list-view .list-cell:hover {
-    -fx-background-color: #384E92;
-	-fx-border-color: transparent;
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
-}
-
-.combo-box
-

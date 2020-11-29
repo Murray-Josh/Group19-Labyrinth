@@ -1,46 +1,33 @@
 package holdables;
 
-import javafx.scene.image.Image;
-
 /**
- * Outline for a Holdables.TileType, which specifies the directions the player can go.
- *
- * @author FungWah Westley & Joseph Omar
- * @version 2.0
+ * Defines the types of {@link Tile} that can be placed on the board. Also defines the directions a player can go on a tile when the tile's angle is 0
+ * @author Fungwah Westley
+ * @author Joseph Omar
+ * @version 3.0
  */
-public abstract class TileType {
-    protected static boolean NORTH;
-    protected static boolean SOUTH;
-    protected static boolean EAST;
-    protected static boolean WEST;
+public enum TileType {
+    STRAIGHT(false, true, false, true),
+    CORNER(true, true, false, false),
+    JUNCTION(true, true, false, true),
+    GOAL(true, true, true, true);
 
-    protected TileType(Boolean NORTH, Boolean SOUTH, Boolean EAST, Boolean WEST){
-        this.NORTH = NORTH;
-        this.SOUTH = SOUTH;
-        this.EAST = EAST;
-        this.WEST = WEST;
-    }
+    private final boolean NORTH;
+    private final boolean EAST;
+    private final boolean SOUTH;
+    private final boolean WEST;
 
     /**
-     * Gets an array of boolean which indicates the directions a player can go.
-     *
-     * @return Available directions <NORTH, EAST, SOUTH, WEST>
+     * Defines where a player can go on a particular tile when angle = 0
+     * @param north Can the player go north
+     * @param east Can the player go east
+     * @param south Can the player go south
+     * @param west Can the player go west
      */
-    public static boolean[] getAvailableDirections() {
-        return new boolean[]{NORTH, EAST, SOUTH, WEST};
+    TileType(boolean north, boolean east, boolean south, boolean west) {
+        this.NORTH = north;
+        this.EAST = east;
+        this.SOUTH = south;
+        this.WEST=  west;
     }
-
-    /**
-     * Gets the Holdables.TileType name.
-     *
-     * @return Holdables.Tile type name
-     */
-    public String toString() {
-        return this.getClass().getName();
-    }
-
-    public static boolean canMoveNorth(){return NORTH;}
-    public static boolean canMoveEast(){return EAST;}
-    public static boolean canMoveSouth(){return SOUTH;}
-    public static boolean canMoveWest(){return WEST;}
 }

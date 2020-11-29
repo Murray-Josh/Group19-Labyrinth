@@ -3,7 +3,7 @@ package players;
 import core.Coordinate;
 import holdables.Holdable;
 import holdables.PlayerEffect;
-import styles.Style;
+import styles.shit.Style1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Player implements Serializable {
     private static ArrayList<Holdable> hand;
     private PlayerProfile profile;
     private ArrayList<Coordinate> coordinateArray;
-    private Style style;
+    private Style1 style;
     private int playerNum;
     private int currentDirection;
     private PlayerEffect activeEffect;
@@ -31,7 +31,7 @@ public class Player implements Serializable {
      * @param style     Styles.Style of piece for player
      * @param playerNum Players.Player number
      */
-    public Player(PlayerProfile profile, Coordinate coord, Style style, int playerNum) {
+    public Player(PlayerProfile profile, Coordinate coord, Style1 style, int playerNum) {
         setProfile(profile);
         setStart(coord);
         setStyle(style);
@@ -117,7 +117,7 @@ public class Player implements Serializable {
      *
      * @param style Styles.Style of player piece
      */
-    public void setStyle(Style style) {
+    public void setStyle(Style1 style) {
         this.style = style;
     }
 

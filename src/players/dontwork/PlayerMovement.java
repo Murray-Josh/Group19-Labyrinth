@@ -1,4 +1,4 @@
-package players;
+package players.dontwork;
 
 import com.sun.media.jfxmedia.events.PlayerEvent;
 import com.sun.media.jfxmedia.events.PlayerStateEvent;
