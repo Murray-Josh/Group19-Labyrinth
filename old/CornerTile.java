@@ -1,11 +1,22 @@
-package com.Tiles;
+package holdables;
 
-public class CornerTile extends TileType{
-
+/**
+ * A Corner tile, where a player can go North or east.
+ *
+ * @author FungWah Westley & Joseph Omar
+ * @version 2.0
+ */
+public class CornerTile extends TileType {
+    /*
+     * Specify the directions where the player can go
+     */
+    static {
+        NORTH = true;
+        EAST = true;
+        SOUTH = false;
+        WEST = false;
+    }
     public CornerTile(){
-        setNORTH(getDirectionIsTrue());
-        setEAST(getDirectionIsFalse());
-        setSOUTH(getDirectionIsTrue());
-        setWEST(getDirectionIsFalse());
+        super(NORTH,EAST,SOUTH,WEST);
     }
 }
