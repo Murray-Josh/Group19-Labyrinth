@@ -38,24 +38,26 @@ public class PlayerMovement () {
 
 //could just if player presses up, check if that tile is accessible or not instead of checking all possible options - might be a lot faster
 
+// we can only use this if using awt things is allowed which i dont know if it is...
+
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
-            dx = -2;
+        if (key == KeyEvent.VK_LEFT && tileAccess() == true){
+            dx = -1;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 2;
+            dx = 1;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -2;
+            dy = -1;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 2;
+            dy = 1;
         }
     }
 
@@ -73,6 +75,13 @@ public class PlayerMovement () {
         return y;
     }
 
+    private boolean tileAccess(){
+        if (tilesAlign){
+            return true;
+        } else if{
+
+        }
+    }
 
 
 
