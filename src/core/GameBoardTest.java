@@ -1,7 +1,7 @@
 package core;
 
+import constants.TileType;
 import holdables.Tile;
-import holdables.TileType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
