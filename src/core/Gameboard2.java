@@ -1,8 +1,8 @@
 package core;
 
+import constants.TileType;
 import holdables.*;
 import players.Player;
-import styles.CarStyle;
 import styles.PirateStyle;
 import styles.Style;
 
