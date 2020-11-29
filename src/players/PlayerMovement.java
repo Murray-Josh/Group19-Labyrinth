@@ -52,8 +52,8 @@ public class PlayerMovement () {
 
 
 
-//TODO check if surrounding tiles are accessable from current tile
-    if(nextMoveTi()){
+//TODO check if surrounding tiles are accessible from current tile
+    if(nextMoveTile()){
         //block user from entering
     }else{
 
@@ -69,6 +69,9 @@ public class PlayerMovement () {
 //TODO take input from player - arrow keys or click on tile
 //TODO check for double move? - does that happen in this class or another??????????
 //TODO check for backwards movements for selected player - again does that happen in this class or another??????????
-// check if tile player wants to move to isnt being occupied by another player
+//TODO check if tile player wants to move to isn´t being occupied by another player
+
+
+//could just if player presses up, check if that tile is accessible or not instead of checking all possible options - might be a lot faster
 
 }
