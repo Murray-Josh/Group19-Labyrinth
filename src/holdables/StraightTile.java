@@ -16,4 +16,7 @@ public class StraightTile extends TileType {
         SOUTH = false;
         WEST = true;
     }
+    public StraightTile(){
+        super(NORTH,EAST,SOUTH,WEST);
+    }
 }

@@ -16,4 +16,7 @@ public class GoalTile extends TileType {
         SOUTH = true;
         WEST = true;
     }
+    public GoalTile(){
+        super(NORTH,EAST,SOUTH,WEST);
+    }
 }
