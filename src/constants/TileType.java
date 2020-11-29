@@ -1,4 +1,6 @@
-package holdables;
+package constants;
+
+import holdables.Tile;
 
 /**
  * Defines the types of {@link Tile} that can be placed on the board. Also defines the directions a player can go on a tile when the tile's angle is 0

@@ -1,8 +1,8 @@
 package holdables;
 
+import constants.TileType;
 import core.Coordinate;
 import javafx.scene.image.Image;
-import styles.CarStyle;
 import styles.Style;
 
 import java.io.Serializable;
