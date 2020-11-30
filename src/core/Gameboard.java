@@ -26,7 +26,7 @@ import java.util.Random;
  * @author Joshua Murray, Jordy Martinson
  * @version 1.0
  */
-public class Gameboard2 implements Serializable {
+public class Gameboard implements Serializable {
     private final static int ROTATION_LOCK = 45;
     private final SilkBag silkBag = new SilkBag();
     private Random rand = new Random();
@@ -39,7 +39,7 @@ public class Gameboard2 implements Serializable {
     private final int MAX_PLAYERS = 4;
     private Coordinate[] startCoords = new Coordinate[4];
 
-    public Gameboard2(String fileName) {
+    public Gameboard(String fileName) {
         Scanner in;
         style = new PirateStyle() ;
         try {
@@ -321,7 +321,7 @@ public class Gameboard2 implements Serializable {
 
     //just for testing
     public static void main(String[] args) {
-        Gameboard2 g = new Gameboard2("src/file/GBOne");
+        Gameboard g = new Gameboard("src/file/GBOne");
         g.boardToString();
 //        System.out.println(g.isStart(0,0));
 //        System.out.println(g.isStart(4,8));
