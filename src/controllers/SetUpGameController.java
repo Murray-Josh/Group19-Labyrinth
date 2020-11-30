@@ -89,14 +89,14 @@ public class SetUpGameController implements Initializable {
      *
      * @return An instance of the selected style
      */
-    private Class createStyle(String selected) {
+    private Style createStyle(String selected) {
         switch (selected) {
             case CARS:
-                return CarStyle.class;
+                return new CarStyle();
             case MOUSE_TRAP:
-                return MouseStyle.class;
+                return new MouseStyle();
             case PIRATE:
-                return PirateStyle.class;
+                return new PirateStyle();
             default:
                 showError(ErrorMsg.STYLE_NOT_VALID, Title.SETUP, false);
                 return null;

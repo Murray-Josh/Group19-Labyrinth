@@ -3,24 +3,23 @@ package holdables;
 import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
-import javafx.scene.image.Image;
 import styles.Style;
 
 import java.io.Serializable;
 
-import static holdables.TileEffect.*;
+import static holdables.TileEffect.NONE;
 
-/*** A tile that can be placed on the gameboard or in the silk bag.
+/** A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
- * @version 2.0
+ * @version 3.0
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
     private TileType   type;
-    private Style      style;
+    private  Style      style;
     private Angle     angle;
-    private TileEffect effect = NONE;
+    private final TileEffect effect = NONE;
     private boolean    fixed;
 
 
@@ -49,7 +48,7 @@ public class Tile implements Serializable, Holdable {
      * @param angle Holdables.Tile's Angle of rotation
      * @param fixed If the is fixed or not
      */
-    public Tile(TileType type, Style style, double angle, boolean fixed) {
+    public Tile(TileType type, Style style, Angle angle, boolean fixed) {
         setType(type);
         setStyle(style);
         setAngle(angle);
@@ -132,10 +131,6 @@ public class Tile implements Serializable, Holdable {
      */
     public void setAngle(Angle angle) {
         this.angle = angle;
-    }
-
-    public Image getImage() {
-        return new Image(this.style);
     }
 
     /**

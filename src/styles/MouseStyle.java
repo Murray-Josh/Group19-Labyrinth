@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version 3.5
  */
 
-public class MouseTrapStyle extends Style implements Serializable {
+public class MouseStyle extends Style implements Serializable {
     static {
         PLAYER_ONE = new Image("patrick.jpg");
         PLAYER_TWO = new Image("patrick.jpg");
@@ -33,7 +33,7 @@ public class MouseTrapStyle extends Style implements Serializable {
     /**
      * Gets each images and assigns them to the style class
      */
-    public MouseTrapStyle() {
+    public MouseStyle() {
         super(PLAYER_ONE, PLAYER_TWO, PLAYER_THREE, PLAYER_FOUR, STRAIGHT_TILE, STRAIGHT_FIRE, STRAIGHT_ICE,
                 CORNER_TILE, CORNER_FIRE, CORNER_ICE, JUNCTION_TILE, JUNCTION_FIRE, JUNCTION_ICE, GOAL_TILE, GAMEBOARD);
     }
