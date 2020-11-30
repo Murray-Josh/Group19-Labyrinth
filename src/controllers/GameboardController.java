@@ -3,12 +3,15 @@ package controllers;
 import constants.ErrorMsg;
 import constants.Title;
 import constants.Window;
+import core.Gameboard;
 import core.Level;
+import core.SilkBag;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -20,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
@@ -37,9 +41,7 @@ public class GameboardController implements Initializable {
     @FXML
     private Button cmdSilkBag;
 
-    private SilkBag silkBag;
-
-    private Array
+    private Gameboard board;
 
 
     public void cmdActionClick(MouseEvent mouseEvent) {
@@ -66,6 +68,9 @@ public class GameboardController implements Initializable {
     }
 
     private void importLevelData(Level level) {
+        board = new Gameboard();
+    }
 
+    public void keyPressed(KeyEvent keyEvent) {
     }
 }
