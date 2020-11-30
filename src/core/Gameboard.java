@@ -1,20 +1,17 @@
 package core;
 
-import constants.ErrorMsg;
-import constants.Title;
-import constants.Window;
-import controllers.StageController;
 import holdables.Holdable;
 import holdables.Tile;
 import players.Player;
 import styles.Style;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.stream.Stream;
-
-import static java.util.Collections.addAll;
 
 public class Gameboard implements Serializable {
     private Level level;
@@ -27,20 +24,28 @@ public class Gameboard implements Serializable {
 
     public Gameboard(String levelURL, ArrayList<Player> players, Style style)
             throws IOException, ClassNotFoundException {
+
         this.players = players;
         this.style=style;
         Level level = deserializeLevel(levelURL);
         this.width = level.getWidth();
         this.height = level.getHeight();
+        tiles = new Matrix<Tile>(width, height);
         setTiles(level);
-
 
     }
 
     private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException{
         ArrayList<Tile> fixed = level.getFixed();
+        ArrayList<Tile> movable = (level.getMovables());
+        Collections.shuffle(movable);
         fixed.forEach(tile -> {
             tiles.set(tile.getCoordinate(), tile);
+        });
+        tiles.forEach(tile -> {
+            if (tile == null) {
+
+            }
         });
     }
 
@@ -54,17 +59,19 @@ public class Gameboard implements Serializable {
         return level;
     }
 
-    private ArrayList<Holdable> shuffle(ArrayList<Holdable> list) {
-        Collections.shuffle(list);
-        return list;
-    }
 
-    private ArrayList<Holdable> combine(ArrayList<Holdable> listA, ArrayList<Holdable> listB) {
+    private ArrayList<Holdable> combine(ArrayList<? extends Holdable> listA, ArrayList<? extends Holdable> listB) {
         ArrayList<Holdable> toReturn = new ArrayList<Holdable>();
         Stream.of(listA, listB).forEach(toReturn::addAll);
         return toReturn;
     }
 
 
+    public int getWidth() {
+        return width;
+    }
 
+    public int getHeight() {
+        return height;
+    }
 }

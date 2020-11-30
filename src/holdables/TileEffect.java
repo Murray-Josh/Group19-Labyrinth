@@ -7,7 +7,7 @@ package holdables;
  * @author Joseph Omar
  * @version 3.2
  */
-public enum TileEffect implements Effect, Holdable {
+public enum TileEffect implements Holdable, Effect {
     FIRE(3, 2),
     ICE(3, 1),
     NONE(1,0);

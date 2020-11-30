@@ -7,7 +7,4 @@ package holdables;
  * @version 3.0
  */
 public interface Effect extends Holdable {
-
-    static void apply() {
-    }
 }

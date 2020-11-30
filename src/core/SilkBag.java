@@ -4,7 +4,7 @@ import holdables.*;
 import players.Player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * This class represents the Silk Bag: an array list and its methods.
@@ -12,23 +12,22 @@ import java.util.ArrayList;
  * @author Jordy Martinson
  * @version 1.0
  */
-public class SilkBag implements Serializable {
-    private final ArrayList<Holdable> bagList = new ArrayList<Holdable>();
-
-    /**
-     * Adds an object to the bag
-     *
-     * @param obj the object to be added
-     */
-    public void enqueue(Holdable obj) {
-        bagList.add(obj);
+public class SilkBag extends ArrayDeque<Holdable> implements Serializable {
+    public SilkBag(List<Holdable> items) {
+        super();
+        Collections.shuffle(items);
+        super.addAll(items);
     }
 
     /**
-     * Removes the first object from the bag
+     * Shuffles the {@link SilkBag}
      */
-    public void dequeue(Player p) {
-        Player.addToHand(bagList.get(0));
-        bagList.remove(0);
+    public void shuffle() {
+        ArrayList<Holdable> temp= new ArrayList<Holdable>();
+        while (!isEmpty()) {
+            temp.add(poll());
+        }
+        Collections.shuffle(temp);
+        temp.addAll(temp);
     }
 }

@@ -16,18 +16,17 @@ import java.util.function.Consumer;
 final public class Matrix<T> implements Iterable<T>, Serializable {
     private final int width;
     private final int height;
-    private T[][] data;
+    private Object[][] data;
 
     /**
      * Constructs a new {@link Matrix}
      * @param width Width of the matrix
      * @param height Height of the matrix
-     * @param type Type of data to be stored in the matrix
      */
-    public Matrix(int width, int height, Class<T[][]> type) {
+    public Matrix(int width, int height) {
         this.width = width;
         this.height = height;
-        this.data = type.cast(Array.newInstance(type, width, height));
+        data = new Object[width][height];
     }
 
     /**
@@ -59,8 +58,9 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @throws IndexOutOfBoundsException If the coordinate is either too big or too small
      * @throws NullPointerException If there is no data at the coordinate
      */
+    @SuppressWarnings("unchecked")
     public T get(int x, int y) throws IndexOutOfBoundsException, NullPointerException {
-        return this.data[x][y];
+        return (T) this.data[x][y];
     }
 
     /**
@@ -81,7 +81,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @throws NullPointerException If there is no data at the coordinate
      */
     public T get(Coordinate coordinate) throws IndexOutOfBoundsException, NullPointerException{
-        return this.data[coordinate.getX()][coordinate.getY()];
+        return (T) this.data[coordinate.getX()][coordinate.getY()];
     }
 
     /**
@@ -109,8 +109,8 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @return If the element exists in the {@link Matrix}
      */
     public boolean exists(T elem) {
-        for (T[] i: data) {
-            for (T j: i) {
+        for (Object[] i: data) {
+            for (Object j: i) {
                 if (j.equals(elem)) {
                     return true;
                 }
@@ -162,12 +162,13 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
          * @return Data in the next element
          */
         @Override
+        @SuppressWarnings("unchecked")
         public T next() {
             if (posX < getWidth()) {
-                return data[posX++][posY];
+                return (T) data[posX++][posY];
             } else if (posY < getHeight()) {
                 posX = 0;
-                return data[posX][posY++];
+                return (T) data[posX][posY++];
             } else {
                 return null;
             }

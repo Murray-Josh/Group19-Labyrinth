@@ -8,5 +8,6 @@ package holdables;
  */
 public enum PlayerEffect implements Effect, Holdable {
     DOUBLE_MOVE,
-    BACKTRACK
+    BACKTRACK,
+    NONE;
 }
