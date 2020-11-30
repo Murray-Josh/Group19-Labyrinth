@@ -1,10 +1,9 @@
-package players.dontwork;
+package players;
 
-import com.sun.media.jfxmedia.events.PlayerEvent;
-import com.sun.media.jfxmedia.events.PlayerStateEvent;
 import core.Coordinate;
-import players.Player;
-import styles.CarStyle;
+import core.GameBoardTest;
+import core.Gameboard2;
+import javafx.scene.control.Button;
 import styles.Style;
 import holdables.Tile;
 import java.awt.event.KeyEvent;
@@ -28,8 +27,8 @@ public class PlayerMovement () {
 
 //TODO load in image??
 
-    private void loadPlayer() {
-        Style.getPlayerImage();
+    private void loadPlayer(int num) {
+        Style.getPlayerImage(num);
     }
 
 
@@ -46,19 +45,19 @@ public class PlayerMovement () {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT && tileAccessable() == true){
-            dx = -1;
+            dx += -1;
         }
 
         if (key == KeyEvent.VK_RIGHT && tileAccessable() == true) {
-            dx = 1;
+            dx += 1;
         }
 
         if (key == KeyEvent.VK_UP && tileAccessable() == true) {
-            dy = -1;
+            dy += -1;
         }
 
         if (key == KeyEvent.VK_DOWN && tileAccessable() == true) {
-            dy = 1;
+            dy += 1;
         }
     }
 
@@ -77,6 +76,7 @@ public class PlayerMovement () {
     }
 
     private boolean tileAccessable(){
+        boolean tilesAlign = true;
         if (tilesAlign && Tile.isOnFire() == false){
             return true;
         } else {
@@ -84,21 +84,10 @@ public class PlayerMovement () {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     //   Tile nextMoveTile = null;
 
 
+    private Gameboard2 Gameboard;
     //TODO gets current player position
     Tile currentTile = Gameboard.getTile(Player.getCoordinate().getX(),Player.getCoordinate().getY());
     //        (1,2)
@@ -113,7 +102,6 @@ public class PlayerMovement () {
 //TODO check if tile is on fire
     if(nextMoveTile.isOnFire()){
         //block user from e}else if (nextMoveTile.rotaion == 1 || ...){
-        move there
     }
 
 
@@ -121,8 +109,8 @@ public class PlayerMovement () {
 
 
     //not really sure where this came from but shes here now
-    public Coordinate getCoordinate(int i) {
-        return coordinateArray.get(i);
+    public Coordinate getCoordinate(int num) {
+        return Player.coordinateArray.get(num);
     }
 
 
@@ -135,15 +123,17 @@ public class PlayerMovement () {
 
 
 //TODO check if surrounding tiles are accessible from current tile - there is a method that does this in tileType
-    if(nextMoveTile()){
+    if(
+    void nextMoveTile(){
         //block user from entering
     }else{
 
-    } if(nextMoveTile.rotation))
+    } if(nextMoveTile.rotation()) {
+
+    }
 
             //    public Coordinate getCoordinate(int i) { return coordinateArray.get(i);  }
             //    Boolean hasUserClickedTile = false;
-            while
 
 
 
@@ -154,8 +144,6 @@ public class PlayerMovement () {
 //TODO check if tile player wants to move to isn´t being occupied by another player
 
 
-
-}
 
 
     public void Move(Player currentPlayer, int i){
@@ -185,7 +173,7 @@ public class PlayerMovement () {
             if(!(updateTempTile(currentTile,up,down,left,right).isOnFire()){
                 currentPlayer.= updateTempTile(currentTile,up,down,left,right);
                 count++;
-            }else{
+            } else {
                 //block user from pressing an arrow to that tile.
             }
             //not sure how the user will tell the game the moves chosen has finished but
@@ -217,3 +205,4 @@ public class PlayerMovement () {
         return currentTile;
 
     }
+}
