@@ -1,5 +1,7 @@
 package core;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import constants.ErrorMsg;
 import constants.TileType;
 import holdables.Tile;
 import javafx.application.Application;
@@ -34,14 +36,15 @@ public class GameBoardTest extends Application {
 
         for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
             addButtonY(gridPane, gameboardTest.getSize()[0] + 1, y);
+            addButtonY(gridPane, 0, y);
+
         }
         for (int x = 0; x < gameboardTest.getSize()[0]; x++) {
             addButtonX(gridPane, x, gameboardTest.getSize()[1] + 1);
 
         }
 
-
-        Scene scene = new Scene(gridPane, 1280, 720);
+        Scene scene = new Scene(gridPane, 1920, 1080);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -57,9 +60,16 @@ public class GameBoardTest extends Application {
         Button button = new Button();
         button.setText("Row: " + rowIndex);
         button.setOnMouseClicked(e -> {
-            System.out.printf("Clicked on [%d, %d]%n", colIndex, rowIndex);
-            tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Row", rowIndex);
-            redraw();
+            boolean fixedCol = false;
+            for (int x = 0; x < gameboardTest.getSize()[0]; x++) {
+                if (gameboardTest.getTile(x, rowIndex).isFixed()) {
+                    fixedCol = true;
+                }
+            }
+            if (!fixedCol) {
+                tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Row", rowIndex);
+                redraw();
+            }
         });
         grid.add(button, colIndex, rowIndex);
     }
@@ -75,8 +85,16 @@ public class GameBoardTest extends Application {
         Button button = new Button();
         button.setText("Column: " + colIndex);
         button.setOnMouseClicked(e -> {
-            tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
-            redraw();
+            boolean fixedRow = false;
+            for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
+                if (gameboardTest.getTile(colIndex, y).isFixed()) {
+                    fixedRow = true;
+                }
+            }
+            if (!fixedRow) {
+                tileMove(new Tile(TileType.CORNER, gameboardTest.getStyle(), 90, false), gameboardTest, "Column", colIndex);
+                redraw();
+            }
         });
         grid.add(button, colIndex, rowIndex);
     }
@@ -137,26 +155,19 @@ public class GameBoardTest extends Application {
     public void redraw() {
         CarStyle c = new CarStyle();
         Image startImage = c.getCornerFire();
-        //Image fixedImage = c.getJunctionIce();
         for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
 
             for (int x = 0; x < gameboardTest.getSize()[0]; x++) {
 
                 ImageView iv1 = new ImageView();
 
-
                 if (gameboardTest.isStart(gameboardTest.getTile(x, y).getCoordinate().getX(), gameboardTest.getTile(x, y).getCoordinate().getY())) {
                     iv1.setImage(startImage);
-                    /*
-                } else if (gameboardTest.getTile(x, y).isFixed()) {
-                    iv1.setImage(fixedImage);
 
-                     */
                 } else {
                     iv1.setImage(gameboardTest.getTile(x, y).getImage());
 
                 }
-                System.out.println(gameboardTest.getTile(x,y).getType());
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
