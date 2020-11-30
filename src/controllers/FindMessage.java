@@ -9,6 +9,7 @@ import constants.Title;
 import java.net.URL;
 import java.util.Scanner;
 
+
 /**
  * Opens the cswebcat website, decodes and outputs the message.
  *

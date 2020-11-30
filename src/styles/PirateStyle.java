@@ -29,6 +29,7 @@ public final class PirateStyle extends Style implements Serializable {
         GAMEBOARD = new Image("resources/styles/pirate/pirate_boarder.png");
     }
 
+
     /**
      * Gets each images and assigns them to the style class
      */
