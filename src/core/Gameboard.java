@@ -19,7 +19,7 @@ import static java.util.Collections.addAll;
 public class Gameboard implements Serializable {
     private Level level;
     private SilkBag           silkBag;
-    private Vector<Vector<Tile>>            tiles;
+    private Vector<Vector<Tile>>            grid = new Vector<Vector<Tile>>();
     private ArrayList<Player> players;
     private int width;
     private int height;
@@ -29,7 +29,6 @@ public class Gameboard implements Serializable {
             throws IOException, ClassNotFoundException {
         this.players = players;
         this.style=style;
-
         Level level = deserializeLevel(levelURL);
         this.width = level.getWidth();
         this.height = level.getHeight();
@@ -44,7 +43,7 @@ public class Gameboard implements Serializable {
             int x = tile.getCoordinate().getX();
             int y = tile.getCoordinate().getY();
 
-            tiles[x][y] = tile;
+            grid.setElementAt;
 
 
         });

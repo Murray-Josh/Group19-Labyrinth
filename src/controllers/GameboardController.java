@@ -66,5 +66,6 @@ public class GameboardController implements Initializable {
     }
 
     public void keyPressed(KeyEvent keyEvent) {
+        keyEvent.
     }
 }
