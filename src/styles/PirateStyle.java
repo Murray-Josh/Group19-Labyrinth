@@ -10,175 +10,31 @@ import java.io.Serializable;
  * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
  * @version 3.0
  */
-public enum PirateStyle implements Serializable, Style {
-    CORNER_FIRE(new Image("resources/styles/pirate/pirate_fire.png")),
-    CORNER_ICE(new Image("resources/styles/pirate/pirate_corner_ice.png")),
-    CORNER_TILE(new Image("resources/styles/pirate/pirate_corner.png")),
-    GAMEBOARD(new Image("resources/styles/pirate/pirate_boarder.png")),
-    GOAL_TILE(new Image("resources/styles/pirate/pirate_goal.png")),
-    JUNCTION_FIRE(new Image("resources/styles/pirate/pirate_fire.png")),
-    JUNCTION_ICE(new Image("resources/styles/pirate/pirate_junction_ice.png")),
-    JUNCTION_TILE(new Image("resources/styles/pirate/pirate_junction.png")),
-    PLAYER_FOUR(new Image("resources/styles/pirate/pirate_player_four.png")),
-    PLAYER_ONE(new Image("resources/styles/pirate/pirate_player_one.png")),
-    PLAYER_THREE(new Image("resources/styles/pirate/pirate_player_three.png")),
-    PLAYER_TWO(new Image("resources/styles/pirate/pirate_player_two.png")),
-    STRAIGHT_FIRE(new Image("resources/styles/pirate/pirate_fire.png")),
-    STRAIGHT_ICE(new Image("resources/styles/pirate/pirate_straight_ice.png")),
-    STRAIGHT_TILE(new Image("resources/styles/pirate/pirate_straight.png"));
-
-    private final Image IMAGE;
-    PirateStyle(Image image) {
-        this.IMAGE = image;
+public final class PirateStyle extends Style implements Serializable {
+    static {
+        PLAYER_ONE = new Image("resources/styles/pirate/pirate_player_one.png");
+        PLAYER_TWO = new Image("resources/styles/pirate/pirate_player_two.png");
+        PLAYER_THREE = new Image("resources/styles/pirate/pirate_player_three.png");
+        PLAYER_FOUR = new Image("resources/styles/pirate/pirate_player_four.png");
+        STRAIGHT_TILE = new Image("resources/styles/pirate/pirate_straight.png");
+        STRAIGHT_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
+        STRAIGHT_ICE = new Image("resources/styles/pirate/pirate_straight_ice.png");
+        CORNER_TILE = new Image("resources/styles/pirate/pirate_corner.png");
+        CORNER_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
+        CORNER_ICE = new Image("resources/styles/pirate/pirate_corner_ice.png");
+        JUNCTION_TILE = new Image("resources/styles/pirate/pirate_junction.png");
+        JUNCTION_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
+        JUNCTION_ICE = new Image("resources/styles/pirate/pirate_junction_ice.png");
+        GOAL_TILE = new Image("resources/styles/pirate/pirate_goal.png");
+        GAMEBOARD = new Image("resources/styles/pirate/pirate_boarder.png");
     }
 
-    /**
-     * Gets Player One's Sprite
-     *
-     * @return Sprite
-     */
-    @Override
-    public Image getPlayerOne() {
-        return PLAYER_ONE.IMAGE;
-    }
 
     /**
-     * Gets Player Two's Sprite
-     *
-     * @return Sprite
+     * Gets each images and assigns them to the style class
      */
-    @Override
-    public Image getPlayerTwo() {
-        return null;
-    }
-
-    /**
-     * Gets Player Three's Sprite
-     *
-     * @return Sprite
-     */
-    @Override
-    public Image getPlayerThree() {
-        return null;
-    }
-
-    /**
-     * Gets Player Four's Sprite
-     *
-     * @return Sprite
-     */
-    @Override
-    public Image getPlayerFour() {
-        return null;
-    }
-
-    /**
-     * Gets Straight Tile's image when effect is NONE
-     *
-     * @return Tile when effect is NONE
-     */
-    @Override
-    public Image getStraightTileNone() {
-        return null;
-    }
-
-    /**
-     * Gets Corner Tile's image when effect is NONE
-     *
-     * @return Tile when effect is NONE
-     */
-    @Override
-    public Image getCornerTileNone() {
-        return null;
-    }
-
-    /**
-     * Gets Junction Tile's image when effect is NONE
-     *
-     * @return Tile when effect is NONE
-     */
-    @Override
-    public Image getJunctionTileNone() {
-        return null;
-    }
-
-    /**
-     * Gets Straight Tile's image when effect is Fire
-     *
-     * @return Tile when effect is Fire
-     */
-    @Override
-    public Image getStraightTileFire() {
-        return null;
-    }
-
-    /**
-     * Gets JunctionTile's image when effect is Fire
-     *
-     * @return Tile when effect is Fire
-     */
-    @Override
-    public Image getJunctionTileFire() {
-        return null;
-    }
-
-    /**
-     * Gets Corner Tile's image when effect is Fire
-     *
-     * @return Tile when effect is Fire
-     */
-    @Override
-    public Image getCornerTileFire() {
-        return null;
-    }
-
-    /**
-     * Gets Straight Tile's image when effect is ICE
-     *
-     * @return Tile when effect is ICE
-     */
-    @Override
-    public Image getStraightTileIce() {
-        return null;
-    }
-
-    /**
-     * Gets Junction Tile's image when effect is ICE
-     *
-     * @return Tile when effect is ICE
-     */
-    @Override
-    public Image getJunctionTileIce() {
-        return null;
-    }
-
-    /**
-     * Gets Corner Tile's image when effect is ICE
-     *
-     * @return Tile when effect is ICE
-     */
-    @Override
-    public Image getCornerTileIce() {
-        return null;
-    }
-
-    /**
-     * Gets Gameboard border image
-     *
-     * @return
-     */
-    @Override
-    public Image getGameboard() {
-        return null;
-    }
-
-    /**
-     * Gets Goal Tile's image
-     *
-     * @return
-     */
-    @Override
-    public Image getGoalTile() {
-        return null;
+    public PirateStyle() {
+        super(PLAYER_ONE, PLAYER_TWO, PLAYER_THREE, PLAYER_FOUR, STRAIGHT_TILE, STRAIGHT_FIRE, STRAIGHT_ICE,
+                CORNER_TILE, CORNER_FIRE, CORNER_ICE, JUNCTION_TILE, JUNCTION_FIRE, JUNCTION_ICE, GOAL_TILE, GAMEBOARD);
     }
 }
