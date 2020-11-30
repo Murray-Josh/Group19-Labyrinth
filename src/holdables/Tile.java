@@ -1,5 +1,6 @@
 package holdables;
 
+import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
 import javafx.scene.image.Image;
@@ -50,6 +51,14 @@ public class Tile implements Serializable, Holdable {
         setStyle(style);
         setAngle(angle);
         setFixed(fixed);
+    }
+
+    public Tile(Coordinate coordinate, TileType type, Angle angle, boolean fixed){
+        this.coordinate=coordinate;
+        this.type=type;
+        this.angle = angle;
+        this.fixed=fixed;
+        this.style=null;
     }
 
     /**
