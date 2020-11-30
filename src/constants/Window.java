@@ -10,7 +10,8 @@ public enum Window {
     HOME("../resources/fxml/MainMenu.fxml", Title.MAIN),
     LOAD("../resources/fxml/LoadGame.fxml", Title.LOAD),
     SCOREBOARD("../resources/fxml/Scoreboard.fxml", Title.SCOREBOARD),
-    SETUP("../resources/fxml/SetUpGame.fxml", Title.SETUP);
+    SETUP("../resources/fxml/SetUpGame.fxml", Title.SETUP),
+    BOARD("../resources/fxml/Gameboard.fxml", Title.MAIN);
 
 
     private final String PATH;

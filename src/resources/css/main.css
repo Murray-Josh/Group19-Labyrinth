@@ -16,6 +16,12 @@
     -fx-font-family: roboto light;
     -fx-border-color: #221B3C;
 	}
+.no-border {
+	-fx-background-color: #2C2C3E;
+	-fx-text-fill: WHITE;
+    -fx-font-family: roboto light;
+    -fx-border-color: transparent;
+}
 
 .label-large{
 	-fx-text-fill: WHITE;
@@ -137,4 +143,45 @@
 
 .label:disabled {
 	-fx-opacity: 1.0;
+}
+.scroll-pane {
+    -fx-background-color:#2C2C3E;
+    -fx-border-color:transparent;
+	    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #384E92;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+	    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scroll-pane:focused {
+	    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
 }
