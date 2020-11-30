@@ -19,9 +19,13 @@ import java.util.Collection;
 public class Level implements Serializable {
 
     private ArrayList<Tile> fixed;
-    private int             movables;
+    private ArrayList<Tile> movables;
+
     private int             width;
     private int              height;
+    private Coordinate playerOnePosition;
+    private Coordinate playerTwoPosition;
+    private Coordinate playerThreePosition;
 
     /**
      * Constructs an empty {@link Level}
@@ -29,7 +33,7 @@ public class Level implements Serializable {
     public Level() {
         this.width=0;
         this.height=0;
-        this.movables =0;
+        this.movables=new ArrayList<Tile>();
         this.fixed=new ArrayList<Tile>();
     }
 
@@ -207,5 +211,7 @@ public class Level implements Serializable {
     public int fixedAmount() {
         return this.fixed.size();
     }
+
+    public Coordinate getPlayerOnePosition()
 
 }

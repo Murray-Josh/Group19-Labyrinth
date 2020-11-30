@@ -84,7 +84,7 @@ public class StageController {
      * changes the scene to the main menu
      */
     public static void home() {
-        stage.getIcons().add(new Image(StageController.class.getResourceAsStream("/resources/menu/Gun_Raccoon.png")));
+        stage.getIcons().add(new Image(StageController.class.getResourceAsStream("/resources/me/Gun_Raccoon.png")));
         changeScene(Window.HOME);
         stage.setOnCloseRequest(e -> Platform.exit());
     }

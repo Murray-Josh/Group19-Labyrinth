@@ -8,13 +8,13 @@ package constants;
 public enum Angle {
     UP(0), LEFT(270), RIGHT(90), DOWN(180);
 
-    private final int ANGLE;
+    private final double ANGLE;
 
     /**
      * Creates Angle
      * @param angle Angle in degrees (0-270)
      */
-    Angle(int angle) {
+    Angle(double angle) {
         this.ANGLE = angle;
     }
 
@@ -22,7 +22,7 @@ public enum Angle {
      * Gets the angle of the entity
      * @return
      */
-    public int get(){
+    public double get(){
         return this.ANGLE;
     }
 

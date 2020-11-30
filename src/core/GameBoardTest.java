@@ -110,7 +110,6 @@ public class GameBoardTest extends Application {
             gameboardTest.setTile(effectSet, colIndex, rowIndex);
             redraw();
 
-
         });
         grid.add(pane, colIndex, rowIndex);
 
@@ -171,6 +170,7 @@ public class GameBoardTest extends Application {
                 iv1.setFitHeight(100);
                 iv1.setFitWidth(100);
                 iv1.setRotate(gameboardTest.getTile(x, y).getAngle());
+
 
                 gridPane.add(iv1, x, y);
                 addPane(gridPane, x, y);

@@ -25,7 +25,8 @@ public enum ErrorMsg {
     SAVE_NOT_SELECTED("You have not selected a save file to load\n", "No Savegame Selected"),
     SAVE_READ_ERROR("The savegame selected could not be parsed\n", "Savegame Parse Error"),
     SAVE_WRITE_ERROR("The game could not be written to a file\n", "Savegame Write Error"),
-    STYLE_NOT_VALID("The selected Style is unavailable", "Style Unavailable");
+    STYLE_NOT_VALID("The selected Style is unavailable", "Style Unavailable"),
+    LEVEL_READ_ERROR("The level could not be read.\nPlease verify files or use a different level file.", "Level Read Error");
 
     private final String MESSAGE;
     private final String HEADER;

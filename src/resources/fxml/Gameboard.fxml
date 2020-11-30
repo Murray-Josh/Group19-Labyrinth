@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onKeyPressed="#keyPressed" prefHeight="792.0" prefWidth="1178.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameBoardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onKeyPressed="#keyPressed" prefHeight="792.0" prefWidth="1178.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameboardController">
    <center>
       <GridPane fx:id="grdBoard" prefHeight="680.0" BorderPane.alignment="CENTER">
         <columnConstraints>
