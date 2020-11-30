@@ -25,6 +25,7 @@ public final class PirateStyle extends Style implements Serializable {
         JUNCTION_TILE = new Image("resources/styles/pirate/pirate_junction.png");
         JUNCTION_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
         JUNCTION_ICE = new Image("resources/styles/pirate/pirate_junction_ice.png");
+        GOAL_TILE = new Image("resources/styles/pirate/pirate_goal.png");
         GAMEBOARD = new Image("resources/styles/pirate/pirate_boarder.png");
     }
 
