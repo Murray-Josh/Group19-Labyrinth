@@ -26,6 +26,8 @@ public class Level implements Serializable {
     private Coordinate playerOnePosition;
     private Coordinate playerTwoPosition;
     private Coordinate playerThreePosition;
+    private Coordinate playerFourPosition;
+
 
     /**
      * Constructs an empty {@link Level}
@@ -35,6 +37,11 @@ public class Level implements Serializable {
         this.height=0;
         this.movables=new ArrayList<Tile>();
         this.fixed=new ArrayList<Tile>();
+        this.playerOnePosition = new Coordinate(0,0);
+        this.playerTwoPosition = new Coordinate(0,0);
+        this.playerThreePosition = new Coordinate(0,0);
+        this.playerFourPosition = new Coordinate(0,0);
+
     }
 
     /**
@@ -44,11 +51,15 @@ public class Level implements Serializable {
      * @param height Height of the board
      * @param movables Number of movable tiles
      */
-    public Level(ArrayList<Tile> fixed, int width, int height, int movables) {
+    public Level(ArrayList<Tile> fixed, int width, int height, ArrayList<Tile> movables, Coordinate p1Pos, Coordinate p2Pos, Coordinate p3Pos, Coordinate p4Pos) {
         this.width=width;
         this.height=height;
         this.movables =movables;
         this.fixed=fixed;
+        this.playerOnePosition = p1Pos;
+        this.playerTwoPosition = p2Pos;
+        this.playerThreePosition = p3Pos;
+        this. playerFourPosition = p4Pos;
     }
 
     /**
@@ -57,7 +68,7 @@ public class Level implements Serializable {
      * @param height Height of the board
      * @param movables Number of movable tiles
      */
-    public Level(int width, int height, int movables) {
+    public Level(int width, int height,  ArrayList<Tile> movables) {
         this.width=width;
         this.height=height;
         this.movables =movables;
@@ -72,7 +83,7 @@ public class Level implements Serializable {
     public Level(int width, int height) {
         this.width=width;
         this.height=height;
-        this.movables =0;
+        this.movables = new ArrayList<Tile>();
         this.fixed=new ArrayList<Tile>();
     }
 
@@ -207,11 +218,88 @@ public class Level implements Serializable {
      *
      * @return Number of fixed Tiles
      */
-
     public int fixedAmount() {
         return this.fixed.size();
     }
 
-    public Coordinate getPlayerOnePosition()
+    /**
+     *
+     * @return
+     */
+    public Coordinate getPlayerOnePosition() {
+        return playerOnePosition;
+    }
+
+    /**
+     *
+     * @param playerOnePosition
+     */
+    public void setPlayerOnePosition(Coordinate playerOnePosition) {
+        this.playerOnePosition = playerOnePosition;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Coordinate getPlayerTwoPosition() {
+        return playerTwoPosition;
+    }
+
+    /**
+     *
+     * @param playerTwoPosition
+     */
+    public void setPlayerTwoPosition(Coordinate playerTwoPosition) {
+        this.playerTwoPosition = playerTwoPosition;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Coordinate getPlayerThreePosition() {
+        return playerThreePosition;
+    }
+
+    /**
+     *
+     * @param playerThreePosition
+     */
+    public void setPlayerThreePosition(Coordinate playerThreePosition) {
+        this.playerThreePosition = playerThreePosition;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Coordinate getPlayerFourPosition() {
+        return playerFourPosition;
+    }
+
+    /**
+     *
+     * @param playerFourPosition
+     */
+    public void setPlayerFourPosition(Coordinate playerFourPosition) {
+        this.playerFourPosition = playerFourPosition;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<Tile> getMovables() {
+        return movables;
+    }
+
+    /**
+     * 
+     * @param movables
+     */
+    public void setMovables(ArrayList<Tile> movables) {
+        this.movables = movables;
+    }
 
 }
