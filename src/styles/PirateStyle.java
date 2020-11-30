@@ -39,7 +39,7 @@ public enum PirateStyle implements Serializable, Style {
      */
     @Override
     public Image getPlayerOne() {
-        return null;
+        return PLAYER_ONE.IMAGE;
     }
 
     /**
