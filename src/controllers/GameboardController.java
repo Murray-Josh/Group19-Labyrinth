@@ -5,25 +5,19 @@ import constants.Title;
 import constants.Window;
 import core.Gameboard;
 import core.Level;
-import core.SilkBag;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.fxml.Initializable;
 
-import styles.CarStyle;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
