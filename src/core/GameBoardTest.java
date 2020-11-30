@@ -5,6 +5,7 @@ import constants.ErrorMsg;
 import constants.TileType;
 import holdables.Tile;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -44,6 +45,7 @@ public class GameBoardTest extends Application {
 
         }
 
+        gridPane.setAlignment(Pos.CENTER);
         Scene scene = new Scene(gridPane, 1920, 1080);
         primaryStage.setScene(scene);
         primaryStage.show();
