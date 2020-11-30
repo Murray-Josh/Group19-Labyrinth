@@ -2,7 +2,7 @@ package players;
 
 import core.Coordinate;
 import core.GameBoardTest;
-import core.Gameboard2;
+import core.Gameboard;
 import javafx.scene.control.Button;
 import styles.Style;
 import holdables.Tile;
@@ -15,14 +15,26 @@ import java.awt.event.KeyEvent;
  * @version 1.0
  */
 
-public class PlayerMovement () {
+public class PlayerMovement() {
 
+
+}
+
+
+
+
+
+
+/*
     private int dx;
     private int dy;
     private int x;
     private int y;
 
+//TODO all methods should be static
 
+    //non static attribute - "private gameboard" and the initialise
+    //do we just want the key codes or do we want the gameboard controller to just call a method here which makes it easier for us...
 
 
 //TODO load in image??
@@ -39,6 +51,8 @@ public class PlayerMovement () {
 //could just if player presses up, check if that tile is accessible or not instead of checking all possible options - might be a lot faster
 
 // we can only use this if using awt things is allowed which i dont know if it is...
+
+// this is happening in gameboard controller (key listener) - need to accsess that instead of creating it ourselves :)
 
     public void keyPressed(KeyEvent e) {
 
@@ -87,9 +101,11 @@ public class PlayerMovement () {
     //   Tile nextMoveTile = null;
 
 
-    private Gameboard2 Gameboard;
+    private Gameboard gameboard;
+
     //TODO gets current player position
-    Tile currentTile = Gameboard.getTile(Player.getCoordinate().getX(),Player.getCoordinate().getY());
+
+    Tile currentTile = gameboard.getTile(Player.getCoordinate().getX(),Player.getCoordinate().getY());
     //        (1,2)
     //  (0,1) (1,1) (2,1)
     //        (1,0)
@@ -100,6 +116,7 @@ public class PlayerMovement () {
 
 
 //TODO check if tile is on fire
+
     if(nextMoveTile.isOnFire()){
         //block user from e}else if (nextMoveTile.rotaion == 1 || ...){
     }
@@ -116,13 +133,15 @@ public class PlayerMovement () {
 
 
 //TODO loop that checks who many tiles the player can still move out of 4
-    //Int count = 0;
-    //Boolean hasUserClickedTile = false
-    //while (hasUserClickedTile == false || count < 4) {}
+
+    Int count = 0;
+    Boolean hasUserClickedTile = false
+    while (hasUserClickedTile == false || count < 4) {}
 
 
 
 //TODO check if surrounding tiles are accessible from current tile - there is a method that does this in tileType
+
     if(
     void nextMoveTile(){
         //block user from entering
@@ -142,6 +161,10 @@ public class PlayerMovement () {
 //TODO check for double move? - does that happen in this class or another??????????
 //TODO check for backwards movements for selected player - again does that happen in this class or another??????????
 //TODO check if tile player wants to move to isn´t being occupied by another player
+
+
+
+
 
 
 
@@ -206,3 +229,4 @@ public class PlayerMovement () {
 
     }
 }
+*/
