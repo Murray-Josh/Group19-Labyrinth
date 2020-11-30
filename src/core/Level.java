@@ -304,4 +304,22 @@ public class Level implements Serializable {
         this.movables = movables;
     }
 
+    public void setPlayerPosition(Coordinate coordinate, int playerNumber) {
+        switch (playerNumber) {
+            case 1 : this.playerOnePosition = coordinate;
+            case 2 : this.playerTwoPosition = coordinate;
+            case 3 : this.playerThreePosition = coordinate;
+            case 4 : this.playerFourPosition = coordinate;
+            default : throw new IllegalArgumentException("Player number not in range");
+        }
+    }
+    public Coordinate getPlayerPosition(int playerNumber) {
+        switch (playerNumber) {
+            case 1 : return this.playerOnePosition;
+            case 2 : return this.playerTwoPosition;
+            case 3 : return this.playerThreePosition;
+            case 4 : return this.playerFourPosition;
+            default : throw new IllegalArgumentException("Player number not in range");
+        }
+    }
 }
