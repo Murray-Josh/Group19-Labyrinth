@@ -1,7 +1,5 @@
 package core;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import constants.ErrorMsg;
 import constants.TileType;
 import holdables.Tile;
 import javafx.application.Application;
@@ -23,13 +21,13 @@ import styles.CarStyle;
 public class GameBoardTest extends Application {
 
 
-    private Gameboard2 gameboardTest;
+    private Gameboard gameboardTest;
     private GridPane gridPane;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        gameboardTest = new Gameboard2("src/resources/file/GameboardOne");
+        gameboardTest = new Gameboard("src/resources/file/GameboardOne");
         gridPane = new GridPane();
         redraw();
 
@@ -127,7 +125,7 @@ public class GameBoardTest extends Application {
      * @param num         Row/Column number
      * @return Gameboard in new state
      */
-    public Gameboard2 tileMove(Tile tile, Gameboard2 gameboard, String rowOrColumn, int num) {
+    public Gameboard tileMove(Tile tile, Gameboard gameboard, String rowOrColumn, int num) {
 
         if (rowOrColumn.equals("Column")) {
             Tile newTile = tile;
