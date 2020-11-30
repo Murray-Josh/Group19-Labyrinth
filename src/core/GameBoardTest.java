@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import styles.CarStyle;
+import styles.Style;
 
 /**
  * Gameboard Test when run creates a grid of junction tile images - WIP
@@ -153,7 +154,7 @@ public class GameBoardTest extends Application {
      */
     public void redraw() {
         CarStyle c = new CarStyle();
-        Image startImage = c.getCornerFire();
+        Image startImage = Style.getCornerFire();
         for (int y = 0; y < gameboardTest.getSize()[1]; y++) {
 
             for (int x = 0; x < gameboardTest.getSize()[0]; x++) {

@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 final public class Matrix<T> implements Iterable<T>, Serializable {
     private final int width;
     private final int height;
-    private Object[][] data;
+    private final Object[][] data;
 
     /**
      * Constructs a new {@link Matrix}
@@ -147,7 +147,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
     private class MatrixIterator implements Iterator {
         private int posX = 0;
         private int posY = 0;
-        private T current = null;
+        private final T current = null;
 
         /**
          *

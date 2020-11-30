@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 public class Gameboard implements Serializable {
     private Level level;
     private SilkBag           silkBag;
-    private Matrix<Tile> tiles;
-    private ArrayList<Player> players;
-    private int width;
-    private int height;
-    private Style style;
+    private final Matrix<Tile> tiles;
+    private final ArrayList<Player> players;
+    private final int width;
+    private final int height;
+    private final Style style;
 
 
     public Gameboard(String levelURL, ArrayList<Player> players, Style style)
