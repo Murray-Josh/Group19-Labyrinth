@@ -1,13 +1,19 @@
 package core;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 /**
  * Creates a {@link Matrix} that can be used to represent a grid
  * @param <T> Type of Object to be stored
+ * @author Joseph Omar
+ * @version 1.1
  */
-final public class Matrix<T> {
+final public class Matrix<T> implements Iterable<T>, Serializable {
     private final int width;
     private final int height;
     private T[][] data;
@@ -127,5 +133,44 @@ final public class Matrix<T> {
      */
     public int getHeight() {
         return this.height;
+    }
+
+    /**
+     * Creates a {@link MatrixIterator} for use in for each loops
+     * @return Iterator of type <></>
+     */
+    @Override
+    public Iterator<T> iterator() {
+        return new MatrixIterator();
+    }
+
+    private class MatrixIterator implements Iterator {
+        private int posX = 0;
+        private int posY = 0;
+        private T current = null;
+
+        /**
+         *
+         * @return If there is another element after the current one
+         */
+        @Override
+        public boolean hasNext() { return posX < getWidth() && posY < getHeight();
+        }
+
+        /**
+         * Gets the data of the next element in the Matrix
+         * @return Data in the next element
+         */
+        @Override
+        public T next() {
+            if (posX < getWidth()) {
+                return data[posX++][posY];
+            } else if (posY < getHeight()) {
+                posX = 0;
+                return data[posX][posY++];
+            } else {
+                return null;
+            }
+        }
     }
 }

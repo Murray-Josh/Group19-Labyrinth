@@ -19,7 +19,7 @@ import static java.util.Collections.addAll;
 public class Gameboard implements Serializable {
     private Level level;
     private SilkBag           silkBag;
-    private Vector<Vector<Tile>>            grid = new Vector<Vector<Tile>>();
+    private Matrix<Tile> tiles;
     private ArrayList<Player> players;
     private int width;
     private int height;
@@ -37,15 +37,10 @@ public class Gameboard implements Serializable {
 
     }
 
-    private void setTiles(Level level) {
+    private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException{
         ArrayList<Tile> fixed = level.getFixed();
         fixed.forEach(tile -> {
-            int x = tile.getCoordinate().getX();
-            int y = tile.getCoordinate().getY();
-
-            grid.setElementAt;
-
-
+            tiles.set(tile.getCoordinate(), tile);
         });
     }
 
