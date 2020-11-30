@@ -12,7 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import players.PlayerProfile;
 import players.Profiles;
 import styles.CarStyle;
-import styles.MouseTrapStyle;
+import styles.MouseStyle;
 import styles.PirateStyle;
 import styles.Style;
 
@@ -89,14 +89,14 @@ public class SetUpGameController implements Initializable {
      *
      * @return An instance of the selected style
      */
-    private Style createStyle(String selected) {
+    private Class createStyle(String selected) {
         switch (selected) {
             case CARS:
-                return new CarStyle();
+                return CarStyle.class;
             case MOUSE_TRAP:
-                return new MouseTrapStyle();
+                return MouseStyle.class;
             case PIRATE:
-                return new PirateStyle();
+                return PirateStyle.class;
             default:
                 showError(ErrorMsg.STYLE_NOT_VALID, Title.SETUP, false);
                 return null;

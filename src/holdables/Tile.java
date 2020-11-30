@@ -8,18 +8,21 @@ import styles.Style;
 
 import java.io.Serializable;
 
+import static holdables.TileEffect.*;
+
 /*** A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
- * @version 1.0
+ * @version 2.0
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
     private TileType   type;
     private Style      style;
-    private double     angle;
+    private Angle     angle;
+    private TileEffect effect = NONE;
     private boolean    fixed;
-    private boolean    onFire;
+
 
     /**
      * Constructs a new Holdables.Tile.
@@ -30,7 +33,7 @@ public class Tile implements Serializable, Holdable {
      * @param angle      Holdables.Tile's Angle of rotation
      * @param fixed      If the is fixed or not
      */
-    public Tile(Coordinate coordinate, TileType type, Style style, double angle, boolean fixed) {
+    public Tile(Coordinate coordinate, TileType type, Style style, Angle angle, boolean fixed) {
         setCoordinate(coordinate);
         setType(type);
         setStyle(style);
@@ -75,19 +78,7 @@ public class Tile implements Serializable, Holdable {
         this.fixed = false;
     }
 
-    /**
-     * Makes the tile be on fire
-     */
-    public void setOnFire() {
-        this.onFire = true;
-    }
 
-    /**
-     * Removes the Fire effect from the tile
-     */
-    public void removeFire() {
-        this.onFire = false;
-    }
 
     /**
      * Get's the tile's Core.Coordinate
@@ -130,7 +121,7 @@ public class Tile implements Serializable, Holdable {
      *
      * @return Rotation angle of tile
      */
-    public double getAngle() {
+    public Angle getAngle() {
         return this.angle;
     }
 
@@ -139,41 +130,12 @@ public class Tile implements Serializable, Holdable {
      *
      * @param angle New angle
      */
-    public void setAngle(double angle) {
+    public void setAngle(Angle angle) {
         this.angle = angle;
     }
 
     public Image getImage() {
-        switch (this.getType()) {
-            case CORNER:
-                if (isOnFire()) {
-                    return Style.getCornerFire();
-                } else if (isFixed()) {
-                    return Style.getCornerIce();
-                } else {
-                    return Style.getCornerTile();
-                }
-            case JUNCTION:
-                if (isOnFire()) {
-                    return Style.getJunctionFire();
-                } else if (isFixed()) {
-                    return Style.getJunctionIce();
-                } else {
-                    return Style.getJunctionTile();
-                }
-            case STRAIGHT:
-                if (isOnFire()) {
-                    return Style.getStraightFire();
-                } else if (isFixed()) {
-                    return Style.getStraightIce();
-                } else {
-                    return Style.getStraightTile();
-                }
-            case GOAL:
-                return Style.getGoalTile();
-            default:
-                return null;
-        }
+        return new Image(this.style);
     }
 
     /**
@@ -195,15 +157,6 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
-     * Gets if the tile is on fire
-     *
-     * @return Fixed value of tile
-     */
-    public boolean isOnFire() {
-        return this.onFire;
-    }
-
-    /**
      * Gets if the tile is fixed
      *
      * @return Fixed value of tile
@@ -219,15 +172,6 @@ public class Tile implements Serializable, Holdable {
      */
     public void setFixed(boolean fixed) {
         this.fixed = fixed;
-    }
-
-    /**
-     * Sets the tiles onFire value
-     *
-     * @param onFire Whether or not the tile is on fire
-     */
-    public void setOnFire(boolean onFire) {
-        this.onFire = onFire;
     }
 
 

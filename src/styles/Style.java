@@ -1,194 +1,146 @@
 package styles;
 
+import holdables.TileEffect;
 import javafx.scene.image.Image;
 
-import java.io.Serializable;
-
-/**
- * Create three classes to split up the stuff into to make it easier to access from other classes
- *
- * @author Issi Ludwig & Martin Samm
- * @version 3.0
- */
-public abstract class Style implements Serializable {
-
-    protected static Image PLAYER_ONE;
-    protected static Image PLAYER_TWO;
-    protected static Image PLAYER_THREE;
-    protected static Image PLAYER_FOUR;
-    protected static Image STRAIGHT_TILE;
-    protected static Image STRAIGHT_FIRE;
-    protected static Image STRAIGHT_ICE;
-    protected static Image CORNER_TILE;
-    protected static Image CORNER_FIRE;
-    protected static Image CORNER_ICE;
-    protected static Image JUNCTION_TILE;
-    protected static Image JUNCTION_FIRE;
-    protected static Image JUNCTION_ICE;
-    protected static Image GOAL_TILE;
-    protected static Image GAMEBOARD;
+public interface Style {
+    /**
+     * Gets Player One's Sprite
+     * @return Sprite
+     */
+    Image getPlayerOne();
+    /**
+     * Gets Player Two's Sprite
+     * @return Sprite
+     */
+    Image getPlayerTwo();
+    /**
+     * Gets Player Three's Sprite
+     * @return Sprite
+     */
+    Image getPlayerThree();
+    /**
+     * Gets Player Four's Sprite
+     * @return Sprite
+     */
+    Image getPlayerFour();
+    /**
+     * Gets Straight Tile's image when effect is NONE
+     * @return Tile when effect is NONE
+     */
+    Image getStraightTileNone();
+    /**
+     * Gets Corner Tile's image when effect is NONE
+     * @return Tile when effect is NONE
+     */
+    Image getCornerTileNone();
+    /**
+     * Gets Junction Tile's image when effect is NONE
+     * @return Tile when effect is NONE
+     */
+    Image getJunctionTileNone();
+    /**
+     * Gets Straight Tile's image when effect is Fire
+     * @return Tile when effect is Fire
+     */
+    Image getStraightTileFire();
+    /**
+     * Gets JunctionTile's image when effect is Fire
+     * @return Tile when effect is Fire
+     */
+    Image getJunctionTileFire();
+    /**
+     * Gets Corner Tile's image when effect is Fire
+     * @return Tile when effect is Fire
+     */
+    Image getCornerTileFire();
+    /**
+     * Gets Straight Tile's image when effect is ICE
+     * @return Tile when effect is ICE
+     */
+    Image getStraightTileIce();
+    /**
+     * Gets Junction Tile's image when effect is ICE
+     * @return Tile when effect is ICE
+     */
+    Image getJunctionTileIce();
+    /**
+     * Gets Corner Tile's image when effect is ICE
+     * @return Tile when effect is ICE
+     */
+    Image getCornerTileIce();
+    /**
+     * Gets Gameboard border image
+     * @return
+     */
+    Image getGameboard();
+    /**
+     * Gets Goal Tile's image
+     * @return
+     */
+    Image getGoalTile();
 
     /**
-     * Implements the images onto the gameboard
-     *
-     * @param PLAYER_ONE    Player one
-     * @param PLAYER_TWO    Player Two
-     * @param PLAYER_THREE  Player Three
-     * @param PLAYER_FOUR   Player Four
-     * @param STRAIGHT_TILE Straight Tile
-     * @param STRAIGHT_FIRE Straight Tile on fire
-     * @param STRAIGHT_ICE  Straight Tile covered with ice
-     * @param CORNER_TILE   Corner Tile
-     * @param CORNER_FIRE   Corner Tile on Fire
-     * @param CORNER_ICE    Corner Tile covered with ice
-     * @param JUNCTION_TILE Junction Tile
-     * @param JUNCTION_FIRE Junction tile on fire
-     * @param JUNCTION_ICE  Junction Tile covered with ice
-     * @param GOAL_TILE     Goal Tile
-     * @param GAMEBOARD     Standard Border
+     * Converts the Class name to a presentable String
+     * @return
      */
-    protected Style(Image PLAYER_ONE, Image PLAYER_TWO, Image PLAYER_THREE, Image PLAYER_FOUR, Image STRAIGHT_TILE,
-                    Image STRAIGHT_FIRE, Image STRAIGHT_ICE, Image CORNER_TILE, Image CORNER_FIRE, Image CORNER_ICE,
-                    Image JUNCTION_TILE, Image JUNCTION_FIRE, Image JUNCTION_ICE, Image GOAL_TILE, Image GAMEBOARD) {
-        Style.PLAYER_ONE = PLAYER_ONE;
-        Style.PLAYER_TWO = PLAYER_TWO;
-        Style.PLAYER_THREE = PLAYER_THREE;
-        Style.PLAYER_FOUR = PLAYER_FOUR;
-        Style.STRAIGHT_TILE = STRAIGHT_TILE;
-        Style.STRAIGHT_FIRE = STRAIGHT_FIRE;
-        Style.STRAIGHT_ICE = STRAIGHT_ICE;
-        Style.CORNER_TILE = CORNER_TILE;
-        Style.CORNER_FIRE = CORNER_FIRE;
-        Style.CORNER_ICE = CORNER_ICE;
-        Style.JUNCTION_TILE = JUNCTION_TILE;
-        Style.JUNCTION_FIRE = JUNCTION_FIRE;
-        Style.JUNCTION_ICE = JUNCTION_ICE;
-        Style.GOAL_TILE = GOAL_TILE;
-        Style.GAMEBOARD = GAMEBOARD;
-    }
+    String toString();
 
     /**
-     * Gets the image corresponding to the player number of a player
-     *
-     * @param playerNumber The number of the player 1-4
-     *
-     * @return The players sprite
+     * Gets a player's sprite based on their Player Number
+     * @param playerNumber Player Number 1-4
+     * @return Their Sprite
      */
-    public static Image getPlayerImage(int playerNumber) {
-        switch (playerNumber) {
-            case 1:
-                return PLAYER_ONE;
-            case 2:
-                return PLAYER_TWO;
-            case 3:
-                return PLAYER_THREE;
-            case 4:
-                return PLAYER_FOUR;
-            default:
-                throw new IndexOutOfBoundsException("<" + playerNumber + "> is not a valid player number");
+    default Image getPlayer(int playerNumber) {
+    switch (playerNumber) {
+        case 1 : return getPlayerOne();
+        case 2 : return getPlayerTwo();
+        case 3 : return getPlayerThree();
+        case 4 : return getPlayerFour();
+        default: throw new IndexOutOfBoundsException("Player number specified is not supported");
         }
     }
 
     /**
-     * Gets the Corner Holdables.Tile Image
-     *
-     * @return Corner Holdables.Tile Image
+     * Gets the Straight tile image base on effect
+     * @param effect Effect to find the Tile asset for
+     * @return Tile asset for the effect
      */
-    public static Image getCornerTile() {
-        return CORNER_TILE;
+    default Image getStraightTile(TileEffect effect) {
+        switch(effect) {
+            case ICE:return getStraightTileIce();
+            case FIRE:return getStraightTileFire();
+            case NONE:return getStraightTileNone();
+            default:throw new IllegalArgumentException("Effect does not exist");
+        }
+    }
+    /**
+     * Gets the Corner tile image base on effect
+     * @param effect Effect to find the Tile asset for
+     * @return Tile asset for the effect
+     */
+    default Image getCornerTile(TileEffect effect) {
+        switch(effect) {
+            case ICE:return getCornerTileIce();
+            case FIRE:return getCornerTileFire();
+            case NONE:return getCornerTileNone();
+            default:throw new IllegalArgumentException("Effect does not exist");
+        }
     }
 
     /**
-     * Gets the Corner Fire Image
-     *
-     * @return Corner Fire Image
+     * Gets the Junction tile image base on effect
+     * @param effect Effect to find the Tile asset for
+     * @return Tile asset for the effect
      */
-    public static Image getCornerFire() {
-        return CORNER_FIRE;
+    default Image getJunctionTile(TileEffect effect) {
+        switch(effect) {
+            case ICE:return getJunctionTileIce();
+            case FIRE:return getJunctionTileFire();
+            case NONE:return getJunctionTileNone();
+            default:throw new IllegalArgumentException("Effect does not exist");
+        }
     }
 
-    /**
-     * Gets the Corner Ice Image
-     *
-     * @return Corner Ice Image
-     */
-    public static Image getCornerIce() {
-        return CORNER_ICE;
-    }
-
-
-    /**
-     * Gets the Straight Holdables.Tile Image
-     *
-     * @return Straight Holdables.Tile Image
-     */
-    public static Image getStraightTile() {
-        return STRAIGHT_TILE;
-    }
-
-    /**
-     * Gets the Straight Fire Image
-     *
-     * @return Straight Fire Image
-     */
-    public static Image getStraightFire() {
-        return STRAIGHT_FIRE;
-    }
-
-    /**
-     * Gets the Straight Ice Image
-     *
-     * @return Straight Ice Image
-     */
-    public static Image getStraightIce() {
-        return STRAIGHT_ICE;
-    }
-
-
-    /**
-     * Gets the Goal Holdables.Tile Image
-     *
-     * @return Goal Holdables.Tile Image
-     */
-    public static Image getGoalTile() {
-        return GOAL_TILE;
-    }
-
-    /**
-     * Gets the Junction Holdables.Tile Image
-     *
-     * @return Junction Holdables.Tile Image
-     */
-    public static Image getJunctionTile() {
-        return JUNCTION_TILE;
-    }
-
-    /**
-     * Gets the Junction Fire Image
-     *
-     * @return Junction Fire Image
-     */
-    public static Image getJunctionFire() {
-        return JUNCTION_FIRE;
-    }
-
-    /**
-     * Gets the Junction Ice Image
-     *
-     * @return Junction Ice Image
-     */
-    public static Image getJunctionIce() {
-        return JUNCTION_ICE;
-    }
-
-
-    /**
-     * Gets the Core.Gameboard Border Image
-     *
-     * @return Core.Gameboard Border Image
-     */
-    public static Image getGameboardImage() {
-        return GAMEBOARD;
-    }
-
+    
 }

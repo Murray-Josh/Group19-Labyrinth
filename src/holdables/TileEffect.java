@@ -5,11 +5,12 @@ package holdables;
  * {@link Tile} and {@link PlayerEffect}
  *
  * @author Joseph Omar
- * @version 3.1
+ * @version 3.2
  */
 public enum TileEffect implements Effect, Holdable {
     FIRE(3, 2),
-    ICE(3, 1);
+    ICE(3, 1),
+    NONE(1,0);
     private final int RANGE;
     private final int TURNS_ACTIVE;
 
