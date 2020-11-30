@@ -9,6 +9,7 @@ import constants.Title;
 import java.net.URL;
 import java.util.Scanner;
 
+
 /**
  * Opens the cswebcat website, decodes and outputs the message.
  *
@@ -81,10 +82,12 @@ public class FindMessage {
         char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         int move = 1;
         char[] arrayList = text.toCharArray();
-        for (int i = 0; i < arrayList.length; i++) {
+        for (int i = 0; i < arrayList.length; i++) { //For each letter in the string
             for (int j = 0; j < alphabet.length; j++) {
-                if ((i + 1) % 2 != 0 && arrayList[i] == alphabet[j]) {
-                    if (j - move < 0) {
+                if ((i + 1) % 2 != 0 && arrayList[i] == alphabet[j]) { //If the char in the array is an odd number and
+                    // is found in the alphabet
+                    if (j - move < 0) { //This if statement makes sure that if the alphabet array lands at char 'A', it
+                        // will loop back to Z and continue counting.
                         int temp = move - j;
                         arrayList[i] = alphabet[alphabet.length - temp];
                         break;
@@ -92,8 +95,10 @@ public class FindMessage {
                         arrayList[i] = alphabet[j - move];
                         break;
                     }
-                } else if ((i + 1) % 2 == 0 && arrayList[i] == alphabet[j]) {
-                    if (j + move >= alphabet.length) {
+                } else if ((i + 1) % 2 == 0 && arrayList[i] == alphabet[j]) { //If the char in the array is an even
+                    // number and is found in the alphabet
+                    if (j + move >= alphabet.length) { //If statement makes sure when the alphabet array lands at char
+                        // 'Z', it will loop and go back to 'A' and continue counting.
                         int temp = j + move - alphabet.length;
                         arrayList[i] = alphabet[temp];
                         break;
