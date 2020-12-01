@@ -9,10 +9,13 @@ import core.Matrix;
 import core.Matrix;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -32,15 +35,15 @@ public class GameboardController implements InitialiseWithArgs, Initializable {
     @FXML
     private GridPane grdBoard;
     @FXML
-    private VBox vboxPlayers;
+    private VBox     vboxPlayers;
     @FXML
-    private VBox vboxEffects;
+    private VBox     vboxEffects;
     @FXML
-    private Button cmdActivate;
+    private Button   cmdActivate;
     @FXML
-    private Label lblStatus;
+    private Label    lblStatus;
     @FXML
-    private Button cmdSilkBag;
+    private Button   cmdSilkBag;
 
     private Gameboard board;
 
@@ -48,13 +51,14 @@ public class GameboardController implements InitialiseWithArgs, Initializable {
 
     private Style style;
 
-    private Level level;
+    private Level     level;
     private Gameboard gameboard;
 
     public void cmdActionClick(MouseEvent mouseEvent) {
 
     }
 
+    /*
     private void formatPlayers(){
         for(int pNum = 0; pNum < board.getPlayersCount(); pNum ++) {
             Label label = new Label("Player: " + pNum);
@@ -71,24 +75,42 @@ public class GameboardController implements InitialiseWithArgs, Initializable {
         vboxP1.getChildren().add(playerImView);
         return vboxP1;
     }
+    *
+     */
 
     @Override
-    public void initialize(URL location, ResourceBundle resources, Object[] args) {
+    public void initialize(URL location, ResourceBundle resources) {
         formatPlayers();
-        this.gameboard = (Gameboard) args[1];
-        Matrix tiles = new Matrix(grdBoard.getWidth(), grdBoard.getHeight());
-        gameboard.getTiles().forEach(tile -> {
-            System.out.println(tile.toString());
-            ImageView img = new ImageView();
-            img.setImage(tile.getImage());
-            img.setRotate(tile.getAngle().get());
-            grdBoard.add(img, tile.getCoordinate().getX(), tile.getCoordinate().getY());
-        });
-
-        }
 
     }
 
+    @Override
+    public void initializeWithArgs(Object[] args) {
+        this.gameboard = (Gameboard) args[1];
+        gameboard.getTiles().forEach(tile -> {
+            System.out.println(tile.toString());
+            ImageView image = new ImageView();
+            image.setImage(tile.getImage());
+            image.setRotate(tile.getAngle().get());
+            grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
+        });
+
+    }
+
+
+    private void formatPlayers() {
+        this.vboxPlayers.setAlignment(Pos.CENTER);
+        ArrayList<Player> players = this.gameboard.getPlayers();
+        players.forEach(player -> {
+            ImageView image = new ImageView(player.getPlayerImage());
+            Label name = new Label(player.getProfile().getName());
+            VBox playerPicture = new VBox(image, name);
+            VBox.setMargin(image, new Insets(4, 0, 4, 0));
+            VBox.setMargin(name, new Insets(4, 4, 4, 4));
+            this.vboxPlayers.getChildren().add(playerPicture);
+        });
+    }
+}
 
     /*
     public void keyPressed(KeyEvent keyEvent) {

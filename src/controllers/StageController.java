@@ -78,6 +78,7 @@ public class StageController {
     public static void start(Stage primaryStage) {
         stage = primaryStage;
         home();
+        
     }
 
     /**
@@ -109,8 +110,20 @@ public class StageController {
     }
 
     public static void changeScene(Window window, Object[] args) {
-        changeScene(window);
-
+        Scene scene = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(StageController.class.getResource(window.getPath()));
+            Parent root = loader.load();
+            InitialiseWithArgs controller = loader.getController();
+            controller.initializeWithArgs(args);
+            scene = new Scene(root);
+            setNewScene(scene, window.getTitle());
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
