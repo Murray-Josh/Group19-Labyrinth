@@ -2,6 +2,7 @@ package controllers;
 
 import constants.ErrorMsg;
 import constants.Title;
+import constants.Window;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,8 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.home;
-import static controllers.StageController.showError;
+import static controllers.StageController.*;
 
 public class SetUpGameController implements Initializable {
     public static final  String        CARS       = "Cars";
@@ -80,6 +80,8 @@ public class SetUpGameController implements Initializable {
     public void cmdStartClick(ActionEvent actionEvent) {
         Style style = createStyle(comStyle.getSelectionModel().getSelectedItem());
         /* method call to send/create the game */
+        changeScene(Window.BOARD);
+
     }
 
     /**

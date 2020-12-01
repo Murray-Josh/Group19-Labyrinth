@@ -3,6 +3,8 @@ package core;
 import holdables.Holdable;
 import holdables.Tile;
 import players.Player;
+import players.PlayerProfile;
+import players.Profiles;
 import styles.Style;
 
 import java.io.FileInputStream;
@@ -16,7 +18,7 @@ import java.util.stream.Stream;
 
 public class Gameboard implements Serializable {
     private Level level;
-    private SilkBag           silkBag;
+    private SilkBag silkBag;
     private final Matrix<Tile> tiles;
     private final ArrayList<Player> players;
     private final int width;
@@ -24,11 +26,12 @@ public class Gameboard implements Serializable {
     private final Style style;
 
 
-    public Gameboard(String levelURL, ArrayList<Player> players, Style style)
+    public Gameboard(String levelURL, Style style)
             throws IOException, ClassNotFoundException {
-        this.players = players;
-        this.style=style;
+        this.style = style;
         Level level = deserializeLevel(levelURL);
+        this.players = makePlayers(level);
+
         this.width = level.getWidth();
         this.height = level.getHeight();
         tiles = new Matrix<Tile>(width, height);
@@ -37,16 +40,18 @@ public class Gameboard implements Serializable {
     }
 
     private void setStartingPositions(ArrayList<Player> players, Level level) {
-       // players.forEach(player ->
+        players.forEach(player ->
+                player.setCoordinate(level.getPlayerPosition(player.getPlayerNum()), player.getPlayerNum()));
     }
 
     /**
      * Fill the Gameboard up with tiles
+     *
      * @param level Level that the board is based on
      * @throws IndexOutOfBoundsException
      * @throws NullPointerException
      */
-    private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException{
+    private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException {
         /* Get Fixed and movable tiles */
         ArrayList<Tile> fixed = level.getFixed();
         ArrayList<Tile> movable = level.getMovables();
@@ -74,9 +79,10 @@ public class Gameboard implements Serializable {
 
     /**
      * Takes the {@link Level} URL and deserializes it into a Level object
+     *
      * @param levelPath Path to level file
      * @return Deserialised {@link Level}
-     * @throws IOException If the Level cannot be found or read
+     * @throws IOException            If the Level cannot be found or read
      * @throws ClassNotFoundException If a Class in the Serialised Level cannot be found
      */
     private Level deserializeLevel(String levelPath)
@@ -91,6 +97,7 @@ public class Gameboard implements Serializable {
 
     /**
      * Combines two Arraylists of holdable implementing objects together
+     *
      * @param listA List to combine
      * @param listB Other list to combine
      * @return Combined List
@@ -103,6 +110,7 @@ public class Gameboard implements Serializable {
 
     /**
      * Width of the board
+     *
      * @return Board width
      */
     public int getWidth() {
@@ -111,6 +119,7 @@ public class Gameboard implements Serializable {
 
     /**
      * Height of the board
+     *
      * @return Board height
      */
     public int getHeight() {
@@ -119,9 +128,41 @@ public class Gameboard implements Serializable {
 
     /**
      * Gets the {@link Matrix} of {@link Tile}
+     *
      * @return Matrix of Tiles
      */
     public Matrix<Tile> getTiles() {
         return this.tiles;
+    }
+
+    public ArrayList<Player> makePlayers(Level level){
+        PlayerProfile profile1 = null;
+        PlayerProfile profile2 = null;
+        PlayerProfile profile3 = null;
+        PlayerProfile profile4 = null;
+
+        ArrayList<Player> playerList= new ArrayList<Player>();
+
+        Player playerOne = new Player(profile1, level.getPlayerOnePosition(), this.style, 1);
+        playerList.add(playerOne);
+
+        Player playerTwo = new Player(profile2, level.getPlayerTwoPosition(), this.style, 2);
+        playerList.add(playerTwo);
+
+        Player playerThree = new Player(profile3, level.getPlayerThreePosition(), this.style, 3);
+        playerList.add(playerThree);
+
+        Player playerFour = new Player(profile4, level.getPlayerFourPosition(), this.style, 4);
+        playerList.add(playerFour);
+
+        return playerList;
+    }
+
+    public Player getPlayers(int playerNum) {
+        return players.get(playerNum);
+    }
+
+    public int getNumOfPLayers() {
+        return players.size();
     }
 }

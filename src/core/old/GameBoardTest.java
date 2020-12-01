@@ -1,6 +1,8 @@
-package core;
+package core.old;
 
 import constants.TileType;
+import core.Coordinate;
+import core.Gameboard;
 import holdables.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;

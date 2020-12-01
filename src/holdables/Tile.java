@@ -3,6 +3,7 @@ package holdables;
 import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
+import javafx.scene.image.Image;
 import styles.Style;
 
 import java.io.Serializable;
@@ -170,4 +171,36 @@ public class Tile implements Serializable, Holdable {
     }
 
 
+    public Image getImage() {
+        switch (this.getType().toString()) {
+
+            case "CORNER":
+
+                if (isFixed()) {
+                    return Style.getCornerIce();
+                } else {
+                    return Style.getCornerTile();
+                }
+            case "JUNCTION":
+
+                if (isFixed()) {
+                    return Style.getJunctionIce();
+                } else {
+                    return Style.getJunctionTile();
+                }
+            case "STRAIGHT":
+
+                if (isFixed()) {
+                    return Style.getStraightIce();
+                } else {
+                    return Style.getStraightTile();
+                }
+            case "GOAL":
+
+                return Style.getGoalTile();
+
+            default:
+                return null;
+        }
+    }
 }

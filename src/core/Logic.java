@@ -1,12 +1,13 @@
 package core;
 
+
 import java.io.File;
 
 public class Logic {
 
 
     public static void createGame(File selected) {
-        GameBoardTest gameBoardTest = new GameBoardTest();
+        //GameBoardTest gameBoardTest = new GameBoardTest();
         //gameBoardTest.start();
     }
 

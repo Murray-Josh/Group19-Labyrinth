@@ -3,10 +3,12 @@ package players;
 import core.Coordinate;
 import holdables.Holdable;
 import holdables.PlayerEffect;
+import javafx.scene.image.Image;
 import styles.Style;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Class for players in game
@@ -17,11 +19,12 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     private static ArrayList<Holdable>   hand;
     private        PlayerProfile         profile;
-    private        ArrayList<Coordinate> coordinateArray;
+    private Stack<Coordinate> pastCoords;
     private        Style                 style;
     private        int                   playerNum;
     private        int                   currentDirection;
     private        PlayerEffect          activeEffect;
+    private Image playerImage;
 
     /**
      * Constructor for a player
@@ -37,6 +40,7 @@ public class Player implements Serializable {
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(0);
+        setPlayerImage(playerNum);
     }
 
     /**
@@ -45,8 +49,8 @@ public class Player implements Serializable {
      * @param coord
      */
     public void setStart(Coordinate coord) {
-        coordinateArray = new ArrayList<>();
-        coordinateArray.add(coord);
+        pastCoords.push(coord);
+
     }
 
     /**
@@ -92,7 +96,7 @@ public class Player implements Serializable {
      * @return Coordinates of player
      */
     public Coordinate getCoordinate(int i) {
-        return coordinateArray.get(i);
+        return pastCoords.peek();
     }
 
     /**
@@ -101,7 +105,7 @@ public class Player implements Serializable {
      * @param coord object for player
      */
     public void setCoordinate(Coordinate coord, int i) {
-        coordinateArray.set(i, coord);
+        pastCoords.push(coord);
     }
 
     /**
@@ -174,5 +178,13 @@ public class Player implements Serializable {
      */
     public void setActiveEffect(PlayerEffect activeEffect) {
         this.activeEffect = activeEffect;
+    }
+
+    public void setPlayerImage(int playerNum) {
+        Style.getPlayerImage(playerNum);
+    }
+
+    public Image getPlayerImage() {
+        return playerImage;
     }
 }
