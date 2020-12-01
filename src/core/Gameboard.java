@@ -4,7 +4,6 @@ import holdables.Holdable;
 import holdables.Tile;
 import players.Player;
 import players.PlayerProfile;
-import players.Profiles;
 import styles.Style;
 
 import java.io.FileInputStream;
@@ -14,18 +13,18 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class Gameboard implements Serializable {
 
 
     private SilkBag silkBag;
-    private final Matrix<Tile> tiles;
+    private Matrix<Tile> tiles;
     private final ArrayList<Player> players;
     private final int width;
     private final int height;
     private final Style style;
+    private Tile goalTile;
 
     /**
      * Creates a {@link Gameboard} from a Level Path, Style and a {@link java.util.Collection} of {@link PlayerProfile}
@@ -64,7 +63,7 @@ public class Gameboard implements Serializable {
      * @throws IndexOutOfBoundsException If there are more tiles than the gameboard allows
      * @throws NullPointerException If there aren't enough movable tiles for the gameboard
      */
-    private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException {
+    public void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException {
         /* Get Fixed and movable tiles */
         ArrayList<Tile> fixed = level.getFixed();
         ArrayList<Tile> movable = level.getMovables();
@@ -88,14 +87,16 @@ public class Gameboard implements Serializable {
         });
     }
 
-    /**
-     * Takes the {@link Level} URL and deserializes it into a Level object
-     *
-     * @param levelPath Path to level file
-     * @return Deserialised {@link Level}
-     * @throws IOException            If the Level cannot be found or read
-     * @throws ClassNotFoundException If a Class in the Serialised Level cannot be found
-     */
+
+
+        /**
+         * Takes the {@link Level} URL and deserializes it into a Level object
+         *
+         * @param levelPath Path to level file
+         * @return Deserialised {@link Level}
+         * @throws IOException            If the Level cannot be found or read
+         * @throws ClassNotFoundException If a Class in the Serialised Level cannot be found
+         */
     private Level deserializeLevel(String levelPath)
             throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(levelPath);
@@ -146,6 +147,12 @@ public class Gameboard implements Serializable {
         return this.tiles;
     }
 
+    public void setGameboardTile(Coordinate coord, Tile tile){
+        tiles.set(tile.getCoordinate(), tile);
+
+    }
+
+
     public ArrayList<Player> makePlayers(Level level){
         PlayerProfile profile1 = null;
         PlayerProfile profile2 = null;
@@ -192,4 +199,7 @@ public class Gameboard implements Serializable {
         return style;
     }
 
+    public Coordinate getGoal() {
+        return goalTile.getCoordinate();
+    }
 }

@@ -1,11 +1,13 @@
 package controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import constants.ErrorMsg;
 import constants.Title;
 import constants.Window;
+import core.Coordinate;
 import core.Gameboard;
 import core.Level;
-import holdables.Effect;
+import holdables.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -18,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import players.Player;
 import styles.Style;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +33,9 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private static final String REFRESH_COMPLETE = "Refreshing Gameboard";
     public static final String FORMATTING_PLAYERS = "Formatting Players";
     public static final String PLAYER_FORMATTING_COMPLETE = "Player Formatting Complete!";
+    public static final String SILK_BAG_DRAW = "Draw from silk bag";
+    public static final String PLACE_TILE = "Place your tile";
+
     public static final int TILE_SIZE = 50;
     public BorderPane root;
     public ButtonBar butttonBar;
@@ -55,9 +61,20 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private Level level;
     private Gameboard gameboard;
 
+    private int tempPlayerCounter;
+
+    private Holdable newTileToPlace;
+    private int newTileToPlaceX;
+    private int newTileToPlaceY;
+
+
+    public void cmdActionClick(MouseEvent mouseEvent) {
+
+    }
 
     /**
      * Initialises the controller and it's FXML window
+     *
      * @param location
      * @param resources
      */
@@ -67,6 +84,49 @@ public class GameboardController implements InitialisableWithParameters, Initial
     }
 
 
+    public void initializeWithArgs(Object[] args) {
+        this.gameboard = (Gameboard) args[1];
+        tempPlayerCounter = 1;
+        cmdSilkBag.setVisible(false);
+        cmdActivate.setVisible(false);
+        refresh();
+        playerTurn();
+
+    }
+
+
+    /**
+     * playerturn order stuff
+     */
+    private void playerTurn() {
+        // Draw from silk bag
+        cmdSilkBag.setVisible(true);
+        setStatus(SILK_BAG_DRAW);
+
+        //If effect finish
+        if (newTileToPlace.getClass() == PlayerEffect.class || newTileToPlace.getClass() == TileEffect.class) {
+            players.get(tempPlayerCounter).addToHand((Effect) newTileToPlace);
+
+        // If tile call methods to place it
+        } else if (newTileToPlace.getClass() == Tile.class) {
+            setStatus(PLACE_TILE);
+            cmdSilkBag.setVisible(true);
+            // tileMove(newTileToPlace, rowOr, newTileToPlaceY); need a way to get player click
+            refresh();
+
+        }
+
+        //PlayerMovement(players(tempPlayerCounter)); Waiting for class to finish
+        if(winCheck()){
+            //somehow end the game
+        }
+        else {
+            tempPlayerCounter += 1;
+            refresh();
+            playerTurn();
+        }
+
+    }
 
     /**
      * Refreshes the GridPane, updating each tile from the {@link Gameboard}
@@ -104,6 +164,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Creates a Container that holds the player and their data
+     *
      * @param player Player to create a Container for
      * @return Formatted Vbox
      */
@@ -118,6 +179,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Sets the value of the status message
+     *
      * @param message Message to be displayed
      */
     public void setStatus(String message) {
@@ -126,6 +188,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * formats and displays a players hand in the right hand  {@link javafx.scene.control.ScrollPane}
+     *
      * @param player Current {@link Player}
      */
     public void displayPlayerHand(Player player) {
@@ -134,11 +197,12 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Formats the Action tiles in a players hand into an icon and a name
+     *
      * @param item
      * @return
      */
     private VBox formatActionTile(Effect item) {
-        ImageView image =  new ImageView(item.getImage(this.style));
+        ImageView image = new ImageView(item.getImage(this.style));
         Label name = new Label(item.toString());
         VBox actionTile = new VBox(image, name);
         VBox.setMargin(image, new Insets(4, 0, 4, 0));
@@ -148,7 +212,8 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Sets up the correct number of rows and columns according to parameters
-     * @param width Width in Columns
+     *
+     * @param width  Width in Columns
      * @param height Height in Columns
      */
     private void setGridSize(int width, int height) {
@@ -156,12 +221,12 @@ public class GameboardController implements InitialisableWithParameters, Initial
         this.grdBoard.getRowConstraints().clear();
         for (int i = 0; i < width; i++) {
             ColumnConstraints columnConstraint = new ColumnConstraints();
-            columnConstraint.setPercentWidth(100.0/width);
+            columnConstraint.setPercentWidth(100.0 / width);
             this.grdBoard.getColumnConstraints().add(columnConstraint);
         }
-        for (int i = 0; i < height ;i++) {
+        for (int i = 0; i < height; i++) {
             RowConstraints rowConstraint = new RowConstraints();
-            rowConstraint.setPercentHeight(100.0/height);
+            rowConstraint.setPercentHeight(100.0 / height);
             this.grdBoard.getRowConstraints().add(rowConstraint);
         }
         setWindowSize();
@@ -171,7 +236,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
      * Sets the height of the window based on the size of the gameboard
      */
     private void setWindowSize() {
-        double  gridPaneWidth = TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
+        double gridPaneWidth = TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
         double gridPaneHeight = TILE_SIZE * grdBoard.getRowConstraints().size() * TILE_SIZE;
         double prefWidth = gridPaneWidth + vboxEffects.getMaxWidth() + vboxPlayers.getMaxWidth();
         double prefHeight = gridPaneHeight + lblStatus.getMaxHeight() + butttonBar.getMaxHeight();
@@ -180,6 +245,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Called from the {@link StageController}, allows the passage of parameters between scenes
+     *
      * @param parameters Parameters for this Controller
      */
     @Override
@@ -192,16 +258,62 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Handles the silk bag button click event
+     *
      * @param mouseEvent
      */
     public void cmdSilkbagClick(MouseEvent mouseEvent) {
+        cmdSilkBag.setVisible(false);
+        drawTile();
+
+    }
+
+    public void drawTile(){
+        setNewTileToPlace(gameboard.getSilkBag().getFirst());
     }
 
     /**
      * Handles the Activate button click event
+     *
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
+    }
+
+    public void setNewTileToPlace(Holdable newTileToPlace) {
+        this.newTileToPlace = newTileToPlace;
+    }
+
+    public void tileMove(Holdable tile, String rowOrColumn, int num) {
+        Tile newTile = (Tile) tile;
+        if (rowOrColumn.equals("Column")) {
+            for (int y = 0; y < gameboard.getHeight(); y++) {
+                Tile tempTile = gameboard.getTiles().get(num, y);
+                newTile.setCoordinate(new Coordinate(num, y));
+                gameboard.setGameboardTile(newTile.getCoordinate(), newTile);
+                newTile = tempTile;
+            }
+
+        } else if (rowOrColumn.equals("Row")) {
+            for (int x = 0; x < gameboard.getWidth(); x++) {
+                Tile tempTile = gameboard.getTiles().get(x, num);
+                newTile.setCoordinate(new Coordinate(x, num));
+                gameboard.setGameboardTile(newTile.getCoordinate(), newTile);
+                newTile = tempTile;
+            }
+        }
+    }
+
+    /**
+     * Will work when goalTile is variable in gameboard
+     * @return
+     */
+    public boolean winCheck(){
+        if(players.get(tempPlayerCounter).getCoordinate()==gameboard.getGoal()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 
