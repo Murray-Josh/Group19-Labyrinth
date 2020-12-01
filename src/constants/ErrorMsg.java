@@ -28,7 +28,8 @@ public enum ErrorMsg {
     STYLE_NOT_VALID("The selected Style is unavailable", "Style Unavailable"),
     LEVEL_READ_ERROR("The level could not be read.\nPlease verify files or use a different level file.", "Level Read Error"),
     BOARD_CREATE_ERROR("The Gameboard could not be created\nPlease try using a different level", "Gameboard Creation Error"),
-    LEVEL_FILE_ERROR("There are no Level Files to use\nPlease verify game files", "No Levels to Use");
+    LEVEL_FILE_ERROR("There are no Level Files to use\nPlease verify game files", "No Levels to Use"),
+    BOARD_REFRESH_ERROR("The Gameboard could not be refreshed\nRedirecting to game setup menu", "Gameboard Refresh Error");
 
     private final String MESSAGE;
     private final String HEADER;

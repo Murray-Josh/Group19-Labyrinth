@@ -8,10 +8,10 @@ import java.util.ResourceBundle;
 /**
  * Allows a FXML Controller Class to be initialised with arguments
  */
-public interface InitialiseWithArgs {
+public interface InitialisableWithParameters {
     /**
-     * Method to use the arguments passed to it
-     * @param args
+     * Method to use the parameters passed to it
+     * @param parameters
      */
-    void initializeWithArgs(Object[] args);
+    void initialiseWithParameters(Object[] parameters);
 }

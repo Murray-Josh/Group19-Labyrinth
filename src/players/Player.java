@@ -2,6 +2,7 @@ package players;
 
 import constants.Angle;
 import core.Coordinate;
+import holdables.Effect;
 import holdables.Holdable;
 import holdables.PlayerEffect;
 import javafx.scene.image.Image;
@@ -18,7 +19,7 @@ import java.util.Stack;
  * @version 1.0
  */
 public class Player implements Serializable {
-    private ArrayList<Holdable>   hand;
+    private ArrayList<Effect>   hand;
     private        PlayerProfile         profile;
     private Stack<Coordinate> coordinateHistory;
     private        Style                 style;
@@ -66,10 +67,10 @@ public class Player implements Serializable {
     /**
      * Adds an effect card to players hand
      *
-     * @param holdable Holdables.Effect card
+     * @param effect Holdables.Effect card
      */
-    public void addToHand(Holdable holdable) {
-        this.hand.add(holdable);
+    public void addToHand(Effect effect) {
+        this.hand.add(effect);
 
     }
 
@@ -114,7 +115,7 @@ public class Player implements Serializable {
      *
      * @return Card hand of player
      */
-    public ArrayList<Holdable> getHand() {
+    public ArrayList<Effect> getHand() {
         return hand;
     }
 
@@ -123,7 +124,7 @@ public class Player implements Serializable {
      *
      * @param hand Players hand
      */
-    public void setHand(ArrayList<Holdable> hand) {
+    public void setHand(ArrayList<Effect> hand) {
         this.hand = hand;
     }
 

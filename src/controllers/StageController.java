@@ -114,8 +114,8 @@ public class StageController {
         try {
             FXMLLoader loader = new FXMLLoader(StageController.class.getResource(window.getPath()));
             Parent root = loader.load();
-            InitialiseWithArgs controller = loader.getController();
-            controller.initializeWithArgs(args);
+            InitialisableWithParameters controller = loader.getController();
+            controller.initialiseWithParameters(args);
             scene = new Scene(root);
             setNewScene(scene, window.getTitle());
         } catch (IOException e) {
