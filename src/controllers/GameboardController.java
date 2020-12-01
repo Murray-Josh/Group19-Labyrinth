@@ -5,6 +5,8 @@ import constants.Title;
 import constants.Window;
 import core.Gameboard;
 import core.Level;
+import core.Matrix;
+import core.Matrix;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class GameboardController implements InitialiseWithArgs {
+public class GameboardController implements InitialiseWithArgs, Initializable {
     @FXML
     private GridPane grdBoard;
     @FXML
@@ -74,6 +76,17 @@ public class GameboardController implements InitialiseWithArgs {
     public void initialize(URL location, ResourceBundle resources, Object[] args) {
         formatPlayers();
         this.gameboard = (Gameboard) args[1];
+        Matrix tiles = new Matrix(grdBoard.getWidth(), grdBoard.getHeight());
+        gameboard.getTiles().forEach(tile -> {
+            System.out.println(tile.toString());
+            ImageView img = new ImageView();
+            img.setImage(tile.getImage());
+            img.setRotate(tile.getAngle().get());
+            grdBoard.add(img, tile.getCoordinate().getX(), tile.getCoordinate().getY());
+        });
+
+        }
+
     }
 
 
@@ -83,4 +96,4 @@ public class GameboardController implements InitialiseWithArgs {
     }
 
      */
-}
+
