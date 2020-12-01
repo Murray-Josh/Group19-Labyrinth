@@ -9,5 +9,14 @@ package holdables;
 public enum PlayerEffect implements Effect, Holdable {
     DOUBLE_MOVE,
     BACKTRACK,
-    NONE
+    NONE;
+
+    public String toString() {
+        switch (this) {
+            case DOUBLE_MOVE:return "Double Move";
+            case BACKTRACK:return "Backtrack";
+            case NONE : return "No Effect";
+            default : return "Not a Player Effect";
+        }
+    }
 }

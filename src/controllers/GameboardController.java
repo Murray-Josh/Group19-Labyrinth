@@ -5,6 +5,7 @@ import constants.Title;
 import constants.Window;
 import core.Gameboard;
 import core.Level;
+import holdables.Effect;
 import holdables.Holdable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -138,11 +139,12 @@ public class GameboardController implements InitialisableWithParameters, Initial
     }
 
     public void displayPlayerHand(Player player) {
-        player.getHand().forEach(item -> formatTile(item));
+        player.getHand().forEach(item -> formatActionTile(item));
     }
 
-    private void formatTile(Holdable item) {
-        VBox
+    private void formatActionTile(Effect item) {
+        VBox actionTile = new VBox();
+        Label name = new Label();
     }
 }
 

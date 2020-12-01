@@ -42,4 +42,13 @@ public enum TileEffect implements Holdable, Effect {
     public int getTurnsActive() {
         return TURNS_ACTIVE;
     }
+
+    public String toString() {
+        switch(this) {
+            case FIRE:return "Set on Fire";
+            case ICE : return "Freeze";
+            case NONE:return "No Effect";
+            default:return "Not a Tile Effect";
+        }
+    }
 }
