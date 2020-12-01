@@ -1,5 +1,8 @@
 package holdables;
 
+import javafx.scene.image.Image;
+import styles.Style;
+
 /**
  * Defines the types of {@link Effect} that can be applied to a {@link Tile}. These are also {@link Holdable}, like
  * {@link Tile} and {@link PlayerEffect}
@@ -43,12 +46,23 @@ public enum TileEffect implements Holdable, Effect {
         return TURNS_ACTIVE;
     }
 
+    @Override
     public String toString() {
         switch(this) {
             case FIRE:return "Set on Fire";
             case ICE : return "Freeze";
             case NONE:return "No Effect";
             default:return "Not a Tile Effect";
+        }
+    }
+
+    @Override
+    public Image getImage(Style style) {
+        switch(this) {
+            case FIRE:return null;
+            case ICE : return null;
+            case NONE:return null;
+            default:return null;
         }
     }
 }

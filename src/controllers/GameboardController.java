@@ -6,20 +6,20 @@ import constants.Window;
 import core.Gameboard;
 import core.Level;
 import holdables.Effect;
-import holdables.Holdable;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import players.Player;
 import styles.Style;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,6 +32,9 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private static final String REFRESH_COMPLETE = "Refreshing Gameboard";
     public static final String FORMATTING_PLAYERS = "Formatting Players";
     public static final String PLAYER_FORMATTING_COMPLETE = "Player Formatting Complete!";
+    public static final int TILE_SIZE = 50;
+    public BorderPane root;
+    public ButtonBar butttonBar;
     @FXML
     private GridPane grdBoard;
     @FXML
@@ -53,6 +56,8 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     private Level level;
     private Gameboard gameboard;
+    private double prefHeight;
+    private double prefWidth;
 
     /**
      * Handles the Activate button click
@@ -138,13 +143,58 @@ public class GameboardController implements InitialisableWithParameters, Initial
         this.lblStatus.setText(message);
     }
 
+    /**
+     * formats and displays a players hand in the right hand  {@link javafx.scene.control.ScrollPane}
+     * @param player Current {@link Player}
+     */
     public void displayPlayerHand(Player player) {
-        player.getHand().forEach(item -> formatActionTile(item));
+        player.getHand().forEach(item -> this.vboxEffects.getChildren().add(formatActionTile(item)));
     }
 
-    private void formatActionTile(Effect item) {
-        VBox actionTile = new VBox();
-        Label name = new Label();
+    /**
+     * Formats the Action tiles in a players hand into an icon and a name
+     * @param item
+     * @return
+     */
+    private VBox formatActionTile(Effect item) {
+        ImageView image =  new ImageView(item.getImage(this.style));
+        Label name = new Label(item.toString());
+        VBox actionTile = new VBox(image, name);
+        VBox.setMargin(image, new Insets(4, 0, 4, 0));
+        VBox.setMargin(name, new Insets(4, 4, 4, 4));
+        return actionTile;
+    }
+
+    /**
+     * Sets up the correct number of rows and columns according to parameters
+     * @param width Width in Columns
+     * @param height Height in Columns
+     */
+    private void setGridSize(int width, int height) {
+        this.grdBoard.getColumnConstraints().clear();
+        this.grdBoard.getRowConstraints().clear();
+        for (int i = 0; i < width; i++) {
+            ColumnConstraints columnConstraint = new ColumnConstraints();
+            columnConstraint.setPercentWidth(100.0/width);
+            this.grdBoard.getColumnConstraints().add(columnConstraint);
+        }
+        for (int i = 0; i < height ;i++) {
+            RowConstraints rowConstraint = new RowConstraints();
+            rowConstraint.setPercentHeight(100.0/height);
+            this.grdBoard.getRowConstraints().add(rowConstraint);
+        }
+        setWindowSize();
+    }
+
+    /**
+     * Sets the height of the window based on the size of the gameboard
+     */
+    private void setWindowSize() {
+        double  gridPaneWidth = TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
+        double gridPaneHeight = TILE_SIZE * grdBoard.getRowConstraints().size() * TILE_SIZE;
+        this.prefWidth = gridPaneWidth + vboxEffects.getMaxWidth() + vboxPlayers.getMaxWidth();
+        this.prefHeight = gridPaneHeight + lblStatus.getMaxHeight() + butttonBar.getMaxHeight();
+        this.root.setPrefSize(this.prefWidth, this.prefHeight);
     }
 }
 

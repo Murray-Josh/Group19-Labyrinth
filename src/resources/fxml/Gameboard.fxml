@@ -4,30 +4,65 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onKeyPressed="#keyPressed" prefHeight="792.0" prefWidth="1178.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameboardController">
+<BorderPane fx:id="root" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="863.0" prefWidth="1176.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameboardController">
    <center>
-      <GridPane fx:id="grdBoard" prefHeight="680.0" BorderPane.alignment="CENTER">
+      <GridPane fx:id="grdBoard" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="680.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
    </center>
    <left>
-      <VBox fx:id="vboxPlayers" prefHeight="680.0" prefWidth="170.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="vboxPlayers" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <VBox maxWidth="170.0" minWidth="170.0" prefHeight="200.0" prefWidth="170.0" styleClass="no-border" BorderPane.alignment="CENTER">
+      <VBox maxWidth="170.0" minWidth="170.0" prefWidth="170.0" styleClass="no-border" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="vboxEffects" styleClass="no-border" />
+                  <VBox fx:id="vboxEffects" maxWidth="153.0" minWidth="153.0" prefHeight="153.0" prefWidth="153.0" styleClass="no-border" />
                </content></ScrollPane>
-            <Button fx:id="cmdActivate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cmdActivateClick" prefHeight="30.0" prefWidth="170.0" text="Activate" textAlignment="CENTER" VBox.vgrow="NEVER">
+            <Button fx:id="cmdActivate" maxHeight="30.0" maxWidth="170.0" minHeight="30.0" minWidth="170.0" mnemonicParsing="false" onAction="#cmdActivateClick" prefHeight="30.0" prefWidth="170.0" text="Activate" textAlignment="CENTER" VBox.vgrow="NEVER">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -36,14 +71,14 @@
       </VBox>
    </right>
    <bottom>
-      <Label fx:id="lblStatus" styleClass="label-small" text="Waiting ..." BorderPane.alignment="CENTER_LEFT">
+      <Label fx:id="lblStatus" maxHeight="34.0" minHeight="34.0" prefHeight="34.0" styleClass="label-small" text="Waiting ..." BorderPane.alignment="CENTER_LEFT">
          <padding>
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>
       </Label>
    </bottom>
    <top>
-      <ButtonBar buttonOrder="%key.unspecified" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ButtonBar fx:id="butttonBar" buttonOrder="%key.unspecified" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" BorderPane.alignment="CENTER">
         <buttons>
           <Button fx:id="cmdSilkBag" alignment="CENTER" mnemonicParsing="false" text="Pick an Action" />
         </buttons>
