@@ -12,7 +12,7 @@ import players.Profiles;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.changeScene;
+import static controllers.StageController.*;
 
 /**
  * Controls the Main Menu {@link javafx.scene.Scene}

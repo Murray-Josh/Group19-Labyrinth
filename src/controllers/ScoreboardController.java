@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.home;
-import static controllers.StageController.showError;
+import static controllers.StageController.*;
 
 /**
  * Controls the Scoreboard scene

@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.home;
-import static controllers.StageController.showError;
+import static controllers.StageController.*;
 
 /**
  * Controls and handles the LoadGame scene

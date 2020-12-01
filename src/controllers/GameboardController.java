@@ -56,8 +56,6 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     private Level level;
     private Gameboard gameboard;
-    private double prefHeight;
-    private double prefWidth;
 
     /**
      * Handles the Activate button click
@@ -77,15 +75,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
         formatPlayers();
     }
 
-    /**
-     * Called from the {@link StageController}, allows the passage of parameters between scenes
-     * @param parameters Parameters for this Controller
-     */
-    @Override
-    public void initialiseWithParameters(Object[] parameters) {
-        this.gameboard = (Gameboard) parameters[1];
-        refresh();
-    }
+
 
     /**
      * Refreshes the GridPane, updating each tile from the {@link Gameboard}
@@ -192,9 +182,20 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private void setWindowSize() {
         double  gridPaneWidth = TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
         double gridPaneHeight = TILE_SIZE * grdBoard.getRowConstraints().size() * TILE_SIZE;
-        this.prefWidth = gridPaneWidth + vboxEffects.getMaxWidth() + vboxPlayers.getMaxWidth();
-        this.prefHeight = gridPaneHeight + lblStatus.getMaxHeight() + butttonBar.getMaxHeight();
-        this.root.setPrefSize(this.prefWidth, this.prefHeight);
+        double prefWidth = gridPaneWidth + vboxEffects.getMaxWidth() + vboxPlayers.getMaxWidth();
+        double prefHeight = gridPaneHeight + lblStatus.getMaxHeight() + butttonBar.getMaxHeight();
+        this.root.setPrefSize(prefWidth, prefHeight);
+    }
+
+    /**
+     * Called from the {@link StageController}, allows the passage of parameters between scenes
+     * @param parameters Parameters for this Controller
+     */
+    @Override
+    public void initialiseWithParameters(Object[] parameters) {
+        this.gameboard = (Gameboard) parameters[1];
+        setGridSize(gameboard.getWidth(), gameboard.getHeight());
+        refresh();
     }
 }
 
