@@ -18,8 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import players.Player;
 import styles.Style;
-
-import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -57,13 +55,6 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private Level level;
     private Gameboard gameboard;
 
-    /**
-     * Handles the Activate button click
-     * @param mouseEvent
-     */
-    public void cmdActionClick(MouseEvent mouseEvent) {
-
-    }
 
     /**
      * Initialises the controller and it's FXML window
@@ -196,6 +187,21 @@ public class GameboardController implements InitialisableWithParameters, Initial
         this.gameboard = (Gameboard) parameters[1];
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
         refresh();
+    }
+
+
+    /**
+     * Handles the silk bag button click event
+     * @param mouseEvent
+     */
+    public void cmdSilkbagClick(MouseEvent mouseEvent) {
+    }
+
+    /**
+     * Handles the Activate button click event
+     * @param mouseEvent
+     */
+    public void cmdActivateClick(MouseEvent mouseEvent) {
     }
 }
 
