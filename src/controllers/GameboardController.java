@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class GameboardController implements Initializable {
+public class GameboardController implements InitialiseWithArgs {
     @FXML
     private GridPane grdBoard;
     @FXML
@@ -47,34 +47,10 @@ public class GameboardController implements Initializable {
     private Style style;
 
     private Level level;
+    private Gameboard gameboard;
 
     public void cmdActionClick(MouseEvent mouseEvent) {
 
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        formatPlayers();
-
-
-    }
-
-    private void getLevel(String path) {
-        try {
-            FileInputStream fileIn = new FileInputStream(new File(path));
-            ObjectInputStream objIn = new ObjectInputStream(fileIn);
-            Level level = (Level) objIn.readObject();
-            importLevelData(path);
-        } catch (Exception e) {
-            e.printStackTrace();
-            StageController.showError(ErrorMsg.LEVEL_READ_ERROR, Title.ERROR, false);
-            StageController.changeScene(Window.SETUP);
-        }
-    }
-
-    private void importLevelData(String levelPath) throws IOException, ClassNotFoundException {
-        board = new Gameboard(levelPath,style) ;
     }
 
     private void formatPlayers(){
@@ -92,6 +68,12 @@ public class GameboardController implements Initializable {
         VBox vboxP1 = new VBox();
         vboxP1.getChildren().add(playerImView);
         return vboxP1;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources, Object[] args) {
+        formatPlayers();
+        this.gameboard = (Gameboard) args[1];
     }
 
 

@@ -108,6 +108,11 @@ public class StageController {
         }
     }
 
+    public static void changeScene(Window window, Object[] args) {
+        changeScene(window);
+
+    }
+
     /**
      * Displays an Error Dialog containing the passed strings
      *

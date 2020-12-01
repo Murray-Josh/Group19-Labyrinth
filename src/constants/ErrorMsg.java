@@ -26,7 +26,9 @@ public enum ErrorMsg {
     SAVE_READ_ERROR("The savegame selected could not be parsed\n", "Savegame Parse Error"),
     SAVE_WRITE_ERROR("The game could not be written to a file\n", "Savegame Write Error"),
     STYLE_NOT_VALID("The selected Style is unavailable", "Style Unavailable"),
-    LEVEL_READ_ERROR("The level could not be read.\nPlease verify files or use a different level file.", "Level Read Error");
+    LEVEL_READ_ERROR("The level could not be read.\nPlease verify files or use a different level file.", "Level Read Error"),
+    BOARD_CREATE_ERROR("The Gameboard could not be created\nPlease try using a different level", "Gameboard Creation Error"),
+    LEVEL_FILE_ERROR("There are no Level Files to use\nPlease verify game files", "No Levels to Use");
 
     private final String MESSAGE;
     private final String HEADER;

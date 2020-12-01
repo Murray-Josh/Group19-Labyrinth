@@ -27,11 +27,20 @@ public class Gameboard implements Serializable {
     private final int height;
     private final Style style;
 
-
-    public Gameboard(String levelURL, Style style, ArrayList<PlayerProfile> profiles)
-            throws IOException, ClassNotFoundException {
+    /**
+     * Creates a {@link Gameboard} from a Level Path, Style and a {@link java.util.Collection} of {@link PlayerProfile}
+     * @param levelPath Path to the level file
+     * @param style Style of the board
+     * @param profiles {@link java.util.Collection} of {@link PlayerProfile} of the players
+     * @throws IOException If the {@link Level} file could not be found.
+     * @throws ClassNotFoundException If a class in the {@link Level} file could not be found
+     * @throws IndexOutOfBoundsException If a tiles coordinate doesn't exist in the {@link Gameboard} {@link Matrix}
+     * @throws NullPointerException If there aren't enough tiles to be placed on the gameboard
+     */
+    public Gameboard(String levelPath, Style style, ArrayList<PlayerProfile> profiles)
+            throws IOException, ClassNotFoundException, IndexOutOfBoundsException, NullPointerException {
         this.style = style;
-        Level level = deserializeLevel(levelURL);
+        Level level = deserializeLevel(levelPath);
         this.players = constructPlayers(profiles, level);
         this.width = level.getWidth();
         this.height = level.getHeight();

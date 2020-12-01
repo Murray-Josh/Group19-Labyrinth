@@ -3,6 +3,7 @@ package controllers;
 import constants.ErrorMsg;
 import constants.Title;
 import constants.Window;
+import core.Gameboard;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,9 @@ import styles.MouseStyle;
 import styles.PirateStyle;
 import styles.Style;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +30,7 @@ import static controllers.StageController.*;
 
 public class SetUpGameController implements Initializable {
     public static final  String        CARS       = "Cars";
-    public static final  String        MOUSE_TRAP = "Mouse Trap";
+    public static final  String        MOUSE = "Mouse Trap";
     public static final  String        PIRATE     = "Pirate";
     private static final PlayerProfile none       = new PlayerProfile("--None--");
 
@@ -43,7 +47,7 @@ public class SetUpGameController implements Initializable {
     private ChoiceBox<PlayerProfile> comFour;
 
     @FXML
-    private ChoiceBox                           comBoard;
+    private ChoiceBox<File>                          comBoard;
     @FXML
     private ChoiceBox<String>                   comStyle;
     @FXML
@@ -79,8 +83,15 @@ public class SetUpGameController implements Initializable {
      */
     public void cmdStartClick(ActionEvent actionEvent) {
         Style style = createStyle(comStyle.getSelectionModel().getSelectedItem());
-        /* method call to send/create the game */
-        changeScene(Window.BOARD);
+        String levelPath = comBoard.getSelectionModel().getSelectedItem().toString();
+        try {
+            Gameboard gameboard = new Gameboard(levelPath, style, players);
+            changeScene(Window.BOARD, new Object[]{gameboard});
+        } catch (Exception e) {
+            showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
+            changeScene(Window.SETUP);
+            e.printStackTrace();
+        }
 
     }
 
@@ -95,7 +106,7 @@ public class SetUpGameController implements Initializable {
         switch (selected) {
             case CARS:
                 return new CarStyle();
-            case MOUSE_TRAP:
+            case MOUSE:
                 return new MouseStyle();
             case PIRATE:
                 return new PirateStyle();
@@ -117,6 +128,21 @@ public class SetUpGameController implements Initializable {
         this.resourceBundle = resources;
         initialisePlayers();
         initialiseStyles();
+        initialiseLevels();
+    }
+
+    private void initialiseLevels() {
+        FilenameFilter filter= (dir, name) -> name.endsWith(".ser");
+        File[] fileArray = new File("").listFiles(filter);
+        if (fileArray != null) {
+            ObservableList<File> files = FXCollections.observableArrayList(Arrays.asList(fileArray));
+            this.comBoard.setItems(files);
+            this.comBoard.getSelectionModel().selectFirst();
+
+        } else {
+            showError(ErrorMsg.LEVEL_FILE_ERROR, Title.SETUP, false);
+            home();
+        }
     }
 
     /**
@@ -153,7 +179,7 @@ public class SetUpGameController implements Initializable {
      * Adds styles to the styles Choice Box
      */
     private void initialiseStyles() {
-        this.comStyle.setItems(FXCollections.observableArrayList(CARS, MOUSE_TRAP, PIRATE));
+        this.comStyle.setItems(FXCollections.observableArrayList(CARS, MOUSE, PIRATE));
         comStyle.setValue(CARS);
     }
 
