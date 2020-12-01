@@ -97,7 +97,7 @@ public class Player implements Serializable {
      *
      * @return Coordinates of player
      */
-    public Coordinate getCoordinate(int i) {
+    public Coordinate getCoordinate() {
         return coordinateHistory.peek();
     }
 
