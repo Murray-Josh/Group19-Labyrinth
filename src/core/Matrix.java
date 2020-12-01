@@ -33,7 +33,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * Constructs a Matrix using a 2D array of <></>
      * @param data Data to be placed into the matrix
      */
-    public Matrix(T[][] data) {
+    public Matrix(Object[][] data) {
         this.width = data.length;
         this.height = data[0].length;
         this.data = data;
@@ -80,6 +80,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @throws IndexOutOfBoundsException If the coordinate is either too big or too small
      * @throws NullPointerException If there is no data at the coordinate
      */
+    @SuppressWarnings("unchecked")
     public T get(Coordinate coordinate) throws IndexOutOfBoundsException, NullPointerException{
         return (T) this.data[coordinate.getX()][coordinate.getY()];
     }
@@ -140,6 +141,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @return Iterator of type <></>
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Iterator<T> iterator() {
         return new MatrixIterator();
     }
@@ -147,7 +149,6 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
     private class MatrixIterator implements Iterator {
         private int posX = 0;
         private int posY = 0;
-        private final T current = null;
 
         /**
          *

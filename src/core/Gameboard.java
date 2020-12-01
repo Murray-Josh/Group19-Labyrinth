@@ -14,10 +14,12 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Gameboard implements Serializable {
-    private Level level;
+
+
     private SilkBag silkBag;
     private final Matrix<Tile> tiles;
     private final ArrayList<Player> players;
@@ -26,30 +28,32 @@ public class Gameboard implements Serializable {
     private final Style style;
 
 
-    public Gameboard(String levelURL, Style style)
+    public Gameboard(String levelURL, Style style, ArrayList<PlayerProfile> profiles)
             throws IOException, ClassNotFoundException {
         this.style = style;
         Level level = deserializeLevel(levelURL);
-        this.players = makePlayers(level);
-
+        this.players = constructPlayers(profiles, level);
         this.width = level.getWidth();
         this.height = level.getHeight();
-        tiles = new Matrix<Tile>(width, height);
+        tiles = new Matrix<>(width, height);
         setTiles(level);
-        setStartingPositions(players, level);
     }
 
-    private void setStartingPositions(ArrayList<Player> players, Level level) {
-        players.forEach(player ->
-                player.setCoordinate(level.getPlayerPosition(player.getPlayerNum()), player.getPlayerNum()));
+
+    private ArrayList<Player> constructPlayers(ArrayList<PlayerProfile> profiles, Level level) {
+        ArrayList<Player> toReturn = new ArrayList<>();
+        profiles.forEach(profile -> {
+            toReturn.add(new Player(profile, level.getPlayerPosition(profiles.indexOf(profile) + 1), this.style, profiles.indexOf(profile) + 1));
+        });
+        return toReturn;
     }
 
     /**
      * Fill the Gameboard up with tiles
      *
      * @param level Level that the board is based on
-     * @throws IndexOutOfBoundsException
-     * @throws NullPointerException
+     * @throws IndexOutOfBoundsException If there are more tiles than the gameboard allows
+     * @throws NullPointerException If there aren't enough movable tiles for the gameboard
      */
     private void setTiles(Level level) throws IndexOutOfBoundsException, NullPointerException {
         /* Get Fixed and movable tiles */
@@ -61,9 +65,7 @@ public class Gameboard implements Serializable {
         ArrayDeque<Tile> movableTiles = new ArrayDeque<>(movable);
 
         /*Add all fixed tiles to the correct position on the board */
-        fixed.forEach(tile -> {
-            tiles.set(tile.getCoordinate(), tile);
-        });
+        fixed.forEach(tile -> tiles.set(tile.getCoordinate(), tile));
 
         /* Add a random movable tile to any space not filled in */
         tiles.forEach(tile -> {
@@ -103,7 +105,7 @@ public class Gameboard implements Serializable {
      * @return Combined List
      */
     private ArrayList<Holdable> combine(ArrayList<? extends Holdable> listA, ArrayList<? extends Holdable> listB) {
-        ArrayList<Holdable> toReturn = new ArrayList<Holdable>();
+        ArrayList<Holdable> toReturn = new ArrayList<>();
         Stream.of(listA, listB).forEach(toReturn::addAll);
         return toReturn;
     }
@@ -162,7 +164,23 @@ public class Gameboard implements Serializable {
         return players.get(playerNum);
     }
 
-    public int getNumOfPLayers() {
+    public int getPlayersCount() {
         return players.size();
     }
+    public SilkBag getSilkBag() {
+        return silkBag;
+    }
+
+    public void setSilkBag(SilkBag silkBag) {
+        this.silkBag = silkBag;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
 }

@@ -1,11 +1,12 @@
 package players;
 
+import constants.Angle;
 import core.Coordinate;
 import holdables.Holdable;
 import holdables.PlayerEffect;
 import javafx.scene.image.Image;
 import styles.Style;
-
+import static constants.Angle.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -17,12 +18,12 @@ import java.util.Stack;
  * @version 1.0
  */
 public class Player implements Serializable {
-    private static ArrayList<Holdable>   hand;
+    private ArrayList<Holdable>   hand;
     private        PlayerProfile         profile;
-    private Stack<Coordinate> pastCoords;
+    private Stack<Coordinate> coordinateHistory;
     private        Style                 style;
     private        int                   playerNum;
-    private        int                   currentDirection;
+    private Angle currentDirection;
     private        PlayerEffect          activeEffect;
     private Image playerImage;
 
@@ -30,26 +31,26 @@ public class Player implements Serializable {
      * Constructor for a player
      *
      * @param profile   Profile of a player
-     * @param coord     Coordinates of gameboard of player
+     * @param coordinate     Coordinates of gameboard of player
      * @param style     Styles.Style of piece for player
      * @param playerNum Players.Player number
      */
-    public Player(PlayerProfile profile, Coordinate coord, Style style, int playerNum) {
+    public Player(PlayerProfile profile, Coordinate coordinate, Style style, int playerNum) {
         setProfile(profile);
-        setStart(coord);
+        setStart(coordinate);
         setStyle(style);
         setPlayerNum(playerNum);
-        setCurrentDirection(0);
+        setCurrentDirection(UP);
         setPlayerImage(playerNum);
     }
 
     /**
      * Sets the player's initial position
      *
-     * @param coord
+     * @param coordinate
      */
-    public void setStart(Coordinate coord) {
-        pastCoords.push(coord);
+    public void setStart(Coordinate coordinate) {
+        coordinateHistory.push(coordinate);
 
     }
 
@@ -67,8 +68,8 @@ public class Player implements Serializable {
      *
      * @param holdable Holdables.Effect card
      */
-    public static void addToHand(Holdable holdable) {
-        hand.add(holdable);
+    public void addToHand(Holdable holdable) {
+        this.hand.add(holdable);
 
     }
 
@@ -96,16 +97,16 @@ public class Player implements Serializable {
      * @return Coordinates of player
      */
     public Coordinate getCoordinate(int i) {
-        return pastCoords.peek();
+        return coordinateHistory.peek();
     }
 
     /**
      * Sets coordinates of player on gameboard
      *
-     * @param coord object for player
+     * @param coordinate object for player
      */
-    public void setCoordinate(Coordinate coord, int i) {
-        pastCoords.push(coord);
+    public void setCoordinate(Coordinate coordinate) {
+        coordinateHistory.push(coordinate);
     }
 
     /**
@@ -122,8 +123,8 @@ public class Player implements Serializable {
      *
      * @param hand Players hand
      */
-    private void setHand(ArrayList<Holdable> hand) {
-        Player.hand = hand;
+    public void setHand(ArrayList<Holdable> hand) {
+        this.hand = hand;
     }
 
     /**
@@ -149,7 +150,7 @@ public class Player implements Serializable {
      *
      * @return Direction player is facing
      */
-    public int getCurrentDirection() {
+    public Angle getCurrentDirection() {
         return currentDirection;
     }
 
@@ -158,7 +159,7 @@ public class Player implements Serializable {
      *
      * @param currentDirection Direction player is facing
      */
-    public void setCurrentDirection(int currentDirection) {
+    public void setCurrentDirection(Angle currentDirection) {
         this.currentDirection = currentDirection;
     }
 
@@ -180,8 +181,8 @@ public class Player implements Serializable {
         this.activeEffect = activeEffect;
     }
 
-    public void setPlayerImage(int playerNum) {
-        Style.getPlayerImage(playerNum);
+    public void setPlayerImage(int playerNumber) {
+        this.playerImage = Style.getPlayerImage(playerNumber);
     }
 
     public Image getPlayerImage() {

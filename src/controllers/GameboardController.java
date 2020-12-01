@@ -5,8 +5,6 @@ import constants.Title;
 import constants.Window;
 import core.Gameboard;
 import core.Level;
-import core.Matrix;
-import holdables.Tile;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -80,7 +78,7 @@ public class GameboardController implements Initializable {
     }
 
     private void formatPlayers(){
-        for(int pNum = 0; pNum < board.getNumOfPLayers();pNum ++) {
+        for(int pNum = 0; pNum < board.getPlayersCount(); pNum ++) {
             Label label = new Label("Player: " + pNum);
             Pane paneP1 = new Pane(label);
             paneP1.getChildren().add(createPlayerImageVbox(pNum));
