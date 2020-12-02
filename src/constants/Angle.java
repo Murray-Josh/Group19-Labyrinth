@@ -34,4 +34,22 @@ public enum Angle {
     public String toString() {
         return String.valueOf(this.ANGLE);
     }
+
+    /**
+     * Converts a Double to an Angle type
+     * @param value Angle to be converted
+     * @return Angle corresponding to specified value
+     */
+    public Angle toAngle(double value) {
+        switch ((int) value) {
+            case 0 :
+            case 360:
+                return Angle.DOWN;
+            case 90: return Angle.LEFT;
+            case 180:return Angle.UP;
+            case 270:return Angle.RIGHT;
+            default:throw new IllegalArgumentException("Not an Angle Constant");
+        }
+    }
+
 }
