@@ -16,9 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import players.Player;
+import players.PlayerMovement;
 import styles.Style;
 
 import java.net.URL;
@@ -100,7 +102,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
      */
     private void playerTurn() {
         // Draw from silk bag
-        cmdSilkBag.setVisible(true);
+        cmdSilkBag.setDisable(false);
         setStatus(SILK_BAG_DRAW);
 
         //If effect finish
@@ -314,6 +316,12 @@ public class GameboardController implements InitialisableWithParameters, Initial
         else {
             return false;
         }
+    }
+
+    public void keyPressed(KeyEvent keyEvent) {
+
+        PlayerMovement.keyPressed(keyEvent);
+
     }
 }
 

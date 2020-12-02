@@ -33,7 +33,7 @@ public class PlayerMovement {
 
 //TODO key listener method
 
-    private void keyPressed(KeyEvent e){
+    public static void keyPressed(KeyEvent e){
         KeyCode key = e.getCode();
 
 
