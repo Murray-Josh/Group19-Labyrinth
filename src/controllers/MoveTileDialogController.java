@@ -20,5 +20,5 @@ public class MoveTileDialogController {
     @FXML
     private GridPane  grdTiles;
 
-    p
+
 }
