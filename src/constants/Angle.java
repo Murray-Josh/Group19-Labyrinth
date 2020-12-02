@@ -6,7 +6,7 @@ package constants;
  * @version 1.0
  */
 public enum Angle {
-    UP(0), LEFT(270), RIGHT(90), DOWN(180);
+    DOWN(0), LEFT(90), UP(180), RIGHT(270);
 
     private final double ANGLE;
 
