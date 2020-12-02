@@ -32,9 +32,13 @@ public class PlayerMovement {
 
 //TODO key listener method
 
+
+    /**
+     * checks the key input and translates it to coordinate change - controls whether the sprite is moving
+     * @param e KeyEvent identifier
+     */
     public static void keyPressed(KeyEvent e){
         KeyCode key = e.getCode();
-
 
         switch(key){
             case W:
@@ -47,10 +51,10 @@ public class PlayerMovement {
                 break;
             case S:
             case DOWN:
-            case RIGHT:
                 dy = 1;
                 break;
             case D:
+            case RIGHT:
                 dy = 1;;
                 break;
             case SPACE:
@@ -59,16 +63,30 @@ public class PlayerMovement {
                 break;
         }
     }
-        public void move(){
+
+    /**
+     * changes players coordinates
+     */
+    public void move(){
             x += dx;
             y += dy;
         }
 
-        public int getX(){
+
+        // both of these methods occur in Coordinate.java as well - might be easier to just call them from there
+    /**
+     * gets x coordinate
+     * @return x coordinate
+     */
+    public int getX(){
             return x;
         }
 
-        public int getY(){
+    /**
+     * gets y coordinate
+     * @return y coordinate
+     */
+    public int getY(){
             return y;
         }
 
