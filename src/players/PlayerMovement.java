@@ -2,11 +2,13 @@ package players;
 
 import core.Coordinate;
 import core.Gameboard;
+import holdables.PlayerEffect;
 import holdables.TileEffect;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Moves the players
@@ -96,6 +98,7 @@ public class PlayerMovement {
     //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
     private Boolean[] tilesAligned(Player currentPlayer){
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
+        Coordinate prevCoord = currentTile.getCoordinate();
         checkAligns(currentTile, currentMovable);
         Boolean[] alignsArr = new Boolean[4];
 
