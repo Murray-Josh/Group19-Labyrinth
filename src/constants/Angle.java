@@ -40,7 +40,7 @@ public enum Angle {
      * @param value Angle to be converted
      * @return Angle corresponding to specified value
      */
-    public Angle toAngle(double value) {
+    public static Angle toAngle(double value) {
         switch ((int) value) {
             case 0 :
             case 360:
