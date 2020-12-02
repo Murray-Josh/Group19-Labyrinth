@@ -4,6 +4,7 @@ import core.Coordinate;
 import core.Gameboard;
 import holdables.PlayerEffect;
 import holdables.TileEffect;
+import players.TurnCounter;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
@@ -51,6 +52,10 @@ public class PlayerMovement {
                 break;
             case D:
                 dy = 1;;
+                break;
+            case SPACE:
+            case ENTER:
+                TurnCounter.switchPlayer();
                 break;
         }
     }
@@ -224,7 +229,7 @@ public class PlayerMovement {
 
 
 //TODO end turn (dw about this just yet tho)
-
+//TODO make any movement away from start square of turn a move and if you move back towards that square, you get the move back
 
 
     private Coordinate oldCoord(Player currentPlayer, int player){
