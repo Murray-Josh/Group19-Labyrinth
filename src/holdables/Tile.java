@@ -3,12 +3,15 @@ package holdables;
 import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
+import core.Gameboard;
 import javafx.scene.image.Image;
+import players.Player;
 import styles.Style;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-import static holdables.TileEffect.NONE;
+import static holdables.TileEffect.*;
 
 /** A tile that can be placed on the gameboard or in the silk bag.
  *
@@ -20,7 +23,7 @@ public class Tile implements Serializable, Holdable {
     private TileType   type;
     private  Style      style;
     private Angle     angle;
-    private final TileEffect effect = NONE;
+    private TileEffect effect = NONE;
     private boolean    fixed;
 
 
@@ -168,6 +171,23 @@ public class Tile implements Serializable, Holdable {
      */
     public void setFixed(boolean fixed) {
         this.fixed = fixed;
+    }
+
+
+    public void makeFireEffect(){
+        effect = FIRE;
+    }
+
+    public void makeIceEffect(){
+        effect = ICE;
+    }
+
+    public TileEffect getEffect(){
+        return effect;
+    }
+
+    public void setEffect(TileEffect effect) {
+        this.effect = effect;
     }
 
 
