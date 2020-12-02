@@ -27,8 +27,6 @@ public class PlayerMovement {
     
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();
     ArrayList<Integer> nextMovable = new ArrayList<Integer>();
-    
-    private static final int MOVE_COUNT = 4;
 
 
 //TODO key listener method
@@ -48,11 +46,11 @@ public class PlayerMovement {
                 break;
             case S:
             case DOWN:
+            case RIGHT:
                 dy = 1;
                 break;
             case D:
-            case RIGHT:
-                dx = 1;;
+                dy = 1;;
                 break;
         }
     }
@@ -71,7 +69,12 @@ public class PlayerMovement {
 
 
 
+   /* private Boolean canPlayerEnterTile(Player currentPlayer, Tile selectedTile){
+        if(gameboard.getPlayers(i).getCoordinate().equals(checkTile.getCoordinate())) {
+            return !(TileEffect.FIRE || !(tilesAligned(currentPlayer)) || isPlayerOnTile(selectedTile));
 
+        }
+*/
 
 
 // TODO private method double move and backspace - pop coordinate stack
@@ -112,25 +115,25 @@ public class PlayerMovement {
         //then checks if next tile allows for travel in the opposite direction
         if(currentMovable.contains(0) && !isPlayerOnTile(southTile) && !isOnFire(southTile)) {
             checkAligns(southTile, nextMovable);
-            if(nextMovable.contains(2) && (southTile.getCoordinate() != prevCoord)) {
+            if(nextMovable.contains(2)) {
                 alignsArr[0] = true;
             }
         }
         if(currentMovable.contains(1) && !isPlayerOnTile(westTile) && !isOnFire(westTile)) {
             checkAligns(westTile, nextMovable);
-            if(nextMovable.contains(3) && (westTile.getCoordinate() != prevCoord)) {
+            if(nextMovable.contains(3)) {
                 alignsArr[1] = true;
             }
         }
         if(currentMovable.contains(2) && !isPlayerOnTile(northTile) && !isOnFire(northTile)) {
             checkAligns(northTile, nextMovable);
-            if(nextMovable.contains(0) && (northTile.getCoordinate() != prevCoord)) {
+            if(nextMovable.contains(0)) {
                 alignsArr[2] = true;
             }
         }
         if(currentMovable.contains(3) && !isPlayerOnTile(eastTile) && !isOnFire(eastTile)) {
             checkAligns(eastTile, nextMovable);
-            if(nextMovable.contains(1) && (eastTile.getCoordinate() != prevCoord)) {
+            if(nextMovable.contains(1)) {
                 alignsArr[3] = true;
             }
         }
@@ -173,7 +176,7 @@ public class PlayerMovement {
                         break;
                     case RIGHT:
                         list.add(2);
-                        list.add(3);
+                        list.add(1);
                         break;
                 }
             case JUNCTION:
@@ -209,18 +212,13 @@ public class PlayerMovement {
         return list;
     }
 
+//TODO move counter method 1-4 moves - old coord != nodprivate static static
 
-    //As long as there is somewhere for the player to move to and within count limit, can move
-    //works with double move
-    private void moveCount(Player p) {
-        int count = MOVE_COUNT;
-        while(Arrays.asList(tilesAligned(p)).contains(true)) {
-            if(p.getActiveEffect() == PlayerEffect.DOUBLE_MOVE) { //may be issues with when double move is applied and when this is checked
-                count = 2 * MOVE_COUNT;
-            }
-            for(int i = 0; i < count; i++) {
-                //can move
-            }
+    private static void moveCount(){
+        int count = 0;
+        while(isAccessable() && count <= 4 && canPlayerEnterTile()){
+            //move
+            count++;
         }
     }
 
