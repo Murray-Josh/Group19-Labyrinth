@@ -368,12 +368,15 @@ public class Level implements Serializable {
      */
     private void readGameboard(Scanner in) {
         readSize(in.nextLine());
-        int fixed = Integer.parseInt(in.nextLine());
-        readFixed(fixed, in);
+        int fixedTile = Integer.parseInt(in.nextLine());
+        readFixed(fixedTile, in);
+        System.out.println(fixed);
         int unfixed = Integer.parseInt(in.nextLine());
         if (unfixed > 0) {
             readUnfixed(unfixed, in);
         }
+        System.out.println(unfixed);
+
         setStartCoords(in);
     }
 
