@@ -21,6 +21,9 @@ public class PlayerMovement {
     private static int y;
     private static int dx;
     private static int dy;
+    
+    ArrayList<Integer> currentMovable = new ArrayList<Integer>();
+    ArrayList<Integer> nextMovable = new ArrayList<Integer>();
 
 
 //TODO key listener method
@@ -77,32 +80,128 @@ public class PlayerMovement {
 
     }
 
-//TODO boolean method check if you can move there ie tiles are aligned/not on fire/different player not on square etc
-
-    private static Boolean canPlayerEnterTile(Tile nextTile){
-     if (TileEffect.FIRE || tilesAligned() == false || isPlayerOnTile()){
-            return false;
-        } else {
-         return true;
+private Boolean isPlayerOnTile(Tile checkTile) {
+        Boolean playerPresent = false;
+        for(int i = 0; i < gameboard.getPlayersCount(); i++) {
+            if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
+                playerPresent = true;
+            }
         }
+        return playerPresent;
     }
 
-    private static Boolean isPlayerOnTile(Player currentPlayer){
-        //we need to know how many players are in the game
-        if(currentPlayer.getCoordinate().equals() || currentPlayer.getCoordinate().equals()){}
+    //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
+    private Boolean[] tilesAligned(Player currentPlayer){
+        Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
+        checkAligns(currentTile, currentMovable);
+        Boolean[] alignsArr = new Boolean[4];
 
-    }
+        //May fail at board edges
+        Tile southTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()+1);
+        Tile westTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()-1, currentTile.getCoordinate().getY());
+        Tile northTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()-1);
+        Tile eastTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()+1, currentTile.getCoordinate().getY());
 
-    private static Boolean tilesAligned(){
-        //checks if the tiles align - is there an easier way of doing this than doing shit tonnes of if statements
-    }
-
-//TODO boolean method that calls above - checks in all four directions - ends turn if not possible to move
-
-    private static Boolean isAccessable(){
-        if(canPlayerEnterTile()){
-            //how would you check the four directions??
+        //First checks if the current tile allows for travel in a direction,
+        //then checks if next tile allows for travel in the opposite direction
+        if(currentMovable.contains(0) && !isPlayerOnTile(southTile) && !isOnFire(southTile)) {
+            checkAligns(southTile, nextMovable);
+            if(nextMovable.contains(2)) {
+                alignsArr[0] = true;
+            }
         }
+        if(currentMovable.contains(1) && !isPlayerOnTile(westTile) && !isOnFire(westTile)) {
+            checkAligns(westTile, nextMovable);
+            if(nextMovable.contains(3)) {
+                alignsArr[1] = true;
+            }
+        }
+        if(currentMovable.contains(2) && !isPlayerOnTile(northTile) && !isOnFire(northTile)) {
+            checkAligns(northTile, nextMovable);
+            if(nextMovable.contains(0)) {
+                alignsArr[2] = true;
+            }
+        }
+        if(currentMovable.contains(3) && !isPlayerOnTile(eastTile) && !isOnFire(eastTile)) {
+            checkAligns(eastTile, nextMovable);
+            if(nextMovable.contains(1)) {
+                alignsArr[3] = true;
+            }
+        }
+        return alignsArr;
+    }
+
+    private boolean isOnFire(Tile checkTile) {
+        //need to check if on fire somehow
+        return false;
+    }
+
+    //Nested switch statements to determine which directions the player can move in
+    private ArrayList<Integer> checkAligns(Tile tile, ArrayList<Integer> list) {
+        list.clear();
+        switch(tile.getType()) {
+            case STRAIGHT:
+                switch(tile.getAngle()) {
+                    case LEFT:
+                    case RIGHT:
+                        list.add(0);
+                        list.add(2);
+                        break;
+                    default:
+                        list.add(1);
+                        list.add(3);
+                        break;
+                }
+            case CORNER:
+                switch(tile.getAngle()) {
+                    case DOWN:
+                        list.add(3);
+                        list.add(0);
+                        break;
+                    case LEFT:
+                        list.add(0);
+                        list.add(1);
+                        break;
+                    case UP:
+                        list.add(1);
+                        list.add(2);
+                        break;
+                    case RIGHT:
+                        list.add(2);
+                        list.add(1);
+                        break;
+                }
+            case JUNCTION:
+                switch(tile.getAngle()) {
+                    case DOWN:
+                        list.add(3);
+                        list.add(0);
+                        list.add(1);
+                        break;
+                    case LEFT:
+                        list.add(0);
+                        list.add(1);
+                        list.add(2);
+                        break;
+                    case UP:
+                        list.add(1);
+                        list.add(2);
+                        list.add(3);
+                        break;
+                    case RIGHT:
+                        list.add(2);
+                        list.add(3);
+                        list.add(0);
+                        break;
+                }
+            case GOAL:
+                list.add(0);
+                list.add(1);
+                list.add(2);
+                list.add(3);
+                break;
+        }
+        return list;
     }
 
 //TODO move counter method 1-4 moves - old coord != nodprivate static static
