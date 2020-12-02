@@ -83,7 +83,9 @@ public class SetUpGameController implements Initializable {
      */
     public void cmdStartClick(ActionEvent actionEvent) {
         Style style = createStyle(comStyle.getSelectionModel().getSelectedItem());
-        String levelPath = comBoard.getSelectionModel().getSelectedItem().toString();
+        //String levelPath = comBoard.getSelectionModel().getSelectedItem().toString();
+        String levelPath = "src/resources/file/level";
+
         try {
             Gameboard gameboard = new Gameboard(levelPath, style, players);
             changeScene(Window.BOARD, new Object[]{gameboard});
@@ -133,7 +135,7 @@ public class SetUpGameController implements Initializable {
 
     private void initialiseLevels() {
         FilenameFilter filter= (dir, name) -> name.endsWith(".ser");
-        File[] fileArray = new File("").listFiles(filter);
+        File[] fileArray = new File("src/resources/file/").listFiles(filter);
         if (fileArray != null) {
             ObservableList<File> files = FXCollections.observableArrayList(Arrays.asList(fileArray));
             this.comBoard.setItems(files);
