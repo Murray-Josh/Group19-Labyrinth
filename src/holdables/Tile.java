@@ -3,13 +3,10 @@ package holdables;
 import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
-import core.Gameboard;
 import javafx.scene.image.Image;
-import players.Player;
 import styles.Style;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import static holdables.TileEffect.*;
 

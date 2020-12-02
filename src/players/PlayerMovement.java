@@ -81,14 +81,14 @@ public class PlayerMovement {
 
     }
 
+
 private Boolean isPlayerOnTile(Tile checkTile) {
-        boolean playerPresent = false;
         for(int i = 0; i < gameboard.getPlayersCount(); i++) {
             if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
-                playerPresent = true;
+                return true;
             }
         }
-        return playerPresent;
+        return false;
     }
 
     //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
@@ -133,8 +133,7 @@ private Boolean isPlayerOnTile(Tile checkTile) {
     }
 
     private boolean isOnFire(Tile checkTile) {
-        //need to check if on fire somehow
-        return false;
+        return checkTile.getEffect() == TileEffect.FIRE;
     }
 
     //Nested switch statements to determine which directions the player can move in
