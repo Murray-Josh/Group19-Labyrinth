@@ -7,17 +7,25 @@
 }
 .button {
 	-fx-font-size: 16px;
-    -fx-font-family: scientifica;
 	-fx-text-fill: WHITE;
     -fx-background-color: #2C2C3E;
 }
 .button:hover {
     -fx-background-color: #384E92;
 }
+
+.button-2 {
+	-fx-font-size: 16px;
+	-fx-font-family: Segoe UI;
+	-fx-text-fill: WHITE;
+    -fx-background-color: #2C2C3E;
+}
+.button-2:hover {
+    -fx-background-color: #384E92;
+}
 .hbox{
 	-fx-background-color: #2C2C3E;
 	-fx-text-fill: WHITE;
-    -fx-font-family: scientifica;
     -fx-border-color: #221B3C;
 	}
 .no-border {
@@ -115,16 +123,15 @@
 	-fx-border-color: #221B3C;
 }
 
-// Background color of the whole context menu
 .choice-box .context-menu { -fx-background-color: #2C2C3E;; }
-// Focused item background color in the list
+
 .choice-box .menu-item:focused { -fx-background-color: #384E92; }
-// Text color of non-focused items in the list
+
 .choice-box .menu-item > .label { 
 -fx-text-fill: WHITE;
 	-fx-font-family: scientifica;
 	-fx-font-size: 16px; }
-// Text color of focused item in the list
+
 .choice-box .menu-item:focused > .label { -fx-text-fill: WHITE;
 	-fx-font-family: scientifica;
 	-fx-font-size: 16px; }

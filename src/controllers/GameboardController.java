@@ -333,13 +333,13 @@ public class GameboardController implements InitialisableWithParameters, Initial
      * Shows the Place Tile dialog
      * @param tile Tile to place onto the board
      */
-    public void showTileShifts(Tile tile) {
+    public void showTileShifts(Tile tile, Gameboard gameboard) {
         Scene scene = null;
         try {
             FXMLLoader loader = new FXMLLoader(StageController.class.getResource(Window.TILE_SHIFT.getPath()));
             Parent root = loader.load();
             InitialisableWithParameters controller = loader.getController();
-            controller.initialiseWithParameters(new Object[] {tile});
+            controller.initialiseWithParameters(new Object[] {tile, gameboard, this});
             scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle(Title.PLACE_TILE.name());

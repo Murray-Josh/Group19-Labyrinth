@@ -2,6 +2,7 @@ package core;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Spliterator;
@@ -118,6 +119,22 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
             }
         }
         return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T[] getColumn(int x) {
+        ArrayList<T> toReturn = new ArrayList<>();
+        for (Object elem : data[x]) {
+            toReturn.add((T) elem);
+        }
+        return (T[]) toReturn.toArray();
+    }
+
+    public T[] getRow(int y) {
+        ArrayList<T> toReturn = new ArrayList<>();
+        for (Object[] column : data) {
+            toReturn.add((T) column[y - 1]);
+        }
     }
 
     /**
