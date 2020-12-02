@@ -12,8 +12,8 @@ import holdables.Tile;
  */
 public enum TileType {
     STRAIGHT(false, true, false, true),
-    CORNER(true, true, false, false),
-    JUNCTION(true, true, false, true),
+    CORNER(false, true, true, false),
+    JUNCTION(false, true, true, true),
     GOAL(true, true, true, true);
 
     private final boolean NORTH;
