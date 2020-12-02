@@ -25,6 +25,8 @@ public class PlayerMovement {
     
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();
     ArrayList<Integer> nextMovable = new ArrayList<Integer>();
+    
+    private static final int MOVE_COUNT = 4;
 
 
 //TODO key listener method
@@ -204,13 +206,18 @@ public class PlayerMovement {
         return list;
     }
 
-//TODO move counter method 1-4 moves - old coord != nodprivate static static
 
-    private static void moveCount(){
-        int count = 0;
-        while(isAccessable() && count <= 4 && canPlayerEnterTile()){
-            //move
-            count++;
+    //As long as there is somewhere for the player to move to and within count limit, can move
+    //works with double move
+    private void moveCount(Player p) {
+        int count = MOVE_COUNT;
+        while(Arrays.asList(tilesAligned(p)).contains(true)) {
+            if(p.getActiveEffect() == PlayerEffect.DOUBLE_MOVE) { //may be issues with when double move is applied and when this is checked
+                count = 2 * MOVE_COUNT;
+            }
+            for(int i = 0; i < count; i++) {
+                //can move
+            }
         }
     }
 
