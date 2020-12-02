@@ -46,11 +46,11 @@ public class PlayerMovement {
                 break;
             case S:
             case DOWN:
-            case RIGHT:
                 dy = 1;
                 break;
             case D:
-                dy = 1;;
+            case RIGHT:
+                dx = 1;;
                 break;
         }
     }
@@ -170,7 +170,7 @@ public class PlayerMovement {
                         break;
                     case RIGHT:
                         list.add(2);
-                        list.add(1);
+                        list.add(3);
                         break;
                 }
             case JUNCTION:
