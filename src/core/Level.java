@@ -313,6 +313,7 @@ public class Level implements Serializable {
             default : throw new IllegalArgumentException("Player number not in range");
         }
     }
+
     public Coordinate getPlayerPosition(int playerNumber) {
         switch (playerNumber) {
             case 1 : return this.playerOnePosition;
