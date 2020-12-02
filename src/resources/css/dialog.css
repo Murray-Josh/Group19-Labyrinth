@@ -1,98 +1,95 @@
- .dialog-pane{
-	-fx-background-color: #2C2C3E;
- }
+.dialog-pane {
+    -fx-background-color: #2C2C3E;
+}
 
 /**Customization of The Bar where the buttons are located**/
 
 .dialog-pane .label {
-	-fx-text-fill: WHITE;
-	-fx-background-color: #2C2C3E;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
+    -fx-text-fill: WHITE;
+    -fx-background-color: #2C2C3E;
+    -fx-font-family: roboto light;
+    -fx-font-size: 14px;
 }
 
 /**Customization of DialogPane Header**/
 .dialog-pane:header .header-panel {
-	-fx-background-color: #2C2C3E;
+    -fx-background-color: #2C2C3E;
 }
 
-.dialog-pane:header .header-panel .label{
-	-fx-text-fill: WHITE;
-	-fx-text-fill: WHITE;
-	-fx-background-color: #2C2C3E;
-	-fx-font-family: roboto light;
-	-fx-font-size: 18px;
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: WHITE;
+    -fx-text-fill: WHITE;
+    -fx-background-color: #2C2C3E;
+    -fx-font-family: roboto light;
+    -fx-font-size: 18px;
 }
 
 
 /**Customization of Buttons**/
-.dialog-pane .button{
-	-fx-font-size: 13px;
+.dialog-pane .button {
+    -fx-font-size: 13px;
     -fx-font-family: roboto light;
-	-fx-text-fill: WHITE;
+    -fx-text-fill: WHITE;
     -fx-background-color: #2C2C3E;
- }
+}
 
-.dialog-pane .button:hover{
+.dialog-pane .button:hover {
     -fx-background-color: #384E92;
- }
+}
 
- .dialog-pane .text-field{
+.dialog-pane .text-field {
     -fx-background-color: #2C2C3E;
- 	-fx-border-color: #221B3C;
- 	-fx-font-family: roboto light;
- 	-fx-font-size: 13px;
- 	-fx-text-fill: white;
- }
+    -fx-border-color: #221B3C;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
 
- .dialog-pane .button-bar .container{
+.dialog-pane .button-bar .container {
     -fx-background-color: #2C2C3E;
- }
-
+}
 
 
 .combo-box {
     -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
-     	 	-fx-border-color: #221B3C;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+    -fx-border-color: #221B3C;
 }
 
 .combo-box .list-cell {
     -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
 }
 
 .combo-box-popup .list-view {
     -fx-background-color: #2C2C3E;
-     	-fx-border-color: #221B3C;
-     	 	-fx-font-family: roboto light;
-         	-fx-font-size: 13px;
-         	-fx-text-fill: white;
+    -fx-border-color: #221B3C;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
 }
 
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: #2C2C3E;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
 }
 
-.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
-{
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
     -fx-background-color: #384E92;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
 }
 
-.combo-box-popup .list-view .list-cell:filled:hover
-{
+.combo-box-popup .list-view .list-cell:filled:hover {
     -fx-background-color: #384E92;
-     	-fx-font-family: roboto light;
-     	-fx-font-size: 13px;
-     	-fx-text-fill: white;
+    -fx-font-family: roboto light;
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
 }

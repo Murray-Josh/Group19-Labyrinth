@@ -61,7 +61,6 @@ public class FindMessage {
      * Solves the puzzle to help find the correct website
      *
      * @param text String
-     *
      * @return Decrypted text
      */
     private static String solve(String text) {
@@ -75,7 +74,6 @@ public class FindMessage {
      * Decrypt the original text into a valid string
      *
      * @param text String
-     *
      * @return Decrypted text
      */
     private static String decrypt(String text) {

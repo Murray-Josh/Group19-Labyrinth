@@ -13,7 +13,7 @@ import styles.Style;
 public enum TileEffect implements Holdable, Effect {
     FIRE(3, 2),
     ICE(3, 1),
-    NONE(1,0);
+    NONE(1, 0);
     private final int RANGE;
     private final int TURNS_ACTIVE;
 
@@ -48,21 +48,29 @@ public enum TileEffect implements Holdable, Effect {
 
     @Override
     public String toString() {
-        switch(this) {
-            case FIRE:return "Set on Fire";
-            case ICE : return "Freeze";
-            case NONE:return "No Effect";
-            default:return "Not a Tile Effect";
+        switch (this) {
+            case FIRE:
+                return "Set on Fire";
+            case ICE:
+                return "Freeze";
+            case NONE:
+                return "No Effect";
+            default:
+                return "Not a Tile Effect";
         }
     }
 
     @Override
     public Image getImage(Style style) {
-        switch(this) {
-            case FIRE:return null;
-            case ICE : return null;
-            case NONE:return null;
-            default:return null;
+        switch (this) {
+            case FIRE:
+                return null;
+            case ICE:
+                return null;
+            case NONE:
+                return null;
+            default:
+                return null;
         }
     }
 }

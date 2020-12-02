@@ -22,8 +22,8 @@ import java.util.Optional;
  * @version 2.0
  */
 public class StageController {
-    private static Stage  stage;
-    private static Scene  previousScene;
+    private static Stage stage;
+    private static Scene previousScene;
     private static String previousTitle;
 
     /**
@@ -38,7 +38,6 @@ public class StageController {
      *
      * @param scene New scene to be shown
      * @param title Title of the window, as string
-     *
      * @throws IllegalStateException If the scene parameter is null
      */
     private static void setNewScene(Scene scene, String title) {
@@ -78,7 +77,7 @@ public class StageController {
     public static void start(Stage primaryStage) {
         stage = primaryStage;
         home();
-        
+
     }
 
     /**
@@ -131,7 +130,6 @@ public class StageController {
      *
      * @param error {@link ErrorMsg} template to use
      * @param quit  Whether to quit the application
-     *
      * @parm title The title to use (member of {@link Title})
      */
     public static void showError(ErrorMsg error, Title title, boolean quit) {

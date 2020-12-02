@@ -6,6 +6,7 @@ package controllers;
 public interface InitialisableWithParameters {
     /**
      * Method to use the parameters passed to it
+     *
      * @param parameters
      */
     void initialiseWithParameters(Object[] parameters);

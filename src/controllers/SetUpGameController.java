@@ -20,7 +20,6 @@ import styles.Style;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,13 +28,13 @@ import java.util.ResourceBundle;
 import static controllers.StageController.*;
 
 public class SetUpGameController implements Initializable {
-    public static final  String        CARS       = "Cars";
-    public static final  String        MOUSE = "Mouse Trap";
-    public static final  String        PIRATE     = "Pirate";
-    private static final PlayerProfile none       = new PlayerProfile("--None--");
+    public static final String CARS = "Cars";
+    public static final String MOUSE = "Mouse Trap";
+    public static final String PIRATE = "Pirate";
+    private static final PlayerProfile none = new PlayerProfile("--None--");
 
     private final ObservableList<PlayerProfile> profiles = FXCollections.observableArrayList(Profiles.getProfiles());
-    private final ArrayList<PlayerProfile>      players  = new ArrayList<>();
+    private final ArrayList<PlayerProfile> players = new ArrayList<>();
 
     @FXML
     private ChoiceBox<PlayerProfile> comOne;
@@ -47,25 +46,25 @@ public class SetUpGameController implements Initializable {
     private ChoiceBox<PlayerProfile> comFour;
 
     @FXML
-    private ChoiceBox<File>                          comBoard;
+    private ChoiceBox<File> comBoard;
     @FXML
-    private ChoiceBox<String>                   comStyle;
+    private ChoiceBox<String> comStyle;
     @FXML
-    private Button                              cmdStart;
+    private Button cmdStart;
     @FXML
-    private Button                              cmdBack;
+    private Button cmdBack;
     @FXML
-    private Button                              cmdLockOne;
+    private Button cmdLockOne;
     @FXML
-    private Button                              cmdLockTwo;
+    private Button cmdLockTwo;
     @FXML
-    private Button                              cmdLockThree;
+    private Button cmdLockThree;
     @FXML
-    private Button                              cmdLockFour;
+    private Button cmdLockFour;
     private ArrayList<ChoiceBox<PlayerProfile>> boxes;
-    private ArrayList<Button>                   buttons;
-    private URL                                 location;
-    private ResourceBundle                      resourceBundle;
+    private ArrayList<Button> buttons;
+    private URL location;
+    private ResourceBundle resourceBundle;
 
     /**
      * Handles the quit click event
@@ -101,7 +100,6 @@ public class SetUpGameController implements Initializable {
      * Creates a style based on the users selection from the Styles Choice box
      *
      * @param selected The selected Style
-     *
      * @return An instance of the selected style
      */
     private Style createStyle(String selected) {
@@ -134,7 +132,7 @@ public class SetUpGameController implements Initializable {
     }
 
     private void initialiseLevels() {
-        FilenameFilter filter= (dir, name) -> name.endsWith(".ser");
+        FilenameFilter filter = (dir, name) -> name.endsWith(".ser");
         File[] fileArray = new File("src/resources/file/").listFiles(filter);
         if (fileArray != null) {
             ObservableList<File> files = FXCollections.observableArrayList(Arrays.asList(fileArray));

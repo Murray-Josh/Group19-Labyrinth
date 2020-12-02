@@ -1,17 +1,10 @@
 package core;
 
-import constants.ErrorMsg;
-import constants.Title;
 import controllers.StageController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
 public class Main extends Application {
-
 
 
     public static void main(String[] args) {
@@ -33,13 +26,12 @@ public class Main extends Application {
         launch(args);
 
 
-
     }
-
 
 
     /**
      * Starts the program
+     *
      * @param primaryStage Stage passed from javafx
      */
     @Override

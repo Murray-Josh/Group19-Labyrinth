@@ -1,10 +1,12 @@
 package core;
 
-import holdables.*;
-import players.Player;
+import holdables.Holdable;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This class represents the Silk Bag: an array list and its methods.
@@ -23,7 +25,7 @@ public class SilkBag extends ArrayDeque<Holdable> implements Serializable {
      * Shuffles the {@link SilkBag}
      */
     public void shuffle() {
-        ArrayList<Holdable> temp= new ArrayList<Holdable>();
+        ArrayList<Holdable> temp = new ArrayList<Holdable>();
         while (!isEmpty()) {
             temp.add(poll());
         }

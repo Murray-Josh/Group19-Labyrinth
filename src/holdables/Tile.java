@@ -10,18 +10,19 @@ import java.io.Serializable;
 
 import static holdables.TileEffect.*;
 
-/** A tile that can be placed on the gameboard or in the silk bag.
+/**
+ * A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
  * @version 3.0
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
-    private TileType   type;
-    private  Style      style;
-    private Angle     angle;
+    private TileType type;
+    private Style style;
+    private Angle angle;
     private TileEffect effect = NONE;
-    private boolean    fixed;
+    private boolean fixed;
 
 
     /**
@@ -56,12 +57,12 @@ public class Tile implements Serializable, Holdable {
         setFixed(fixed);
     }
 
-    public Tile(Coordinate coordinate, TileType type, Angle angle, boolean fixed){
-        this.coordinate=coordinate;
-        this.type=type;
+    public Tile(Coordinate coordinate, TileType type, Angle angle, boolean fixed) {
+        this.coordinate = coordinate;
+        this.type = type;
         this.angle = angle;
-        this.fixed=fixed;
-        this.style=null;
+        this.fixed = fixed;
+        this.style = null;
     }
 
     /**
@@ -77,7 +78,6 @@ public class Tile implements Serializable, Holdable {
     public void setMovable() {
         this.fixed = false;
     }
-
 
 
     /**
@@ -171,15 +171,15 @@ public class Tile implements Serializable, Holdable {
     }
 
 
-    public void makeFireEffect(){
+    public void makeFireEffect() {
         effect = FIRE;
     }
 
-    public void makeIceEffect(){
+    public void makeIceEffect() {
         effect = ICE;
     }
 
-    public TileEffect getEffect(){
+    public TileEffect getEffect() {
         return effect;
     }
 

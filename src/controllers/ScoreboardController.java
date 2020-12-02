@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.*;
+import static controllers.StageController.home;
+import static controllers.StageController.showError;
 
 /**
  * Controls the Scoreboard scene
@@ -27,9 +28,9 @@ import static controllers.StageController.*;
  */
 public class ScoreboardController implements Initializable {
     @FXML
-    private TableView                           tblTable;
+    private TableView tblTable;
     @FXML
-    private TableColumn<PlayerProfile, String>  colNickname;
+    private TableColumn<PlayerProfile, String> colNickname;
     @FXML
     private TableColumn<PlayerProfile, Integer> colGames;
     @FXML
@@ -37,9 +38,9 @@ public class ScoreboardController implements Initializable {
     @FXML
     private TableColumn<PlayerProfile, Integer> colLosses;
     @FXML
-    private TableColumn<PlayerProfile, Float>   colPercentage;
+    private TableColumn<PlayerProfile, Float> colPercentage;
     @FXML
-    private Button                              cmdBack;
+    private Button cmdBack;
 
     /**
      * Goes back to the main menu

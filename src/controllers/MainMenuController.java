@@ -12,7 +12,7 @@ import players.Profiles;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.*;
+import static controllers.StageController.changeScene;
 
 /**
  * Controls the Main Menu {@link javafx.scene.Scene}
@@ -22,21 +22,21 @@ import static controllers.StageController.*;
  */
 public class MainMenuController implements Initializable {
     @FXML
-    private Button    cmdNew;
+    private Button cmdNew;
     @FXML
-    private Button    cmdLoad;
+    private Button cmdLoad;
     @FXML
-    private Button    cmdScoreboard;
+    private Button cmdScoreboard;
     @FXML
-    private Button    cmdMakeProfile;
+    private Button cmdMakeProfile;
     @FXML
-    private Button    cmdDeleteProfile;
+    private Button cmdDeleteProfile;
     @FXML
-    private Button    cmdQuit;
+    private Button cmdQuit;
     @FXML
     private ImageView logo;
     @FXML
-    private Label     msgDayMessage;
+    private Label msgDayMessage;
 
     /**
      * Handles the Quit button click event

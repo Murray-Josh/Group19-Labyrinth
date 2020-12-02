@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.*;
+import static controllers.StageController.home;
+import static controllers.StageController.showError;
 
 /**
  * Controls and handles the LoadGame scene
@@ -28,15 +29,15 @@ import static controllers.StageController.*;
  * @version 1.0
  */
 public class LoadGameController implements Initializable {
-    private static final Title          title = Title.SAVE;
+    private static final Title title = Title.SAVE;
     @FXML
-    private              Button         cmdRefresh;
+    private Button cmdRefresh;
     @FXML
-    private              Button         cmdLoad;
+    private Button cmdLoad;
     @FXML
-    private              Button         cmdCancel;
+    private Button cmdCancel;
     @FXML
-    private              ListView<File> lstSaves;
+    private ListView<File> lstSaves;
 
     private File selected;
 
@@ -64,7 +65,7 @@ public class LoadGameController implements Initializable {
      */
     private List<File> getSaves() {
         File dir = new File("/../saves");
-        if (! dir.exists()) {
+        if (!dir.exists()) {
             dir.mkdir();
         }
         File[] dirFilteredContents = dir.listFiles((dir1, name) -> name.endsWith(".labyrinth"));

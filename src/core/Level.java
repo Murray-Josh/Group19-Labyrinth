@@ -3,7 +3,6 @@ package core;
 import constants.Angle;
 import constants.TileType;
 import holdables.Tile;
-import styles.CarStyle;
 import styles.PirateStyle;
 
 import java.io.File;
@@ -11,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 
 /**
@@ -25,80 +24,82 @@ import java.util.Random;
  */
 public class Level implements Serializable {
 
+    private static final int MAX_PLAYERS = 4;
     private ArrayList<Tile> fixed;
     private ArrayList<Tile> movables;
-
-    private int             width;
-    private int              height;
+    private int width;
+    private int height;
     private Coordinate playerOnePosition;
     private Coordinate playerTwoPosition;
     private Coordinate playerThreePosition;
     private Coordinate playerFourPosition;
 
-    private static final int MAX_PLAYERS = 4;
-
     /**
      * Constructs an empty {@link Level}
      */
     public Level() {
-        this.width=0;
-        this.height=0;
-        this.movables=new ArrayList<Tile>();
-        this.fixed=new ArrayList<Tile>();
-        this.playerOnePosition = new Coordinate(0,0);
-        this.playerTwoPosition = new Coordinate(0,0);
-        this.playerThreePosition = new Coordinate(0,0);
-        this.playerFourPosition = new Coordinate(0,0);
+        this.width = 0;
+        this.height = 0;
+        this.movables = new ArrayList<Tile>();
+        this.fixed = new ArrayList<Tile>();
+        this.playerOnePosition = new Coordinate(0, 0);
+        this.playerTwoPosition = new Coordinate(0, 0);
+        this.playerThreePosition = new Coordinate(0, 0);
+        this.playerFourPosition = new Coordinate(0, 0);
 
     }
 
 
     /**
      * Constructs a fully specified level
-     * @param fixed Collection of fixed tiles
-     * @param width Width of the board
-     * @param height Height of the board
+     *
+     * @param fixed    Collection of fixed tiles
+     * @param width    Width of the board
+     * @param height   Height of the board
      * @param movables Number of movable tiles
      */
     public Level(ArrayList<Tile> fixed, int width, int height, ArrayList<Tile> movables, Coordinate p1Pos, Coordinate p2Pos, Coordinate p3Pos, Coordinate p4Pos) {
-        this.width=width;
-        this.height=height;
-        this.movables=new ArrayList<Tile>();
-        this.fixed=fixed;
+        this.width = width;
+        this.height = height;
+        this.movables = new ArrayList<Tile>();
+        this.fixed = fixed;
         this.playerOnePosition = p1Pos;
         this.playerTwoPosition = p2Pos;
         this.playerThreePosition = p3Pos;
-        this. playerFourPosition = p4Pos;
+        this.playerFourPosition = p4Pos;
     }
 
     /**
      * Constuts a partially specified level
-     * @param width Width of the board
-     * @param height Height of the board
+     *
+     * @param width    Width of the board
+     * @param height   Height of the board
      * @param movables Number of movable tiles
      */
-    public Level(int width, int height,  ArrayList<Tile> movables) {
-        this.width=width;
-        this.height=height;
-        this.movables=new ArrayList<Tile>();
-        this.fixed=new ArrayList<Tile>();
+    public Level(int width, int height, ArrayList<Tile> movables) {
+        this.width = width;
+        this.height = height;
+        this.movables = new ArrayList<Tile>();
+        this.fixed = new ArrayList<Tile>();
     }
 
     /**
      * Constructs a partially specified level
-     * @param width Width of the board
+     *
+     * @param width  Width of the board
      * @param height Height of the board
      */
     public Level(int width, int height) {
 
         this.movables = new ArrayList<Tile>();
-        this.fixed=new ArrayList<Tile>();
+        this.fixed = new ArrayList<Tile>();
     }
+
     public Level(String path) {
-        this.width=width;
-        this.height=height;
-        this.movables=new ArrayList<Tile>();
-        this.fixed=new ArrayList<Tile>();
+        this.width = width;
+        this.height = height;
+        this.movables = new ArrayList<Tile>();
+        this.fixed = new ArrayList<Tile>();
 
         readGameboardFile(path);
     }
@@ -149,6 +150,7 @@ public class Level implements Serializable {
     public void setFixed(ArrayList<Tile> fixed) {
         this.fixed = fixed;
     }
+
     public void addToFixed(Tile fixedTile) {
         this.fixed.add(fixedTile);
     }
@@ -157,7 +159,6 @@ public class Level implements Serializable {
      * Gets the tile an index
      *
      * @param index index of the tile
-     *
      * @return The tile at index
      * @throws IndexOutOfBoundsException If the index is too big or too small
      */
@@ -169,7 +170,6 @@ public class Level implements Serializable {
      * If tile exists as a fixed tile
      *
      * @param tile Tile to check
-     *
      * @return If the tile is fixed
      */
     public boolean fixedExists(Tile tile) {
@@ -242,7 +242,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Coordinate getPlayerOnePosition() {
@@ -250,7 +249,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @param playerOnePosition
      */
     public void setPlayerOnePosition(Coordinate playerOnePosition) {
@@ -258,7 +256,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Coordinate getPlayerTwoPosition() {
@@ -266,7 +263,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @param playerTwoPosition
      */
     public void setPlayerTwoPosition(Coordinate playerTwoPosition) {
@@ -274,7 +270,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Coordinate getPlayerThreePosition() {
@@ -282,7 +277,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @param playerThreePosition
      */
     public void setPlayerThreePosition(Coordinate playerThreePosition) {
@@ -290,7 +284,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @return
      */
     public Coordinate getPlayerFourPosition() {
@@ -298,7 +291,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @param playerFourPosition
      */
     public void setPlayerFourPosition(Coordinate playerFourPosition) {
@@ -306,7 +298,6 @@ public class Level implements Serializable {
     }
 
     /**
-     *
      * @return
      */
     public ArrayList<Tile> getMovables() {
@@ -314,7 +305,6 @@ public class Level implements Serializable {
     }
 
     /**
-     * 
      * @param movables
      */
     public void setMovables(ArrayList<Tile> movables) {
@@ -323,30 +313,39 @@ public class Level implements Serializable {
 
     public void setPlayerPosition(Coordinate coordinate, int playerNumber) {
         switch (playerNumber) {
-            case 1 : this.playerOnePosition = coordinate;
-            break;
-            case 2 : this.playerTwoPosition = coordinate;
+            case 1:
+                this.playerOnePosition = coordinate;
                 break;
-            case 3 : this.playerThreePosition = coordinate;
+            case 2:
+                this.playerTwoPosition = coordinate;
                 break;
-            case 4 : this.playerFourPosition = coordinate;
+            case 3:
+                this.playerThreePosition = coordinate;
                 break;
-            default : throw new IllegalArgumentException("Player number not in range");
+            case 4:
+                this.playerFourPosition = coordinate;
+                break;
+            default:
+                throw new IllegalArgumentException("Player number not in range");
         }
     }
 
     public Coordinate getPlayerPosition(int playerNumber) {
         switch (playerNumber) {
-            case 1 : return this.playerOnePosition;
-            case 2 : return this.playerTwoPosition;
-            case 3 : return this.playerThreePosition;
-            case 4 : return this.playerFourPosition;
-            default : throw new IllegalArgumentException("Player number not in range");
+            case 1:
+                return this.playerOnePosition;
+            case 2:
+                return this.playerTwoPosition;
+            case 3:
+                return this.playerThreePosition;
+            case 4:
+                return this.playerFourPosition;
+            default:
+                throw new IllegalArgumentException("Player number not in range");
         }
     }
 
     /**
-     *
      * @param fileName
      */
     public void readGameboardFile(String fileName) {
@@ -361,6 +360,7 @@ public class Level implements Serializable {
             System.exit(0);
         }
     }
+
     /**
      * Reads file and calls methods to break it down
      *
@@ -414,7 +414,7 @@ public class Level implements Serializable {
             PirateStyle style = new PirateStyle();
 
 
-            addToFixed(new Tile(new Coordinate(x,y), fTileType,style ,Angle.UP, true));
+            addToFixed(new Tile(new Coordinate(x, y), fTileType, style, Angle.UP, true));
 
         }
     }
@@ -439,13 +439,14 @@ public class Level implements Serializable {
             int randAngle = rand.nextInt(angleArray.length);
             PirateStyle style = new PirateStyle();
 
-            movables.add(new Tile(unfTLineType,style, Angle.UP, false));
+            movables.add(new Tile(unfTLineType, style, Angle.UP, false));
         }
     }
 
     /**
      * Reads file and determines start location for all players
      * Then sets each player's start
+     *
      * @param in Scanner to read from
      */
     private void setStartCoords(Scanner in) {
@@ -456,12 +457,12 @@ public class Level implements Serializable {
 //        players.add(new Player(new PlayerProfile("d"), new Coordinate(0,0), getStyle(), 4));
 
         in.useDelimiter(",");
-        for(int i = 1; i <= MAX_PLAYERS; i++) {
+        for (int i = 1; i <= MAX_PLAYERS; i++) {
             String cLine = in.nextLine();
             String[] coordArray = cLine.split(",");
             Coordinate playCoord = new Coordinate(Integer.parseInt(coordArray[1]), Integer.parseInt(coordArray[2]));
             System.out.println(i);
-            setPlayerPosition(playCoord,i);
+            setPlayerPosition(playCoord, i);
         }
     }
 

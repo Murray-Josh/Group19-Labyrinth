@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import constants.ErrorMsg;
 import constants.Title;
 import constants.Window;
@@ -25,7 +24,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
-//import players.PlayerMovement;
 import styles.Style;
 
 import java.io.IOException;
@@ -33,18 +31,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static controllers.StageController.*;
+import static controllers.StageController.changeScene;
+import static controllers.StageController.showError;
 
 
 public class GameboardController implements InitialisableWithParameters, Initializable {
-    private static final String REFRESHING = "Refreshing Gameboard";
-    private static final String REFRESH_COMPLETE = "Refreshing Gameboard";
     public static final String FORMATTING_PLAYERS = "Formatting Players";
     public static final String PLAYER_FORMATTING_COMPLETE = "Player Formatting Complete!";
     public static final String SILK_BAG_DRAW = "Draw from silk bag";
     public static final String PLACE_TILE = "Place your tile";
-
-    public static final int TILE_SIZE = 50;
+    public static final int TILE_SIZE = 100;
+    private static final String REFRESHING = "Refreshing Gameboard";
+    private static final String REFRESH_COMPLETE = "Refreshing Gameboard";
     public BorderPane root;
     public ButtonBar butttonBar;
     @FXML
@@ -75,6 +73,20 @@ public class GameboardController implements InitialisableWithParameters, Initial
     private int newTileToPlaceX;
     private int newTileToPlaceY;
 
+    /**
+     * Creates a Container that holds the player and their data
+     *
+     * @param player Player to create a Container for
+     * @return Formatted Vbox
+     */
+    private static VBox createPlayerContainer(Player player) {
+        ImageView image = new ImageView(player.getPlayerImage());
+        Label name = new Label(player.getProfile().getName());
+        VBox playerPicture = new VBox(image, name);
+        VBox.setMargin(image, new Insets(4, 0, 4, 0));
+        VBox.setMargin(name, new Insets(4, 4, 4, 4));
+        return playerPicture;
+    }
 
     public void cmdActionClick(MouseEvent mouseEvent) {
 
@@ -91,7 +103,6 @@ public class GameboardController implements InitialisableWithParameters, Initial
         formatPlayers();
     }
 
-
     public void initializeWithArgs(Object[] args) {
         this.gameboard = (Gameboard) args[1];
         tempPlayerCounter = 1;
@@ -101,7 +112,6 @@ public class GameboardController implements InitialisableWithParameters, Initial
         playerTurn();
 
     }
-
 
     /**
      * playerturn order stuff
@@ -115,7 +125,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
         if (newTileToPlace.getClass() == PlayerEffect.class || newTileToPlace.getClass() == TileEffect.class) {
             players.get(tempPlayerCounter).addToHand((Effect) newTileToPlace);
 
-        // If tile call methods to place it
+            // If tile call methods to place it
         } else if (newTileToPlace.getClass() == Tile.class) {
             setStatus(PLACE_TILE);
             cmdSilkBag.setVisible(true);
@@ -124,10 +134,9 @@ public class GameboardController implements InitialisableWithParameters, Initial
         }
 
         //PlayerMovement(players(tempPlayerCounter)); Waiting for class to finish
-        if(winCheck()){
+        if (winCheck()) {
             //somehow end the game
-        }
-        else {
+        } else {
             tempPlayerCounter += 1;
             refresh();
             playerTurn();
@@ -146,6 +155,9 @@ public class GameboardController implements InitialisableWithParameters, Initial
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
                 image.setRotate(tile.getAngle().get());
+                image.setPreserveRatio(false);
+                image.setFitHeight(TILE_SIZE);
+                image.setFitWidth(TILE_SIZE);
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
             });
             setStatus(REFRESH_COMPLETE);
@@ -167,21 +179,6 @@ public class GameboardController implements InitialisableWithParameters, Initial
             this.vboxPlayers.getChildren().add(playerPicture);
         });
         setStatus(PLAYER_FORMATTING_COMPLETE);
-    }
-
-    /**
-     * Creates a Container that holds the player and their data
-     *
-     * @param player Player to create a Container for
-     * @return Formatted Vbox
-     */
-    private static VBox createPlayerContainer(Player player) {
-        ImageView image = new ImageView(player.getPlayerImage());
-        Label name = new Label(player.getProfile().getName());
-        VBox playerPicture = new VBox(image, name);
-        VBox.setMargin(image, new Insets(4, 0, 4, 0));
-        VBox.setMargin(name, new Insets(4, 4, 4, 4));
-        return playerPicture;
     }
 
     /**
@@ -274,7 +271,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     }
 
-    public void drawTile(){
+    public void drawTile() {
         setNewTileToPlace(gameboard.getSilkBag().getFirst());
     }
 
@@ -312,15 +309,11 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Will work when goalTile is variable in gameboard
+     *
      * @return
      */
-    public boolean winCheck(){
-        if(players.get(tempPlayerCounter).getCoordinate()==gameboard.getGoal()){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean winCheck() {
+        return players.get(tempPlayerCounter).getCoordinate() == gameboard.getGoal();
     }
 
     public void keyPressed(KeyEvent keyEvent) {
@@ -331,6 +324,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     /**
      * Shows the Place Tile dialog
+     *
      * @param tile Tile to place onto the board
      */
     public void showTileShifts(Tile tile, Gameboard gameboard) {
@@ -339,7 +333,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
             FXMLLoader loader = new FXMLLoader(StageController.class.getResource(Window.TILE_SHIFT.getPath()));
             Parent root = loader.load();
             InitialisableWithParameters controller = loader.getController();
-            controller.initialiseWithParameters(new Object[] {tile, gameboard, this});
+            controller.initialiseWithParameters(new Object[]{tile, gameboard, this});
             scene = new Scene(root);
             Stage stage = new Stage();
             stage.setTitle(Title.PLACE_TILE.name());
