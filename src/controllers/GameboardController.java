@@ -20,7 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import players.Player;
-import players.PlayerMovement;
+//import players.PlayerMovement;
 import styles.Style;
 
 import java.net.URL;
@@ -89,8 +89,8 @@ public class GameboardController implements InitialisableWithParameters, Initial
     public void initializeWithArgs(Object[] args) {
         this.gameboard = (Gameboard) args[1];
         tempPlayerCounter = 1;
-        cmdSilkBag.setVisible(false);
-        cmdActivate.setVisible(false);
+        cmdSilkBag.setDisable(true);
+        cmdActivate.setDisable(true);
         refresh();
         playerTurn();
 
@@ -113,9 +113,8 @@ public class GameboardController implements InitialisableWithParameters, Initial
         } else if (newTileToPlace.getClass() == Tile.class) {
             setStatus(PLACE_TILE);
             cmdSilkBag.setVisible(true);
-            // tileMove(newTileToPlace, rowOr, newTileToPlaceY); need a way to get player click
+            // tileMove(newTileToPlace, rowOrColumn, newTileToPlaceY); need a way to get player click
             refresh();
-
         }
 
         //PlayerMovement(players(tempPlayerCounter)); Waiting for class to finish
@@ -320,7 +319,7 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
     public void keyPressed(KeyEvent keyEvent) {
 
-        PlayerMovement.keyPressed(keyEvent);
+        //PlayerMovement.keyPressed(keyEvent);
 
     }
 }

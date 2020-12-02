@@ -2,13 +2,18 @@ package core;
 
 import constants.Angle;
 import constants.TileType;
-import holdables.Holdable;
 import holdables.Tile;
+import styles.CarStyle;
+import styles.PirateStyle;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Scanner;
+import java.util.Random;
+
 
 /**
  * Represents a Level that can be used in the game
@@ -30,6 +35,7 @@ public class Level implements Serializable {
     private Coordinate playerThreePosition;
     private Coordinate playerFourPosition;
 
+    private static final int MAX_PLAYERS = 4;
 
     /**
      * Constructs an empty {@link Level}
@@ -46,6 +52,7 @@ public class Level implements Serializable {
 
     }
 
+
     /**
      * Constructs a fully specified level
      * @param fixed Collection of fixed tiles
@@ -56,7 +63,7 @@ public class Level implements Serializable {
     public Level(ArrayList<Tile> fixed, int width, int height, ArrayList<Tile> movables, Coordinate p1Pos, Coordinate p2Pos, Coordinate p3Pos, Coordinate p4Pos) {
         this.width=width;
         this.height=height;
-        this.movables =movables;
+        this.movables=new ArrayList<Tile>();
         this.fixed=fixed;
         this.playerOnePosition = p1Pos;
         this.playerTwoPosition = p2Pos;
@@ -73,7 +80,7 @@ public class Level implements Serializable {
     public Level(int width, int height,  ArrayList<Tile> movables) {
         this.width=width;
         this.height=height;
-        this.movables =movables;
+        this.movables=new ArrayList<Tile>();
         this.fixed=new ArrayList<Tile>();
     }
 
@@ -83,10 +90,17 @@ public class Level implements Serializable {
      * @param height Height of the board
      */
     public Level(int width, int height) {
-        this.width=width;
-        this.height=height;
+
         this.movables = new ArrayList<Tile>();
         this.fixed=new ArrayList<Tile>();
+    }
+    public Level(String path) {
+        this.width=width;
+        this.height=height;
+        this.movables=new ArrayList<Tile>();
+        this.fixed=new ArrayList<Tile>();
+
+        readGameboardFile(path);
     }
 
     /**
@@ -103,9 +117,9 @@ public class Level implements Serializable {
      *
      * @param fixed Tile to be added
      */
-    public void addFixed(Tile fixed) {
-        this.fixed.add(fixed);
-    }
+    //public void addFixed(Tile fixed) {
+    //    this.fixed.add(fixed);
+    //}
 
     /**
      * Adds a fixed Tile
@@ -134,6 +148,9 @@ public class Level implements Serializable {
      */
     public void setFixed(ArrayList<Tile> fixed) {
         this.fixed = fixed;
+    }
+    public void addToFixed(Tile fixedTile) {
+        this.fixed.add(fixedTile);
     }
 
     /**
@@ -307,9 +324,13 @@ public class Level implements Serializable {
     public void setPlayerPosition(Coordinate coordinate, int playerNumber) {
         switch (playerNumber) {
             case 1 : this.playerOnePosition = coordinate;
+            break;
             case 2 : this.playerTwoPosition = coordinate;
+                break;
             case 3 : this.playerThreePosition = coordinate;
+                break;
             case 4 : this.playerFourPosition = coordinate;
+                break;
             default : throw new IllegalArgumentException("Player number not in range");
         }
     }
@@ -322,5 +343,157 @@ public class Level implements Serializable {
             case 4 : return this.playerFourPosition;
             default : throw new IllegalArgumentException("Player number not in range");
         }
+    }
+
+    /**
+     *
+     * @param fileName
+     */
+    public void readGameboardFile(String fileName) {
+        Scanner in;
+        PirateStyle style = new PirateStyle();
+        try {
+            File file = new File(fileName);
+            in = new Scanner(file);
+            readGameboard(in);
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot find " + fileName);
+            System.exit(0);
+        }
+    }
+    /**
+     * Reads file and calls methods to break it down
+     *
+     * @param in
+     */
+    private void readGameboard(Scanner in) {
+        readSize(in.nextLine());
+        int fixed = Integer.parseInt(in.nextLine());
+        readFixed(fixed, in);
+        int unfixed = Integer.parseInt(in.nextLine());
+        if (unfixed > 0) {
+            readUnfixed(unfixed, in);
+        }
+        setStartCoords(in);
+    }
+
+    /**
+     * Reads board size
+     *
+     * @param sLine
+     * @return
+     */
+    private void readSize(String sLine) {
+        String[] sizeStrArray = sLine.split(",");
+        this.setHeight(Integer.parseInt(sizeStrArray[0]));
+        this.setWidth(Integer.parseInt(sizeStrArray[1]));
+
+    }
+
+    /**
+     * Reads fixed files and places onto board where coordinates dictate
+     *
+     * @param fixed
+     * @param in
+     */
+    private void readFixed(int fixed, Scanner in) {
+        in.useDelimiter(",");
+
+        for (int i = 0; i < fixed; i++) {
+            String tLine = in.nextLine();
+            String[] fixedArray = tLine.split(",");
+            int x = Integer.parseInt(fixedArray[0]);
+            int y = Integer.parseInt(fixedArray[1]);
+            String fTile = fixedArray[2];
+            TileType fTileType = readTileType(fTile);
+            int turn = Integer.parseInt(fixedArray[3]);
+
+
+            System.out.println(fTileType);
+            System.out.println(Angle.toAngle(turn));
+            PirateStyle style = new PirateStyle();
+
+
+            addToFixed(new Tile(new Coordinate(x,y), fTileType,style ,Angle.UP, true));
+
+        }
+    }
+
+    /**
+     * Goes through each unfixed tile and draws from them randomly, ensuring tiles are not drawn twice
+     * Then places on empty board or into bag if already a tile there
+     *
+     * @param unfixed
+     * @param in
+     */
+    private void readUnfixed(int unfixed, Scanner in) {
+        ArrayList<TileType> tempList = new ArrayList<>();
+        int[] angleArray = new int[]{0, 90, 180, 270};
+
+        Angle newAngle;
+        for (int i = 0; i < unfixed; i++) {
+            String unfTLine = in.nextLine();
+            TileType unfTLineType = readTileType(unfTLine);
+            tempList.add(unfTLineType);
+            Random rand = new Random();
+            int randAngle = rand.nextInt(angleArray.length);
+            PirateStyle style = new PirateStyle();
+
+            movables.add(new Tile(unfTLineType,style, Angle.UP, false));
+        }
+    }
+
+    /**
+     * Reads file and determines start location for all players
+     * Then sets each player's start
+     * @param in Scanner to read from
+     */
+    private void setStartCoords(Scanner in) {
+
+//        players.add(new Player(new PlayerProfile("a"), new Coordinate(0,0), getStyle(), 1));
+//        players.add(new Player(new PlayerProfile("b"), new Coordinate(0,0), getStyle(), 2));
+//        players.add(new Player(new PlayerProfile("c"), new Coordinate(0,0), getStyle(), 3));
+//        players.add(new Player(new PlayerProfile("d"), new Coordinate(0,0), getStyle(), 4));
+
+        in.useDelimiter(",");
+        for(int i = 1; i <= MAX_PLAYERS; i++) {
+            String cLine = in.nextLine();
+            String[] coordArray = cLine.split(",");
+            Coordinate playCoord = new Coordinate(Integer.parseInt(coordArray[1]), Integer.parseInt(coordArray[2]));
+            System.out.println(i);
+            setPlayerPosition(playCoord,i);
+        }
+    }
+
+
+    /**
+     * Takes in a string value of tiletype and outputs object
+     *
+     * @param tileTypeString
+     * @return
+     */
+    private TileType readTileType(String tileTypeString) {
+        TileType tileTypeObject;
+
+        switch (tileTypeString) {
+            case "corner":
+                tileTypeObject = TileType.CORNER;
+                break;
+            case "junction":
+                tileTypeObject = TileType.JUNCTION;
+                break;
+
+            case "straight":
+                tileTypeObject = TileType.STRAIGHT;
+                break;
+
+            case "goal":
+                tileTypeObject = TileType.GOAL;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + tileTypeString);
+
+        }
+        return tileTypeObject;
     }
 }
