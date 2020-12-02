@@ -101,6 +101,14 @@ public class Player implements Serializable {
         return coordinateHistory.peek();
     }
 
+    public Coordinate[] getLastTwoCoordinates(){
+        Stack<Coordinate> temp = coordinateHistory;
+        Coordinate firstTile = temp.pop();
+        Coordinate secondTile = temp.pop();
+        Coordinate thirdTile = temp.pop();
+        return new Coordinate[]{firstTile, secondTile, thirdTile};
+    }
+
     /**
      * Sets coordinates of player on gameboard
      *

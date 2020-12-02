@@ -4,7 +4,7 @@ import core.Coordinate;
 import core.Gameboard;
 import holdables.PlayerEffect;
 import holdables.TileEffect;
-import players.TurnCounter;
+//import players.TurnCounter;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
@@ -59,7 +59,7 @@ public class PlayerMovement {
                 break;
             case SPACE:
             case ENTER:
-                TurnCounter.switchPlayer();
+                //TurnCounter.switchPlayer();
                 break;
         }
     }
@@ -102,9 +102,26 @@ public class PlayerMovement {
 
 // TODO private method double move and backspace - pop coordinate stack
 
-
-    private static void backMovement(){
-
+    /**
+     * moves the player to the tile they were two turns ago.
+     * If that tile is on fire, then they move to their previous tile
+     * If their previous tile is on fire, they stay where they are.
+     * @param player selected player
+     */
+    private void backMovement(Player player){
+        Coordinate[] tiles = player.getLastTwoCoordinates();
+        Tile currentTile = gameboard.getTiles().get(tiles[0]);
+        Tile previousTile = gameboard.getTiles().get(tiles[1]);
+        Tile prefferedTile = gameboard.getTiles().get(tiles[2]);
+        if(previousTile.getEffect() != TileEffect.FIRE || tiles[1] != null){
+            if(prefferedTile.getEffect() != TileEffect.FIRE || tiles[2] != null){
+                player.setCoordinate(tiles[2]);
+            } else {
+                player.setCoordinate(tiles[1]);
+            }
+        } else {
+            player.setCoordinate(tiles[0]);
+        }
     }
 
     private static void doubleMove(){
@@ -237,13 +254,13 @@ public class PlayerMovement {
 
 //TODO move counter method 1-4 moves - old coord != nodprivate static static
 
-    private static void moveCount(){
-        int count = 0;
-        while(isAccessable() && count <= 4 && canPlayerEnterTile()){
-            //move
-            count++;
-        }
-    }
+//    private static void moveCount(){
+//        int count = 0;
+//        while(isAccessable() && count <= 4 && canPlayerEnterTile()){
+//            //move
+//            count++;
+//        }
+//    }
 
 
 //TODO end turn (dw about this just yet tho)
