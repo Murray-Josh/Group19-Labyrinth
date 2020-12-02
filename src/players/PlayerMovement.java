@@ -6,6 +6,7 @@ import holdables.TileEffect;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Moves the players
@@ -81,7 +82,7 @@ public class PlayerMovement {
     }
 
 private Boolean isPlayerOnTile(Tile checkTile) {
-        Boolean playerPresent = false;
+        boolean playerPresent = false;
         for(int i = 0; i < gameboard.getPlayersCount(); i++) {
             if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
                 playerPresent = true;
