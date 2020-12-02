@@ -82,7 +82,7 @@ public class PlayerMovement {
     }
 
 
-private Boolean isPlayerOnTile(Tile checkTile) {
+    private Boolean isPlayerOnTile(Tile checkTile) {
         for(int i = 0; i < gameboard.getPlayersCount(); i++) {
             if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
                 return true;
@@ -107,25 +107,25 @@ private Boolean isPlayerOnTile(Tile checkTile) {
         //then checks if next tile allows for travel in the opposite direction
         if(currentMovable.contains(0) && !isPlayerOnTile(southTile) && !isOnFire(southTile)) {
             checkAligns(southTile, nextMovable);
-            if(nextMovable.contains(2)) {
+            if(nextMovable.contains(2) && (southTile.getCoordinate() != prevCoord)) {
                 alignsArr[0] = true;
             }
         }
         if(currentMovable.contains(1) && !isPlayerOnTile(westTile) && !isOnFire(westTile)) {
             checkAligns(westTile, nextMovable);
-            if(nextMovable.contains(3)) {
+            if(nextMovable.contains(3) && (westTile.getCoordinate() != prevCoord)) {
                 alignsArr[1] = true;
             }
         }
         if(currentMovable.contains(2) && !isPlayerOnTile(northTile) && !isOnFire(northTile)) {
             checkAligns(northTile, nextMovable);
-            if(nextMovable.contains(0)) {
+            if(nextMovable.contains(0) && (northTile.getCoordinate() != prevCoord)) {
                 alignsArr[2] = true;
             }
         }
         if(currentMovable.contains(3) && !isPlayerOnTile(eastTile) && !isOnFire(eastTile)) {
             checkAligns(eastTile, nextMovable);
-            if(nextMovable.contains(1)) {
+            if(nextMovable.contains(1) && (eastTile.getCoordinate() != prevCoord)) {
                 alignsArr[3] = true;
             }
         }
