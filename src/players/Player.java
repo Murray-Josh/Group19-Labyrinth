@@ -21,7 +21,7 @@ import java.util.Stack;
 public class Player implements Serializable {
     private ArrayList<Effect>   hand;
     private        PlayerProfile         profile;
-    private Stack<Coordinate> coordinateHistory;
+    public Stack<Coordinate> coordinateHistory;     //made this public so i can use it in the backtracking method in player movement, i hope thats okay :)
     private        Style                 style;
     private        int                   playerNum;
     private Angle currentDirection;
@@ -43,6 +43,13 @@ public class Player implements Serializable {
         setPlayerNum(playerNum);
         setCurrentDirection(UP);
         setPlayerImage(playerNum);
+    }
+
+    /**
+     * constructor for backMovement in PlayerMovement
+     */
+    public Player() {
+
     }
 
     /**

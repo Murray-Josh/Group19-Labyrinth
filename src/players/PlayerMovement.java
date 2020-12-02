@@ -2,14 +2,12 @@ package players;
 
 import core.Coordinate;
 import core.Gameboard;
-import holdables.PlayerEffect;
 import holdables.TileEffect;
 //import players.TurnCounter;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Moves the players
@@ -72,8 +70,7 @@ public class PlayerMovement {
             y += dy;
         }
 
-
-        // both of these methods occur in Coordinate.java as well - might be easier to just call them from there
+        // both of these get methods occur in Coordinate.java as well - might be easier to just call them from there
     /**
      * gets x coordinate
      * @return x coordinate
@@ -91,13 +88,6 @@ public class PlayerMovement {
         }
 
 
-
-   /* private Boolean canPlayerEnterTile(Player currentPlayer, Tile selectedTile){
-        if(gameboard.getPlayers(i).getCoordinate().equals(checkTile.getCoordinate())) {
-            return !(TileEffect.FIRE || !(tilesAligned(currentPlayer)) || isPlayerOnTile(selectedTile));
-
-        }
-*/
 
 
 // TODO private method double move and backspace - pop coordinate stack
@@ -124,11 +114,18 @@ public class PlayerMovement {
         }
     }
 
+    /**
+     * player effect double move
+     */
     private static void doubleMove(){
-
+        //reverse turn counter one?
     }
 
-
+    /**
+     * checks if another player is on the tile the player wants to move onto
+     * @param checkTile
+     * @return boolean (if pther player is on next tile)
+     */
     private Boolean isPlayerOnTile(Tile checkTile) {
         for(int i = 0; i < gameboard.getPlayersCount(); i++) {
             if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
@@ -138,6 +135,12 @@ public class PlayerMovement {
         return false;
     }
 
+//TODO javadoc this bad boi
+    /**
+     * im actually not too sure what is happening here
+     * @param currentPlayer
+     * @return boolean array of accessable tile
+     */
     //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
     private Boolean[] tilesAligned(Player currentPlayer){
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
@@ -180,11 +183,23 @@ public class PlayerMovement {
         return alignsArr;
     }
 
+
+    /**
+     * checks if the next tile is on fire or not
+     * @param checkTile
+     * @return boolean (next tile is on fire)
+     */
     private boolean isOnFire(Tile checkTile) {
         return checkTile.getEffect() == TileEffect.FIRE;
     }
 
-    //Nested switch statements to determine which directions the player can move in
+
+    /**
+     * determines which direction a player can move in
+     * @param tile
+     * @param list
+     * @return arraylist of moveable directions
+     */
     private ArrayList<Integer> checkAligns(Tile tile, ArrayList<Integer> list) {
         list.clear();
         switch(tile.getType()) {
@@ -252,15 +267,41 @@ public class PlayerMovement {
         return list;
     }
 
-//TODO move counter method 1-4 moves - old coord != nodprivate static static
+    /**
+     * checks if tile is accessible by player
+     * @param currTile
+     * @param nextTile
+     * @return boolean (is the next tile accessible)
+     */
+    private Boolean isAccessible(Tile currTile, Tile nextTile){
+        if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile) && checkAligns(currTile, nextTile)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-//    private static void moveCount(){
-//        int count = 0;
-//        while(isAccessable() && count <= 4 && canPlayerEnterTile()){
-//            //move
-//            count++;
-//        }
-//    }
+    //fungwah sent on discord
+   /* private Boolean canPlayerEnterTile(Player currentPlayer, Tile selectedTile){
+        if(gameboard.getPlayers(i).getCoordinate().equals(checkTile.getCoordinate())) {
+            return !(TileEffect.FIRE || !(tilesAligned(currentPlayer)) || isPlayerOnTile(selectedTile));
+
+        }
+*/
+
+
+//TODO move counter method 1-4 moves - old coord != new coord private static
+
+    /**
+     * counts the moves out of 4 a player is allowed to make per round
+     */
+   /* private void moveCount(){
+        int count = 0;
+        while(isAccessible()){
+            //move
+            count++;
+        }
+    }   */
 
 
 //TODO end turn (dw about this just yet tho)
