@@ -42,7 +42,11 @@ public enum Title {
     /**
      * Critical Error (Only when the program exits after
      */
-    CRIT_ERROR("Labyrinth encountered a critical error");
+    CRIT_ERROR("Labyrinth encountered a critical error"),
+    /**
+     * Tile Shifts
+     */
+    PLACE_TILE("Place a Tile");
 
     private final String TITLE;
 

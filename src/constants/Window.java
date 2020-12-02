@@ -11,8 +11,8 @@ public enum Window {
     LOAD("../resources/fxml/LoadGame.fxml", Title.LOAD),
     SCOREBOARD("../resources/fxml/Scoreboard.fxml", Title.SCOREBOARD),
     SETUP("../resources/fxml/SetUpGame.fxml", Title.SETUP),
-    BOARD("../resources/fxml/Gameboard.fxml", Title.MAIN);
-
+    BOARD("../resources/fxml/Gameboard.fxml", Title.MAIN),
+    TILE_SHIFT("../resources/fxml/MoveTileDialog.fxml", Title.PLACE_TILE);
 
     private final String PATH;
     private final Title  TITLE;

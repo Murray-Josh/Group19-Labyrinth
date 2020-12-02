@@ -9,9 +9,12 @@ import core.Gameboard;
 import core.Level;
 import holdables.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
@@ -19,10 +22,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import players.Player;
 import players.PlayerMovement;
 import styles.Style;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -322,6 +328,31 @@ public class GameboardController implements InitialisableWithParameters, Initial
 
         PlayerMovement.keyPressed(keyEvent);
 
+    }
+
+    /**
+     * Shows the Place Tile dialog
+     * @param tile Tile to place onto the board
+     */
+    public void showTileShifts(Tile tile) {
+        Scene scene = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(StageController.class.getResource(Window.TILE_SHIFT.getPath()));
+            Parent root = loader.load();
+            InitialisableWithParameters controller = loader.getController();
+            controller.initialiseWithParameters(new Object[] {tile});
+            scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle(Title.PLACE_TILE.name());
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 }
 
