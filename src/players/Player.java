@@ -7,7 +7,9 @@ import holdables.Holdable;
 import holdables.PlayerEffect;
 import javafx.scene.image.Image;
 import styles.Style;
+
 import static constants.Angle.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -16,25 +18,29 @@ import java.util.Stack;
  * Class for players in game
  *
  * @author Joshua Murray
- * @version 1.0
+ * @author Issi Ludwig
+ * @author Joseph Omar
+ * @author Jordy Martinson
+ * @author Martin Samm
+ * @version 2.0
  */
 public class Player implements Serializable {
-    private ArrayList<Effect>   hand;
-    private        PlayerProfile         profile;
+    private ArrayList<Effect> hand;
+    private PlayerProfile profile;
     public Stack<Coordinate> coordinateHistory;     //made this public so i can use it in the backtracking method in player movement, i hope thats okay :)
-    private        Style                 style;
-    private        int                   playerNum;
+    private Style style;
+    private int playerNum;
     private Angle currentDirection;
-    private        PlayerEffect          activeEffect;
+    private PlayerEffect activeEffect;
     private Image playerImage;
 
     /**
      * Constructor for a player
      *
-     * @param profile   Profile of a player
-     * @param coordinate     Coordinates of gameboard of player
-     * @param style     Styles.Style of piece for player
-     * @param playerNum Players.Player number
+     * @param profile    Profile of a player
+     * @param coordinate Coordinates of gameboard of player
+     * @param style      Styles.Style of piece for player
+     * @param playerNum  Players.Player number
      */
     public Player(PlayerProfile profile, Coordinate coordinate, Style style, int playerNum) {
         setProfile(profile);
@@ -46,7 +52,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * constructor for backMovement in PlayerMovement
+     * Constructor for backMovement in PlayerMovement
      */
     public Player() {
 
@@ -108,7 +114,7 @@ public class Player implements Serializable {
         return coordinateHistory.peek();
     }
 
-    public Coordinate[] getLastTwoCoordinates(){
+    public Coordinate[] getLastTwoCoordinates() {
         Stack<Coordinate> temp = coordinateHistory;
         Coordinate firstTile = temp.pop();
         Coordinate secondTile = temp.pop();
@@ -197,10 +203,18 @@ public class Player implements Serializable {
         this.activeEffect = activeEffect;
     }
 
+    /**
+     * Set image of player
+     * @param playerNumber Player number to set image of
+     */
     public void setPlayerImage(int playerNumber) {
         this.playerImage = Style.getPlayerImage(playerNumber);
     }
 
+    /**
+     * Get image of a player
+     * @return Image of player
+     */
     public Image getPlayerImage() {
         return playerImage;
     }

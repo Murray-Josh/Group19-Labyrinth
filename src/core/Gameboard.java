@@ -20,6 +20,7 @@ import java.util.stream.Stream;
  *
  * @author Joshua Murray
  * @author Joseph Omar
+ * @author Jordy Martinson
  * @version 1.2
  */
 public class Gameboard implements Serializable {
