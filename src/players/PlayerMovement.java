@@ -150,7 +150,7 @@ public class PlayerMovement {
         checkAligns(currentTile, currentMovable);
         Boolean[] alignsArr = new Boolean[4];
 
-        //May fail at board edges
+        //switch to getnorth tile etc
         Tile southTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()+1);
         Tile westTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()-1, currentTile.getCoordinate().getY());
         Tile northTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()-1);
@@ -233,7 +233,7 @@ public class PlayerMovement {
                         break;
                     case RIGHT:
                         list.add(2);
-                        list.add(1);
+                        list.add(3);
                         break;
                 }
             case JUNCTION:
