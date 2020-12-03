@@ -48,7 +48,7 @@
                                         <Insets/>
                                     </opaqueInsets>
                                 </Label>
-                                <ChoiceBox fx:id="comDirection" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                <ChoiceBox fx:id="comAxis" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets bottom="14.0" right="14.0" top="14.0"/>
                                     </HBox.margin>

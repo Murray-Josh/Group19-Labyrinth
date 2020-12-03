@@ -1,8 +1,18 @@
 package controllers;
 
+
+import static controllers.MoveTileDialogController.Axis.COLUMN;
+import static controllers.MoveTileDialogController.Axis.ROW;
+
 import constants.Angle;
+import core.Coordinate;
 import core.Gameboard;
 import holdables.Tile;
+import holdables.TileEffect;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -16,403 +26,396 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static controllers.MoveTileDialogController.Axis.COLUMN;
-import static controllers.MoveTileDialogController.Axis.ROW;
-
-/**
- * Controls the MoveTileDialog, which allows the player to add a tile onto the
- * board.
- *
- * @author Joseph Omar
- * @version 1.4
- TODO
- Check if theres a player on a tile that gets puched off, move them to the new one
- */
 public class MoveTileDialogController implements InitialisableWithParameters {
-    public static final  int    PREVIEW_WIDTH       = 128;
-    public static final  int    WINDOW_MIN_WIDTH    = 766;
-    private static final double TILE_SIZE           = 100;
-    private static final String ARROW_PATH_ROLLOVER =
-            "../resources/menu/arrow_rollover.png";
-    private static final double WINDOW_HEIGHT       = TILE_SIZE + 219;
-    private static final String ARROW_PATH          =
-            "../resources/menu/arrow.png";
 
-    private static final String             RIGHT  = "Right";
-    private static final String             LEFT   = "Left";
-    private static final String             TOP    = "Top";
-    private static final String             BOTTOM = "Bottom";
-    private              ImageView          addLeft;
-    private              ImageView          addRight;
-    @FXML
-    private              Button             cmdConfirm;
-    @FXML
-    private              ChoiceBox<Axis>    comDirection;
-    @FXML
-    private              ChoiceBox<Integer> comNumber;
-    @FXML
-    private              Label              lblLeft;
-    @FXML
-    private              Label              lblRight;
-    @FXML
-    private              GridPane           grdTiles;
-    @FXML
-    private              AnchorPane         rootPane;
+   /**
+    * Window and Tile sizes used in this class
+    */
+   private static final int TILE_PREVIEW_WIDTH = 128;
+   private static final int WINDOW_MIN_WIDTH = 766;
+   private static final int TILE_SIZE = 100;
+   private static final int WINDOW_MIN_HEIGHT = 219;
+   private static final int WINDOW_MAX_HEIGHT = WINDOW_MIN_HEIGHT + TILE_SIZE;
+   /**
+    * Paths to the add tile button assets
+    */
+   private static final String ADD_PATH = "../resources/menu/add.png";
+   private static final String ADD_PATH_ROLLOVER = "../resources/menu/add_rollover.png";
+   /**
+    * Strings indicating the direction of the axis
+    */
+   private static final String TOP = "Top";
+   private static final String BOTTOM = "Bottom";
+   private static final String LEFT = "Left";
+   private static final String RIGHT = "Right";
+   /**
+    * Field common to most methods in this Controller
+    */
+   private Tile tileToPlace;
+   private Gameboard gameboard;
+   private LinkedList<Tile> axisContents = new LinkedList<>();
+   private LinkedList<ImageView> formattedTiles;
+   private Axis axis;
+   private Integer index;
+   private ImageView addLeft;
+   private ImageView addRight;
 
-    private Tile             tile;
-    private Gameboard        gameboard;
-    private ArrayDeque<Tile> selectedTiles;
+   /**
+    * FXML Controls
+    */
+   @FXML
+   private Button cmdConfirm;
+   @FXML
+   private ChoiceBox<Axis> comAxis;
+   @FXML
+   private ChoiceBox<Integer> comIndex;
+   @FXML
+   private Label lblLeft;
+   @FXML
+   private Label lblRight;
+   @FXML
+   private GridPane grdTiles;
+   @FXML
+   private AnchorPane rootPane;
+   @FXML
+   private ImageView imgTile;
 
-    /**
-     * Initialises the MoveTile {@link constants.Window}
-     *
-     * @param parameters Objects the method needs to initialise the window
-     */
-    @Override
-    public void initialiseWithParameters(Object[] parameters) {
-        this.tile = (Tile) parameters[0];
-        this.gameboard = (Gameboard) parameters[1];
+   /**
+    * Creates an ImageView Node from a specified image, applying the appropriate properties
+    *
+    * @param image Image to be place in the tile
+    * @return ImageView containing the specified image
+    */
+   private static ImageView createImageView(Image image, double angle) {
+      ImageView imageView = new ImageView();
+      imageView.setImage(image);
+      imageView.setPreserveRatio(false);
+      imageView.setFitHeight(TILE_SIZE);
+      imageView.setFitWidth(TILE_SIZE);
+      imageView.setRotate(angle);
+      return imageView;
+   }
 
-        resetWindow();
+   /**
+    * Initialises the Place a Tile dialog with parameters passed from the initialising class
+    *
+    * @param parameters Parameters of this Place a tile Dialog
+    */
+   @Override
+   public void initialiseWithParameters(Object[] parameters) {
+      this.gameboard = (Gameboard) parameters[0];
+      this.tileToPlace = (Tile) parameters[1];
+      initialise();
+   }
 
-    }
+   /**
+    * Resets the window and its controls to their default values
+    */
+   private void initialise() {
+      imgTile.setImage(tileToPlace.getImage());
+      imgTile.setRotate(tileToPlace.getAngle().get());
+      grdTiles.getRowConstraints().clear();
+      grdTiles.getColumnConstraints().clear();
+      comIndex.getItems().clear();
+      comAxis.setItems(FXCollections.observableArrayList(COLUMN, ROW));
+      comAxis.getSelectionModel().selectFirst();
+      comIndex.getItems().clear();
+      comIndex.setDisable(true);
+      enableChoiceBoxes();
+      defineChoiceBoxListeners();
+      updateWindowSize();
+   }
 
-    /**
-     * Clears the window to default values
-     */
-    private void resetWindow() {
-        this.grdTiles.getColumnConstraints().clear();
-        this.grdTiles.getRowConstraints().clear();
-        this.comDirection.getItems().clear();
-        sizeWindow();
-        this.comDirection.getItems().addAll(COLUMN, ROW);
-        this.comDirection.getSelectionModel().selectFirst();
-        addListeners();
-        enableChoiceBoxes();
-        this.cmdConfirm.setDisable(true);
-    }
+   /**
+    * Creates event listeners for bot the Axis and the Index Choice Boxes
+    */
+   private void defineChoiceBoxListeners() {
 
-    /**
-     * Adds Events to the Choice boxes that trigger an event when the selected
-     * item changes
-     */
-    private void addListeners() {
-        comDirection.getSelectionModel().selectedItemProperty()
-                    .addListener((observable, oldValue, newValue) -> {
-                        updateNumbers(newValue);
-                        if (newValue == COLUMN) {
-                            lblLeft.setText(TOP);
-                            lblRight.setText(BOTTOM);
-                        } else {
-                            lblLeft.setText(LEFT);
-                            lblRight.setText(RIGHT);
-                        }
-                    });
-        comNumber.getSelectionModel().selectedItemProperty()
-                 .addListener((observable, oldValue, newValue) -> {
-                     updateGrid(
-                             comDirection.getSelectionModel().getSelectedItem(),
-                             newValue);
-                     sizeWindow();
-                 });
-    }
+      /*Direction on change Event */
+      comAxis.getSelectionModel().selectedItemProperty()
+           .addListener((observable, oldValue, newValue) -> {
+              comIndex.getItems().clear();
+              this.axis = newValue;
+              if (newValue == COLUMN) {
+                 lblLeft.setText(TOP);
+                 lblRight.setText(BOTTOM);
+              } else if (newValue == ROW) {
+                 lblLeft.setText(LEFT);
+                 lblRight.setText(RIGHT);
+              }
+              comIndex.setDisable(false);
+              populateIndexes();
+           });
 
-    /**
-     * Update the available column/row numbers in the choice box
-     *
-     * @param axis Whether the numbers to display correspond to columns or rows
-     */
-    private void updateNumbers(Axis axis) {
-        comNumber.getItems().clear();
-        getIndexes(axis);
-    }
+      /* Index on change Event */
+      comIndex.getSelectionModel().selectedItemProperty()
+           .addListener((observable, oldValue, newValue) -> {
+              this.index = newValue;
+              populateGrid();
+              enableShiftButtons();
+           });
+   }
 
-    /**
-     * Loops through each index on the specified Axis
-     *
-     * @param axis The selected Axis to get the available indexes from
-     */
-    private void getIndexes(Axis axis) {
-        for (int i = 0; i < gameboard.getTiles().getWidth(); i++) {
-            ArrayList<Tile> tiles;
-            if (axis.equals(COLUMN)) {
-                tiles = new ArrayList<>(
-                        Arrays.asList(gameboard.getTiles().getColumn(i)));
-            } else {
-                tiles = new ArrayList<>(
-                        Arrays.asList(gameboard.getTiles().getRow(i)));
-            }
+   /**
+    * Adds all the tiles at the selected index to the grid, rotating them if there are in a column
+    */
+   private void populateGrid() {
+      formattedTiles = new LinkedList<>();
+      if (axis == COLUMN) {
+         axisContents = getTilesColumn();
+         axisContents.forEach(tile -> formattedTiles
+              .add(createImageView(tile.getImage(), tile.getAngle().get() - 90)));
+      } else if (axis == ROW) {
+         axisContents = getTilesRow();
+         formattedTiles.clear();
+         axisContents.forEach(tile -> formattedTiles
+              .add(createImageView(tile.getImage(), tile.getAngle().get())));
+      }
+      this.addLeft = createImageView(new Image(ADD_PATH), 0);
+      this.addRight = createImageView(new Image(ADD_PATH), 180);
+      addRight.setRotate(Angle.UP.get());
+      formattedTiles.addFirst(addLeft);
+      formattedTiles.addLast(addRight);
+      defineGridSize();
+      for (int i = 0; i < formattedTiles.size(); i++) {
+         grdTiles.add(formattedTiles.get(i), i, 0);
+      }
 
+   }
+
+   /**
+    * Calculates and sets the Window size based on the amount of tiles in the Grid
+    */
+   private void updateWindowSize() {
+      final double GRID_WIDTH = grdTiles.getColumnConstraints().size() * TILE_SIZE;
+      if (grdTiles.getRowConstraints().size() == 0) {
+         rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT);
+      } else if (GRID_WIDTH < WINDOW_MIN_WIDTH) {
+         rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_MAX_HEIGHT);
+         grdTiles.setMinSize(GRID_WIDTH, TILE_SIZE);
+      } else {
+         rootPane.setMinSize(GRID_WIDTH + TILE_PREVIEW_WIDTH, WINDOW_MAX_HEIGHT);
+         grdTiles.setMinSize(GRID_WIDTH, TILE_SIZE);
+      }
+
+      rootPane.setMaxSize(rootPane.getMaxWidth(), WINDOW_MAX_HEIGHT);
+      rootPane.setPrefSize(rootPane.getMinWidth(), WINDOW_MAX_HEIGHT);
+
+      grdTiles.setMaxSize(GRID_WIDTH, TILE_SIZE);
+      grdTiles.setPrefSize(GRID_WIDTH, TILE_SIZE);
+   }
+
+   /**
+    * Gets the tiles on a specified row and returns them in a linked list
+    *
+    * @return List of tiles on selected row index
+    */
+   private LinkedList<Tile> getTilesRow() {
+      return new LinkedList<>(Arrays.asList(gameboard.getTiles().getRow(index)));
+   }
+
+   /**
+    * Gets the tiles on a specified column and returns them in a linked list
+    *
+    * @return List of tiles on selected column index
+    */
+   private LinkedList<Tile> getTilesColumn() {
+      return new LinkedList<>(Arrays.asList(gameboard.getTiles().getColumn(index)));
+   }
+
+   /**
+    * Finds all indexes on the selected axis where there are no fixed tiles or the Ice Effect isn't
+    * active;
+    */
+   private void populateIndexes() {
+      /* If the selected axis is a column */
+      if (this.axis == COLUMN) {
+         /* Loop through each column */
+         for (int i = 0; i < gameboard.getWidth(); i++) {
             AtomicBoolean hasFixed = new AtomicBoolean(false);
-
-            tiles.forEach(tile -> {
-                if (tile.isFixed() && !hasFixed.get()) {
-                    hasFixed.set(true);
-                }
-            });
-
+            /*Loop throw each tile in column i and check if any are fixed or have the ice effect*/
+            for (Tile tile : gameboard.getTiles().getColumn(i)) {
+               if (tile.isFixed() || tile.getEffect().equals(TileEffect.ICE) || hasFixed.get()) {
+                  hasFixed.set(true);
+               }
+            }
+            /*If there are ot fixed tiles in the column, add it to the ChoiceBox*/
             if (!hasFixed.get()) {
-                comNumber.getItems().add(i);
+               comIndex.getItems().add(i);
             }
-        }
-    }
-
-    /**
-     * update the gridpane based on the axis and number selected
-     */
-    private void updateGrid(Axis axis, int number) {
-        ArrayList<Tile> tiles;
-        if (axis.equals(COLUMN)) {
-            tiles = new ArrayList<>(
-                    Arrays.asList(this.gameboard.getTiles().getColumn(number)));
-        } else {
-            tiles = new ArrayList<>(
-                    Arrays.asList(this.gameboard.getTiles().getRow(number)));
-        }
-        this.selectedTiles = new ArrayDeque<>(tiles);
-        defineGrid(tiles.size());
-        addToGrid(formatTiles(tiles, axis));
-    }
-
-    /**
-     * Takes Tiles and formats them into stack panes as well as adding an add
-     * button to the first and last grid squares
-     *
-     * @param tiles Tile to be formatted
-     *
-     * @return Queue of ImageView items containing the Tiles passed to the
-     * method
-     */
-    private ArrayDeque<ImageView> formatTiles(ArrayList<Tile> tiles,
-                                              Axis axis) {
-        ArrayDeque<ImageView> formattedTiles = new ArrayDeque<>();
-        /* For each tile, create an imageview with the tile's image inside */
-        tiles.forEach(tile -> {
-            ImageView imageView = createImageView(tile.getImage());
-            imageView.setRotate(tile.getAngle().get());
-            /* If the axis is x, rotate the tile anticlockwise */
-            if (axis == COLUMN) {
-                imageView.setRotate(imageView.getRotate() - 90);
+         }
+         /*If the axis is rows */
+      } else {
+         /*Loop through each row */
+         for (int i = 0; i < gameboard.getHeight(); i++) {
+            AtomicBoolean hasFixed = new AtomicBoolean(false);
+            /*Check if there is a fixed tile in that row*/
+            for (Tile tile : gameboard.getTiles().getRow(i)) {
+               if (tile.isFixed() || tile.getEffect().equals(TileEffect.ICE) || hasFixed.get()) {
+                  hasFixed.set(true);
+               }
             }
-            formattedTiles.add(imageView);
-        });
-        /* Create the addLeft and addRight Buttons */
-        this.addLeft = createImageView(new Image(ARROW_PATH));
-        this.addRight = createImageView(new Image(ARROW_PATH));
-        addRight.setRotate(Angle.UP.get());
+            /*If there are ot fixed tiles in the row, add it to the ChoiceBox*/
+            if (!hasFixed.get()) {
+               comIndex.getItems().add(i);
+            }
+         }
+      }
+   }
 
-        enableShiftRollover();
-        enableShiftButtons();
-        disableChoiceBoxes();
-        return formattedTiles;
-    }
+   /**
+    * Defines events for addLeft and addRight and enables them
+    */
+   private void enableShiftButtons() {
+      addLeft.setDisable(false);
+      addLeft.setOnMouseClicked(event -> addToLeft());
+      addRight.setDisable(false);
+      addRight.setOnMouseClicked(event -> addToRight());
 
-    /**
-     * Enables the addLeft and addRight button events
-     */
-    private void enableShiftButtons() {
-        this.addLeft.setDisable(false);
-        this.addLeft.setOnMouseClicked(event -> addToLeft());
-        this.addRight.setDisable(false);
-        this.addRight.setOnMouseClicked(event -> addToRight());
-    }
+      addRight.setOnMouseEntered(
+           event -> addRight.setImage(new Image(ADD_PATH_ROLLOVER)));
+      addRight.setOnMouseExited(
+           event -> addRight.setImage(new Image(ADD_PATH)));
+      addLeft.setOnMouseEntered(
+           event -> addLeft.setImage(new Image(ADD_PATH_ROLLOVER)));
+      addLeft.setOnMouseExited(
+           event -> addLeft.setImage(new Image(ADD_PATH)));
+   }
 
-    /**
-     * Adds the tile to the right of the grid
-     */
-    private void addToRight() {
-        this.selectedTiles.addLast(this.tile);
-        this.selectedTiles.removeFirst();
-        updateGrid(comDirection.getSelectionModel().getSelectedItem(),
-                   comNumber.getSelectionModel().getSelectedItem());
-        disableShiftRollover();
-        disableShiftButtons();
-        disableChoiceBoxes();
-        cmdConfirm.setDisable(false);
-    }
+   /**
+    * Adds the Tile to the right of the grid
+    */
+   private void addToRight() {
+      disableChoiceBoxes();
+      disableShiftButtons();
+      formattedTiles.removeLast();
+      formattedTiles.addLast(createImageView(tileToPlace.getImage(), tileToPlace.getAngle().get()));
 
-    /**
-     * Adds the tile to the left of the grid
-     */
-    private void addToLeft() {
-        this.selectedTiles.addFirst(this.tile);
-        this.selectedTiles.removeLast();
-        updateGrid(comDirection.getSelectionModel().getSelectedItem(),
-                   comNumber.getSelectionModel().getSelectedItem());
-        disableShiftRollover();
-        disableShiftButtons();
-        disableChoiceBoxes();
-        cmdConfirm.setDisable(false);
-    }
+      gameboard.getSilkBag().addLast(axisContents.removeFirst());
+      if (axis == COLUMN) {
+         axisContents.forEach(tile -> {
+            tile.getCoordinate().increaseY(1);
+            tile.getCoordinate().setX(index);
+         });
+         tileToPlace.setCoordinate(new Coordinate(index, 0));
+         axisContents.addLast(tileToPlace);
+      } else if (axis == ROW) {
+         axisContents.forEach(tile -> {
+            tile.getCoordinate().decreaseX(1);
+            tile.getCoordinate().setY(index);
+         });
+         tileToPlace.setCoordinate(new Coordinate(gameboard.getWidth() - 1, index));
+         axisContents.addLast(tileToPlace);
+      }
+      populateGrid();
+   }
 
-    /**
-     * Disables the Choice Boxes
-     */
-    private void disableChoiceBoxes() {
-        Axis selectedAxis = comDirection.getSelectionModel().getSelectedItem();
-        Integer selectedNumber =
-                comNumber.getSelectionModel().getSelectedItem();
-        this.comDirection.setDisable(true);
-        this.comDirection.getSelectionModel().select(selectedAxis);
-        this.comNumber.setDisable(true);
-        this.comNumber.getSelectionModel().select(selectedNumber);
-    }
+   /**
+    * Adds the tile to the left of the grid
+    */
+   private void addToLeft() {
+      disableChoiceBoxes();
+      disableShiftButtons();
+      formattedTiles.removeFirst();
+      formattedTiles
+           .addFirst(createImageView(tileToPlace.getImage(), tileToPlace.getAngle().get()));
+      gameboard.getSilkBag().addLast(axisContents.removeLast());
+      if (axis == COLUMN) {
+         axisContents.forEach(tile -> {
+            tile.getCoordinate().decreaseY(1);
+            tile.getCoordinate().setX(index);
+         });
+         tileToPlace.setCoordinate(new Coordinate(index, gameboard.getHeight() - 1));
+         axisContents.addLast(tileToPlace);
+      } else if (axis == ROW) {
+         axisContents.forEach(tile -> {
+            tile.getCoordinate().increaseX(1);
+            tile.getCoordinate().setY(index);
+         });
+         tileToPlace.setCoordinate(new Coordinate(0, index));
+         axisContents.addLast(tileToPlace);
+      }
+      populateGrid();
+   }
 
-    /**
-     * Enables the Choice Boxes
-     */
-    private void enableChoiceBoxes() {
-        this.comDirection.setDisable(false);
-        this.comDirection.getSelectionModel().selectFirst();
-        this.comNumber.setDisable(false);
-        this.comNumber.getSelectionModel().selectFirst();
-    }
+   /**
+    * Disables the shift buttons
+    */
+   private void disableShiftButtons() {
+      addLeft.setDisable(true);
+      addRight.setDisable(true);
+   }
 
-    /**
-     * Disables the Shift Buttons (addLeft & addRight)
-     */
-    private void disableShiftButtons() {
-        this.addLeft.setDisable(true);
-        this.addRight.setDisable(true);
-    }
+   /**
+    * Enables the ChoiceBoxes
+    */
+   private void enableChoiceBoxes() {
+      comAxis.setDisable(false);
+      comAxis.getSelectionModel().selectFirst();
+      comIndex.setDisable(false);
+      comIndex.getSelectionModel().selectFirst();
+   }
 
-    /**
-     * Enables the rollover events for the add left and add right buttons
-     */
-    private void enableShiftRollover() {
+   /**
+    * Disables the ChoiceBoxes
+    */
+   private void disableChoiceBoxes() {
+      Axis selectedAxis = comAxis.getSelectionModel().getSelectedItem();
+      Integer selectedNumber =
+           comIndex.getSelectionModel().getSelectedItem();
+      comAxis.setDisable(true);
+      comAxis.getSelectionModel().select(selectedAxis);
+      comIndex.setDisable(true);
+      comIndex.getSelectionModel().select(selectedNumber);
+   }
 
-        addRight.setOnMouseEntered(
-                event -> addRight.setImage(new Image(ARROW_PATH_ROLLOVER)));
-        addRight.setOnMouseExited(
-                event -> addRight.setImage(new Image(ARROW_PATH)));
-        addLeft.setOnMouseEntered(
-                event -> addLeft.setImage(new Image(ARROW_PATH_ROLLOVER)));
-        addLeft.setOnMouseExited(
-                event -> addLeft.setImage(new Image(ARROW_PATH)));
+   /**
+    * Redefines the number of columns in the grid to the amount of Tiles on the selected Axis + the
+    * AddLeft and AddRight Buttons
+    */
+   private void defineGridSize() {
+      final int PERCENT_WIDTH = 100 / axisContents.size() + 2;
 
-    }
+      RowConstraints row = new RowConstraints();
+      row.setPercentHeight(100);
+      grdTiles.getRowConstraints().setAll(row);
 
-    /**
-     * Disables the rollover events for the add left and add right buttons
-     */
-    private void disableShiftRollover() {
-        addLeft.setOnMouseEntered(null);
-        addRight.setOnMouseEntered(null);
+      for (int i = 0; i < axisContents.size() + 2; i++) {
+         ColumnConstraints c = new ColumnConstraints();
+         c.setPercentWidth(PERCENT_WIDTH);
+         grdTiles.getColumnConstraints().add(c);
+      }
+      updateWindowSize();
+   }
 
-        addLeft.setOnMouseExited(null);
-        addRight.setOnMouseExited(null);
-    }
+   public void cmdResetClicked(MouseEvent mouseEvent) {
+      initialise();
+   }
 
-    /**
-     * Adds each Tile to the GridPane
-     *
-     * @param formattedTiles All the Tiles to add to the grid
-     */
-    private void addToGrid(ArrayDeque<ImageView> formattedTiles) {
-        for (int i = 0; i < formattedTiles.size(); i++) {
-            grdTiles.add(formattedTiles.poll(), i, 0);
-        }
-    }
-
-    /**
-     * Creates an ImageView Node from a specified image, applying the
-     * appropriate properties
-     *
-     * @param image Image to be place in the tile
-     *
-     * @return ImageView containing the specified image
-     */
-    private ImageView createImageView(Image image) {
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
-        imageView.setPreserveRatio(false);
-        imageView.setFitHeight(TILE_SIZE);
-        imageView.setFitWidth(TILE_SIZE);
-        return imageView;
-    }
-
-    /**
-     * Adds the appropriate amount of columns to the grid based on the players
-     * selection
-     *
-     * @param numberOfTiles The Number of tiles on the selected axis
-     */
-    private void defineGrid(int numberOfTiles) {
-        final int PERCENT_WIDTH = 100 / numberOfTiles;
-        grdTiles.getColumnConstraints().clear();
-        grdTiles.getRowConstraints().clear();
-        RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setPercentHeight(100);
-        grdTiles.getRowConstraints().add(rowConstraints);
-
-        for (int i = 0; i < numberOfTiles; i++) {
-            ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(PERCENT_WIDTH);
-            grdTiles.getColumnConstraints().add(columnConstraints);
-        }
-    }
-
-    /**
-     * Resizes the window based on the number of tiles in the grid. If there are
-     * no tiles, the window is sized to its minimum without the grid
-     */
-    private void sizeWindow() {
-        if (grdTiles.getColumnConstraints().size() == 0) {
-            rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_HEIGHT - TILE_SIZE);
-        } else if ((grdTiles.getColumnConstraints().size() * TILE_SIZE) +
-                   PREVIEW_WIDTH < WINDOW_MIN_WIDTH) {
-            rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_HEIGHT);
-        } else {
-            rootPane.setMinSize(
-                    (grdTiles.getColumnConstraints().size() * TILE_SIZE) +
-                    PREVIEW_WIDTH, WINDOW_HEIGHT);
-        }
-
-        rootPane.setMaxSize(rootPane.getMinWidth(), rootPane.getMinHeight());
-        rootPane.setPrefSize(rootPane.getMinWidth(), rootPane.getMinHeight());
-    }
-
-    /**
-     * Handles the Confirm Button click event
-     *
-     * @param mouseEvent Event Object
-     */
-    @SuppressWarnings("unused")
-    public void cmdConfirmClicked(MouseEvent mouseEvent) {
-        selectedTiles.forEach(
-                tile -> gameboard.getTiles().set(tile.getCoordinate(), tile));
-        Stage stage = (Stage) cmdConfirm.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Handles the Reset Button click event
-     *
-     * @param mouseEvent Event Object
-     */
-    @SuppressWarnings("unused")
-    public void cmdResetClicked(MouseEvent mouseEvent) {
-        resetWindow();
-    }
+   public void cmdConfirmClicked(MouseEvent mouseEvent) {
+      axisContents.forEach(tile -> gameboard.getTiles().set(tile.getCoordinate(), tile));
+      Stage stage = (Stage) rootPane.getScene().getWindow();
+      stage.close();
+   }
 
 
-    /**
-     * Defines available axes and a corresponding String value for it
-     */
-    protected enum Axis {
-        COLUMN("Column"),
-        ROW("Row");
-        final String AXIS;
+   /**
+    * Creates a type called Axis to be used to identify the axis of the selected linear array of
+    * tiles
+    */
+   protected enum Axis {
+      COLUMN("Column"), ROW("ROW");
+      private final String AXIS;
 
-        Axis(String axis) {
-            this.AXIS = axis;
-        }
-    }
+      Axis(String axis) {
+         this.AXIS = axis;
+      }
+
+      private String get() {
+         return this.AXIS;
+      }
+
+   }
 
 
 }
