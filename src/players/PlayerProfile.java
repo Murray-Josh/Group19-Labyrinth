@@ -1,22 +1,20 @@
 package players;
-/*
- * Players.PlayerProfile.java
- */
-
 
 import java.io.Serializable;
 
 /**
- * stores wins, losses, number of games played and name of each individual player * @version 2.0.0
+ * Stores wins, losses, number of games played and name of each individual player * @version 2.0.0
  *
  * @author Martin Samm
+ * @author Joseph Omar
+ * @version 1.0
  */
 public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
-    private static final int    PERCENTAGE_MULTIPLIER = 100;
-    private              int    wins;
-    private              int    losses;
-    private              int    games;
-    private              String name;
+    private static final int PERCENTAGE_MULTIPLIER = 100;
+    private int wins;
+    private int losses;
+    private int games;
+    private String name;
 
     /**
      * Creates a new player profile
@@ -46,6 +44,8 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     }
 
     /**
+     * Gets number of losses
+     *
      * @return current amount of losses
      */
     public int getNumOfLosses() {
@@ -62,6 +62,8 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     }
 
     /**
+     * Gets number of games
+     *
      * @return current number of games
      */
     public int getNumOfGames() {
@@ -78,7 +80,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     }
 
     /**
-     * Return's the Players.Player Profile's win percentage
+     * Gets the Players.Player Profile's win percentage
      *
      * @return Win Percentage
      */
@@ -101,7 +103,6 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      * Compares this profile to another profile
      *
      * @param comparisonProfile Profile being compared to
-     *
      * @return 0 if equal, >0 if better, <0 if worse.
      */
     @Override
@@ -110,6 +111,8 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     }
 
     /**
+     * Gets number of wins
+     *
      * @return current amount of wins
      */
     public int getNumOfWins() {
@@ -129,7 +132,6 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      * If this profile matches another profile
      *
      * @param p Profile to be checked against
-     *
      * @return If the names match or not
      */
     public boolean equals(PlayerProfile p) {
@@ -137,6 +139,8 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     }
 
     /**
+     * Gets name of profile
+     *
      * @return name of the player profile
      */
     public String getName() {
