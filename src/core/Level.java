@@ -95,7 +95,7 @@ public class Level implements Serializable {
         this.fixed = new ArrayList<Tile>();
     }
 
-    public Level(String path) {
+    public Level(String path)  {
         this.width = width;
         this.height = height;
         this.movables = new ArrayList<Tile>();
@@ -409,7 +409,7 @@ public class Level implements Serializable {
             System.out.println(fTileType);
             System.out.println(Angle.toAngle(turn));
 
-            addToFixed(new Tile(new Coordinate(x, y), fTileType, Angle.UP, true));
+            addToFixed(new Tile(new Coordinate(x, y), fTileType, Angle.toAngle(turn), true));
 
         }
     }
@@ -423,7 +423,7 @@ public class Level implements Serializable {
      */
     private void readUnfixed(int unfixed, Scanner in) {
         ArrayList<TileType> tempList = new ArrayList<>();
-        int[] angleArray = new int[]{0, 90, 180, 270};
+        Angle[] angleArray = new Angle[]{Angle.UP, Angle.DOWN, Angle.LEFT, Angle.RIGHT};
 
         Angle newAngle;
         for (int i = 0; i < unfixed; i++) {
@@ -431,10 +431,9 @@ public class Level implements Serializable {
             TileType unfTLineType = readTileType(unfTLine);
             tempList.add(unfTLineType);
             Random rand = new Random();
-            int randAngle = rand.nextInt(angleArray.length);
-            PirateStyle style = new PirateStyle();
+            Angle randAngle = angleArray[rand.nextInt(angleArray.length)];
 
-            movables.add(new Tile(unfTLineType, style, Angle.UP, false));
+            movables.add(new Tile(unfTLineType, randAngle, false));
         }
     }
 

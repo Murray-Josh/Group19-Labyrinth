@@ -59,13 +59,32 @@ public class Tile implements Serializable, Holdable {
         setFixed(fixed);
     }
 
+    /**
+     *
+     * @param coordinate
+     * @param type
+     * @param angle
+     * @param fixed
+     */
     public Tile(Coordinate coordinate, TileType type, Angle angle,
                 boolean fixed) {
-        this.coordinate = coordinate;
-        this.type = type;
-        this.angle = angle;
-        this.fixed = fixed;
-        this.style = null;
+        setCoordinate(coordinate);
+        setType(type);
+        setAngle(angle);
+        setFixed(fixed);
+    }
+
+    /**
+     *
+     * @param type
+     * @param angle
+     * @param fixed
+     */
+    public Tile(TileType type, Angle angle,
+                boolean fixed) {
+        setType(type);
+        setAngle(angle);
+        setFixed(fixed);
     }
 
     /**
