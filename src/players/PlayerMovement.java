@@ -82,8 +82,8 @@ public class PlayerMovement {
         if(tilesAligned(player)[direction]) {
             if(!isOffBoard(player)) {
                 player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
+                count++;
             }
-            count++;
         }
     }
     
