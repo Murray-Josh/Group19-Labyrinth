@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Stream;
 
+/**
+ * Gameboard class for players to play on
+ *
+ * @author Joshua Murray
+ * @author Joseph Omar
+ * @version 1.2
+ */
 public class Gameboard implements Serializable {
 
 
@@ -48,7 +55,13 @@ public class Gameboard implements Serializable {
         setTiles(level);
     }
 
-
+    /**
+     * Constructs players to game from given info
+     *
+     * @param profiles List of player profiles
+     * @param level    Level file
+     * @return Array list of players
+     */
     private ArrayList<Player> constructPlayers(ArrayList<PlayerProfile> profiles, Level level) {
         ArrayList<Player> toReturn = new ArrayList<>();
         profiles.forEach(profile -> {
@@ -89,7 +102,7 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Width of the board
+     * Gets width of the board
      *
      * @return Board width
      */
@@ -98,7 +111,7 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Height of the board
+     * Gets height of the board
      *
      * @return Board height
      */
@@ -116,7 +129,7 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Fill the Gameboard up with tiles
+     * Fills the Gameboard up with tiles
      *
      * @param level Level that the board is based on
      * @throws IndexOutOfBoundsException If there are more tiles than the gameboard allows
@@ -146,12 +159,24 @@ public class Gameboard implements Serializable {
         });
     }
 
+    /**
+     * Set a gameboard tile
+     *
+     * @param coord Coordinates for tile
+     * @param tile  Tile object to be set
+     */
     public void setGameboardTile(Coordinate coord, Tile tile) {
         tiles.set(tile.getCoordinate(), tile);
 
     }
 
 
+    /**
+     * Makes array list of players using level file
+     *
+     * @param level Level file
+     * @return Arraylist of players
+     */
     public ArrayList<Player> makePlayers(Level level) {
         PlayerProfile profile1 = null;
         PlayerProfile profile2 = null;
@@ -175,30 +200,66 @@ public class Gameboard implements Serializable {
         return playerList;
     }
 
+    /**
+     * Gets a player
+     *
+     * @param playerNum Num of player to get
+     * @return Player object of requested player
+     */
     public Player getPlayers(int playerNum) {
         return players.get(playerNum);
     }
 
+    /**
+     * Gets number of players in game
+     *
+     * @return Number of players in game
+     */
     public int getPlayersCount() {
         return players.size();
     }
 
+    /**
+     * Gets silk bag for game
+     *
+     * @return Silk bag from game
+     */
     public SilkBag getSilkBag() {
         return silkBag;
     }
 
+    /**
+     * Sets silk bag for game
+     *
+     * @param silkBag Silk bag for game
+     */
     public void setSilkBag(SilkBag silkBag) {
         this.silkBag = silkBag;
     }
 
+    /**
+     * Get list of players in game
+     *
+     * @return Arraylist of players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Gets style of game
+     *
+     * @return Style of game
+     */
     public Style getStyle() {
         return style;
     }
 
+    /**
+     * Gets goal tile from game
+     *
+     * @return Goal tile from game
+     */
     public Coordinate getGoal() {
         return goalTile.getCoordinate();
     }
