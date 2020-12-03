@@ -15,6 +15,11 @@ public enum PlayerEffect implements Effect, Holdable {
     BACKTRACK,
     NONE;
 
+    /**
+     * To string method for player effect
+     *
+     * @return Player effect as string
+     */
     @Override
     public String toString() {
 
@@ -30,6 +35,12 @@ public enum PlayerEffect implements Effect, Holdable {
         }
     }
 
+    /**
+     * Returns image of player effect
+     *
+     * @param style Style of game
+     * @return Image of player effect
+     */
     @Override
     public Image getImage(Style style) {
         switch (this) {
