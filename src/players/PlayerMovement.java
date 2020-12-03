@@ -102,8 +102,8 @@ public class PlayerMovement {
         Coordinate[] tiles = player.getLastTwoCoordinates();
         Tile previousTile = gameboard.getTiles().get(tiles[1]);
         Tile preferredTile = gameboard.getTiles().get(tiles[2]);
-        if(!isOnFire(previousTile) || tiles[1] != null){
-            if(!isOnFire(preferredTile) || tiles[2] != null){
+        if(!isOnFire(previousTile) && tiles[1] != null && !isPlayerOnTile(previousTile)){
+            if(!isOnFire(preferredTile) && tiles[2] != null && !isPlayerOnTile(preferredTile)){
                 player.setCoordinate(tiles[2]);
             } else {
                 player.setCoordinate(tiles[1]);
@@ -151,10 +151,15 @@ public class PlayerMovement {
         Boolean[] alignsArr = new Boolean[4];
 
         //switch to getnorth tile etc
-        Tile southTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()+1);
-        Tile westTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()-1, currentTile.getCoordinate().getY());
-        Tile northTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()-1);
-        Tile eastTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()+1, currentTile.getCoordinate().getY());
+//        Tile southTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()+1);
+//        Tile westTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()-1, currentTile.getCoordinate().getY());
+//        Tile northTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()-1);
+//        Tile eastTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()+1, currentTile.getCoordinate().getY());
+
+        Tile southTile = currentTile.getSouthTile(gameboard);
+        Tile westTile = currentTile.getWestTile(gameboard);
+        Tile northTile = currentTile.getNorthTile(gameboard);
+        Tile eastTile = currentTile.getEastTile(gameboard);
 
         //First checks if the current tile allows for travel in a direction,
         //then checks if next tile allows for travel in the opposite direction
@@ -268,7 +273,6 @@ public class PlayerMovement {
         }
         return list;
     }
-
     /**
      * checks if tile is accessible by player
      * @param currTile
@@ -276,7 +280,7 @@ public class PlayerMovement {
      * @return boolean (is the next tile accessible)
      */
     private Boolean isAccessible(Tile currTile, Tile nextTile){
-        if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile) && checkAligns(currTile, nextTile)){
+        if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile)){
             return true;
         } else {
             return false;
@@ -297,13 +301,13 @@ public class PlayerMovement {
     /**
      * counts the moves out of 4 a player is allowed to make per round
      */
-   /* private void moveCount(){
-        int count = 0;
-        while(isAccessible()){
-            //move
-            count++;
-        }
-    }   */
+//   private void moveCount(){
+//        int count = 0;
+//        while(isAccessible()){
+//            //move
+//            count++;
+//        }
+//    }
 
 
 //TODO end turn (dw about this just yet tho)
