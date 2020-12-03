@@ -100,11 +100,10 @@ public class PlayerMovement {
      */
     private void backMovement(Player player){
         Coordinate[] tiles = player.getLastTwoCoordinates();
-        Tile currentTile = gameboard.getTiles().get(tiles[0]);
         Tile previousTile = gameboard.getTiles().get(tiles[1]);
-        Tile prefferedTile = gameboard.getTiles().get(tiles[2]);
-        if(previousTile.getEffect() != TileEffect.FIRE || tiles[1] != null){
-            if(prefferedTile.getEffect() != TileEffect.FIRE || tiles[2] != null){
+        Tile preferredTile = gameboard.getTiles().get(tiles[2]);
+        if(!isOnFire(previousTile) || tiles[1] != null){
+            if(!isOnFire(preferredTile) || tiles[2] != null){
                 player.setCoordinate(tiles[2]);
             } else {
                 player.setCoordinate(tiles[1]);
