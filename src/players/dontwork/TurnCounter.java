@@ -68,3 +68,5 @@ public class TurnCounter {
 
     }
 }
+
+//should include skipping turns if player is unable to move due to an effect but my brain stopped working tonight lol
