@@ -57,14 +57,14 @@ public class PlayerMovement {
                 break;
             case S:
             case DOWN:
-                Tile west = tile.getNorthTile(gameboard);
+                Tile west = tile.getWestTile(gameboard);
                 if(!isPlayerOnTile(west) && !isOnFire(west) && tilesAligned(player)[1]) {
                     player.setCoordinate(west.getCoordinate());
                 }
                 break;
             case D:
             case RIGHT:
-                Tile south = tile.getNorthTile(gameboard);
+                Tile south = tile.getSouthTile(gameboard);
                 if(!isPlayerOnTile(south) && !isOnFire(south) && tilesAligned(player)[0]) {
                     player.setCoordinate(south.getCoordinate());
                 }
