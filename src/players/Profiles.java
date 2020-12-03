@@ -18,8 +18,8 @@ import java.util.Optional;
  * @version 3.0
  */
 public class Profiles {
-    private static final String                   PATH     = "profiles.ser";
-    private static       ArrayList<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
+    private static final String PATH = "profiles.ser";
+    private static ArrayList<PlayerProfile> profiles = new ArrayList<PlayerProfile>();
 
     /**
      * Adds a profile to the list of profiles and then refreshes
@@ -46,10 +46,10 @@ public class Profiles {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             PlayerProfile newProfile = new PlayerProfile(result.get());
-            if (! (exists(newProfile))) {
+            if (!(exists(newProfile))) {
                 add(newProfile);
                 StageController.showConfirmation("The profile " + newProfile.getName() +
-                        " has successfully been created.", "Profile Creation Complete",
+                                " has successfully been created.", "Profile Creation Complete",
                         Title.CREATE_PROFILE.toString());
             } else {
                 StageController.showError(ErrorMsg.PROFILE_ADD_ERROR, Title.CREATE_PROFILE, false);
@@ -140,7 +140,6 @@ public class Profiles {
      * Checks if a profile of the same name already exists in the list of profiles
      *
      * @param profile Profile you want to check
-     *
      * @return If it exists or not
      */
     public static boolean exists(PlayerProfile profile) {
