@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
+import javafx.stage.*;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,6 +64,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     private Tile tile;
     private Gameboard gameboard;
     private GameboardController gameboardController;
+    private ArrayDeque<Tile> selectedTiles;
 
     /**
      * Initialises the MoveTile {@link constants.Window}
@@ -76,12 +77,22 @@ public class MoveTileDialogController implements InitialisableWithParameters {
         this.gameboard = (Gameboard) parameters[1];
         this.gameboardController = (GameboardController) parameters[2];
 
+        resetWindow();
+
+    }
+
+    /**
+     * Clears the window to default values
+     */
+    private void resetWindow() {
         this.grdTiles.getColumnConstraints().clear();
         this.grdTiles.getRowConstraints().clear();
+        this.comDirection.getItems().clear();
         sizeWindow();
         this.comDirection.getItems().addAll(COLUMN, ROW);
+        this.comDirection.getSelectionModel().selectFirst();
         addListeners();
-
+        enableChoiceBoxes();
     }
 
     /**
@@ -151,8 +162,9 @@ public class MoveTileDialogController implements InitialisableWithParameters {
         } else {
             tiles = new ArrayList<Tile>(Arrays.asList(this.gameboard.getTiles().getRow(number)));
         }
+        this.selectedTiles.addAll(tiles);
         defineGrid(tiles.size());
-        addToGrid(formatTiles(tiles));
+        addToGrid(formatTiles(tiles, axis));
     }
 
     /**
@@ -161,36 +173,101 @@ public class MoveTileDialogController implements InitialisableWithParameters {
      * @param tiles Tile to be formatted
      * @return
      */
-    private ArrayDeque<ImageView> formatTiles(ArrayList<Tile> tiles) {
+    private ArrayDeque<ImageView> formatTiles(ArrayList<Tile> tiles,Axis axis) {
         ArrayDeque<ImageView> formattedTiles = new ArrayDeque<>();
+        /* For each tile, create an imageview with the tile's image inside */
         tiles.forEach(tile -> {
-
-            formattedTiles.add(createImageView(tile.getImage()));
+            ImageView imageView = createImageView(tile.getImage());
+            imageView.setRotate(tile.getAngle().get());
+            /* If the axis is x, rotate the tile anticlockwise */
+            if (axis == COLUMN) {
+                imageView.setRotate(imageView.getRotate() - 90);
+            }
+            formattedTiles.add(imageView);
         });
+        /* Create the addLeft and addRight Buttons */
         this.addLeft = createImageView(new Image(ARROW_PATH));
         this.addRight = createImageView(new Image(ARROW_PATH));
         addRight.setRotate(Angle.UP.get());
 
-        enableRollover();
-
+        enableShiftRollover();
+        enableShiftButtons();
+        disableChoiceBoxes();
         return formattedTiles;
+    }
+
+    /**
+     * Enables the addLeft and addRight button events
+     */
+    private void enableShiftButtons() {
+        this.addLeft.setDisable(false);
+        this.addLeft.setOnMouseClicked(event -> {
+            addToLeft();
+        });
+        this.addRight.setDisable(false);
+        this.addRight.setOnMouseClicked(event -> {
+            addToRight();
+
+    });
+    }
+
+    private void addToRight() {
+        this.selectedTiles.addLast(this.tile);
+        this.selectedTiles.removeFirst();
+        updateGrid(comDirection.getSelectionModel().getSelectedItem(), comNumber.getSelectionModel().getSelectedItem());
+        disableShiftRollover();
+        disableShiftButtons();
+        disableChoiceBoxes();
+        cmdConfirm.setDisable(false);
+    }
+    private void addToLeft() {
+        this.selectedTiles.addFirst(this.tile);
+        this.selectedTiles.removeLast();
+        updateGrid(comDirection.getSelectionModel().getSelectedItem(), comNumber.getSelectionModel().getSelectedItem());
+        disableShiftRollover();
+        disableShiftButtons();
+        disableChoiceBoxes();
+        cmdConfirm.setDisable(false);
+    }
+    private void disableChoiceBoxes() {
+        Axis selectedAxis = comDirection.getSelectionModel().getSelectedItem();
+        Integer selectedNumber  = comNumber.getSelectionModel().getSelectedItem();
+        this.comDirection.setDisable(true);
+        this.comDirection.getSelectionModel().select(selectedAxis);
+        this.comNumber.setDisable(true);
+        this.comNumber.getSelectionModel().select(selectedNumber);
+    }
+
+    private void enableChoiceBoxes() {
+        this.comDirection.setDisable(false);
+        this.comDirection.getSelectionModel().selectFirst();
+        this.comNumber.setDisable(false );
+        this.comNumber.getSelectionModel().selectFirst();
+    }
+
+
+
+    private void disableShiftButtons() {
+        this.addLeft.setDisable(true);
+        this.addRight.setDisable(true);
     }
 
     /**
      * Enables the rollover events for the add left and add right buttons
      */
-    private void enableRollover() {
-        addLeft.setOnMouseEntered(event -> addLeft.setImage(new Image(ARROW_PATH_ROLLOVER)));
+    private void enableShiftRollover() {
+       
         addRight.setOnMouseEntered(event -> addRight.setImage(new Image(ARROW_PATH_ROLLOVER)));
-
-        addLeft.setOnMouseExited(event -> addLeft.setImage(new Image(ARROW_PATH)));
         addRight.setOnMouseExited(event -> addRight.setImage(new Image(ARROW_PATH)));
+        addLeft.setOnMouseEntered(event -> addLeft.setImage(new Image(ARROW_PATH_ROLLOVER)));
+        addLeft.setOnMouseExited(event -> addLeft.setImage(new Image(ARROW_PATH)));
+
     }
 
     /**
      * Disables the rollover events for the add left and add right buttons
      */
-    private void disableRollover() {
+    private void disableShiftRollover() {
         addLeft.setOnMouseEntered(null);
         addRight.setOnMouseEntered(null);
 
@@ -262,6 +339,15 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     public void cmdConfirmClicked(MouseEvent mouseEvent) {
+        selectedTiles.forEach(tile -> {
+            gameboard.getTiles().set(tile.getCoordinate(), tile);
+        });
+        Stage stage = (Stage) cmdConfirm.getScene().getWindow();
+        stage.close();
+    }
+
+    public void cmdResetClicked(MouseEvent mouseEvent) {
+        resetWindow();
     }
 
 
