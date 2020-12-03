@@ -14,6 +14,7 @@ import java.util.ArrayList;
  *
  * @author FungWah Westley & Isabelle Ludwig
  * @author Jordy Martinson
+ * @author Martin Samm
  * @version 1.0
  */
 
@@ -91,8 +92,8 @@ public class PlayerMovement {
      * Determines which directions the current tile allows movement in
      * Then checks the corresponding adjacent tiles to see if they line up
      * Assigns true or false to array according to which directions can be travelled in
-     * @param currentPlayer
-     * @return boolean array of accessable direction
+     * @param currentPlayer Player to input
+     * @return boolean array of accessible direction
      */
     private Boolean[] tilesAligned(Player currentPlayer){
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
@@ -120,10 +121,10 @@ public class PlayerMovement {
     }
     
     /**
-     * determines which direction a player can move in
-     * @param tile
-     * @param list
-     * @return arraylist of moveable directions
+     * Determines which direction a player can move in
+     * @param tile Tile to check allignment of
+     * @param list List to add movable tiles to
+     * @return arraylist of movable directions
      */
     private ArrayList<Integer> checkAligns(Tile tile, ArrayList<Integer> list) {
         list.clear();
@@ -194,7 +195,7 @@ public class PlayerMovement {
     
     /**
      * Stores adjacent tiles as array
-     * @param currentTile player's current tile
+     * @param currentTile Player's current tile
      * @return Array of adjacent tiles
      */
     private Tile[] adjacentTiles(Tile currentTile) {
@@ -207,9 +208,9 @@ public class PlayerMovement {
     }
     
     /**
-     * checks if another player is on the tile the player wants to move onto
-     * @param checkTile
-     * @return boolean (if pther player is on next tile)
+     * Checks if another player is on the tile the player wants to move onto
+     * @param checkTile Tile to check for player
+     * @return If other player is on next tile
      */
     private Boolean isPlayerOnTile(Tile checkTile) {
         for(int i = 0; i < gameboard.getPlayersCount(); i++) {
@@ -221,9 +222,9 @@ public class PlayerMovement {
     }
     
     /**
-     * checks if the next tile is on fire or not
-     * @param checkTile
-     * @return boolean (next tile is on fire)
+     * Checks if the next tile is on fire or not
+     * @param checkTile Tile to check for fire
+     * @return  If next tile is on fire
      */
     private boolean isOnFire(Tile checkTile) {
         return checkTile.getEffect() == TileEffect.FIRE;
@@ -231,8 +232,8 @@ public class PlayerMovement {
     
     /**
      * Checks if the player would be off the board
-     * @param p player moving
-     * @return true if player would move off the board
+     * @param p Player moving
+     * @return If player would move off the board
      */
     private boolean isOffBoard(Player p) {
         if ((p.getCoordinate().getX() + dx > gameboard.getWidth()) || p.getCoordinate().getX() + dx < 0) {
@@ -268,10 +269,10 @@ public class PlayerMovement {
     // TODO private method double move and backspace - pop coordinate stack
 
     /**
-     * moves the player to the tile they were two turns ago.
+     * Moves the player to the tile they were two turns ago.
      * If that tile is on fire, then they move to their previous tile
      * If their previous tile is on fire, they stay where they are.
-     * @param player selected player
+     * @param player Selected player
      */
     private void backMovement(Player player){
         Coordinate[] tiles = player.getLastTwoCoordinates();
@@ -290,7 +291,7 @@ public class PlayerMovement {
 
 
     /**
-     * player effect double move
+     * Player effect double move
      */
     private static void doubleMove(){
         //reverse turn counter one?
@@ -298,10 +299,10 @@ public class PlayerMovement {
 
     
     /**
-     * checks if tile is accessible by player
-     * @param currTile
-     * @param nextTile
-     * @return boolean (is the next tile accessible)
+     * Checks if tile is accessible by player
+     * @param currTile Current tile player is on
+     * @param nextTile Tile to check for accessibility
+     * @return If the next tile accessible
      */
     private Boolean isAccessible(Tile currTile, Tile nextTile){
         if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile)){
