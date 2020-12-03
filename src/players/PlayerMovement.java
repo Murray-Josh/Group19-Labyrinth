@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Moves the players
  *
  * @author FungWah Westley & Isabelle Ludwig
+ * @author Jordy Martinson
  * @version 1.0
  */
 
@@ -26,6 +27,9 @@ public class PlayerMovement {
     
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();
     ArrayList<Integer> nextMovable = new ArrayList<Integer>();
+    private Boolean[] alignsArr = new Boolean[4];
+    private final int MOVE_COUNT = 4;
+    private int count = 0;
 
 
 //TODO key listener method
@@ -43,31 +47,23 @@ public class PlayerMovement {
         switch(key){
             case W:
             case UP:
-                Tile north = tile.getNorthTile(gameboard);
-                if(!isPlayerOnTile(north) && !isOnFire(north) && tilesAligned(player)[0]) {
-                    player.setCoordinate(north.getCoordinate());
-                }
+                dy = -1;
+                moveCheck(player, tile, 2);
                 break;
             case A:
             case LEFT:
-                Tile east = tile.getEastTile(gameboard);
-                if(!isPlayerOnTile(east) && !isOnFire(east) && tilesAligned(player)[3]) {
-                    player.setCoordinate(east.getCoordinate());
-                }
+                dx = -1;
+                moveCheck(player, tile, 1);
                 break;
             case S:
             case DOWN:
-                Tile west = tile.getWestTile(gameboard);
-                if(!isPlayerOnTile(west) && !isOnFire(west) && tilesAligned(player)[1]) {
-                    player.setCoordinate(west.getCoordinate());
-                }
+                dy = 1;
+                moveCheck(player, tile, 0);
                 break;
             case D:
             case RIGHT:
-                Tile south = tile.getSouthTile(gameboard);
-                if(!isPlayerOnTile(south) && !isOnFire(south) && tilesAligned(player)[0]) {
-                    player.setCoordinate(south.getCoordinate());
-                }
+                dx = 1;
+                moveCheck(player, tile, 3);
                 break;
             case SPACE:
             case ENTER:
@@ -75,81 +71,22 @@ public class PlayerMovement {
                 break;
         }
     }
-
+    
     /**
-     * changes players coordinates
+     * Determines if move can be done
+     * @param player player to move
+     * @param tile current tile
+     * @param direction direction to move in
      */
-    public void move(){
-            x += dx;
-            y += dy;
-        }
-
-        // both of these get methods occur in Coordinate.java as well - might be easier to just call them from there
-    /**
-     * gets x coordinate
-     * @return x coordinate
-     */
-    public int getX(){
-            return x;
-        }
-
-    /**
-     * gets y coordinate
-     * @return y coordinate
-     */
-    public int getY(){
-            return y;
-        }
-
-
-
-
-// TODO private method double move and backspace - pop coordinate stack
-
-    /**
-     * moves the player to the tile they were two turns ago.
-     * If that tile is on fire, then they move to their previous tile
-     * If their previous tile is on fire, they stay where they are.
-     * @param player selected player
-     */
-    private void backMovement(Player player){
-        Coordinate[] tiles = player.getLastTwoCoordinates();
-        Tile previousTile = gameboard.getTiles().get(tiles[1]);
-        Tile preferredTile = gameboard.getTiles().get(tiles[2]);
-        if(!isOnFire(previousTile) && tiles[1] != null && !isPlayerOnTile(previousTile)){
-            if(!isOnFire(preferredTile) && tiles[2] != null && !isPlayerOnTile(preferredTile)){
-                player.setCoordinate(tiles[2]);
-            } else {
-                player.setCoordinate(tiles[1]);
+    private void moveCheck(Player player, Tile tile, int direction) {
+        if(tilesAligned(player)[direction]) {
+            if(!isOffBoard(player)) {
+                player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
             }
-        } else {
-            player.setCoordinate(tiles[0]);
+            count++;
         }
     }
-
-
-    /**
-     * player effect double move
-     */
-    private static void doubleMove(){
-        //reverse turn counter one?
-    }
-
-    /**
-     * checks if another player is on the tile the player wants to move onto
-     * @param checkTile
-     * @return boolean (if pther player is on next tile)
-     */
-    private Boolean isPlayerOnTile(Tile checkTile) {
-        for(int i = 0; i < gameboard.getPlayersCount(); i++) {
-            if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
-                return true;
-            }
-        }
-        return false;
-    }
-
-//TODO javadoc this bad boi
+    
     /**
      * Determines which directions the current tile allows movement in
      * Then checks the corresponding adjacent tiles to see if they line up
@@ -157,64 +94,31 @@ public class PlayerMovement {
      * @param currentPlayer
      * @return boolean array of accessable direction
      */
-    //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
     private Boolean[] tilesAligned(Player currentPlayer){
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
-        Coordinate prevCoord = currentTile.getCoordinate();
         checkAligns(currentTile, currentMovable);
-        Boolean[] alignsArr = new Boolean[4];
+        Tile[] adjTiles = adjacentTiles(currentTile);
 
-        //switch to getnorth tile etc
-//        Tile southTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()+1);
-//        Tile westTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()-1, currentTile.getCoordinate().getY());
-//        Tile northTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX(), currentTile.getCoordinate().getY()-1);
-//        Tile eastTile = this.gameboard.getTiles().get(currentTile.getCoordinate().getX()+1, currentTile.getCoordinate().getY());
+        for(int i = 0; i < adjTiles.length; i++) {
+            if(currentMovable.contains(i) && adjTiles[i] != null && !isPlayerOnTile(adjTiles[i]) && !isOnFire(adjTiles[i])) {
+                checkAligns(adjTiles[i], nextMovable);
 
-        Tile southTile = currentTile.getSouthTile(gameboard);
-        Tile westTile = currentTile.getWestTile(gameboard);
-        Tile northTile = currentTile.getNorthTile(gameboard);
-        Tile eastTile = currentTile.getEastTile(gameboard);
+                int nextTileDir = i + 2;
+                if(nextTileDir > adjTiles.length) {
+                    nextTileDir = i - 2;
+                }
 
-        //First checks if the current tile allows for travel in a direction,
-        //then checks if next tile allows for travel in the opposite direction
-        if(currentMovable.contains(0) && !isPlayerOnTile(southTile) && !isOnFire(southTile)) {
-            checkAligns(southTile, nextMovable);
-            if(nextMovable.contains(2)) {
-                alignsArr[0] = true;
-            }
-        }
-        if(currentMovable.contains(1) && !isPlayerOnTile(westTile) && !isOnFire(westTile)) {
-            checkAligns(westTile, nextMovable);
-            if(nextMovable.contains(3)) {
-                alignsArr[1] = true;
-            }
-        }
-        if(currentMovable.contains(2) && !isPlayerOnTile(northTile) && !isOnFire(northTile)) {
-            checkAligns(northTile, nextMovable);
-            if(nextMovable.contains(0)) {
-                alignsArr[2] = true;
-            }
-        }
-        if(currentMovable.contains(3) && !isPlayerOnTile(eastTile) && !isOnFire(eastTile)) {
-            checkAligns(eastTile, nextMovable);
-            if(nextMovable.contains(1)) {
-                alignsArr[3] = true;
+                if(nextMovable.contains(nextTileDir)) {
+                    alignsArr[i] = true;
+                }
+                else {
+                    alignsArr[i] = false;
+                }
             }
         }
         return alignsArr;
     }
-
-
-    /**
-     * checks if the next tile is on fire or not
-     * @param checkTile
-     * @return boolean (next tile is on fire)
-     */
-    private boolean isOnFire(Tile checkTile) {
-        return checkTile.getEffect() == TileEffect.FIRE;
-    }
-
-
+    
     /**
      * determines which direction a player can move in
      * @param tile
@@ -287,6 +191,112 @@ public class PlayerMovement {
         }
         return list;
     }
+    
+    /**
+     * Stores adjacent tiles as array
+     * @param currentTile player's current tile
+     * @return Array of adjacent tiles
+     */
+    private Tile[] adjacentTiles(Tile currentTile) {
+        Tile[] adjTilesArr = new Tile[4];
+        adjTilesArr[0] = currentTile.getSouthTile(gameboard);
+        adjTilesArr[1] = currentTile.getWestTile(gameboard);
+        adjTilesArr[2] = currentTile.getNorthTile(gameboard);
+        adjTilesArr[3] = currentTile.getEastTile(gameboard);
+        return adjTilesArr;
+    }
+    
+    /**
+     * checks if another player is on the tile the player wants to move onto
+     * @param checkTile
+     * @return boolean (if pther player is on next tile)
+     */
+    private Boolean isPlayerOnTile(Tile checkTile) {
+        for(int i = 0; i < gameboard.getPlayersCount(); i++) {
+            if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * checks if the next tile is on fire or not
+     * @param checkTile
+     * @return boolean (next tile is on fire)
+     */
+    private boolean isOnFire(Tile checkTile) {
+        return checkTile.getEffect() == TileEffect.FIRE;
+    }
+    
+    /**
+     * Checks if the player would be off the board
+     * @param p player moving
+     * @return true if player would move off the board
+     */
+    private boolean isOffBoard(Player p) {
+        if ((p.getCoordinate().getX() + dx > gameboard.getWidth()) || p.getCoordinate().getX() + dx < 0) {
+            return true;
+        }
+        else if (p.getCoordinate().getX() + dy > gameboard.getHeight() || p.getCoordinate().getX() + dy < 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Moves the player to the opposite side of the board if moved off edge
+     * @param p Player to move
+     */
+    private void loopPlayer(Player p) {
+        if(dx == 1) {
+            p.setCoordinate(new Coordinate(0, p.getCoordinate().getY()));
+        }
+        else if (dx == -1) {
+            p.setCoordinate(new Coordinate(gameboard.getWidth(), p.getCoordinate().getY()));
+        }
+        else if(dy == 1) {
+            p.setCoordinate(new Coordinate(p.getCoordinate().getY(), 0));
+        }
+        else {
+            p.setCoordinate(new Coordinate(gameboard.getHeight(), p.getCoordinate().getY()));
+        }
+    }
+    
+    // TODO private method double move and backspace - pop coordinate stack
+
+    /**
+     * moves the player to the tile they were two turns ago.
+     * If that tile is on fire, then they move to their previous tile
+     * If their previous tile is on fire, they stay where they are.
+     * @param player selected player
+     */
+    private void backMovement(Player player){
+        Coordinate[] tiles = player.getLastTwoCoordinates();
+        Tile previousTile = gameboard.getTiles().get(tiles[1]);
+        Tile preferredTile = gameboard.getTiles().get(tiles[2]);
+        if(!isOnFire(previousTile) && tiles[1] != null && !isPlayerOnTile(previousTile)){
+            if(!isOnFire(preferredTile) && tiles[2] != null && !isPlayerOnTile(preferredTile)){
+                player.setCoordinate(tiles[2]);
+            } else {
+                player.setCoordinate(tiles[1]);
+            }
+        } else {
+            player.setCoordinate(tiles[0]);
+        }
+    }
+
+
+    /**
+     * player effect double move
+     */
+    private static void doubleMove(){
+        //reverse turn counter one?
+    }
+
+    
     /**
      * checks if tile is accessible by player
      * @param currTile
