@@ -15,24 +15,26 @@ import static holdables.TileEffect.*;
  * A tile that can be placed on the gameboard or in the silk bag.
  *
  * @author Joseph Omar
+ * @author Martin Samm
+ * @author Joshua Murray
  * @version 3.0
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
-    private TileType   type;
-    private Style      style;
-    private Angle      angle;
+    private TileType type;
+    private Style style;
+    private Angle angle;
     private TileEffect effect = NONE;
-    private boolean    fixed;
+    private boolean fixed;
 
 
     /**
-     * Constructs a new Holdables.Tile.
+     * Constructs a new Tile.
      *
-     * @param coordinate Holdables.Tile's Core.Coordinate
-     * @param type       Holdables.Tile's Holdables.TileType
-     * @param style      Holdables.Tile's Styles.Style
-     * @param angle      Holdables.Tile's Angle of rotation
+     * @param coordinate Tile's Coordinate
+     * @param type       Tile's TileType
+     * @param style      Tile's Styles.Style
+     * @param angle      Tile's Angle of rotation
      * @param fixed      If the is fixed or not
      */
     public Tile(Coordinate coordinate, TileType type, Style style, Angle angle,
@@ -45,11 +47,11 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
-     * Constructs a new Holdables.Tile.
+     * Constructs a new Tile without coordinate
      *
-     * @param type  Holdables.Tile's Holdables.TileType
-     * @param style Holdables.Tile's Styles.Style
-     * @param angle Holdables.Tile's Angle of rotation
+     * @param type  Tile's TileType
+     * @param style Tile's Style
+     * @param angle Tile's Angle of rotation
      * @param fixed If the is fixed or not
      */
     public Tile(TileType type, Style style, Angle angle, boolean fixed) {
@@ -60,11 +62,12 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
+     * Constructs a new Tile without style
      *
-     * @param coordinate
-     * @param type
-     * @param angle
-     * @param fixed
+     * @param coordinate Tile's Coordinate
+     * @param type       Tile's TileType
+     * @param angle      Tile's Angle of rotation
+     * @param fixed      If the is fixed or not
      */
     public Tile(Coordinate coordinate, TileType type, Angle angle,
                 boolean fixed) {
@@ -75,13 +78,13 @@ public class Tile implements Serializable, Holdable {
     }
 
     /**
+     * Constructs a new Tile without style or coordinate
      *
-     * @param type
-     * @param angle
-     * @param fixed
+     * @param type  Tile's TileType
+     * @param angle Tile's Angle of rotation
+     * @param fixed If the is fixed or not
      */
-    public Tile(TileType type, Angle angle,
-                boolean fixed) {
+    public Tile(TileType type, Angle angle, boolean fixed) {
         setType(type);
         setAngle(angle);
         setFixed(fixed);
@@ -171,7 +174,14 @@ public class Tile implements Serializable, Holdable {
         this.coordinate = coordinate;
     }
 
-    public Tile getNorthTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
+    /**
+     * Gets tile north of this tile
+     *
+     * @param g Gameboard
+     * @return Tile north of this tile
+     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
+     */
+    public Tile getNorthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
                     .get(getCoordinate().getX(), getCoordinate().getY() + 1);
@@ -180,7 +190,14 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
-    public Tile getSouthTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
+    /**
+     * Gets tile south of this tile
+     *
+     * @param g Gameboard
+     * @return Tile south of this tile
+     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
+     */
+    public Tile getSouthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
                     .get(getCoordinate().getX(), getCoordinate().getY() - 1);
@@ -189,7 +206,14 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
-    public Tile getEastTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
+    /**
+     * Gets tile east of this tile
+     *
+     * @param g Gameboard
+     * @return Tile east of this tile
+     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
+     */
+    public Tile getEastTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
                     .get(getCoordinate().getX() + 1, getCoordinate().getY());
@@ -198,7 +222,14 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
-    public Tile getWestTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
+    /**
+     * Gets tile west of this tile
+     *
+     * @param g Gameboard
+     * @return Tile west of this tile
+     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
+     */
+    public Tile getWestTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
                     .get(getCoordinate().getX() - 1, getCoordinate().getY());
@@ -207,6 +238,11 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
+    /**
+     * Get image of tile from type
+     *
+     * @return Image of tile
+     */
     public Image getImage() {
         switch (this.getType().toString()) {
 
