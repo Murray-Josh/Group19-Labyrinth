@@ -70,7 +70,7 @@ public class Level implements Serializable {
     }
 
     /**
-     * Constuts a partially specified level
+     * Constructs a partially specified level
      *
      * @param width    Width of the board
      * @param height   Height of the board
@@ -95,7 +95,12 @@ public class Level implements Serializable {
         this.fixed = new ArrayList<Tile>();
     }
 
-    public Level(String path)  {
+    /**
+     * Constructs a level with file path
+     *
+     * @param path Path of level object
+     */
+    public Level(String path) {
         this.width = width;
         this.height = height;
         this.movables = new ArrayList<Tile>();
@@ -112,15 +117,6 @@ public class Level implements Serializable {
     public void addFixed(ArrayList<Tile> fixed) {
         this.fixed.addAll(fixed);
     }
-
-    /**
-     * Adds a fixed {@link Tile}
-     *
-     * @param fixed Tile to be added
-     */
-    //public void addFixed(Tile fixed) {
-    //    this.fixed.add(fixed);
-    //}
 
     /**
      * Adds a fixed Tile
@@ -199,7 +195,7 @@ public class Level implements Serializable {
     /**
      * Gets the board width
      *
-     * @return board width
+     * @return Board width
      */
     public int getWidth() {
         return this.width;
@@ -208,7 +204,7 @@ public class Level implements Serializable {
     /**
      * Sets the board width
      *
-     * @param width
+     * @param width Board Width
      */
     public void setWidth(int width) {
         this.width = width;
@@ -242,75 +238,101 @@ public class Level implements Serializable {
     }
 
     /**
-     * @return
+     * Gets coordinate of first player
+     *
+     * @return Coordinate of first player
      */
     public Coordinate getPlayerOnePosition() {
         return playerOnePosition;
     }
 
     /**
-     * @param playerOnePosition
+     * Sets coordinate of second player
+     *
+     * @param playerOnePosition Coordinate of first player
      */
     public void setPlayerOnePosition(Coordinate playerOnePosition) {
         this.playerOnePosition = playerOnePosition;
     }
 
     /**
-     * @return
+     * Gets coordinate of second player
+     *
+     * @return Coordinate of second player
      */
     public Coordinate getPlayerTwoPosition() {
         return playerTwoPosition;
     }
 
     /**
-     * @param playerTwoPosition
+     * Sets coordinate of second player
+     *
+     * @param playerTwoPosition Coordinate of second player
      */
     public void setPlayerTwoPosition(Coordinate playerTwoPosition) {
         this.playerTwoPosition = playerTwoPosition;
     }
 
     /**
-     * @return
+     * Gets coordinate of third player
+     *
+     * @return Coordinate of third player
      */
     public Coordinate getPlayerThreePosition() {
         return playerThreePosition;
     }
 
     /**
-     * @param playerThreePosition
+     * Sets coordinate of third player
+     *
+     * @param playerThreePosition Coordinate of third player
      */
     public void setPlayerThreePosition(Coordinate playerThreePosition) {
         this.playerThreePosition = playerThreePosition;
     }
 
     /**
-     * @return
+     * Gets coordinate of fourth player
+     *
+     * @return Coordinate of fourth player
      */
     public Coordinate getPlayerFourPosition() {
         return playerFourPosition;
     }
 
     /**
-     * @param playerFourPosition
+     * Sets coordinate of fourth player
+     *
+     * @param playerFourPosition Coordinate of fourth player
      */
     public void setPlayerFourPosition(Coordinate playerFourPosition) {
         this.playerFourPosition = playerFourPosition;
     }
 
     /**
-     * @return
+     * Gets list of movable tiles
+     *
+     * @return ArrayList of movable tiles
      */
     public ArrayList<Tile> getMovables() {
         return movables;
     }
 
     /**
-     * @param movables
+     * Sets list of movable tiles
+     *
+     * @param movables ArrayList of movable tiles
      */
     public void setMovables(ArrayList<Tile> movables) {
         this.movables = movables;
     }
 
+    /**
+     * Set coordinate of a player with num
+     *
+     * @param coordinate   Coordinate of player
+     * @param playerNumber Player number
+     */
     public void setPlayerPosition(Coordinate coordinate, int playerNumber) {
         switch (playerNumber) {
             case 1:
@@ -330,6 +352,12 @@ public class Level implements Serializable {
         }
     }
 
+    /**
+     * Get coordinate of specified player
+     *
+     * @param playerNumber Players number
+     * @return Coordinate of player
+     */
     public Coordinate getPlayerPosition(int playerNumber) {
         switch (playerNumber) {
             case 1:
@@ -347,20 +375,21 @@ public class Level implements Serializable {
 
     /**
      * Reads a File containing the level
+     *
      * @param fileName Path to the file to load
      */
     public void readGameboardFile(String fileName) throws FileNotFoundException {
         Scanner in;
         PirateStyle style = new PirateStyle();
-            File file = new File(fileName);
-            in = new Scanner(file);
-            readGameboard(in);
+        File file = new File(fileName);
+        in = new Scanner(file);
+        readGameboard(in);
     }
 
     /**
      * Reads file and calls methods to break it down
      *
-     * @param in
+     * @param in Scanner of whole game file
      */
     private void readGameboard(Scanner in) {
         readSize(in.nextLine());
@@ -378,8 +407,7 @@ public class Level implements Serializable {
     /**
      * Gets the Size of the board from the level file
      *
-     * @param sLine
-     * @return
+     * @param sLine Line containing gameboard size
      */
     private void readSize(String sLine) {
         String[] sizeStrArray = sLine.split(",");
@@ -388,10 +416,10 @@ public class Level implements Serializable {
     }
 
     /**
-     * Reads fixed tiles and places onto board where coordinates dictate
+     * Reads and adds fixed tiles to fixed array list
      *
-     * @param fixed The dixed tile to read
-     * @param in Scanner to get the data from
+     * @param fixed The fixed tile to read
+     * @param in    Scanner to get the data from
      */
     private void readFixed(int fixed, Scanner in) {
         in.useDelimiter(",");
@@ -415,21 +443,17 @@ public class Level implements Serializable {
     }
 
     /**
-     * Goes through each unfixed tile and draws from them randomly, ensuring tiles are not drawn twice
-     * Then places on empty board or into bag if already a tile there
+     * Reads and adds all unfixed files to mobvables list
      *
-     * @param unfixed
-     * @param in
+     * @param unfixed Number of unfixed tiles
+     * @param in      Scanner of all unfixed tiles
      */
     private void readUnfixed(int unfixed, Scanner in) {
-        ArrayList<TileType> tempList = new ArrayList<>();
         Angle[] angleArray = new Angle[]{Angle.UP, Angle.DOWN, Angle.LEFT, Angle.RIGHT};
 
-        Angle newAngle;
         for (int i = 0; i < unfixed; i++) {
             String unfTLine = in.nextLine();
             TileType unfTLineType = readTileType(unfTLine);
-            tempList.add(unfTLineType);
             Random rand = new Random();
             Angle randAngle = angleArray[rand.nextInt(angleArray.length)];
 
@@ -464,8 +488,8 @@ public class Level implements Serializable {
     /**
      * Takes in a string value of tiletype and outputs object
      *
-     * @param tileTypeString
-     * @return
+     * @param tileTypeString String of tile type
+     * @return TileType object
      */
     private TileType readTileType(String tileTypeString) {
         TileType tileTypeObject;
@@ -481,6 +505,7 @@ public class Level implements Serializable {
             case "goal":
                 return TileType.GOAL;
             default:
-                throw new IllegalStateException("Unexpected value: " + tileTypeString);}
+                throw new IllegalStateException("Unexpected value: " + tileTypeString);
+        }
     }
 }
