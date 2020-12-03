@@ -34,7 +34,16 @@ import java.util.ResourceBundle;
 import static controllers.StageController.changeScene;
 import static controllers.StageController.showError;
 
-
+/**
+ * TODO
+ * Test Drawing
+ * Draw Players
+ * test move dialog
+ * make apply effects work
+ * method to apply effect to a player
+ * events for selected effect image, draw a border? maybe listview?
+ * logic for activate
+ */
 public class GameboardController
         implements InitialisableWithParameters, Initializable {
     public static final  String     FORMATTING_PLAYERS         =
