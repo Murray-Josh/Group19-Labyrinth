@@ -32,28 +32,42 @@ public class PlayerMovement {
 
 
     /**
-     * checks the key input and translates it to coordinate change - controls whether the sprite is moving
+     * Checks the key input and translates it to coordinate change - controls whether the sprite is moving
      * @param e KeyEvent identifier
+     * @param player players turn to move
      */
-    public static void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e, Player player){
+        Tile tile = gameboard.getTiles().get(player.getCoordinate());
         KeyCode key = e.getCode();
 
         switch(key){
             case W:
             case UP:
-                dy = -1;
+                Tile north = tile.getNorthTile(gameboard);
+                if(!isPlayerOnTile(north) && !isOnFire(north) && tilesAligned(player)[0]) {
+                    player.setCoordinate(north.getCoordinate());
+                }
                 break;
             case A:
             case LEFT:
-                dx = -1;
+                Tile east = tile.getEastTile(gameboard);
+                if(!isPlayerOnTile(east) && !isOnFire(east) && tilesAligned(player)[3]) {
+                    player.setCoordinate(east.getCoordinate());
+                }
                 break;
             case S:
             case DOWN:
-                dy = 1;
+                Tile west = tile.getNorthTile(gameboard);
+                if(!isPlayerOnTile(west) && !isOnFire(west) && tilesAligned(player)[1]) {
+                    player.setCoordinate(west.getCoordinate());
+                }
                 break;
             case D:
             case RIGHT:
-                dy = 1;;
+                Tile south = tile.getNorthTile(gameboard);
+                if(!isPlayerOnTile(south) && !isOnFire(south) && tilesAligned(player)[0]) {
+                    player.setCoordinate(south.getCoordinate());
+                }
                 break;
             case SPACE:
             case ENTER:
