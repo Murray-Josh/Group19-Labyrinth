@@ -3,6 +3,7 @@ package holdables;
 import constants.Angle;
 import constants.TileType;
 import core.Coordinate;
+import core.Gameboard;
 import javafx.scene.image.Image;
 import styles.Style;
 
@@ -185,6 +186,35 @@ public class Tile implements Serializable, Holdable {
 
     public void setEffect(TileEffect effect) {
         this.effect = effect;
+    }
+
+    public Tile getNorthTile(Gameboard g){
+        try {
+            return g.getTiles().get(getCoordinate().getX(), getCoordinate().getY() + 1);
+        } catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+    public Tile getSouthTile(Gameboard g){
+        try {
+            return g.getTiles().get(getCoordinate().getX(), getCoordinate().getY() - 1);
+        } catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+    public Tile getEastTile(Gameboard g){
+        try {
+            return g.getTiles().get(getCoordinate().getX() + 1, getCoordinate().getY());
+        } catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+    public Tile getWestTile(Gameboard g){
+        try {
+            return g.getTiles().get(getCoordinate().getX() - 1, getCoordinate().getY());
+        } catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
     }
 
 
