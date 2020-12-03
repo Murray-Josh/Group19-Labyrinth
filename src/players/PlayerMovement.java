@@ -137,9 +137,11 @@ public class PlayerMovement {
 
 //TODO javadoc this bad boi
     /**
-     * im actually not too sure what is happening here
+     * Determines which directions the current tile allows movement in
+     * Then checks the corresponding adjacent tiles to see if they line up
+     * Assigns true or false to array according to which directions can be travelled in
      * @param currentPlayer
-     * @return boolean array of accessable tile
+     * @return boolean array of accessable direction
      */
     //Checks current tile's directions against surrounding tiles' directions. Returns boolean array
     private Boolean[] tilesAligned(Player currentPlayer){
