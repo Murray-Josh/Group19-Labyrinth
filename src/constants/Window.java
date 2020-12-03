@@ -15,7 +15,7 @@ public enum Window {
     TILE_SHIFT("../resources/fxml/MoveTileDialog.fxml", Title.PLACE_TILE);
 
     private final String PATH;
-    private final Title TITLE;
+    private final Title  TITLE;
 
     /**
      * Constructor for a window

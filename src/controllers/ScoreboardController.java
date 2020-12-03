@@ -28,9 +28,9 @@ import static controllers.StageController.showError;
  */
 public class ScoreboardController implements Initializable {
     @FXML
-    private TableView tblTable;
+    private TableView                           tblTable;
     @FXML
-    private TableColumn<PlayerProfile, String> colNickname;
+    private TableColumn<PlayerProfile, String>  colNickname;
     @FXML
     private TableColumn<PlayerProfile, Integer> colGames;
     @FXML
@@ -38,9 +38,9 @@ public class ScoreboardController implements Initializable {
     @FXML
     private TableColumn<PlayerProfile, Integer> colLosses;
     @FXML
-    private TableColumn<PlayerProfile, Float> colPercentage;
+    private TableColumn<PlayerProfile, Float>   colPercentage;
     @FXML
-    private Button cmdBack;
+    private Button                              cmdBack;
 
     /**
      * Goes back to the main menu
@@ -52,11 +52,14 @@ public class ScoreboardController implements Initializable {
     }
 
     /**
-     * Called to initialize a controller after its root element has been completely processed.
+     * Called to initialize a controller after its root element has been
+     * completely processed.
      *
-     * @param location  The location used to resolve relative paths for the root object, or
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or
      *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     * @param resources The resources used to localize the root object, or
+     *                  <tt>null</tt> if
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,9 +81,10 @@ public class ScoreboardController implements Initializable {
      * Handles the if the profiles list read in is null
      */
     private void nullListHandler() {
-        Alert alert =
-                new Alert(Alert.AlertType.ERROR, "There are no profiles to display, would you like to create one?",
-                        ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.ERROR,
+                                "There are no profiles to display, would you " +
+                                "like to create one?",
+                                ButtonType.YES, ButtonType.NO);
         alert.setHeaderText("No Profile Data");
         alert.setTitle("Scoreboard");
         Optional<ButtonType> result = alert.showAndWait();
@@ -99,11 +103,16 @@ public class ScoreboardController implements Initializable {
     private void populate(ArrayList<PlayerProfile> profiles) {
         tblTable.getItems().addAll(profiles);
         /* Make the columns use the correct PlayerProfile attributes */
-        colNickname.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
-        colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfGames()).asObject());
-        colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfWins()).asObject());
-        colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(data.getValue().getNumOfLosses()).asObject());
-        colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(data.getValue().getWinPercentage()).asObject());
+        colNickname.setCellValueFactory(
+                data -> new ReadOnlyStringWrapper(data.getValue().getName()));
+        colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                data.getValue().getNumOfGames()).asObject());
+        colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                data.getValue().getNumOfWins()).asObject());
+        colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                data.getValue().getNumOfLosses()).asObject());
+        colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(
+                data.getValue().getWinPercentage()).asObject());
 
     }
 }

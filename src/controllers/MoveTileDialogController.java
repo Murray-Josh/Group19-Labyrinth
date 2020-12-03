@@ -16,7 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.stage.*;
+import javafx.stage.Stage;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,45 +27,41 @@ import static controllers.MoveTileDialogController.Axis.COLUMN;
 import static controllers.MoveTileDialogController.Axis.ROW;
 
 /**
- * TODO
- * -Make sure rotations are right depending on axis and rotation of tile
- * -accept button
- * -push in tile Button
- * -assets for the left and right buttons as well as cross
- * -cancel button for placement
- * -tile in the preview
- * -Make sure players aren't on the tile? or make sure that tiles with players on become fixed
- * -code to change the gameboard and send it back
- * -other things
+ * Controls the MoveTileDialog, which allows the player to add a tile onto the board
+ * @author Joseph Omar
+ * @version 1.4
  */
 public class MoveTileDialogController implements InitialisableWithParameters {
-    public static final int PREVIEW_WIDTH = 128;
-    public static final int WINDOW_MIN_WIDTH = 766;
-    private static final double TILE_SIZE = 100;
-    private static final String ARROW_PATH_ROLLOVER = "../resources/menu/arrow_rollover.png";
-    private static final double WINDOW_HEIGHT = TILE_SIZE + 219;
-    private static final String ARROW_PATH = "../resources/menu/arrow.png";
-    private ImageView addLeft;
-    private ImageView addRight;
+    public static final  int                PREVIEW_WIDTH       = 128;
+    public static final  int                WINDOW_MIN_WIDTH    = 766;
+    private static final double             TILE_SIZE           = 100;
+    private static final String             ARROW_PATH_ROLLOVER =
+            "../resources/menu/arrow_rollover.png";
+    private static final double             WINDOW_HEIGHT       =
+            TILE_SIZE + 219;
+    private static final String             ARROW_PATH          =
+            "../resources/menu/arrow.png";
+    private              ImageView          addLeft;
+    private              ImageView          addRight;
     @FXML
-    private Button cmdConfirm;
+    private              Button             cmdConfirm;
     @FXML
-    private ChoiceBox<Axis> comDirection;
+    private              ChoiceBox<Axis>    comDirection;
     @FXML
-    private ChoiceBox<Integer> comNumber;
+    private              ChoiceBox<Integer> comNumber;
     @FXML
-    private Label lblLeft;
+    private              Label              lblLeft;
     @FXML
-    private Label lblRight;
+    private              Label              lblRight;
     @FXML
-    private GridPane grdTiles;
+    private              GridPane           grdTiles;
     @FXML
-    private AnchorPane rootPane;
+    private              AnchorPane         rootPane;
 
-    private Tile tile;
-    private Gameboard gameboard;
+    private Tile                tile;
+    private Gameboard           gameboard;
     private GameboardController gameboardController;
-    private ArrayDeque<Tile> selectedTiles;
+    private ArrayDeque<Tile>    selectedTiles;
 
     /**
      * Initialises the MoveTile {@link constants.Window}
@@ -96,22 +93,30 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     /**
-     * Adds Events to the Choice boxes that trigger an event when the selected item changes
+     * Adds Events to the Choice boxes that trigger an event when the selected
+     * item changes
      */
     private void addListeners() {
-        comDirection.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Axis>() {
-            @Override
-            public void changed(ObservableValue<? extends Axis> observable, Axis oldValue, Axis newValue) {
-                updateNumbers(newValue);
-            }
+        comDirection.getSelectionModel().selectedItemProperty()
+                    .addListener(new ChangeListener<Axis>() {
+                        @Override
+                        public void changed(
+                                ObservableValue<? extends Axis> observable,
+                                Axis oldValue, Axis newValue) {
+                            updateNumbers(newValue);
+                        }
 
-        });
-        comNumber.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
-            @Override
-            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
-                updateGrid(comDirection.getSelectionModel().getSelectedItem(), newValue);
-            }
-        });
+                    });
+        comNumber.getSelectionModel().selectedItemProperty()
+                 .addListener(new ChangeListener<Integer>() {
+                     @Override
+                     public void changed(
+                             ObservableValue<? extends Integer> observable,
+                             Integer oldValue, Integer newValue) {
+                         updateGrid(comDirection.getSelectionModel()
+                                                .getSelectedItem(), newValue);
+                     }
+                 });
     }
 
     /**
@@ -133,9 +138,11 @@ public class MoveTileDialogController implements InitialisableWithParameters {
         for (int i = 0; i < gameboard.getTiles().getWidth(); i++) {
             ArrayList<Tile> tiles;
             if (axis.equals(COLUMN)) {
-                tiles = new ArrayList<>(Arrays.asList(gameboard.getTiles().getColumn(i)));
+                tiles = new ArrayList<>(
+                        Arrays.asList(gameboard.getTiles().getColumn(i)));
             } else {
-                tiles = new ArrayList<>(Arrays.asList(gameboard.getTiles().getRow(i)));
+                tiles = new ArrayList<>(
+                        Arrays.asList(gameboard.getTiles().getRow(i)));
             }
 
             AtomicBoolean hasFixed = new AtomicBoolean(false);
@@ -158,9 +165,11 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     private void updateGrid(Axis axis, int number) {
         ArrayList<Tile> tiles;
         if (axis.equals(COLUMN)) {
-            tiles = new ArrayList<Tile>(Arrays.asList(this.gameboard.getTiles().getColumn(number)));
+            tiles = new ArrayList<Tile>(
+                    Arrays.asList(this.gameboard.getTiles().getColumn(number)));
         } else {
-            tiles = new ArrayList<Tile>(Arrays.asList(this.gameboard.getTiles().getRow(number)));
+            tiles = new ArrayList<Tile>(
+                    Arrays.asList(this.gameboard.getTiles().getRow(number)));
         }
         this.selectedTiles.addAll(tiles);
         defineGrid(tiles.size());
@@ -168,12 +177,15 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     /**
-     * Takes Tiles and formats them into stack panes as well as adding an add button to the first and last grid squares
+     * Takes Tiles and formats them into stack panes as well as adding an add
+     * button to the first and last grid squares
      *
      * @param tiles Tile to be formatted
+     *
      * @return
      */
-    private ArrayDeque<ImageView> formatTiles(ArrayList<Tile> tiles,Axis axis) {
+    private ArrayDeque<ImageView> formatTiles(ArrayList<Tile> tiles,
+                                              Axis axis) {
         ArrayDeque<ImageView> formattedTiles = new ArrayDeque<>();
         /* For each tile, create an imageview with the tile's image inside */
         tiles.forEach(tile -> {
@@ -208,30 +220,35 @@ public class MoveTileDialogController implements InitialisableWithParameters {
         this.addRight.setOnMouseClicked(event -> {
             addToRight();
 
-    });
+        });
     }
 
     private void addToRight() {
         this.selectedTiles.addLast(this.tile);
         this.selectedTiles.removeFirst();
-        updateGrid(comDirection.getSelectionModel().getSelectedItem(), comNumber.getSelectionModel().getSelectedItem());
+        updateGrid(comDirection.getSelectionModel().getSelectedItem(),
+                   comNumber.getSelectionModel().getSelectedItem());
         disableShiftRollover();
         disableShiftButtons();
         disableChoiceBoxes();
         cmdConfirm.setDisable(false);
     }
+
     private void addToLeft() {
         this.selectedTiles.addFirst(this.tile);
         this.selectedTiles.removeLast();
-        updateGrid(comDirection.getSelectionModel().getSelectedItem(), comNumber.getSelectionModel().getSelectedItem());
+        updateGrid(comDirection.getSelectionModel().getSelectedItem(),
+                   comNumber.getSelectionModel().getSelectedItem());
         disableShiftRollover();
         disableShiftButtons();
         disableChoiceBoxes();
         cmdConfirm.setDisable(false);
     }
+
     private void disableChoiceBoxes() {
         Axis selectedAxis = comDirection.getSelectionModel().getSelectedItem();
-        Integer selectedNumber  = comNumber.getSelectionModel().getSelectedItem();
+        Integer selectedNumber =
+                comNumber.getSelectionModel().getSelectedItem();
         this.comDirection.setDisable(true);
         this.comDirection.getSelectionModel().select(selectedAxis);
         this.comNumber.setDisable(true);
@@ -241,10 +258,9 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     private void enableChoiceBoxes() {
         this.comDirection.setDisable(false);
         this.comDirection.getSelectionModel().selectFirst();
-        this.comNumber.setDisable(false );
+        this.comNumber.setDisable(false);
         this.comNumber.getSelectionModel().selectFirst();
     }
-
 
 
     private void disableShiftButtons() {
@@ -256,11 +272,15 @@ public class MoveTileDialogController implements InitialisableWithParameters {
      * Enables the rollover events for the add left and add right buttons
      */
     private void enableShiftRollover() {
-       
-        addRight.setOnMouseEntered(event -> addRight.setImage(new Image(ARROW_PATH_ROLLOVER)));
-        addRight.setOnMouseExited(event -> addRight.setImage(new Image(ARROW_PATH)));
-        addLeft.setOnMouseEntered(event -> addLeft.setImage(new Image(ARROW_PATH_ROLLOVER)));
-        addLeft.setOnMouseExited(event -> addLeft.setImage(new Image(ARROW_PATH)));
+
+        addRight.setOnMouseEntered(
+                event -> addRight.setImage(new Image(ARROW_PATH_ROLLOVER)));
+        addRight.setOnMouseExited(
+                event -> addRight.setImage(new Image(ARROW_PATH)));
+        addLeft.setOnMouseEntered(
+                event -> addLeft.setImage(new Image(ARROW_PATH_ROLLOVER)));
+        addLeft.setOnMouseExited(
+                event -> addLeft.setImage(new Image(ARROW_PATH)));
 
     }
 
@@ -287,9 +307,11 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     /**
-     * Creates an ImageView Node from a specified image, applying the appropriate properties
+     * Creates an ImageView Node from a specified image, applying the
+     * appropriate properties
      *
      * @param image Image to be place in the tile
+     *
      * @return ImageView containing the specified image
      */
     private ImageView createImageView(Image image) {
@@ -303,7 +325,8 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     /**
-     * Adds the appropriate amount of columns to the grid based on the players selection
+     * Adds the appropriate amount of columns to the grid based on the players
+     * selection
      *
      * @param numberOfTiles The Number of tiles on the selected axis
      */
@@ -323,15 +346,19 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     }
 
     /**
-     * Resizes the window based on the number of tiles in the grid. If there are no tiles, the window is sized to its minimum without the grid
+     * Resizes the window based on the number of tiles in the grid. If there are
+     * no tiles, the window is sized to its minimum without the grid
      */
     private void sizeWindow() {
         if (grdTiles.getColumnConstraints().size() == 0) {
             rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_HEIGHT - TILE_SIZE);
-        } else if ((grdTiles.getColumnConstraints().size() * TILE_SIZE) + PREVIEW_WIDTH < WINDOW_MIN_WIDTH) {
+        } else if ((grdTiles.getColumnConstraints().size() * TILE_SIZE) +
+                   PREVIEW_WIDTH < WINDOW_MIN_WIDTH) {
             rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_HEIGHT);
         } else {
-            rootPane.setMinSize((grdTiles.getColumnConstraints().size() * TILE_SIZE) + PREVIEW_WIDTH, WINDOW_HEIGHT);
+            rootPane.setMinSize(
+                    (grdTiles.getColumnConstraints().size() * TILE_SIZE) +
+                    PREVIEW_WIDTH, WINDOW_HEIGHT);
         }
 
         rootPane.setMaxSize(rootPane.getMinWidth(), rootPane.getMinHeight());
@@ -355,7 +382,8 @@ public class MoveTileDialogController implements InitialisableWithParameters {
      * Defines available axes and a corresponding String value for it
      */
     protected enum Axis {
-        COLUMN("Column"), ROW("Row");
+        COLUMN("Column"),
+        ROW("Row");
         final String AXIS;
 
         Axis(String axis) {

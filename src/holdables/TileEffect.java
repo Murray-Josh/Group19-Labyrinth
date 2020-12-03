@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 import styles.Style;
 
 /**
- * Defines the types of {@link Effect} that can be applied to a {@link Tile}. These are also {@link Holdable}, like
- * {@link Tile} and {@link PlayerEffect}
+ * Defines the types of {@link Effect} that can be applied to a {@link Tile}.
+ * These are also {@link Holdable}, like {@link Tile} and {@link PlayerEffect}
  *
  * @author Joseph Omar
  * @version 3.2

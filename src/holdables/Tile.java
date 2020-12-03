@@ -19,11 +19,11 @@ import static holdables.TileEffect.*;
  */
 public class Tile implements Serializable, Holdable {
     private Coordinate coordinate;
-    private TileType type;
-    private Style style;
-    private Angle angle;
+    private TileType   type;
+    private Style      style;
+    private Angle      angle;
     private TileEffect effect = NONE;
-    private boolean fixed;
+    private boolean    fixed;
 
 
     /**
@@ -35,7 +35,8 @@ public class Tile implements Serializable, Holdable {
      * @param angle      Holdables.Tile's Angle of rotation
      * @param fixed      If the is fixed or not
      */
-    public Tile(Coordinate coordinate, TileType type, Style style, Angle angle, boolean fixed) {
+    public Tile(Coordinate coordinate, TileType type, Style style, Angle angle,
+                boolean fixed) {
         setCoordinate(coordinate);
         setType(type);
         setStyle(style);
@@ -58,7 +59,8 @@ public class Tile implements Serializable, Holdable {
         setFixed(fixed);
     }
 
-    public Tile(Coordinate coordinate, TileType type, Angle angle, boolean fixed) {
+    public Tile(Coordinate coordinate, TileType type, Angle angle,
+                boolean fixed) {
         this.coordinate = coordinate;
         this.type = type;
         this.angle = angle;
@@ -78,25 +80,6 @@ public class Tile implements Serializable, Holdable {
      */
     public void setMovable() {
         this.fixed = false;
-    }
-
-
-    /**
-     * Get's the tile's Core.Coordinate
-     *
-     * @return Core.Coordinate of tile
-     */
-    public Coordinate getCoordinate() {
-        return this.coordinate;
-    }
-
-    /**
-     * Sets the Core.Coordinate
-     *
-     * @param coordinate New Core.Coordinate
-     */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
     }
 
     /**
@@ -135,6 +118,109 @@ public class Tile implements Serializable, Holdable {
         this.angle = angle;
     }
 
+    public void makeFireEffect() {
+        effect = FIRE;
+    }
+
+    public void makeIceEffect() {
+        effect = ICE;
+    }
+
+    public TileEffect getEffect() {
+        return effect;
+    }
+
+    public void setEffect(TileEffect effect) {
+        this.effect = effect;
+    }
+
+    public Tile getNorthTile(Gameboard g) {
+        try {
+            return g.getTiles()
+                    .get(getCoordinate().getX(), getCoordinate().getY() + 1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get's the tile's Core.Coordinate
+     *
+     * @return Core.Coordinate of tile
+     */
+    public Coordinate getCoordinate() {
+        return this.coordinate;
+    }
+
+    /**
+     * Sets the Core.Coordinate
+     *
+     * @param coordinate New Core.Coordinate
+     */
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    public Tile getSouthTile(Gameboard g) {
+        try {
+            return g.getTiles()
+                    .get(getCoordinate().getX(), getCoordinate().getY() - 1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public Tile getEastTile(Gameboard g) {
+        try {
+            return g.getTiles()
+                    .get(getCoordinate().getX() + 1, getCoordinate().getY());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public Tile getWestTile(Gameboard g) {
+        try {
+            return g.getTiles()
+                    .get(getCoordinate().getX() - 1, getCoordinate().getY());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public Image getImage() {
+        switch (this.getType().toString()) {
+
+            case "CORNER":
+
+                if (isFixed()) {
+                    return Style.getCornerIce();
+                } else {
+                    return Style.getCornerTile();
+                }
+            case "JUNCTION":
+
+                if (isFixed()) {
+                    return Style.getJunctionIce();
+                } else {
+                    return Style.getJunctionTile();
+                }
+            case "STRAIGHT":
+
+                if (isFixed()) {
+                    return Style.getStraightIce();
+                } else {
+                    return Style.getStraightTile();
+                }
+            case "GOAL":
+
+                return Style.getGoalTile();
+
+            default:
+                return null;
+        }
+    }
+
     /**
      * Gets the tile's Holdables.TileType
      *
@@ -169,85 +255,5 @@ public class Tile implements Serializable, Holdable {
      */
     public void setFixed(boolean fixed) {
         this.fixed = fixed;
-    }
-
-
-    public void makeFireEffect() {
-        effect = FIRE;
-    }
-
-    public void makeIceEffect() {
-        effect = ICE;
-    }
-
-    public TileEffect getEffect() {
-        return effect;
-    }
-
-    public void setEffect(TileEffect effect) {
-        this.effect = effect;
-    }
-
-    public Tile getNorthTile(Gameboard g){
-        try {
-            return g.getTiles().get(getCoordinate().getX(), getCoordinate().getY() + 1);
-        } catch(ArrayIndexOutOfBoundsException e){
-            return null;
-        }
-    }
-    public Tile getSouthTile(Gameboard g){
-        try {
-            return g.getTiles().get(getCoordinate().getX(), getCoordinate().getY() - 1);
-        } catch(ArrayIndexOutOfBoundsException e){
-            return null;
-        }
-    }
-    public Tile getEastTile(Gameboard g){
-        try {
-            return g.getTiles().get(getCoordinate().getX() + 1, getCoordinate().getY());
-        } catch(ArrayIndexOutOfBoundsException e){
-            return null;
-        }
-    }
-    public Tile getWestTile(Gameboard g){
-        try {
-            return g.getTiles().get(getCoordinate().getX() - 1, getCoordinate().getY());
-        } catch(ArrayIndexOutOfBoundsException e){
-            return null;
-        }
-    }
-
-
-    public Image getImage() {
-        switch (this.getType().toString()) {
-
-            case "CORNER":
-
-                if (isFixed()) {
-                    return Style.getCornerIce();
-                } else {
-                    return Style.getCornerTile();
-                }
-            case "JUNCTION":
-
-                if (isFixed()) {
-                    return Style.getJunctionIce();
-                } else {
-                    return Style.getJunctionTile();
-                }
-            case "STRAIGHT":
-
-                if (isFixed()) {
-                    return Style.getStraightIce();
-                } else {
-                    return Style.getStraightTile();
-                }
-            case "GOAL":
-
-                return Style.getGoalTile();
-
-            default:
-                return null;
-        }
     }
 }

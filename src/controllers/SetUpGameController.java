@@ -28,13 +28,14 @@ import java.util.ResourceBundle;
 import static controllers.StageController.*;
 
 public class SetUpGameController implements Initializable {
-    public static final String CARS = "Cars";
-    public static final String MOUSE = "Mouse Trap";
-    public static final String PIRATE = "Pirate";
-    private static final PlayerProfile none = new PlayerProfile("--None--");
+    public static final  String        CARS   = "Cars";
+    public static final  String        MOUSE  = "Mouse Trap";
+    public static final  String        PIRATE = "Pirate";
+    private static final PlayerProfile none   = new PlayerProfile("--None--");
 
-    private final ObservableList<PlayerProfile> profiles = FXCollections.observableArrayList(Profiles.getProfiles());
-    private final ArrayList<PlayerProfile> players = new ArrayList<>();
+    private final ObservableList<PlayerProfile> profiles =
+            FXCollections.observableArrayList(Profiles.getProfiles());
+    private final ArrayList<PlayerProfile>      players  = new ArrayList<>();
 
     @FXML
     private ChoiceBox<PlayerProfile> comOne;
@@ -46,25 +47,25 @@ public class SetUpGameController implements Initializable {
     private ChoiceBox<PlayerProfile> comFour;
 
     @FXML
-    private ChoiceBox<File> comBoard;
+    private ChoiceBox<File>                     comBoard;
     @FXML
-    private ChoiceBox<String> comStyle;
+    private ChoiceBox<String>                   comStyle;
     @FXML
-    private Button cmdStart;
+    private Button                              cmdStart;
     @FXML
-    private Button cmdBack;
+    private Button                              cmdBack;
     @FXML
-    private Button cmdLockOne;
+    private Button                              cmdLockOne;
     @FXML
-    private Button cmdLockTwo;
+    private Button                              cmdLockTwo;
     @FXML
-    private Button cmdLockThree;
+    private Button                              cmdLockThree;
     @FXML
-    private Button cmdLockFour;
+    private Button                              cmdLockFour;
     private ArrayList<ChoiceBox<PlayerProfile>> boxes;
-    private ArrayList<Button> buttons;
-    private URL location;
-    private ResourceBundle resourceBundle;
+    private ArrayList<Button>                   buttons;
+    private URL                                 location;
+    private ResourceBundle                      resourceBundle;
 
     /**
      * Handles the quit click event
@@ -81,8 +82,10 @@ public class SetUpGameController implements Initializable {
      * @param actionEvent
      */
     public void cmdStartClick(ActionEvent actionEvent) {
-        Style style = createStyle(comStyle.getSelectionModel().getSelectedItem());
-        //String levelPath = comBoard.getSelectionModel().getSelectedItem().toString();
+        Style style =
+                createStyle(comStyle.getSelectionModel().getSelectedItem());
+        //String levelPath = comBoard.getSelectionModel().getSelectedItem()
+        // .toString();
         String levelPath = "src/resources/file/level";
 
         try {
@@ -100,6 +103,7 @@ public class SetUpGameController implements Initializable {
      * Creates a style based on the users selection from the Styles Choice box
      *
      * @param selected The selected Style
+     *
      * @return An instance of the selected style
      */
     private Style createStyle(String selected) {
@@ -131,20 +135,6 @@ public class SetUpGameController implements Initializable {
         initialiseLevels();
     }
 
-    private void initialiseLevels() {
-        FilenameFilter filter = (dir, name) -> name.endsWith(".ser");
-        File[] fileArray = new File("src/resources/file/").listFiles(filter);
-        if (fileArray != null) {
-            ObservableList<File> files = FXCollections.observableArrayList(Arrays.asList(fileArray));
-            this.comBoard.setItems(files);
-            this.comBoard.getSelectionModel().selectFirst();
-
-        } else {
-            showError(ErrorMsg.LEVEL_FILE_ERROR, Title.SETUP, false);
-            home();
-        }
-    }
-
     /**
      * Gets the profiles from the saved file and adds them to the Choice Boxes
      */
@@ -152,15 +142,20 @@ public class SetUpGameController implements Initializable {
         /*
         Adds the locking buttons and the Player choice boxes to lists
          */
-        this.buttons = new ArrayList<>(Arrays.asList(cmdLockOne, cmdLockTwo, cmdLockThree, cmdLockFour));
-        this.boxes = new ArrayList<>(Arrays.asList(comOne, comTwo, comThree, comFour));
+        this.buttons = new ArrayList<>(
+                Arrays.asList(cmdLockOne, cmdLockTwo, cmdLockThree,
+                              cmdLockFour));
+        this.boxes = new ArrayList<>(
+                Arrays.asList(comOne, comTwo, comThree, comFour));
 
         /*
-        Adds the default profile none to the list, used to signify that the player slot isn't being used
+        Adds the default profile none to the list, used to signify that the
+        player slot isn't being used
          */
         profiles.add(none);
         /*
-        add profiles list data to each list box, and set the selected item to the default
+        add profiles list data to each list box, and set the selected item to
+         the default
          */
         boxes.forEach(box -> {
             box.setItems(profiles);
@@ -179,8 +174,24 @@ public class SetUpGameController implements Initializable {
      * Adds styles to the styles Choice Box
      */
     private void initialiseStyles() {
-        this.comStyle.setItems(FXCollections.observableArrayList(CARS, MOUSE, PIRATE));
+        this.comStyle.setItems(
+                FXCollections.observableArrayList(CARS, MOUSE, PIRATE));
         comStyle.setValue(CARS);
+    }
+
+    private void initialiseLevels() {
+        FilenameFilter filter = (dir, name) -> name.endsWith(".ser");
+        File[] fileArray = new File("src/resources/file/").listFiles(filter);
+        if (fileArray != null) {
+            ObservableList<File> files =
+                    FXCollections.observableArrayList(Arrays.asList(fileArray));
+            this.comBoard.setItems(files);
+            this.comBoard.getSelectionModel().selectFirst();
+
+        } else {
+            showError(ErrorMsg.LEVEL_FILE_ERROR, Title.SETUP, false);
+            home();
+        }
     }
 
     /**
@@ -193,8 +204,8 @@ public class SetUpGameController implements Initializable {
     }
 
     /**
-     * Adds the locked player to the list of players for the game, disables the current selection control and enables
-     * the next players seletion control.
+     * Adds the locked player to the list of players for the game, disables the
+     * current selection control and enables the next players seletion control.
      *
      * @param currentButton    Current Player Selection Control's lock button
      * @param nextButton       Next Player Selection Control's lock button
@@ -202,9 +213,11 @@ public class SetUpGameController implements Initializable {
      * @param nextChoiceBox    Next Player Selection Control's Choice Box
      * @param slotNumber       Current Player number
      */
-    private void lock(Button currentButton, Button nextButton, ChoiceBox<PlayerProfile> currentChoiceBox,
+    private void lock(Button currentButton, Button nextButton,
+                      ChoiceBox<PlayerProfile> currentChoiceBox,
                       ChoiceBox<PlayerProfile> nextChoiceBox, int slotNumber) {
-        PlayerProfile selection = currentChoiceBox.getSelectionModel().getSelectedItem();
+        PlayerProfile selection =
+                currentChoiceBox.getSelectionModel().getSelectedItem();
         boolean isNone = selection.equals(none);
         /* If the user selected none for either player one or two */
         if (isNone && (slotNumber == 1 || slotNumber == 2)) {
@@ -222,7 +235,8 @@ public class SetUpGameController implements Initializable {
             nextChoiceBox.setValue(none);
         } else {
             this.players.add(selection);
-            updateChoiceBoxes(selection, currentButton, currentChoiceBox, nextButton, nextChoiceBox);
+            updateChoiceBoxes(selection, currentButton, currentChoiceBox,
+                              nextButton, nextChoiceBox);
         }
     }
 
@@ -235,8 +249,10 @@ public class SetUpGameController implements Initializable {
      * @param currentChoiceBox Current Player Selection Control's Choice Box
      * @param nextChoiceBox    Next Player Selection Control's Choice Box
      */
-    private void updateChoiceBoxes(PlayerProfile selection, Button currentButton,
-                                   ChoiceBox<PlayerProfile> currentChoiceBox, Button nextButton,
+    private void updateChoiceBoxes(PlayerProfile selection,
+                                   Button currentButton,
+                                   ChoiceBox<PlayerProfile> currentChoiceBox,
+                                   Button nextButton,
                                    ChoiceBox<PlayerProfile> nextChoiceBox) {
         /* Disable Current Player Selection Control */
         currentButton.setDisable(true);
@@ -255,10 +271,12 @@ public class SetUpGameController implements Initializable {
             nextButton.setDisable(false);
             nextChoiceBox.setDisable(false);
         }
-        /* Creates a new Instance of the selected profile with the same name so that it can be displayed after being
+        /* Creates a new Instance of the selected profile with the same name
+        so that it can be displayed after being
         removed from profiles */
         PlayerProfile forDisplay = new PlayerProfile(selection.getName());
-        currentChoiceBox.setItems(FXCollections.observableArrayList(forDisplay));
+        currentChoiceBox
+                .setItems(FXCollections.observableArrayList(forDisplay));
         currentChoiceBox.setValue(forDisplay);
     }
 

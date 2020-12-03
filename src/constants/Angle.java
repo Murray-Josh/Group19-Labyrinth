@@ -1,13 +1,16 @@
 package constants;
 
 /**
- * Specicifies and finalised specific angles entities can use
+ * Specifies and finalised specific angles entities can use
  *
  * @author Joseph Omar
  * @version 1.0
  */
 public enum Angle {
-    DOWN(0), LEFT(90), UP(180), RIGHT(270);
+    DOWN(0),
+    LEFT(90),
+    UP(180),
+    RIGHT(270);
 
     private final double ANGLE;
 
@@ -24,6 +27,7 @@ public enum Angle {
      * Converts a Double to an Angle type
      *
      * @param value Angle to be converted
+     *
      * @return Angle corresponding to specified value
      */
     public static Angle toAngle(double value) {

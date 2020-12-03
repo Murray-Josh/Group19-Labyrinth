@@ -4,7 +4,8 @@ import javafx.scene.image.Image;
 import styles.Style;
 
 /**
- * Defines a type for the two specified player effects, that can be used to identify what effect to apply.
+ * Defines a type for the two specified player effects, that can be used to
+ * identify what effect to apply.
  *
  * @author Joseph Omar
  * @version 2.0

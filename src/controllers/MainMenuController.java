@@ -22,21 +22,21 @@ import static controllers.StageController.changeScene;
  */
 public class MainMenuController implements Initializable {
     @FXML
-    private Button cmdNew;
+    private Button    cmdNew;
     @FXML
-    private Button cmdLoad;
+    private Button    cmdLoad;
     @FXML
-    private Button cmdScoreboard;
+    private Button    cmdScoreboard;
     @FXML
-    private Button cmdMakeProfile;
+    private Button    cmdMakeProfile;
     @FXML
-    private Button cmdDeleteProfile;
+    private Button    cmdDeleteProfile;
     @FXML
-    private Button cmdQuit;
+    private Button    cmdQuit;
     @FXML
     private ImageView logo;
     @FXML
-    private Label msgDayMessage;
+    private Label     msgDayMessage;
 
     /**
      * Handles the Quit button click event
@@ -93,11 +93,14 @@ public class MainMenuController implements Initializable {
     }
 
     /**
-     * Called to initialize a controller after its root element has been completely processed.
+     * Called to initialize a controller after its root element has been
+     * completely processed.
      *
-     * @param location  The location used to resolve relative paths for the root object, or
+     * @param location  The location used to resolve relative paths for the root
+     *                  object, or
      *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     * @param resources The resources used to localize the root object, or
+     *                  <tt>null</tt> if
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
