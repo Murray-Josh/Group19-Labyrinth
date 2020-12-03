@@ -141,24 +141,24 @@
 }
 
 
-Background color of the whole context menu
+
 .choice-box .context-menu {
     -fx-background-color: #2C2C3E;
 }
 
-Focused item background color in the list
+
 .choice-box .menu-item:focused {
     -fx-background-color: #384E92;
 }
 
-Text color of non-focused items in the list
+
 .choice-box .menu-item > .label {
     -fx-text-fill: WHITE;
     -fx-font-family: scientifica;
     -fx-font-size: 16px;
 }
 
-Text color of focused item in the list
+
 .choice-box .menu-item:focused > .label {
     -fx-text-fill: WHITE;
     -fx-font-family: scientifica;
@@ -178,7 +178,7 @@ Text color of focused item in the list
     -fx-opacity: 1.0;
 }
 
-.choicebox > .label:disabled {
+.choice-box > .label:disabled {
     -fx-opacity: 1.0;
 }
 

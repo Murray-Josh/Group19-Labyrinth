@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="700.0" styleClass="hbox"
-            stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1"
-            fx:controller="controllers.LoadGameController">
-    <children>
-        <ButtonBar layoutX="89.0" layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0"
-                   prefWidth="200.0" style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-            <buttons>
-                <Button fx:id="cmdRefresh" layoutX="521.0" layoutY="11.0" mnemonicParsing="false"
-                        onAction="#cmdRefreshClick" text="Refresh"/>
-                <Button fx:id="cmdLoad" layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdLoadClick"
-                        text="Load Save"/>
-                <Button fx:id="cmdCancel" cancelButton="true" mnemonicParsing="false" onAction="#cmdCancelClick"
-                        text="Cancel"/>
-            </buttons>
-            <padding>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-            </padding>
-        </ButtonBar>
-        <ListView fx:id="lstSaves" layoutX="46.0" layoutY="39.0" onMouseClicked="#lstSavesClick" prefHeight="200.0"
-                  prefWidth="736.0" styleClass="hbox" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <padding>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
-            </padding>
-        </ListView>
-    </children>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="700.0"
+  styleClass="hbox"
+  stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1"
+  fx:controller="controllers.LoadGameController">
+  <children>
+    <ButtonBar style="-fx-border-color: #221B3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      layoutX="89.0"
+      layoutY="346.0" maxHeight="-Infinity" minHeight="-Infinity"
+      prefHeight="40.0" prefWidth="200.0">
+      <buttons>
+        <Button layoutX="521.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdRefreshClick"
+          text="Refresh" fx:id="cmdRefresh"/>
+        <Button layoutX="436.0" layoutY="11.0" mnemonicParsing="false" onAction="#cmdLoadClick"
+          text="Load Save"
+          fx:id="cmdLoad"/>
+        <Button cancelButton="true" mnemonicParsing="false" onAction="#cmdCancelClick"
+          text="Cancel"
+          fx:id="cmdCancel"/>
+      </buttons>
+      <padding>
+        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+      </padding>
+    </ButtonBar>
+    <ListView AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+      layoutX="46.0"
+      layoutY="39.0" onMouseClicked="#lstSavesClick" prefHeight="200.0" prefWidth="736.0"
+      styleClass="hbox" fx:id="lstSaves">
+      <padding>
+        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+      </padding>
+    </ListView>
+  </children>
 </AnchorPane>

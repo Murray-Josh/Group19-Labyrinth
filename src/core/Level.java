@@ -346,19 +346,15 @@ public class Level implements Serializable {
     }
 
     /**
-     * @param fileName
+     * Reads a File containing the level
+     * @param fileName Path to the file to load
      */
-    public void readGameboardFile(String fileName) {
+    public void readGameboardFile(String fileName) throws FileNotFoundException {
         Scanner in;
         PirateStyle style = new PirateStyle();
-        try {
             File file = new File(fileName);
             in = new Scanner(file);
             readGameboard(in);
-        } catch (FileNotFoundException e) {
-            System.out.println("Cannot find " + fileName);
-            System.exit(0);
-        }
     }
 
     /**
@@ -376,12 +372,11 @@ public class Level implements Serializable {
             readUnfixed(unfixed, in);
         }
         System.out.println(unfixed);
-
-        setStartCoords(in);
+        setStartCoordinates(in);
     }
 
     /**
-     * Reads board size
+     * Gets the Size of the board from the level file
      *
      * @param sLine
      * @return
@@ -390,14 +385,13 @@ public class Level implements Serializable {
         String[] sizeStrArray = sLine.split(",");
         this.setHeight(Integer.parseInt(sizeStrArray[0]));
         this.setWidth(Integer.parseInt(sizeStrArray[1]));
-
     }
 
     /**
-     * Reads fixed files and places onto board where coordinates dictate
+     * Reads fixed tiles and places onto board where coordinates dictate
      *
-     * @param fixed
-     * @param in
+     * @param fixed The dixed tile to read
+     * @param in Scanner to get the data from
      */
     private void readFixed(int fixed, Scanner in) {
         in.useDelimiter(",");
@@ -414,10 +408,8 @@ public class Level implements Serializable {
 
             System.out.println(fTileType);
             System.out.println(Angle.toAngle(turn));
-            PirateStyle style = new PirateStyle();
 
-
-            addToFixed(new Tile(new Coordinate(x, y), fTileType, style, Angle.UP, true));
+            addToFixed(new Tile(new Coordinate(x, y), fTileType, Angle.UP, true));
 
         }
     }
@@ -452,7 +444,7 @@ public class Level implements Serializable {
      *
      * @param in Scanner to read from
      */
-    private void setStartCoords(Scanner in) {
+    private void setStartCoordinates(Scanner in) {
 
 //        players.add(new Player(new PlayerProfile("a"), new Coordinate(0,0), getStyle(), 1));
 //        players.add(new Player(new PlayerProfile("b"), new Coordinate(0,0), getStyle(), 2));
@@ -481,23 +473,15 @@ public class Level implements Serializable {
 
         switch (tileTypeString) {
             case "corner":
-                tileTypeObject = TileType.CORNER;
-                break;
+                return TileType.CORNER;
             case "junction":
-                tileTypeObject = TileType.JUNCTION;
-                break;
-
+                return TileType.JUNCTION;
             case "straight":
-                tileTypeObject = TileType.STRAIGHT;
-                break;
+                return TileType.STRAIGHT;
 
             case "goal":
-                tileTypeObject = TileType.GOAL;
-                break;
+                return TileType.GOAL;
             default:
-                throw new IllegalStateException("Unexpected value: " + tileTypeString);
-
-        }
-        return tileTypeObject;
+                throw new IllegalStateException("Unexpected value: " + tileTypeString);}
     }
 }

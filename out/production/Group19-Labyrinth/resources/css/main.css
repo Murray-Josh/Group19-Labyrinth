@@ -1,53 +1,75 @@
-.separator {
-	-fx-background-color: WHITE;
+@font-face {
+    src: url('scientifica.ttf');
 }
+
+.separator {
+    -fx-background-color: WHITE;
+}
+
 .button {
-	-fx-font-size: 13px;
-    -fx-font-family: roboto light;
-	-fx-text-fill: WHITE;
+    -fx-font-size: 16px;
+    -fx-font-family: scientifica;
+    -fx-text-fill: WHITE;
     -fx-background-color: #2C2C3E;
 }
+
 .button:hover {
     -fx-background-color: #384E92;
 }
-.hbox{
-	-fx-background-color: #2C2C3E;
-	-fx-text-fill: WHITE;
-    -fx-font-family: roboto light;
+
+.hbox {
+    -fx-background-color: #2C2C3E;
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
     -fx-border-color: #221B3C;
-	}
+}
+
+.special-pane:hover {
+    -fx-background-color: #384E92;
+}
+
+.special-pane {
+    -fx-background-color: #2C2C3E;
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-border-color: #221B3C;
+}
+
 .no-border {
-	-fx-background-color: #2C2C3E;
-	-fx-text-fill: WHITE;
-    -fx-font-family: roboto light;
+    -fx-background-color: #2C2C3E;
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
     -fx-border-color: transparent;
 }
 
-.label-large{
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 16px;
+.label-large {
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-font-size: 16px;
 }
+
 .label-small {
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 13px;
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-font-size: 15px;
 }
-.label{
-	-fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px;
+
+.label {
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-font-size: 16px;
 }
+
 .text-field, .choice-box {
     -fx-background-color: #2C2C3E;
-	-fx-border-color: #221B3C;
-	-fx-font-family: roboto light;
-	-fx-font-size: 13px;
-	-fx-text-fill: white;
+    -fx-border-color: #221B3C;
+    -fx-font-family: scientifica;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
 }
 
 .border {
-	-fx-border-color: #221B3C;
+    -fx-border-color: #221B3C;
 }
 
 .table-view .column-header-background .filler {
@@ -56,35 +78,38 @@
 
 .table-view {
     -fx-background-color: transparent;
-	-fx-table-cell-background-color: transparent;
-	-fx-alignment: CENTER;
+    -fx-table-cell-background-color: transparent;
+    -fx-alignment: CENTER;
 }
+
 .table-view .corner {
     -fx-background-color: transparent;
 }
+
 .table-view .column-header-background {
     -fx-background-color: transparent;
-		-fx-alignment:CENTER;
+    -fx-alignment: CENTER;
 }
 
 .table-view .column-header {
     -fx-background-color: #2C2C3E;
-		-fx-alignment: CENTER;
+    -fx-alignment: CENTER;
 }
-.table-view .column-header .label{
-   -fx-text-fill: white;
-   -fx-font-weight: bold; 
-   -fx-font-size: 18px;
-   -fx-font-family:roboto light;
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-font-family: scientifica;
 }
 
 .table-view .cell {
-	-fx-alignment: CENTER;
--fx-background-color: #2C2C3E;
--fx-font-size: 16px;
--fx-font-family: roboto light;
-	-fx-text-fill: WHITE;
--fx-border-color: transparent;
+    -fx-alignment: CENTER;
+    -fx-background-color: #2C2C3E;
+    -fx-font-size: 16px;
+    -fx-font-family: scientifica;
+    -fx-text-fill: WHITE;
+    -fx-border-color: transparent;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,
@@ -95,64 +120,81 @@
 .table-view .virtual-flow .scroll-bar:horizontal .track-background {
     -fx-background-color: transparent;
 }
+
 .table-view .virtual-flow .scroll-bar .increment-button,
 .table-view .virtual-flow .scroll-bar .decrement-button {
     -fx-opacity: 0;
     -fx-padding: 2;
 }
-.table-view .virtual-flow .scroll-bar:vertical .thumb{
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb {
     -fx-background-color: #384E92;
 }
+
 .table-view .virtual-flow .scroll-bar:horizontal .thumb {
-    -fx-background-color:transparent;
-}
-.button-bar {
-	-fx-background-color: #2C2C3E;
-	-fx-border-color: #221B3C;
+    -fx-background-color: transparent;
 }
 
-// Background color of the whole context menu
-.choice-box .context-menu { -fx-background-color: #2C2C3E;; }
-// Focused item background color in the list
-.choice-box .menu-item:focused { -fx-background-color: #384E92; }
-// Text color of non-focused items in the list
-.choice-box .menu-item > .label { 
--fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px; }
-// Text color of focused item in the list
-.choice-box .menu-item:focused > .label { -fx-text-fill: WHITE;
-	-fx-font-family: roboto light;
-	-fx-font-size: 14px; }
-	
+.button-bar {
+    -fx-background-color: #2C2C3E;
+    -fx-border-color: #221B3C;
+}
+
+
+
+.choice-box .context-menu {
+    -fx-background-color: #2C2C3E;
+}
+
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #384E92;
+}
+
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-font-size: 16px;
+}
+
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: WHITE;
+    -fx-font-family: scientifica;
+    -fx-font-size: 16px;
+}
+
 .choice-box {
-	    -fx-background-color: #2C2C3E;
-     	-fx-border-color: #221B3C;
-     	 	-fx-font-family: roboto light;
-         	-fx-font-size: 13px;
-         	-fx-text-fill: white;
-			-fx-mark-color: white;
+    -fx-background-color: #2C2C3E;
+    -fx-border-color: #221B3C;
+    -fx-font-family: scientifica;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+    -fx-mark-color: white;
 }
 
 .choice-box:disabled, .combo-box-base:disabled {
-	-fx-opacity: 1.0;
+    -fx-opacity: 1.0;
 }
-.choicebox > .label:disabled {
-	-fx-opacity: 1.0;
+
+.choice-box > .label:disabled {
+    -fx-opacity: 1.0;
 }
 
 .label:disabled {
-	-fx-opacity: 1.0;
+    -fx-opacity: 1.0;
 }
+
 .scroll-pane {
-    -fx-background-color:#2C2C3E;
-    -fx-border-color:transparent;
-	    -fx-background-insets: 0;
+    -fx-background-color: #2C2C3E;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
-.scroll-bar:horizontal, .scroll-bar:vertical{
-    -fx-background-color:transparent;
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: transparent;
 }
 
 .increment-button, .decrement-button {
@@ -161,7 +203,7 @@
 }
 
 .scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
+.scroll-bar:vertical .track {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 0em;
@@ -175,13 +217,15 @@
 
 .scroll-pane > .corner {
     -fx-background-color: transparent;
-	    -fx-background-insets: 0;
+    -fx-background-insets: 0;
     -fx-padding: 0;
 }
+
 .scroll-pane:focused {
-	    -fx-background-insets: 0;
+    -fx-background-insets: 0;
     -fx-padding: 0;
 }
+
 .scroll-pane > .viewport {
-   -fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
