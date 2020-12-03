@@ -34,8 +34,6 @@ public class FindMessage {
 
     /**
      * Returns the message of the day as a string
-     *
-     * @return String message
      */
     private static void generateMessage() {
         try {
@@ -64,7 +62,6 @@ public class FindMessage {
      * Solves the puzzle to help find the correct website
      *
      * @param text String
-     *
      * @return Decrypted text
      */
     private static String solve(String text) {
@@ -78,7 +75,6 @@ public class FindMessage {
      * Decrypt the original text into a valid string
      *
      * @param text String
-     *
      * @return Decrypted text
      */
     private static String decrypt(String text) {
@@ -89,11 +85,11 @@ public class FindMessage {
              i++) { //For each letter in the string
             for (int j = 0; j < alphabet.length; j++) {
                 if ((i + 1) % 2 != 0 && arrayList[i] ==
-                                        alphabet[j]) { //If the char in the
+                        alphabet[j]) { //If the char in the
                     // array is an odd number and
                     // is found in the alphabet
                     if (j - move <
-                        0) { //This if statement makes sure that if the
+                            0) { //This if statement makes sure that if the
                         // alphabet array lands at char 'A', it
                         // will loop back to Z and continue counting.
                         int temp = move - j;
@@ -104,11 +100,11 @@ public class FindMessage {
                         break;
                     }
                 } else if ((i + 1) % 2 == 0 && arrayList[i] ==
-                                               alphabet[j]) { //If the char
+                        alphabet[j]) { //If the char
                     // in the array is an even
                     // number and is found in the alphabet
                     if (j + move >=
-                        alphabet.length) { //If statement makes sure when the
+                            alphabet.length) { //If statement makes sure when the
                         // alphabet array lands at char
                         // 'Z', it will loop and go back to 'A' and continue
                         // counting.
