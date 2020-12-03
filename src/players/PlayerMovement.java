@@ -44,7 +44,7 @@ public class PlayerMovement {
             case W:
             case UP:
                 Tile north = tile.getNorthTile(gameboard);
-                if(!isPlayerOnTile(north) && !isOnFire(north) && tilesAligned(player)[0]) {
+                if(!isPlayerOnTile(north) && !isOnFire(north) && tilesAligned(player)[2]) {
                     player.setCoordinate(north.getCoordinate());
                 }
                 break;

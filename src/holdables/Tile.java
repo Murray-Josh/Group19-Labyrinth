@@ -134,15 +134,6 @@ public class Tile implements Serializable, Holdable {
         this.effect = effect;
     }
 
-    public Tile getNorthTile(Gameboard g) {
-        try {
-            return g.getTiles()
-                    .get(getCoordinate().getX(), getCoordinate().getY() + 1);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
-    }
-
     /**
      * Get's the tile's Core.Coordinate
      *
@@ -161,7 +152,16 @@ public class Tile implements Serializable, Holdable {
         this.coordinate = coordinate;
     }
 
-    public Tile getSouthTile(Gameboard g) {
+    public Tile getNorthTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
+        try {
+            return g.getTiles()
+                    .get(getCoordinate().getX(), getCoordinate().getY() + 1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+
+    public Tile getSouthTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
         try {
             return g.getTiles()
                     .get(getCoordinate().getX(), getCoordinate().getY() - 1);
@@ -170,7 +170,7 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
-    public Tile getEastTile(Gameboard g) {
+    public Tile getEastTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
         try {
             return g.getTiles()
                     .get(getCoordinate().getX() + 1, getCoordinate().getY());
@@ -179,7 +179,7 @@ public class Tile implements Serializable, Holdable {
         }
     }
 
-    public Tile getWestTile(Gameboard g) {
+    public Tile getWestTile(Gameboard g) throws ArrayIndexOutOfBoundsException{
         try {
             return g.getTiles()
                     .get(getCoordinate().getX() - 1, getCoordinate().getY());
