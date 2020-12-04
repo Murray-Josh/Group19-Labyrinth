@@ -22,7 +22,7 @@ import java.util.Scanner;
  * @author Joshua Murray
  * @version 2.0
  */
-public class Level implements Serializable {
+public class Level {
 
     private static final int MAX_PLAYERS = 4;
     private ArrayList<Tile> fixed;
