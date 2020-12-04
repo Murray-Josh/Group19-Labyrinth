@@ -415,17 +415,23 @@ public class GameboardController
    }
 
 
-   private final ArrayList<String> playerLimList = new ArrayList<String>();
 
-   private void backTrackLim(){
-      if(playerLimList.size() < Gameboard.getPlayersCount() && PlayerMovement.backtrack) {
-         //playerLimList.addPlayer;
-      } else if (playerLimList.size() == 4){
-         //           Classname.actions.remove(playerEffect.BACKTRACK);
-         //remove all BACKTRACK tiles from silkBag
+   private void backTrackLim(Player targetPlayer){
+      if (!targetPlayer.hasBeenBackTracked()) {
+         playerMovement.backMovement(targetPlayer);
+         targetPlayer.setBeenBackTracked(true);
+      }
+
+      boolean everyoneBackTracked = true;
+      for (Player gamePlayer:players) {
+         if (!gamePlayer.hasBeenBackTracked()){
+            everyoneBackTracked = false;
+         }
+      }
+
+      if (everyoneBackTracked){
+         //Classname.actions.remove(playerEffect.BACKTRACK);
       }
    }
-
-}
 }
 

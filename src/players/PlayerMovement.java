@@ -38,7 +38,7 @@ public class PlayerMovement {
 
     /**
      * Checks the key input and translates it to coordinate change - controls whether the sprite is moving
-     * @param e KeyEvent identifier
+     * @param key KeyEvent identifier
      * @param player players turn to move
      */
     public void keyPressed(KeyCode key, Player player){
@@ -278,7 +278,7 @@ public class PlayerMovement {
      *
      * @param player Selected player
      */
-    private void backMovement(Player player){
+    public void backMovement(Player player){
         Coordinate[] tiles = player.getLastTwoCoordinates();
         Tile previousTile = gameboard.getTiles().get(tiles[1]);
         Tile preferredTile = gameboard.getTiles().get(tiles[2]);

@@ -33,6 +33,9 @@ public class Player implements Serializable {
     private Angle currentDirection;
     private PlayerEffect activeEffect;
     private Image playerImage;
+    private boolean beenBackTracked;
+
+
 
     /**
      * Constructor for a player
@@ -50,7 +53,7 @@ public class Player implements Serializable {
         setPlayerNum(playerNum);
         setCurrentDirection(UP);
         setPlayerImage(playerNum);
-
+        setBeenBackTracked(false);
     }
 
     /**
@@ -212,6 +215,18 @@ public class Player implements Serializable {
      */
     public void setPlayerImage(int playerNumber) {
         this.playerImage = Style.getPlayerImage(playerNumber);
+    }
+
+    /**
+     * Set whether player has been back tracked
+     * @param beenBackTracked Boolean on if the player has been backed tracked
+     */
+    public void setBeenBackTracked(boolean beenBackTracked){
+        this.beenBackTracked = beenBackTracked;
+    }
+
+    public boolean hasBeenBackTracked(){
+        return beenBackTracked;
     }
 
     /**
