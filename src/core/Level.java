@@ -3,6 +3,7 @@ package core;
 import constants.Angle;
 import constants.TileType;
 import holdables.Effect;
+import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
 import styles.PirateStyle;
@@ -86,7 +87,7 @@ public class Level {
         this.height = height;
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
-        this.action = new ArrayList<Tile>();
+        this.actions = new ArrayList<Effect>();
     }
 
     /**
@@ -520,7 +521,7 @@ public class Level {
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);
         }
     }
-    
+
     /**
      * Reads effect type
      * @param effectTypeString String of effect type
