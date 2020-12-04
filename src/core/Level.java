@@ -485,15 +485,15 @@ public class Level {
     
     /**
      * Reads action tiles
+     *
      * @param action Number of action tiles
-     * @param in Scanner input
+     * @param in     Scanner input
      */
     private void readAction(int action, Scanner in) {
         for (int i = 0; i < action; i++) {
             String actTLine = in.nextLine();
-            TileType actTLineType = readTileType(actTLine);
-
-            actions.add(new Tile(actTLineType, Angle.DOWN, false));
+            Effect actTLineType = readEffectType(actTLine);
+            actions.add(actTLineType);
         }
     }
 
@@ -516,16 +516,28 @@ public class Level {
                 return TileType.STRAIGHT;
             case "goal":
                 return TileType.GOAL;
-            case "double":
-                return TileType.DOUBLE_MOVE;
-            case "back":
-                return TileType.BACKTRACK;
-            case "fire":
-                return TileType.FIRE;
-            case "ice":
-                return TileType.ICE;
             default:
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);
+        }
+    }
+    
+    /**
+     * Reads effect type
+     * @param effectTypeString String of effect type
+     * @return Effect object
+     */
+    private Effect readEffectType(String effectTypeString) {
+        switch (effectTypeString) {
+            case "double":
+                return PlayerEffect.DOUBLE_MOVE;
+            case "back":
+                return PlayerEffect.BACKTRACK;
+            case "fire":
+                return TileEffect.FIRE;
+            case "ice":
+                return TileEffect.ICE;
+            default:
+                throw new IllegalStateException("Unexpected value: " + effectTypeString);
         }
     }
 }
