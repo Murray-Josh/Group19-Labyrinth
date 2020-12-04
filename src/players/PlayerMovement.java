@@ -13,7 +13,8 @@ import java.util.ArrayList;
 /**
  * Moves the players
  *
- * @author FungWah Westley & Isabelle Ludwig
+ * @author FungWah Westley
+ * @author Isabelle Ludwig
  * @author Jordy Martinson
  * @author Martin Samm
  * @version 1.0
@@ -63,7 +64,7 @@ public class PlayerMovement {
                 break;
             case SPACE:
             case ENTER:
-                //TurnCounter.switchPlayer();
+                TurnCounter.switchPlayer();
                 break;
         }
     }
@@ -288,48 +289,6 @@ public class PlayerMovement {
             player.setCoordinate(tiles[0]);
         }
     }
-
-
-    /**
-     * Checks if tile is accessible by player
-     *
-     * @param currTile Current tile player is on
-     * @param nextTile Tile to check for accessibility
-     * @return If the next tile accessible
-     */
-    private Boolean isAccessible(Tile currTile, Tile nextTile) {
-        if (!isOnFire(nextTile) && !isPlayerOnTile(nextTile)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-
-    /**
-     * counts the moves out of 4 a player is allowed to make per round
-     * is also the doubleMove checker
-     * @param nextTile
-     */
-    private void moveCount(Tile nextTile){
-        double count = 0;
-        boolean turnHasEnded = false;
-        while(turnHasEnded || count <= 4) {
-            if (!isOnFire(nextTile) && !isPlayerOnTile(nextTile) && PlayerEffect.DOUBLE_MOVE) {
-                count = count + 0.5;
-            } else if (!isOnFire(nextTile) && !isPlayerOnTile(nextTile)) {
-                count++;
-            } else {
-                turnHasEnded = true;
-            }
-        }
-        if(turnHasEnded){
-            TurnCounter.switchPlayer();
-        }
-
-    }
-
 
 
 //TODO make any movement away from start square of turn a move and if you move back towards that square, you get the move back

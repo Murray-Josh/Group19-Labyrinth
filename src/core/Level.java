@@ -3,6 +3,7 @@ package core;
 import constants.Angle;
 import constants.TileType;
 import holdables.Tile;
+import holdables.TileEffect;
 import styles.PirateStyle;
 
 import java.io.File;
@@ -33,6 +34,8 @@ public class Level {
     private Coordinate playerTwoPosition;
     private Coordinate playerThreePosition;
     private Coordinate playerFourPosition;
+    private ArrayList<Tile> action;
+
 
     /**
      * Constructs an empty {@link Level}
@@ -46,6 +49,7 @@ public class Level {
         this.playerTwoPosition = new Coordinate(0, 0);
         this.playerThreePosition = new Coordinate(0, 0);
         this.playerFourPosition = new Coordinate(0, 0);
+        this.action = new ArrayList<Tile>();
 
     }
 
@@ -81,6 +85,7 @@ public class Level {
         this.height = height;
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
+        this.action = new ArrayList<Tile>();
     }
 
     /**
@@ -242,7 +247,7 @@ public class Level {
     }
 
     /**
-     * Sets coordinate of second player
+     * Sets coordinate of first player
      *
      * @param playerOnePosition Coordinate of first player
      */
@@ -437,7 +442,7 @@ public class Level {
     }
 
     /**
-     * Reads and adds all unfixed files to mobvables list
+     * Reads and adds all unfixed files to movables list
      *
      * @param unfixed Number of unfixed tiles
      * @param in      Scanner of all unfixed tiles
@@ -490,9 +495,16 @@ public class Level {
                 return TileType.JUNCTION;
             case "straight":
                 return TileType.STRAIGHT;
-
             case "goal":
                 return TileType.GOAL;
+            case "double":
+                return TileType.DOUBLE_MOVE;
+            case "back":
+                return TileType.BACKTRACK;
+            case "fire":
+                return TileType.FIRE;
+            case "ice":
+                return TileType.ICE;
             default:
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);
         }
