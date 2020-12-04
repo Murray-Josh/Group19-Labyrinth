@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -39,8 +40,8 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    /**
     * Paths to the add tile button assets
     */
-   private static final String ADD_PATH = "../resources/menu/add.png";
-   private static final String ADD_PATH_ROLLOVER = "../resources/menu/add_rollover.png";
+   private static final String ADD_PATH = "resources/menu/add.png";
+   private static final String ADD_PATH_ROLLOVER = "resources/menu/add_rollover.png";
    /**
     * Strings indicating the direction of the axis
     */
@@ -79,6 +80,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    private AnchorPane rootPane;
    @FXML
    private ImageView imgTile;
+   private Stage stage;
 
    /**
     * Creates an ImageView Node from a specified image, applying the appropriate properties
@@ -102,8 +104,10 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     * @param parameters Parameters of this Place a tile Dialog
     */
    @Override
-   public void initialiseWithParameters(Object[] parameters) {
+   public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
+      this.stage = stage;
       this.gameboard = (Gameboard) parameters[1];
+
       this.tileToPlace = (Tile) parameters[0];
       initialise();
    }
@@ -211,7 +215,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     * @return List of tiles on selected row index
     */
    private LinkedList<Tile> getTilesRow() {
-      return new LinkedList<>(Arrays.asList(gameboard.getTiles().getRow(index)));
+      return new LinkedList<>(gameboard.getTiles().getRow(index));
    }
 
    /**
@@ -220,7 +224,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     * @return List of tiles on selected column index
     */
    private LinkedList<Tile> getTilesColumn() {
-      return new LinkedList<>(Arrays.asList(gameboard.getTiles().getColumn(index)));
+      return new LinkedList<>(gameboard.getTiles().getColumn(index));
    }
 
    /**
@@ -394,8 +398,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
 
    public void cmdConfirmClicked(MouseEvent mouseEvent) {
       axisContents.forEach(tile -> gameboard.getTiles().set(tile.getCoordinate(), tile));
-      Stage stage = (Stage) rootPane.getScene().getWindow();
-      stage.close();
+      this.stage.close();
    }
 
 

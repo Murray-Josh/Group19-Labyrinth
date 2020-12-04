@@ -140,8 +140,8 @@ public class StageController {
               StageController.class.getResource(window.getPath()));
          Parent root = loader.load();
          InitialisableWithParameters controller = loader.getController();
-         controller.initialiseWithParameters(args);
          scene = new Scene(root);
+         controller.initialiseWithParameters(args, scene, stage);
          setNewScene(scene, window.getTitle());
       } catch (IOException e) {
          e.printStackTrace();

@@ -134,12 +134,12 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @return Data in column x
      */
     @SuppressWarnings("unchecked")
-    public T[] getColumn(int x) {
+    public ArrayList<T> getColumn(int x) {
         ArrayList<T> toReturn = new ArrayList<>();
         for (Object elem : data[x]) {
             toReturn.add((T) elem);
         }
-        return (T[]) toReturn.toArray();
+        return toReturn;
     }
 
     /**
@@ -149,10 +149,10 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @return Data in row y
      */
     @SuppressWarnings("unchecked")
-    public T[] getRow(int y) {
+    public ArrayList<T> getRow(int y) {
         ArrayList<T> toReturn = new ArrayList<>();
         for (Object[] column : data) toReturn.add((T) column[y]);
-        return (T[]) toReturn.toArray();
+        return toReturn;
     }
 
     /**

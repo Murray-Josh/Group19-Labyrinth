@@ -1,5 +1,8 @@
 package controllers;
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  * Allows a FXML Controller Class to be initialised with arguments
  */
@@ -10,5 +13,5 @@ public interface InitialisableWithParameters {
     *
     * @param parameters
     */
-   void initialiseWithParameters(Object[] parameters);
+   void initialiseWithParameters(Object[] parameters, Scene scene, Stage primaryStage);
 }

@@ -3,6 +3,7 @@ package controllers;
 import static controllers.StageController.changeScene;
 import static controllers.StageController.showError;
 
+import constants.Angle;
 import constants.ErrorMsg;
 import constants.TileType;
 import constants.Title;
@@ -16,13 +17,10 @@ import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -51,21 +49,25 @@ import styles.Style;
  */
 public class GameboardController
      implements InitialisableWithParameters {
+   private static final int TILE_SIZE = 80;
+   private static final double WINDOW_HEIGHT=34;
+   private static final double WINDOW_WIDTH=340;
 
-   public static final String FORMATTING_PLAYERS =
+   private static final String FORMATTING_PLAYERS =
         "Formatting Players";
-   public static final String PLAYER_FORMATTING_COMPLETE =
+   private static final String PLAYER_FORMATTING_COMPLETE =
         "Player Formatting Complete!";
-   public static final String SILK_BAG_DRAW =
+   private static final String SILK_BAG_DRAW =
         "Draw from silk bag";
-   public static final String PLACE_TILE =
+   private static final String PLACE_TILE =
         "Place your tile";
-   public static final int TILE_SIZE = 100;
+   
    private static final String REFRESHING =
         "Refreshing Gameboard";
    private static final String REFRESH_COMPLETE =
         "Refreshing Gameboard";
-   public BorderPane root;
+   @FXML
+   private BorderPane root;
    @FXML
    private GridPane grdBoard;
    @FXML
@@ -160,6 +162,7 @@ public class GameboardController
 
    public void initializeWithArgs(Object[] args) {
       this.gameboard = (Gameboard) args[0];
+      startKeyListener((Scene) args[args.length-1]);
       tempPlayerCounter = 1;
       cmdSilkBag.setDisable(true);
       cmdActivate.setDisable(true);
@@ -224,12 +227,13 @@ public class GameboardController
     * @param parameters Parameters for this Controller
     */
    @Override
-   public void initialiseWithParameters(Object[] parameters) {
+   public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
       this.gameboard = (Gameboard) parameters[0];
       setGridSize(gameboard.getWidth(), gameboard.getHeight());
       playerMovement = new PlayerMovement(gameboard);
       refresh();
       formatPlayers();
+      startKeyListener(scene);
    }
 
    /**
@@ -283,25 +287,16 @@ public class GameboardController
     */
    private void setWindowSize() {
       double gridPaneWidth =
-           TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
+           TILE_SIZE * grdBoard.getColumnConstraints().size();
       double gridPaneHeight =
-           TILE_SIZE * grdBoard.getRowConstraints().size() * TILE_SIZE;
-      double prefWidth = gridPaneWidth + lstEffects.getMaxWidth() +
-           vboxPlayers.getMaxWidth();
-      double prefHeight = gridPaneHeight + lblStatus.getMaxHeight();
-      this.root.setPrefSize(prefWidth, prefHeight);
-   }
+           TILE_SIZE * grdBoard.getRowConstraints().size();
+      grdBoard.setMaxSize(gridPaneWidth,gridPaneHeight);
+      grdBoard.setMinSize(gridPaneWidth,gridPaneHeight);
+      grdBoard.setPrefSize(gridPaneWidth,gridPaneHeight);
 
-   /**
-    * Handles the silk bag button click event
-    *
-    * @param mouseEvent
-    */
-   public void cmdSilkbagClick(MouseEvent mouseEvent) {
-      showTileShifts(new Tile(TileType.CORNER, this.style, Angle.LEFT, false), this.gameboard);
-      cmdSilkBag.setVisible(false);
-      drawTile();
-
+      root.setMaxSize(gridPaneWidth+WINDOW_WIDTH, gridPaneHeight+WINDOW_HEIGHT);
+      root.setMinSize(gridPaneWidth+WINDOW_WIDTH, gridPaneHeight+WINDOW_HEIGHT);
+      root.setPrefSize(gridPaneWidth+WINDOW_WIDTH, gridPaneHeight+WINDOW_HEIGHT);
    }
 
    public void drawTile() {
@@ -318,6 +313,7 @@ public class GameboardController
     * @param mouseEvent
     */
    public void cmdActivateClick(MouseEvent mouseEvent) {
+      showTileShifts(new Tile(TileType.CORNER, this.style, Angle.UP, false), this.gameboard);
    }
 
 
@@ -332,17 +328,23 @@ public class GameboardController
                 TileType.GOAL);
    }
 
-   public void keyPressed(KeyEvent keyEvent) {
-      if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
+   private void startKeyListener(Scene scene) {
+      scene.setOnKeyPressed(this::handleKeyPress);
+   }
+
+   private void handleKeyPress(KeyEvent event) {
+      if (event.getCode().equals(KeyCode.ESCAPE)) {
          showExitDialog();
-      } else if (keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.RIGHT)
-           || keyEvent.equals(KeyCode.UP) || keyEvent.getCode().equals(KeyCode.DOWN)) {
-        //playerMovement.keyPressed(keyEvent.getCode());
+      } else if (event.getCode().equals(KeyCode.LEFT) || event.getCode().equals(KeyCode.RIGHT)
+           || event.equals(KeyCode.UP) || event.getCode().equals(KeyCode.DOWN)) {
+         //playerMovement.keyPressed(event.getCode());
       }
    }
 
+
    private void showExitDialog() {
       Scene scene = null;
+      Stage stage = new Stage();
       try {
          FXMLLoader loader = new FXMLLoader(StageController.class
               .getResource(
@@ -350,10 +352,9 @@ public class GameboardController
                         .getPath()));
          Parent root = loader.load();
          InitialisableWithParameters controller = loader.getController();
-         controller.initialiseWithParameters(
-              new Object[]{this});
          scene = new Scene(root);
-         Stage stage = new Stage();
+         controller.initialiseWithParameters(
+              new Object[]{this}, scene, stage );
          stage.setTitle(Title.MAIN.name());
          stage.setScene(scene);
          stage.initModality(Modality.APPLICATION_MODAL);
@@ -365,6 +366,7 @@ public class GameboardController
          e.printStackTrace();
       }
    }
+
 
    /**
     * Saves the game and exits the application
@@ -393,6 +395,7 @@ public class GameboardController
     */
    public void showTileShifts(Tile tile, Gameboard gameboard) {
       Scene scene = null;
+      Stage stage = new Stage();
       try {
          FXMLLoader loader = new FXMLLoader(StageController.class
               .getResource(
@@ -400,11 +403,10 @@ public class GameboardController
                         .getPath()));
          Parent root = loader.load();
          InitialisableWithParameters controller = loader.getController();
-         controller.initialiseWithParameters(
-              new Object[]{tile, gameboard, this});
          scene = new Scene(root);
-         Stage stage = new Stage();
-         stage.setTitle(Title.PLACE_TILE.name());
+         controller.initialiseWithParameters(
+              new Object[]{tile,gameboard,this}, scene, stage );
+         stage.setTitle(Title.MAIN.name());
          stage.setScene(scene);
          stage.initModality(Modality.APPLICATION_MODAL);
          stage.showAndWait();

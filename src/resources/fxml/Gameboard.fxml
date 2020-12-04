@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="500.0" prefWidth="1032.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameboardController">
+<BorderPane fx:id="root" maxHeight="1080.0" maxWidth="1920.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1097.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameboardController">
   <bottom>
     <Label fx:id="lblStatus" maxHeight="34.0" minHeight="34.0" prefHeight="34.0" styleClass="label-small" text="Waiting ..." BorderPane.alignment="CENTER_LEFT">
       <padding>
@@ -12,9 +12,6 @@
       </padding>
     </Label>
   </bottom>
-  <center>
-
-  </center>
   <center>
     <GridPane fx:id="grdBoard" maxWidth="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
     </GridPane>
@@ -25,7 +22,7 @@
   <right>
     <VBox maxWidth="170.0" minWidth="170.0" prefWidth="170.0" styleClass="no-border" BorderPane.alignment="CENTER">
       <children>
-            <ListView fx:id="lstEffects" onMouseClicked="#lstEffectClick" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="lstEffects" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="170.0" VBox.vgrow="ALWAYS" />
         <Button fx:id="cmdActivate" maxHeight="30.0" maxWidth="170.0" minHeight="30.0" minWidth="170.0" mnemonicParsing="false" onMouseClicked="#cmdActivateClick" prefHeight="30.0" prefWidth="170.0" text="Activate" textAlignment="CENTER" VBox.vgrow="NEVER">
           <VBox.margin>
             <Insets />
@@ -34,14 +31,4 @@
       </children>
     </VBox>
   </right>
-  <top>
-    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="1174.0" BorderPane.alignment="CENTER">
-      <children>
-        <Button fx:id="cmdSilkbag" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdSilkbagClick" prefHeight="29.0" prefWidth="128.0" text="Pick a Tile" textAlignment="CENTER" />
-      </children>
-    </HBox>
-  </top>
-  <top>
-
-  </top>
 </BorderPane>
