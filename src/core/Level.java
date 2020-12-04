@@ -29,14 +29,13 @@ public class Level {
     private static final int MAX_PLAYERS = 4;
     private ArrayList<Tile> fixed = new ArrayList<>();
     private ArrayList<Tile> movables = new ArrayList<>();
+    private ArrayList<Tile> actions = new ArrayList<>();
     private int width;
     private int height;
     private Coordinate playerOnePosition;
     private Coordinate playerTwoPosition;
     private Coordinate playerThreePosition;
     private Coordinate playerFourPosition;
-    private ArrayList<Tile> action;
-
 
     /**
      * Constructs an empty {@link Level}
@@ -107,7 +106,7 @@ public class Level {
      * @param path Path of level object
      */
     public Level(String path) throws FileNotFoundException {
-        readGameboardFile("../resources/file/GameboardOne.txt");
+        readGameboardFile(path);
     }
 
     /**
@@ -402,6 +401,10 @@ public class Level {
         }
         System.out.println(unfixed);
         setStartCoordinates(in);
+        int action = Integer.parseInt(in.nextLine());
+        if (action > 0) {
+            readAction(action, in);
+        }
     }
 
     /**
@@ -476,6 +479,20 @@ public class Level {
             Coordinate playCoord = new Coordinate(Integer.parseInt(coordArray[1]), Integer.parseInt(coordArray[2]));
             System.out.println(i);
             setPlayerPosition(playCoord, i);
+        }
+    }
+    
+    /**
+     * Reads action tiles
+     * @param action Number of action tiles
+     * @param in Scanner input
+     */
+    private void readAction(int action, Scanner in) {
+        for (int i = 0; i < action; i++) {
+            String actTLine = in.nextLine();
+            TileType actTLineType = readTileType(actTLine);
+
+            actions.add(new Tile(actTLineType, Angle.DOWN, false));
         }
     }
 
