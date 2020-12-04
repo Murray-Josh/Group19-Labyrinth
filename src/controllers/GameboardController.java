@@ -117,6 +117,28 @@ public class GameboardController
    public void cmdActionClick(MouseEvent mouseEvent) {
 
    }
+     
+   /**
+    * Places players at new coordinates
+    * @param pList List of players to place
+    */
+   private void placePlayer(ArrayList<Player> pList) {
+      for (Player player: pList) {
+         placePlayer(player);
+      }
+   }
+
+   /**
+    * Places single player at new coordinate
+    * @param p Player to place
+    */
+   private void placePlayer(Player p) {
+      ImageView image = new ImageView(p.getPlayerImage());
+      image.setPreserveRatio(false);
+      image.setFitHeight(TILE_SIZE);
+      image.setFitWidth(TILE_SIZE);
+      grdBoard.add(image, p.getCoordinate().getX(), p.getCoordinate().getY());
+   }
 
 
    /**
@@ -274,6 +296,7 @@ public class GameboardController
             image.setFitWidth(TILE_SIZE);
             grdBoard.add(image, tile.getCoordinate().getX(),
                  tile.getCoordinate().getY());
+            placePlayer(gameboard.getPlayers());
          });
          setStatus(REFRESH_COMPLETE);
       } else {
