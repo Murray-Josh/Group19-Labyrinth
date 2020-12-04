@@ -2,9 +2,9 @@ package players;
 
 import core.Coordinate;
 import core.Gameboard;
+import holdables.PlayerEffect;
 import holdables.TileEffect;
 //import players.TurnCounter;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
@@ -22,15 +22,12 @@ import java.util.ArrayList;
 public class PlayerMovement {
 
     private Gameboard gameboard;
-    private static int x;
-    private static int y;
     private static int dx;
     private static int dy;
     
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();
     ArrayList<Integer> nextMovable = new ArrayList<Integer>();
     private Boolean[] alignsArr = new Boolean[4];
-    private final int MOVE_COUNT = 4;
     private int count = 0;
     private TurnCounter TurnCounter;
 
@@ -121,12 +118,7 @@ public class PlayerMovement {
     
     /**
      * determines which direction a player can move in
-     * @param tile
-     * @param list
-     * @return arraylist of moveable directions
-     * Determines which direction a player can move in
-     *
-     * @param tile Tile to check allignment of
+     * @param tile Tile to check alignment of
      * @param list List to add movable tiles to
      * @return arraylist of movable directions
      */
@@ -273,8 +265,7 @@ public class PlayerMovement {
             p.setCoordinate(new Coordinate(gameboard.getHeight(), p.getCoordinate().getY()));
         }
     }
-    
-    // TODO private method double move and backspace - pop coordinate stack
+
 
     /**
      * moves the player to the tile they were two turns ago.
@@ -300,14 +291,6 @@ public class PlayerMovement {
 
 
     /**
-     * player effect double move
-     */
-    private static void doubleMove() {
-        //reverse turn counter one?
-    }
-
-
-    /**
      * Checks if tile is accessible by player
      *
      * @param currTile Current tile player is on
@@ -322,73 +305,36 @@ public class PlayerMovement {
         }
     }
 
-    //fungwah sent on discord
-   /* private Boolean canPlayerEnterTile(Player currentPlayer, Tile selectedTile){
-        if(gameboard.getPlayers(i).getCoordinate().equals(checkTile.getCoordinate())) {
-            return !(TileEffect.FIRE || !(tilesAligned(currentPlayer)) || isPlayerOnTile(selectedTile));
 
-        }
-*/
-
-
-//TODO move counter method 1-4 moves - old coord != new coord private static
 
     /**
      * counts the moves out of 4 a player is allowed to make per round
+     * is also the doubleMove checker
+     * @param nextTile
      */
     private void moveCount(Tile nextTile){
-        int count = 0;
+        double count = 0;
         boolean turnHasEnded = false;
-        while(turnHasEnded || count <= 4){
-            if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile)){
+        while(turnHasEnded || count <= 4) {
+            if (!isOnFire(nextTile) && !isPlayerOnTile(nextTile) && PlayerEffect.DOUBLE_MOVE) {
+                count = count + 0.5;
+            } else if (!isOnFire(nextTile) && !isPlayerOnTile(nextTile)) {
                 count++;
-            }else /*if()*/{
+            } else {
                 turnHasEnded = true;
             }
         }
-
         if(turnHasEnded){
-            //TurnCounter.switchPlayer();
+            TurnCounter.switchPlayer();
         }
 
     }
 
 
-//TODO end turn (dw about this just yet tho)
+
 //TODO make any movement away from start square of turn a move and if you move back towards that square, you get the move back
 
 
-   public void Move(Player currentPlayer, int i){
-       int count = 0;
-       Boolean hasUserFinishedMoving = false;
-       while (hasUserFinishedMoving || count <= 4) {
-
-        }
-
-        //update the final location of the player
-      /*  currentTile = tempMoveTile; */
-
-    }
-
-
-    private Tile updateTempTile(Tile currentTile, Button up, Button down, Button left, Button right){
-        Coordinate upCood, downCood, leftCood, righCood;
-        //if up is pressed then
-        upCood = new Coordinate(currentTile.getCoordinate().getX(),currentTile.getCoordinate().getY()+1);
-        currentTile.setCoordinate(upCood);
-        //if down is pressed then
-        downCood = new Coordinate(currentTile.getCoordinate().getX(),currentTile.getCoordinate().getY()-1);
-        currentTile.setCoordinate(downCood);
-        //if left is pressed then
-        leftCood = new Coordinate(currentTile.getCoordinate().getX()-1,currentTile.getCoordinate().getY());
-        currentTile.setCoordinate(leftCood);
-        //if right is pressed then
-        righCood = new Coordinate(currentTile.getCoordinate().getX()-1,currentTile.getCoordinate().getY());
-        currentTile.setCoordinate(leftCood);
-
-        return currentTile;
-
-    }
 }
 
 
