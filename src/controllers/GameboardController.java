@@ -352,15 +352,16 @@ public class GameboardController
    }
 
    private void startKeyListener(Scene scene) {
-      scene.setOnKeyPressed(this::handleKeyPress);
+      scene.setOnKeyReleased(this::handleKeyPress);
    }
 
    private void handleKeyPress(KeyEvent event) {
+      Player p = players.get(0);
       if (event.getCode().equals(KeyCode.ESCAPE)) {
          showExitDialog();
-      } else if (event.getCode().equals(KeyCode.LEFT) || event.getCode().equals(KeyCode.RIGHT)
-           || event.equals(KeyCode.UP) || event.getCode().equals(KeyCode.DOWN)) {
-         //playerMovement.keyPressed(event.getCode());
+      } else if (event.getCode().isArrowKey()) {
+         playerMovement.keyPressed(event.getCode(), p);
+         refresh();
       }
    }
 
