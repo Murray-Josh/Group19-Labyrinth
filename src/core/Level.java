@@ -2,6 +2,7 @@ package core;
 
 import constants.Angle;
 import constants.TileType;
+import holdables.Effect;
 import holdables.Tile;
 import holdables.TileEffect;
 import styles.PirateStyle;
@@ -29,7 +30,7 @@ public class Level {
     private static final int MAX_PLAYERS = 4;
     private ArrayList<Tile> fixed = new ArrayList<>();
     private ArrayList<Tile> movables = new ArrayList<>();
-    private ArrayList<Tile> actions = new ArrayList<>();
+    private ArrayList<Effect> actions = new ArrayList<>();
     private int width;
     private int height;
     private Coordinate playerOnePosition;
@@ -49,7 +50,7 @@ public class Level {
         this.playerTwoPosition = new Coordinate(0, 0);
         this.playerThreePosition = new Coordinate(0, 0);
         this.playerFourPosition = new Coordinate(0, 0);
-        this.action = new ArrayList<Tile>();
+        this.actions = new ArrayList<Effect>();
 
     }
 
