@@ -107,7 +107,7 @@ public class Player implements Serializable {
      *
      * @param profile Profile of player
      */
-    private void setProfile(PlayerProfile profile) {
+    public void setProfile(PlayerProfile profile) {
         this.profile = profile;
     }
 
