@@ -13,7 +13,7 @@ public class TurnCounter {
     private boolean playerThreePlaysNext;
     private boolean playerFourPlaysNext;
 
-    protected P[] players;
+    protected Player[] players;
     //playerOnePlaysNext = true;
 
     public void switchPlayer() {
@@ -32,7 +32,7 @@ public class TurnCounter {
         }
     }
 
-    protected TurnCounter(P... players) {
+    protected TurnCounter(Player[] players) {
         this.players = players;
         reset();
 

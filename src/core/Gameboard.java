@@ -1,7 +1,11 @@
 package core;
 
+import constants.Angle;
+import holdables.Effect;
 import holdables.Holdable;
+import holdables.PlayerEffect;
 import holdables.Tile;
+import java.util.Arrays;
 import players.Player;
 import players.PlayerProfile;
 import styles.Style;
@@ -32,12 +36,12 @@ public class Gameboard implements Serializable {
     private final Style style;
     private SilkBag silkBag;
     private final Matrix<Tile> tiles;
-    private Tile goalTile;
+
 
     /**
      * Creates a {@link Gameboard} from a Level Path, Style and a {@link java.util.Collection} of {@link PlayerProfile}
      *
-     * @param levelPath Path to the level file
+     * @param level Level to create a board from
      * @param style     Style of the board
      * @param profiles  {@link java.util.Collection} of {@link PlayerProfile} of the players
      * @throws IOException               If the {@link Level} file could not be found.
@@ -45,10 +49,9 @@ public class Gameboard implements Serializable {
      * @throws IndexOutOfBoundsException If a tiles coordinate doesn't exist in the {@link Gameboard} {@link Matrix}
      * @throws NullPointerException      If there aren't enough tiles to be placed on the gameboard
      */
-    public Gameboard(String levelPath, Style style, ArrayList<PlayerProfile> profiles)
+    public Gameboard(Level level, Style style, ArrayList<PlayerProfile> profiles)
             throws IOException, ClassNotFoundException, IndexOutOfBoundsException, NullPointerException {
         this.style = style;
-        Level level = deserializeLevel(levelPath);
         this.players = constructPlayers(profiles, level);
         this.width = level.getWidth();
         this.height = level.getHeight();
@@ -65,29 +68,20 @@ public class Gameboard implements Serializable {
      */
     private ArrayList<Player> constructPlayers(ArrayList<PlayerProfile> profiles, Level level) {
         ArrayList<Player> toReturn = new ArrayList<>();
-        profiles.forEach(profile -> {
-            toReturn.add(new Player(profile, level.getPlayerPosition(profiles.indexOf(profile) + 1), this.style, profiles.indexOf(profile) + 1));
-        });
+        for (PlayerProfile profile : profiles) {
+            int index = profiles.indexOf(profile) + 1;
+            Player p = new Player();
+            p.setStart(level.getPlayerPosition(index));
+            p.setStyle(this.style);
+            p.setPlayerImage(index);
+            p.setActiveEffect(PlayerEffect.NONE);
+            p.setCurrentDirection(Angle.UP);
+            p.setPlayerNum(index);
+            toReturn.add(p);
+        }
         return toReturn;
     }
 
-    /**
-     * Takes the {@link Level} URL and deserializes it into a Level object
-     *
-     * @param levelPath Path to level file
-     * @return Deserialised {@link Level}
-     * @throws IOException            If the Level cannot be found or read
-     * @throws ClassNotFoundException If a Class in the Serialised Level cannot be found
-     */
-    private Level deserializeLevel(String levelPath)
-            throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(levelPath);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        Level level = (Level) objectInputStream.readObject();
-        fileInputStream.close();
-        objectInputStream.close();
-        return level;
-    }
 
     /**
      * Combines two Arraylists of holdable implementing objects together
@@ -140,7 +134,8 @@ public class Gameboard implements Serializable {
         /* Get Fixed and movable tiles */
         ArrayList<Tile> fixed = level.getFixed();
         ArrayList<Tile> movable = level.getMovables();
-
+        fixed.forEach(tile -> tile.setStyle(this.style));
+        movable.forEach(tile -> tile.setStyle(this.style));
         /*Shuffle the movable tiles and add them to a ArrayDeque that queues them up ready to add to the Gameboard */
         Collections.shuffle(movable);
         ArrayDeque<Tile> movableTiles = new ArrayDeque<>(movable);
@@ -149,7 +144,7 @@ public class Gameboard implements Serializable {
         fixed.forEach(tile -> tiles.set(tile.getCoordinate(), tile));
 
         /* Add a random movable tile to any space not filled in */
-        tiles.forEach(tile -> {
+        this.tiles.forEach(tile -> {
             if (tile == null) {
                 if (!movableTiles.isEmpty()) {
                     movableTiles.poll();
@@ -158,6 +153,8 @@ public class Gameboard implements Serializable {
                 }
             }
         });
+        movable.retainAll(movableTiles);
+        this.silkBag= new SilkBag(movable);
     }
 
     /**
@@ -171,35 +168,6 @@ public class Gameboard implements Serializable {
 
     }
 
-
-    /**
-     * Makes array list of players using level file
-     *
-     * @param level Level file
-     * @return Arraylist of players
-     */
-    public ArrayList<Player> makePlayers(Level level) {
-        PlayerProfile profile1 = null;
-        PlayerProfile profile2 = null;
-        PlayerProfile profile3 = null;
-        PlayerProfile profile4 = null;
-
-        ArrayList<Player> playerList = new ArrayList<Player>();
-
-        Player playerOne = new Player(profile1, level.getPlayerOnePosition(), this.style, 1);
-        playerList.add(playerOne);
-
-        Player playerTwo = new Player(profile2, level.getPlayerTwoPosition(), this.style, 2);
-        playerList.add(playerTwo);
-
-        Player playerThree = new Player(profile3, level.getPlayerThreePosition(), this.style, 3);
-        playerList.add(playerThree);
-
-        Player playerFour = new Player(profile4, level.getPlayerFourPosition(), this.style, 4);
-        playerList.add(playerFour);
-
-        return playerList;
-    }
 
     /**
      * Gets a player
@@ -254,14 +222,5 @@ public class Gameboard implements Serializable {
      */
     public Style getStyle() {
         return style;
-    }
-
-    /**
-     * Gets goal tile from game
-     *
-     * @return Goal tile from game
-     */
-    public Coordinate getGoal() {
-        return goalTile.getCoordinate();
     }
 }

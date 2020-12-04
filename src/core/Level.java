@@ -100,17 +100,8 @@ public class Level {
      *
      * @param path Path of level object
      */
-    public Level(String path) {
-        this.width = width;
-        this.height = height;
-        this.movables = new ArrayList<Tile>();
-        this.fixed = new ArrayList<Tile>();
-
-        try {
-            readGameboardFile(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public Level(String path) throws FileNotFoundException {
+        readGameboardFile("../resources/file/GameboardOne.txt");
     }
 
     /**

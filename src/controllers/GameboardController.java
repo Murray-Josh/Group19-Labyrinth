@@ -1,6 +1,7 @@
 package controllers;
 
 import constants.ErrorMsg;
+import constants.TileType;
 import constants.Title;
 import constants.Window;
 import core.Coordinate;
@@ -342,8 +343,12 @@ public class GameboardController
      * @return
      */
     public boolean winCheck() {
-        return players.get(tempPlayerCounter).getCoordinate() ==
-               gameboard.getGoal();
+        if (gameboard.getTiles().get(players.get(tempPlayerCounter).getCoordinate()).getType().equals(
+             TileType.GOAL) ){
+            return true;
+        } else {
+                 return false;
+            }
     }
 
     public void keyPressed(KeyEvent keyEvent) {

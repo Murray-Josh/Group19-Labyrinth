@@ -2,8 +2,12 @@ package controllers;
 
 import constants.ErrorMsg;
 import constants.Title;
+import constants.Window;
 import core.Gameboard;
+import core.Level;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +23,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import styles.CarStyle;
+import styles.MouseStyle;
+import styles.PirateStyle;
+import styles.Style;
 
+import static controllers.StageController.changeScene;
 import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
@@ -41,9 +50,9 @@ public class SetUpGameController implements Initializable {
     private ChoiceBox<PlayerProfile> comFour;
     private ArrayList<ChoiceBox<PlayerProfile>> boxes;
     @FXML
-    private ChoiceBox comBoard;
+    private ChoiceBox<String> comBoard;
     @FXML
-    private ChoiceBox comStyle;
+    private ChoiceBox<String> comStyle;
     @FXML
     private Button cmdStart;
     @FXML
@@ -65,7 +74,30 @@ public class SetUpGameController implements Initializable {
     }
 
     public void cmdStartClick(ActionEvent actionEvent) {
-        changeScene(Window.BOARD);
+        Style style = null;
+        Level level = null;
+        switch (comStyle.getSelectionModel().getSelectedItem()) {
+            case MOUSE_TRAP:style=new MouseStyle();
+            case CAR: style=new CarStyle();
+            case PIRATE: style=new PirateStyle();
+            default:
+                showError(ErrorMsg.STYLE_NOT_VALID, Title.SETUP, false);
+                initialize(location, resourceBundle);
+        }
+        try {
+             level = new Level(comBoard.getSelectionModel().getSelectedItem());
+        } catch (FileNotFoundException e) {
+            showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
+            initialize(location,resourceBundle);
+        }
+
+        try {
+            Gameboard gameboard = new Gameboard(level, style, players);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

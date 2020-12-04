@@ -4,6 +4,7 @@ import core.Coordinate;
 import core.Gameboard;
 import holdables.TileEffect;
 //import players.TurnCounter;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
@@ -341,7 +342,7 @@ public class PlayerMovement {
         while(turnHasEnded || count <= 4){
             if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile)){
                 count++;
-            }else if(){
+            }else /*if()*/{
                 turnHasEnded = true;
             }
         }
@@ -365,7 +366,7 @@ public class PlayerMovement {
         }
 
         //update the final location of the player
-        currentTile = tempMoveTile;
+      /*  currentTile = tempMoveTile; */
 
     }
 
@@ -389,7 +390,6 @@ public class PlayerMovement {
 
     }
 }
-*/
 
 
 

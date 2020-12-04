@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  */
 public class SilkBag extends ArrayDeque<Holdable> implements Serializable {
-    public SilkBag(List<Holdable> items) {
+    public SilkBag(List<? extends Holdable> items) {
         super();
         Collections.shuffle(items);
         super.addAll(items);

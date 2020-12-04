@@ -43,12 +43,14 @@ public class Player implements Serializable {
      * @param playerNum  Players.Player number
      */
     public Player(PlayerProfile profile, Coordinate coordinate, Style style, int playerNum) {
+        coordinateHistory = new Stack<>();
         setProfile(profile);
         setStart(coordinate);
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(UP);
         setPlayerImage(playerNum);
+
     }
 
     /**
@@ -56,6 +58,7 @@ public class Player implements Serializable {
      */
     public Player() {
 
+        coordinateHistory = new Stack<>();
     }
 
     /**
@@ -163,7 +166,7 @@ public class Player implements Serializable {
      *
      * @param playerNum Players number
      */
-    private void setPlayerNum(int playerNum) {
+    public void setPlayerNum(int playerNum) {
         this.playerNum = playerNum;
     }
 
