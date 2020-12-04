@@ -3,6 +3,7 @@ package core;
 import constants.Angle;
 import constants.TileType;
 import holdables.Tile;
+import holdables.TileEffect;
 import styles.PirateStyle;
 
 import java.io.File;
@@ -20,13 +21,15 @@ import java.util.Scanner;
  * @author Joseph Omar
  * @author Martin Samm
  * @author Joshua Murray
+ * @author Jordy Martinson
  * @version 2.0
  */
 public class Level {
 
     private static final int MAX_PLAYERS = 4;
-    private ArrayList<Tile> fixed;
-    private ArrayList<Tile> movables;
+    private ArrayList<Tile> fixed = new ArrayList<>();
+    private ArrayList<Tile> movables = new ArrayList<>();
+    private ArrayList<Tile> actions = new ArrayList<>();
     private int width;
     private int height;
     private Coordinate playerOnePosition;
@@ -46,6 +49,7 @@ public class Level {
         this.playerTwoPosition = new Coordinate(0, 0);
         this.playerThreePosition = new Coordinate(0, 0);
         this.playerFourPosition = new Coordinate(0, 0);
+        this.action = new ArrayList<Tile>();
 
     }
 
@@ -81,6 +85,7 @@ public class Level {
         this.height = height;
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
+        this.action = new ArrayList<Tile>();
     }
 
     /**
@@ -101,7 +106,7 @@ public class Level {
      * @param path Path of level object
      */
     public Level(String path) throws FileNotFoundException {
-        readGameboardFile("../resources/file/GameboardOne.txt");
+        readGameboardFile(path);
     }
 
     /**
@@ -242,7 +247,7 @@ public class Level {
     }
 
     /**
-     * Sets coordinate of second player
+     * Sets coordinate of first player
      *
      * @param playerOnePosition Coordinate of first player
      */
@@ -396,6 +401,10 @@ public class Level {
         }
         System.out.println(unfixed);
         setStartCoordinates(in);
+        int action = Integer.parseInt(in.nextLine());
+        if (action > 0) {
+            readAction(action, in);
+        }
     }
 
     /**
@@ -405,8 +414,8 @@ public class Level {
      */
     private void readSize(String sLine) {
         String[] sizeStrArray = sLine.split(",");
-        this.setHeight(Integer.parseInt(sizeStrArray[0]));
-        this.setWidth(Integer.parseInt(sizeStrArray[1]));
+        this.setWidth(Integer.parseInt(sizeStrArray[0]));
+        this.setHeight(Integer.parseInt(sizeStrArray[1]));
     }
 
     /**
@@ -437,7 +446,7 @@ public class Level {
     }
 
     /**
-     * Reads and adds all unfixed files to mobvables list
+     * Reads and adds all unfixed files to movables list
      *
      * @param unfixed Number of unfixed tiles
      * @param in      Scanner of all unfixed tiles
@@ -472,6 +481,20 @@ public class Level {
             setPlayerPosition(playCoord, i);
         }
     }
+    
+    /**
+     * Reads action tiles
+     * @param action Number of action tiles
+     * @param in Scanner input
+     */
+    private void readAction(int action, Scanner in) {
+        for (int i = 0; i < action; i++) {
+            String actTLine = in.nextLine();
+            TileType actTLineType = readTileType(actTLine);
+
+            actions.add(new Tile(actTLineType, Angle.DOWN, false));
+        }
+    }
 
 
     /**
@@ -490,9 +513,16 @@ public class Level {
                 return TileType.JUNCTION;
             case "straight":
                 return TileType.STRAIGHT;
-
             case "goal":
                 return TileType.GOAL;
+            case "double":
+                return TileType.DOUBLE_MOVE;
+            case "back":
+                return TileType.BACKTRACK;
+            case "fire":
+                return TileType.FIRE;
+            case "ice":
+                return TileType.ICE;
             default:
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);
         }

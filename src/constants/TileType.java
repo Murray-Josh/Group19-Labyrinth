@@ -14,7 +14,11 @@ public enum TileType {
     STRAIGHT(false, true, false, true),
     CORNER(false, true, true, false),
     JUNCTION(false, true, true, true),
-    GOAL(true, true, true, true);
+    GOAL(true, true, true, true),
+    DOUBLE_MOVE(false, false, false, false),
+    BACKTRACK(false, false, false, false),
+    FIRE(false, false, false, false),
+    ICE(false, false, false, false);
 
     private final boolean NORTH;
     private final boolean EAST;
