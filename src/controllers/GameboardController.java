@@ -293,6 +293,7 @@ public class GameboardController
     * @param mouseEvent
     */
    public void cmdSilkbagClick(MouseEvent mouseEvent) {
+      showTileShifts(new Tile(TileType.CORNER, this.style, Angle.LEFT, false), this.gameboard);
       cmdSilkBag.setVisible(false);
       drawTile();
 
