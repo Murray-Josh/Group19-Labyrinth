@@ -384,7 +384,6 @@ public class Level implements Serializable {
      */
     public void readGameboardFile(String fileName) throws FileNotFoundException {
         Scanner in;
-        PirateStyle style = new PirateStyle();
         File file = new File(fileName);
         in = new Scanner(file);
         readGameboard(in);
@@ -472,11 +471,6 @@ public class Level implements Serializable {
      * @param in Scanner to read from
      */
     private void setStartCoordinates(Scanner in) {
-
-//        players.add(new Player(new PlayerProfile("a"), new Coordinate(0,0), getStyle(), 1));
-//        players.add(new Player(new PlayerProfile("b"), new Coordinate(0,0), getStyle(), 2));
-//        players.add(new Player(new PlayerProfile("c"), new Coordinate(0,0), getStyle(), 3));
-//        players.add(new Player(new PlayerProfile("d"), new Coordinate(0,0), getStyle(), 4));
 
         in.useDelimiter(",");
         for (int i = 1; i <= MAX_PLAYERS; i++) {
