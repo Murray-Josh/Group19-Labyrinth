@@ -71,6 +71,7 @@ public class Gameboard implements Serializable {
         for (PlayerProfile profile : profiles) {
             int index = profiles.indexOf(profile) + 1;
             Player p = new Player();
+            p.setProfile(profile);
             p.setStart(level.getPlayerPosition(index));
             p.setStyle(this.style);
             p.setPlayerImage(index);
