@@ -100,14 +100,13 @@ public class GameboardController
     * @return Formatted Vbox
     */
    private static VBox createPlayerContainer(Player player) {
-      ImageView image = new ImageView(player.getPlayerImage());
-      Label name = new Label(player.getProfile().getName());
-      VBox playerPicture = new VBox(image, name);
-      VBox.setMargin(image, new Insets(4, 0, 4, 0));
-      VBox.setMargin(name, new Insets(4, 4, 4, 4));
-      return playerPicture;
+       ImageView image = new ImageView(player.getPlayerImage());
+       Label name = new Label(player.getProfile().getName());
+       VBox playerPicture = new VBox(image, name);
+       VBox.setMargin(image, new Insets(4, 0, 4, 0));
+       VBox.setMargin(name, new Insets(4, 4, 4, 4));
+       return playerPicture;
    }
-
    public void cmdActionClick(MouseEvent mouseEvent) {
 
    }
@@ -162,13 +161,14 @@ public class GameboardController
       refresh();
       playerTurn();
 
+
    }
 
    /**
     * playerturn order stuff
     */
    private void playerTurn() {
-      // Draw from silk bag
+      // Draw from silk bagg
       cmdSilkBag.setDisable(false);
       setStatus(SILK_BAG_DRAW);
 
@@ -191,7 +191,13 @@ public class GameboardController
       if (winCheck()) {
          //somehow end the game
       } else {
-         tempPlayerCounter += 1;
+          if (tempPlayerCounter < board.getPlayersCount()){
+              tempPlayerCounter += 1;
+          }
+          else {
+              tempPlayerCounter = 0;
+          }
+
          refresh();
          playerTurn();
       }
