@@ -65,7 +65,7 @@ public class SetUpGameController implements Initializable {
     }
 
     public void cmdStartClick(ActionEvent actionEvent) {
-
+        changeScene(Window.BOARD);
     }
 
 
@@ -147,8 +147,8 @@ public class SetUpGameController implements Initializable {
     }
 
     private void initialiseLevels() {
-        File path = new File("../resources/file");
-        comBoard.setItems(FXCollections.observableArrayList(path.listFiles()));
+        File path = new File("src/resources/file");
+        comBoard.setItems(FXCollections.observableArrayList(path.list()));
     }
 }
 
