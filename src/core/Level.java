@@ -3,6 +3,7 @@ package core;
 import constants.Angle;
 import constants.TileType;
 import holdables.Effect;
+import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
 import styles.PirateStyle;
@@ -86,7 +87,7 @@ public class Level {
         this.height = height;
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
-        this.actions = new ArrayList<>();
+        this.actions = new ArrayList<Effect>();
     }
 
     /**
@@ -485,8 +486,9 @@ public class Level {
     
     /**
      * Reads action tiles
+     *
      * @param action Number of action tiles
-     * @param in Scanner input
+     * @param in     Scanner input
      */
     private void readAction(int action, Scanner in) {
         for (int i = 0; i < action; i++) {
