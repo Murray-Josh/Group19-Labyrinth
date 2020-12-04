@@ -334,7 +334,7 @@ public class GameboardController
          showExitDialog();
       } else if (keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.RIGHT)
            || keyEvent.equals(KeyCode.UP) || keyEvent.getCode().equals(KeyCode.DOWN)) {
-        playerMovement.keyPressed(keyEvent.getCode());
+        //playerMovement.keyPressed(keyEvent.getCode());
       }
    }
 
