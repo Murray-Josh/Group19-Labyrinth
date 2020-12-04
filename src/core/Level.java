@@ -21,13 +21,14 @@ import java.util.Scanner;
  * @author Joseph Omar
  * @author Martin Samm
  * @author Joshua Murray
+ * @author Jordy Martinson
  * @version 2.0
  */
 public class Level {
 
     private static final int MAX_PLAYERS = 4;
-    private ArrayList<Tile> fixed;
-    private ArrayList<Tile> movables;
+    private ArrayList<Tile> fixed = new ArrayList<>();
+    private ArrayList<Tile> movables = new ArrayList<>();
     private int width;
     private int height;
     private Coordinate playerOnePosition;
