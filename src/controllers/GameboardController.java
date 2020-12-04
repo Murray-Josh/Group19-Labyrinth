@@ -18,6 +18,7 @@ import holdables.TileEffect;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -172,7 +173,7 @@ public class GameboardController
     * playerturn order stuff
     */
    private void playerTurn() {
-      // Draw from silk bagg
+      // Draw from silk bag
       cmdSilkBag.setDisable(false);
       setStatus(SILK_BAG_DRAW);
 
@@ -435,9 +436,8 @@ public class GameboardController
       }
 
       if (everyoneBackTracked){
-         player.getHand().remove(PlayerEffect.BACKTRACK);
-         //removes the backtracks from silkbag/some class - but NOT from gameboard
-         //Classname.actions.remove(playerEffect.BACKTRACK);
+         player.getHand().removeAll(Collections.singleton(PlayerEffect.BACKTRACK));
+         gameboard.getSilkBag().removeAll(Collections.singleton(PlayerEffect.BACKTRACK));
       }
    }
 }
