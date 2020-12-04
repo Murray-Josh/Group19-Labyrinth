@@ -414,8 +414,8 @@ public class Level {
      */
     private void readSize(String sLine) {
         String[] sizeStrArray = sLine.split(",");
-        this.setHeight(Integer.parseInt(sizeStrArray[0]));
-        this.setWidth(Integer.parseInt(sizeStrArray[1]));
+        this.setWidth(Integer.parseInt(sizeStrArray[0]));
+        this.setHeight(Integer.parseInt(sizeStrArray[1]));
     }
 
     /**
