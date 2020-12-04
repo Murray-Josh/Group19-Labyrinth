@@ -86,7 +86,7 @@ public class Level {
         this.height = height;
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
-        this.action = new ArrayList<Tile>();
+        this.actions = new ArrayList<>();
     }
 
     /**
@@ -485,9 +485,8 @@ public class Level {
     
     /**
      * Reads action tiles
-     *
      * @param action Number of action tiles
-     * @param in     Scanner input
+     * @param in Scanner input
      */
     private void readAction(int action, Scanner in) {
         for (int i = 0; i < action; i++) {
@@ -520,7 +519,7 @@ public class Level {
                 throw new IllegalStateException("Unexpected value: " + tileTypeString);
         }
     }
-    
+
     /**
      * Reads effect type
      * @param effectTypeString String of effect type
