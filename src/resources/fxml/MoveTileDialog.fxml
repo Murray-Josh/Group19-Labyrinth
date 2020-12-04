@@ -57,7 +57,7 @@
                     <Insets bottom="14.0" right="14.0" top="14.0"/>
                   </HBox.margin>
                 </ChoiceBox>
-                <ChoiceBox HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" fx:id="comNumber">
+                <ChoiceBox HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" fx:id="comIndex">
                   <HBox.margin>
                     <Insets bottom="14.0" right="14.0" top="14.0"/>
                   </HBox.margin>
