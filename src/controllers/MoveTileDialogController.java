@@ -103,8 +103,8 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     */
    @Override
    public void initialiseWithParameters(Object[] parameters) {
-      this.gameboard = (Gameboard) parameters[0];
-      this.tileToPlace = (Tile) parameters[1];
+      this.gameboard = (Gameboard) parameters[1];
+      this.tileToPlace = (Tile) parameters[0];
       initialise();
    }
 
