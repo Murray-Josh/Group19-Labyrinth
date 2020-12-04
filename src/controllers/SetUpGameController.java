@@ -76,14 +76,14 @@ public class SetUpGameController implements Initializable {
     public void cmdStartClick(ActionEvent actionEvent) {
         Style style = null;
         Level level = null;
-        switch (comStyle.getSelectionModel().getSelectedItem()) {
-            case MOUSE_TRAP:style=new MouseStyle();
-            case CAR: style=new CarStyle();
-            case PIRATE: style=new PirateStyle();
-            default:
-                showError(ErrorMsg.STYLE_NOT_VALID, Title.SETUP, false);
-                initialize(location, resourceBundle);
-        }
+       String styleString = comStyle.getValue();
+       if (styleString.equals(MOUSE_TRAP)) {
+           style = new MouseStyle();
+       } else if(styleString.equals(CAR)) {
+           style = new CarStyle();
+       }else{
+           style = new PirateStyle();
+       }
         try {
              level = new Level(comBoard.getSelectionModel().getSelectedItem());
         } catch (FileNotFoundException e) {
