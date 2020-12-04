@@ -101,8 +101,12 @@ public class GameboardController
     */
    private static VBox createPlayerContainer(Player player) {
        ImageView image = new ImageView(player.getPlayerImage());
+       image.setPreserveRatio(false);
+       image.setFitHeight(TILE_SIZE);
+       image.setFitWidth(TILE_SIZE);
        Label name = new Label(player.getProfile().getName());
        VBox playerPicture = new VBox(image, name);
+       playerPicture.setMaxWidth(TILE_SIZE);
        VBox.setMargin(image, new Insets(4, 0, 4, 0));
        VBox.setMargin(name, new Insets(4, 4, 4, 4));
        return playerPicture;
