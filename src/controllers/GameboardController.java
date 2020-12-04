@@ -49,7 +49,7 @@ import styles.Style;
  * a player events for selected effect image, draw a border? maybe listview? logic for activate
  */
 public class GameboardController
-     implements InitialisableWithParameters, Initializable {
+     implements InitialisableWithParameters {
 
    public static final String FORMATTING_PLAYERS =
         "Formatting Players";
@@ -112,16 +112,6 @@ public class GameboardController
 
    }
 
-   /**
-    * Initialises the controller and it's FXML window
-    *
-    * @param location
-    * @param resources
-    */
-   @Override
-   public void initialize(URL location, ResourceBundle resources) {
-      formatPlayers();
-   }
 
    /**
     * Formats each player and adds them to the left panel of the board window
@@ -129,7 +119,7 @@ public class GameboardController
    private void formatPlayers() {
       setStatus(FORMATTING_PLAYERS);
       this.vboxPlayers.setAlignment(Pos.CENTER);
-      ArrayList<Player> players = this.gameboard.getPlayers();
+      players = new ArrayList<>(this.gameboard.getPlayers());
       players.forEach(player -> {
          VBox playerPicture = createPlayerContainer(player);
          this.vboxPlayers.getChildren().add(playerPicture);
@@ -224,10 +214,11 @@ public class GameboardController
     */
    @Override
    public void initialiseWithParameters(Object[] parameters) {
-      this.gameboard = (Gameboard) parameters[1];
+      this.gameboard = (Gameboard) parameters[0];
       setGridSize(gameboard.getWidth(), gameboard.getHeight());
       playerMovement = new PlayerMovement(gameboard);
       refresh();
+      formatPlayers();
    }
 
    /**

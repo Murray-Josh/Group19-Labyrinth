@@ -80,7 +80,7 @@ public class SetUpGameController implements Initializable {
    public void cmdStartClick(ActionEvent actionEvent) {
       Style style = null;
       Level level = null;
-      String styleString = comStyle.getValue();
+      String styleString = comStyle.getValue(); 
       if (styleString.equals(MOUSE_TRAP)) {
 
          style = new MouseStyle();
@@ -90,7 +90,7 @@ public class SetUpGameController implements Initializable {
          style = new PirateStyle();
       }
       try {
-         level = new Level(comBoard.getSelectionModel().getSelectedItem());
+         level = new Level("src/resources/file/" + comBoard.getSelectionModel().getSelectedItem());
       } catch (FileNotFoundException e) {
          showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
          initialize(location, resourceBundle);

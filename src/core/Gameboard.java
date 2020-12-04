@@ -144,10 +144,20 @@ public class Gameboard implements Serializable {
         fixed.forEach(tile -> tiles.set(tile.getCoordinate(), tile));
 
         /* Add a random movable tile to any space not filled in */
+        for(int i = 0; i < tiles.getWidth(); i++) {
+            for(int j = 0; j < tiles.getHeight(); j++) {
+                if(tiles.get(i,j) == null) {
+                    Tile temp = movableTiles.poll();
+                    temp.setCoordinate(new Coordinate(i,j));
+                    tiles.set(i, j, temp);
+                }
+            }
+        }
+        /*
         this.tiles.forEach(tile -> {
             if (tile == null) {
                 if (!movableTiles.isEmpty()) {
-                    movableTiles.poll();
+                    tiles.set(tile.getCoordinate(), movableTiles.poll());
                 } else {
                     throw new NullPointerException("Not enough movable tiles");
                 }
@@ -155,6 +165,7 @@ public class Gameboard implements Serializable {
         });
         movable.retainAll(movableTiles);
         this.silkBag= new SilkBag(movable);
+        */
     }
 
     /**
