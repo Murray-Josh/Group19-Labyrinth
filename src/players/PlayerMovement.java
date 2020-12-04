@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Moves the players
@@ -43,7 +44,8 @@ public class PlayerMovement {
      */
     public void keyPressed(KeyCode key, Player player){
         Tile tile = gameboard.getTiles().get(player.getCoordinate());
-
+        dx = 0;
+        dy = 0;
         switch(key){
             case W:
             case UP:
@@ -81,7 +83,20 @@ public class PlayerMovement {
     private void moveCheck(Player player, Tile tile, int direction) {
         if(tilesAligned(player)[direction]) {
             if(!isOffBoard(player)) {
-                player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
+                switch(direction) {
+                    case 0:
+                        player.setCoordinate(tile.getSouthTile(gameboard).getCoordinate());
+                        break;
+                    case 1:
+                        player.setCoordinate(tile.getWestTile(gameboard).getCoordinate());
+                        break;
+                    case 2:
+                        player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
+                        break;
+                    case 3:
+                        player.setCoordinate(tile.getEastTile(gameboard).getCoordinate());
+                        break;
+                };
                 count++;
             }
         }
@@ -96,6 +111,7 @@ public class PlayerMovement {
      * @return boolean array of accessible direction
      */
     private Boolean[] tilesAligned(Player currentPlayer){
+        Arrays.fill(alignsArr, false);
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
         checkAligns(currentTile, currentMovable);
         Tile[] adjTiles = adjacentTiles(currentTile);
@@ -105,7 +121,7 @@ public class PlayerMovement {
                 checkAligns(adjTiles[i], nextMovable);
 
                 int nextTileDir = i + 2;
-                if(nextTileDir > adjTiles.length) {
+                if(nextTileDir >= adjTiles.length) {
                     nextTileDir = i - 2;
                 }
 
@@ -141,6 +157,7 @@ public class PlayerMovement {
                         list.add(3);
                         break;
                 }
+                break;
             case CORNER:
                 switch(tile.getAngle()) {
                     case DOWN:
@@ -160,6 +177,7 @@ public class PlayerMovement {
                         list.add(3);
                         break;
                 }
+                break;
             case JUNCTION:
                 switch(tile.getAngle()) {
                     case DOWN:
@@ -183,6 +201,7 @@ public class PlayerMovement {
                         list.add(0);
                         break;
                 }
+                break;
             case GOAL:
                 list.add(0);
                 list.add(1);
@@ -243,7 +262,7 @@ public class PlayerMovement {
         if ((p.getCoordinate().getX() + dx > gameboard.getWidth()) || p.getCoordinate().getX() + dx < 0) {
             return true;
         }
-        else if (p.getCoordinate().getX() + dy > gameboard.getHeight() || p.getCoordinate().getX() + dy < 0){
+        else if (p.getCoordinate().getY() + dy > gameboard.getHeight() || p.getCoordinate().getY() + dy < 0){
             return true;
         }
         else {
