@@ -184,7 +184,7 @@ public class Tile implements Serializable, Holdable {
     public Tile getNorthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
-                    .get(getCoordinate().getX(), getCoordinate().getY() + 1);
+                    .get(getCoordinate().getX(), getCoordinate().getY() - 1);
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
@@ -200,7 +200,7 @@ public class Tile implements Serializable, Holdable {
     public Tile getSouthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
         try {
             return g.getTiles()
-                    .get(getCoordinate().getX(), getCoordinate().getY() - 1);
+                    .get(getCoordinate().getX(), getCoordinate().getY() + 1);
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
