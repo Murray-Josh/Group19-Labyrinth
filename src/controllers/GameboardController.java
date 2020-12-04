@@ -413,5 +413,19 @@ public class GameboardController
    public void lstEffectClick(MouseEvent mouseEvent) {
       lstEffects.getSelectionModel().getSelectedItem();
    }
+
+
+   private final ArrayList<String> playerLimList = new ArrayList<String>();
+
+   private void backTrackLim(){
+      if(playerLimList.size() < Gameboard.getPlayersCount() && PlayerMovement.backtrack) {
+         //playerLimList.addPlayer;
+      } else if (playerLimList.size() == 4){
+         //           Classname.actions.remove(playerEffect.BACKTRACK);
+         //remove all BACKTRACK tiles from silkBag
+      }
+   }
+
+}
 }
 
