@@ -106,7 +106,11 @@ public class Level implements Serializable {
         this.movables = new ArrayList<Tile>();
         this.fixed = new ArrayList<Tile>();
 
-        readGameboardFile(path);
+        try {
+            readGameboardFile(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
