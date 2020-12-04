@@ -193,7 +193,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
          */
         @Override
         public boolean hasNext() {
-            return posX < getWidth() && posY < getHeight();
+            return posX < getWidth()+1 && posY < getHeight();
         }
 
         /**
