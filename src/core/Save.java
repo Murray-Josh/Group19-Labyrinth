@@ -1,8 +1,10 @@
 package core;
 
+import controllers.GameboardController;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import players.PlayerMovement;
 
 /**
  * Saves objects to file
@@ -11,7 +13,7 @@ import java.util.Date;
  * @version 2.0.0
  */
 public class Save {
-    private static final String extension = ".labyrinth";
+    private static final String extension = ".ser";
 
     /**
      * Saves the gameboard and it's tiles, the players and their current hands, positions and active effects and the silk bag.
@@ -19,14 +21,14 @@ public class Save {
      * @param obj Objects to be saved
      * @throws IOException If the file cannot be written+
      */
-    private static void saveGame(Object[] obj) throws IOException {
+    public static void saveGame(Object[] obj) throws IOException {
         /* Create a file name using the date and time of the save */
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         File file = new File(dateFormat.format(date) + extension);
         /* If there already is a Core.Save File with the same timestamp, change the filetype to .<filename>.old */
         if (file.exists()) {
-            file.renameTo(new File(file.toString() + ".old"));
+            file.delete();
         }
         /*Write the file */
         FileOutputStream fileOutputStream = new FileOutputStream(file);

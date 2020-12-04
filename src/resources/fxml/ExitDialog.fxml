@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="439.0" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ExitDialogController">
+   <top>
+      <ImageView fitHeight="111.0" fitWidth="389.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../menu/title.png" />
+         </image>
+      </ImageView>
+   </top>
+   <center>
+      <Label alignment="TOP_CENTER" style="-fx-font-size: 48;" text="EXIT THE GAME" BorderPane.alignment="TOP_CENTER" />
+   </center>
+   <right>
+
+   </right>
+   <bottom>
+      <HBox prefHeight="46.0" prefWidth="516.0" BorderPane.alignment="BOTTOM_CENTER">
+         <children>
+          <Button fx:id="cmdSave" mnemonicParsing="false" onMouseClicked="#cmdSaveClick" prefHeight="0.0" prefWidth="231.0" style="-fx-font-size: 20;" text="Save and Exit" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+               </HBox.margin></Button>
+            <Button fx:id="cmdExit" mnemonicParsing="false" onMouseClicked="#cmdExitClick" prefHeight="36.0" prefWidth="231.0" style="-fx-font-size: 20;" text="Exit Without Saving" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -7,7 +7,9 @@ import constants.Window;
 import core.Coordinate;
 import core.Gameboard;
 import core.Level;
+import core.Save;
 import holdables.*;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,16 +17,21 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
+import players.PlayerMovement;
 import styles.Style;
 
 import java.io.IOException;
@@ -61,13 +68,12 @@ public class GameboardController
     private static final String     REFRESH_COMPLETE           =
             "Refreshing Gameboard";
     public               BorderPane root;
-    public               ButtonBar  butttonBar;
     @FXML
     private              GridPane   grdBoard;
     @FXML
     private              VBox       vboxPlayers;
     @FXML
-    private              VBox       vboxEffects;
+ private ListView<String> lstEffects;
     @FXML
     private              Button     cmdActivate;
     @FXML
@@ -87,8 +93,8 @@ public class GameboardController
     private int tempPlayerCounter;
 
     private Holdable newTileToPlace;
-    private int      newTileToPlaceX;
-    private int      newTileToPlaceY;
+    private PlayerMovement playerMovement;
+    private Player activePlayer;
 
     public void cmdActionClick(MouseEvent mouseEvent) {
 
@@ -129,6 +135,17 @@ public class GameboardController
     }
 
     /**
+     * Sets the currently active player
+     * @param player Player to set as active
+     */
+    public void setActivePlayer(Player player) { this.activePlayer = player;}
+
+    /**
+     * Gets the currently active Player
+     * @return Currently active player
+     */
+    public Player getActivePlayer() { return this.activePlayer;}
+    /**
      * Creates a Container that holds the player and their data
      *
      * @param player Player to create a Container for
@@ -145,7 +162,7 @@ public class GameboardController
     }
 
     public void initializeWithArgs(Object[] args) {
-        this.gameboard = (Gameboard) args[1];
+        this.gameboard = (Gameboard) args[0];
         tempPlayerCounter = 1;
         cmdSilkBag.setDisable(true);
         cmdActivate.setDisable(true);
@@ -189,31 +206,12 @@ public class GameboardController
     }
 
     /**
-     * formats and displays a players hand in the right hand  {@link
-     * javafx.scene.control.ScrollPane}
-     *
-     * @param player Current {@link Player}
+     * Adds each effect in the active player's hand to the listview of effects
      */
-    public void displayPlayerHand(Player player) {
-        player.getHand().forEach(item -> this.vboxEffects.getChildren()
-                                                         .add(formatActionTile(
-                                                                 item)));
-    }
-
-    /**
-     * Formats the Action tiles in a players hand into an icon and a name
-     *
-     * @param item
-     *
-     * @return
-     */
-    private VBox formatActionTile(Effect item) {
-        ImageView image = new ImageView(item.getImage(this.style));
-        Label name = new Label(item.toString());
-        VBox actionTile = new VBox(image, name);
-        VBox.setMargin(image, new Insets(4, 0, 4, 0));
-        VBox.setMargin(name, new Insets(4, 4, 4, 4));
-        return actionTile;
+    public void displayPlayerHand() {
+       ArrayList<String> hand = new ArrayList<>();
+        activePlayer.getHand().forEach(item -> hand.add(item.toString()));
+        lstEffects.getItems().setAll(hand);
     }
 
     /**
@@ -226,6 +224,7 @@ public class GameboardController
     public void initialiseWithParameters(Object[] parameters) {
         this.gameboard = (Gameboard) parameters[1];
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
+        playerMovement = new PlayerMovement(gameboard);
         refresh();
     }
 
@@ -283,10 +282,9 @@ public class GameboardController
                 TILE_SIZE * grdBoard.getColumnConstraints().size() * TILE_SIZE;
         double gridPaneHeight =
                 TILE_SIZE * grdBoard.getRowConstraints().size() * TILE_SIZE;
-        double prefWidth = gridPaneWidth + vboxEffects.getMaxWidth() +
+        double prefWidth = gridPaneWidth + lstEffects.getMaxWidth() +
                            vboxPlayers.getMaxWidth();
-        double prefHeight = gridPaneHeight + lblStatus.getMaxHeight() +
-                            butttonBar.getMaxHeight();
+        double prefHeight = gridPaneHeight + lblStatus.getMaxHeight();
         this.root.setPrefSize(prefWidth, prefHeight);
     }
 
@@ -317,25 +315,6 @@ public class GameboardController
     public void cmdActivateClick(MouseEvent mouseEvent) {
     }
 
-    public void tileMove(Holdable tile, String rowOrColumn, int num) {
-        Tile newTile = (Tile) tile;
-        if (rowOrColumn.equals("Column")) {
-            for (int y = 0; y < gameboard.getHeight(); y++) {
-                Tile tempTile = gameboard.getTiles().get(num, y);
-                newTile.setCoordinate(new Coordinate(num, y));
-                gameboard.setGameboardTile(newTile.getCoordinate(), newTile);
-                newTile = tempTile;
-            }
-
-        } else if (rowOrColumn.equals("Row")) {
-            for (int x = 0; x < gameboard.getWidth(); x++) {
-                Tile tempTile = gameboard.getTiles().get(x, num);
-                newTile.setCoordinate(new Coordinate(x, num));
-                gameboard.setGameboardTile(newTile.getCoordinate(), newTile);
-                newTile = tempTile;
-            }
-        }
-    }
 
     /**
      * Will work when goalTile is variable in gameboard
@@ -352,12 +331,59 @@ public class GameboardController
     }
 
     public void keyPressed(KeyEvent keyEvent) {
-
-        //PlayerMovement.keyPressed(keyEvent);
+        if (keyEvent.getCode().equals(KeyCode.ESCAPE)) {
+            showExitDialog();
+        } else if (keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.RIGHT) || keyEvent.equals(KeyCode.UP)||keyEvent.getCode().equals(KeyCode.DOWN)) {
+            playerMovement.keyPressed(keyEvent.getCode());
+        }
 
     }
 
-    /**
+    private void showExitDialog() {
+       Scene scene = null;
+       try {
+          FXMLLoader loader = new FXMLLoader(StageController.class
+               .getResource(
+                    Window.EXIT
+                         .getPath()));
+          Parent root = loader.load();
+          InitialisableWithParameters controller = loader.getController();
+          controller.initialiseWithParameters(
+               new Object[]{this});
+          scene = new Scene(root);
+          Stage stage = new Stage();
+          stage.setTitle(Title.MAIN.name());
+          stage.setScene(scene);
+          stage.initModality(Modality.APPLICATION_MODAL);
+          stage.showAndWait();
+       } catch (IOException e) {
+          e.printStackTrace();
+          showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+       } catch (IllegalStateException e) {
+          e.printStackTrace();
+       }
+    }
+
+   /**
+    * Saves the game and exits the application
+    */
+   public void saveAndExit() {
+       try {
+          Save.saveGame(new Object[]{gameboard, this, playerMovement});
+          System.exit(0);
+       } catch (IOException e) {
+         showError(ErrorMsg.SAVE_WRITE_ERROR, Title.ERROR, false);
+         e.printStackTrace();
+       }
+   }
+
+   /**
+    * Exits the application without saving
+    */
+   public void exit() {
+      System.exit(0);
+   }
+   /**
      * Shows the Place Tile dialog
      *
      * @param tile Tile to place onto the board
@@ -386,5 +412,9 @@ public class GameboardController
             e.printStackTrace();
         }
     }
+
+   public void lstEffectClick(MouseEvent mouseEvent) {
+       lstEffects.getSelectionModel().getSelectedItem();
+   }
 }
 

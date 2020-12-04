@@ -31,14 +31,17 @@ public class PlayerMovement {
     private int count = 0;
     private TurnCounter TurnCounter;
 
+    public PlayerMovement(Gameboard gameboard) {
+        this.gameboard = gameboard;
+    }
+
     /**
      * Checks the key input and translates it to coordinate change - controls whether the sprite is moving
      * @param e KeyEvent identifier
      * @param player players turn to move
      */
-    public void keyPressed(KeyEvent e, Player player){
+    public void keyPressed(KeyCode key, Player player){
         Tile tile = gameboard.getTiles().get(player.getCoordinate());
-        KeyCode key = e.getCode();
 
         switch(key){
             case W:

@@ -375,7 +375,7 @@ public class Level {
      */
     public void readGameboardFile(String fileName) throws FileNotFoundException {
         Scanner in;
-        File file = new File(fileName);
+        File file = new File("../resources/file/" + fileName + ".txt");
         in = new Scanner(file);
         readGameboard(in);
     }

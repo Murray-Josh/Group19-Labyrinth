@@ -73,35 +73,40 @@ public class SetUpGameController implements Initializable {
         home();
     }
 
+    /**
+     * uses the data inputed onto the form and creates a new gamebaord anfd passes it to the Gameboard window
+     * @param actionEvent MouseEvent
+     */
     public void cmdStartClick(ActionEvent actionEvent) {
         Style style = null;
         Level level = null;
-       String styleString = comStyle.getValue();
-       if (styleString.equals(MOUSE_TRAP)) {
-           style = new MouseStyle();
-       } else if(styleString.equals(CAR)) {
-           style = new CarStyle();
-       }else{
-           style = new PirateStyle();
-       }
+        String styleString = comStyle.getValue();
+        if (styleString.equals(MOUSE_TRAP)) {
+
+            style = new MouseStyle();
+        } else if (styleString.equals(CAR)) {
+            style = new CarStyle();
+        } else {
+            style = new PirateStyle();
+        }
         try {
-             level = new Level(comBoard.getSelectionModel().getSelectedItem());
+            level = new Level(comBoard.getSelectionModel().getSelectedItem());
         } catch (FileNotFoundException e) {
             showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
-            initialize(location,resourceBundle);
+            initialize(location, resourceBundle);
         }
 
         try {
             Gameboard gameboard = new Gameboard(level, style, players);
-        } catch (IOException e) {
+            changeScene(Window.BOARD, new Object[]{gameboard});
+        } catch (Exception e) {
+            showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            initialize(location,resourceBundle);
         }
     }
 
-
-    @Override
+        @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.buttons = new ArrayList<>(Arrays.asList(cmdLockOne, cmdLockTwo, cmdLockThree, cmdLockFour));
         this.boxes = new ArrayList<>(Arrays.asList(comOne, comTwo, comThree, comFour));
