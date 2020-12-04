@@ -421,7 +421,7 @@ public class GameboardController
 
 
 
-   private void backTrackLim(Player targetPlayer){
+   private void backTrackLim(Player targetPlayer, Player player){
       if (!targetPlayer.hasBeenBackTracked()) {
          playerMovement.backMovement(targetPlayer);
          targetPlayer.setBeenBackTracked(true);
@@ -435,6 +435,8 @@ public class GameboardController
       }
 
       if (everyoneBackTracked){
+         player.getHand().remove(PlayerEffect.BACKTRACK);
+         //removes the backtracks from silkbag/some class - but NOT from gameboard
          //Classname.actions.remove(playerEffect.BACKTRACK);
       }
    }
