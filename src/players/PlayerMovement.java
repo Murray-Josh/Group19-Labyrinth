@@ -335,13 +335,22 @@ public class PlayerMovement {
     /**
      * counts the moves out of 4 a player is allowed to make per round
      */
-//   private void moveCount(){
-//        int count = 0;
-//        while(isAccessible()){
-//            //move
-//            count++;
-//        }
-//    }
+    private void moveCount(Tile nextTile){
+        int count = 0;
+        boolean turnHasEnded = false;
+        while(turnHasEnded || count <= 4){
+            if(!isOnFire(nextTile) && !isPlayerOnTile(nextTile)){
+                count++;
+            }else if(){
+                turnHasEnded = true;
+            }
+        }
+
+        if(turnHasEnded){
+            //TurnCounter.switchPlayer();
+        }
+
+    }
 
 
 //TODO end turn (dw about this just yet tho)
