@@ -247,30 +247,13 @@ public class Tile implements Serializable, Holdable {
         switch (this.getType().toString()) {
 
             case "CORNER":
-
-                if (isFixed()) {
-                    return Style.getCornerIce();
-                } else {
-                    return Style.getCornerTile();
-                }
+                return Style.getCornerTile();
             case "JUNCTION":
-
-                if (isFixed()) {
-                    return Style.getJunctionIce();
-                } else {
-                    return Style.getJunctionTile();
-                }
+                return Style.getJunctionTile();
             case "STRAIGHT":
-
-                if (isFixed()) {
-                    return Style.getStraightIce();
-                } else {
-                    return Style.getStraightTile();
-                }
+                return Style.getStraightTile();
             case "GOAL":
-
                 return Style.getGoalTile();
-
             default:
                 return null;
         }
