@@ -6,7 +6,9 @@ import javafx.scene.image.Image;
 /**
  * Gives the Images for the CarStyles.Style
  *
- * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
+ * @author Aaron Davies
+ * @author Isabelle Ludwig
+ * @author Joseph Omar
  * @version 3.5
  */
 public class CarStyle extends Style implements Serializable {

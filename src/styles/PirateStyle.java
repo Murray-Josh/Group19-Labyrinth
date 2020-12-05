@@ -6,7 +6,9 @@ import javafx.scene.image.Image;
 /**
  * Gives the Images for the Pirate Styles.Style
  *
- * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
+ * @author Aaron Davies
+ * @author Isabelle Ludwig
+ * @author Joseph Omar
  * @version 3.0
  */
 public final class PirateStyle extends Style implements Serializable {

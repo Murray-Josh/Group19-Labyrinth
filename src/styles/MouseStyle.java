@@ -6,7 +6,9 @@ import javafx.scene.image.Image;
 /**
  * Gives the Images for the Mouse Trap Styles.Style
  *
- * @author Aaron Davies, Isabelle Ludwig & Joseph Omar
+ * @author Aaron Davies
+ * @author Isabelle Ludwig
+ * @author Joseph Omar
  * @version 3.5
  */
 
@@ -20,7 +22,7 @@ public class MouseStyle extends Style implements Serializable {
       STRAIGHT_TILE = new Image("resources/styles/mouse/mouse_str.png");
       STRAIGHT_FIRE = new Image("resources/styles/mouse/mouse_str_fire.png");
       STRAIGHT_ICE = new Image("resources/styles/mouse/mouse_str_ice.png");
-      CORNER_TILE = new Image("resources/styles/mouse/mouse_corner_.png");
+      CORNER_TILE = new Image("resources/styles/mouse/mouse_corner.png");
       CORNER_FIRE = new Image("resources/styles/mouse/mouse_corner_fire.png");
       CORNER_ICE = new Image("resources/styles/mouse/mouse_corner_ice.png");
       JUNCTION_TILE = new Image("resources/styles/mouse/mouse_junction.png");

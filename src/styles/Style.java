@@ -6,7 +6,8 @@ import javafx.scene.image.Image;
 /**
  * Create three classes to split up the stuff into to make it easier to access from other classes
  *
- * @author Issi Ludwig & Martin Samm
+ * @author Issi Ludwig
+ * @author Aaron Davies
  * @version 3.0
  */
 public abstract class Style implements Serializable {
