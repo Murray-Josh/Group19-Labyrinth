@@ -5,7 +5,7 @@ import core.Coordinate;
 import core.Gameboard;
 import holdables.PlayerEffect;
 import holdables.TileEffect;
-//import players.TurnCounter;
+import players.TurnCounter;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
@@ -25,10 +25,7 @@ import java.util.Arrays;
 
 public class PlayerMovement {
 
-    private Gameboard gameboard;
-    private static int dx;
-    private static int dy;
-    
+    private Gameboard gameboard;    
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();
     ArrayList<Integer> nextMovable = new ArrayList<Integer>();
     private Boolean[] alignsArr = new Boolean[4];
@@ -47,35 +44,27 @@ public class PlayerMovement {
      */
     public void keyPressed(KeyCode key, Player player){
         Tile tile = gameboard.getTiles().get(player.getCoordinate());
-        dx = 0;
-        dy = 0;
         switch(key){
             case W:
             case UP:
-                dy = -1;
                 moveCheck(player, tile, 2);
                 break;
             case A:
             case LEFT:
-                dx = -1;
                 moveCheck(player, tile, 1);
                 break;
             case S:
             case DOWN:
-                dy = 1;
                 moveCheck(player, tile, 0);
                 break;
             case D:
             case RIGHT:
-                dx = 1;
                 moveCheck(player, tile, 3);
                 break;
             case SPACE:
             case ENTER:
                 TurnCounter.switchPlayer();
                 break;
-
-
         }
     }
 
@@ -98,29 +87,27 @@ public class PlayerMovement {
      * @param direction direction to move in
      */
     private void moveCheck(Player player, Tile tile, int direction) {
-        if(tilesAligned(player)[direction]) {
-            if(!isOffBoard(player)) {
-                switch(direction) {
-                    case 0:
-                        player.setCoordinate(tile.getSouthTile(gameboard).getCoordinate());
-                        player.setCurrentDirection(Angle.LEFT);
-                        break;
-                    case 1:
-                        player.setCoordinate(tile.getWestTile(gameboard).getCoordinate());
-                        player.setCurrentDirection(Angle.UP);
+        if(tilesAligned(player, this.gameboard)[direction]) {
+            switch(direction) {
+                case 0:
+                    player.setCoordinate(tile.getSouthTile(gameboard).getCoordinate());
+                    player.setCurrentDirection(Angle.LEFT);
+                    break;
+                case 1:
+                    player.setCoordinate(tile.getWestTile(gameboard).getCoordinate());
+                    player.setCurrentDirection(Angle.UP);
 
-                        break;
-                    case 2:
-                        player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
-                        player.setCurrentDirection(Angle.RIGHT);
-                        break;
-                    case 3:
-                        player.setCoordinate(tile.getEastTile(gameboard).getCoordinate());
-                        player.setCurrentDirection(Angle.DOWN);
-                        break;
-                };
-                count++;
-            }
+                    break;
+                case 2:
+                    player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
+                    player.setCurrentDirection(Angle.RIGHT);
+                    break;
+                case 3:
+                    player.setCoordinate(tile.getEastTile(gameboard).getCoordinate());
+                    player.setCurrentDirection(Angle.DOWN);
+                    break;
+            };
+            count++;
         }
     }
     
@@ -132,7 +119,8 @@ public class PlayerMovement {
      * @param currentPlayer Player to input
      * @return boolean array of accessible direction
      */
-    private Boolean[] tilesAligned(Player currentPlayer){
+    public Boolean[] tilesAligned(Player currentPlayer, Gameboard g){
+        this.gameboard = g;
         Arrays.fill(alignsArr, false);
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
         checkAligns(currentTile, currentMovable);
@@ -273,44 +261,6 @@ public class PlayerMovement {
     private boolean isOnFire(Tile checkTile) {
         return checkTile.getEffect() == TileEffect.FIRE;
     }
-    
-    /**
-     * Checks if the player would be off the board
-     *
-     * @param p Player moving
-     * @return If player would move off the board
-     */
-    private boolean isOffBoard(Player p) {
-        if ((p.getCoordinate().getX() + dx > gameboard.getWidth()) || p.getCoordinate().getX() + dx < 0) {
-            return true;
-        }
-        else if (p.getCoordinate().getY() + dy > gameboard.getHeight() || p.getCoordinate().getY() + dy < 0){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    /**
-     * Moves the player to the opposite side of the board if moved off edge
-     * @param p Player to move
-     */
-    private void loopPlayer(Player p) {
-        if(dx == 1) {
-            p.setCoordinate(new Coordinate(0, p.getCoordinate().getY()));
-        }
-        else if (dx == -1) {
-            p.setCoordinate(new Coordinate(gameboard.getWidth(), p.getCoordinate().getY()));
-        }
-        else if(dy == 1) {
-            p.setCoordinate(new Coordinate(p.getCoordinate().getY(), 0));
-        }
-        else {
-            p.setCoordinate(new Coordinate(gameboard.getHeight(), p.getCoordinate().getY()));
-        }
-    }
-
 
     /**
      * moves the player to the tile they were two turns ago.
