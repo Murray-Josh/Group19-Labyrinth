@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -37,6 +38,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
@@ -281,10 +283,14 @@ public class GameboardController
     private void refresh() {
         if (gameboard != null) {
             setStatus(REFRESHING);
+            InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
             gameboard.getTiles().forEach(tile -> {
                 System.out.println(tile.toString());
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
+                if(tile.isFixed()) {
+                        image.setEffect(innerShadow);
+                }
                 image.setRotate(tile.getAngle().get());
                 image.setPreserveRatio(false);
                 image.setFitHeight(TILE_SIZE);
@@ -358,7 +364,6 @@ public class GameboardController
             } else if (event.getCode().isArrowKey()) {
                 playerMovement.keyPressed(event.getCode(), p);
                 activePlayerMovementLeft -= 1;
-
                 refresh();
             }
         } else if (activePlayerMovementLeft == 0) {
