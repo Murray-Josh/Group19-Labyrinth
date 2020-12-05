@@ -74,6 +74,8 @@ public class PlayerMovement {
             case ENTER:
                 TurnCounter.switchPlayer();
                 break;
+
+
         }
     }
 
