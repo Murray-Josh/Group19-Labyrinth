@@ -87,7 +87,6 @@ public class GameboardController
 
     private ArrayList<Player> players;
 
-    private Style style;
 
     private Level level;
     private Gameboard gameboard;
@@ -280,7 +279,7 @@ public class GameboardController
     /**
      * Refreshes the GridPane, updating each tile from the {@link Gameboard}
      */
-    private void refresh() {
+    public void refresh() {
         if (gameboard != null) {
             setStatus(REFRESHING);
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
@@ -336,7 +335,7 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        showTileShifts(new Tile(TileType.GOAL, this.style, Angle.UP, false), this.gameboard);
+        showTileShifts(new Tile(TileType.GOAL, this.gameboard.getStyle(), Angle.UP, false), this.gameboard);
     }
 
 
@@ -385,7 +384,7 @@ public class GameboardController
             scene = new Scene(root);
             controller.initialiseWithParameters(
                     new Object[]{this}, scene, stage);
-            stage.setTitle(Title.MAIN.name());
+            stage.setTitle(Title.MAIN.toString());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -436,7 +435,7 @@ public class GameboardController
             scene = new Scene(root);
             controller.initialiseWithParameters(
                     new Object[]{tile, gameboard, this}, scene, stage);
-            stage.setTitle(Title.MAIN.name());
+            stage.setTitle(Title.MAIN.toString());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();

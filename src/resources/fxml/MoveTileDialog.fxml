@@ -4,121 +4,71 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" maxHeight="319.0" minHeight="319.0" minWidth="761.0" prefHeight="319.0" prefWidth="761.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
-  <children>
-    <BorderPane prefHeight="360.0" prefWidth="640.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
-      <center>
-        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-          <children>
-            <HBox layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="638.0" VBox.vgrow="NEVER">
-              <children>
-                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Row or Column?" HBox.hgrow="NEVER">
-                  <HBox.margin>
-                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
-                  </HBox.margin>
-                  <opaqueInsets>
-                    <Insets />
-                  </opaqueInsets>
-                </Label>
-                <ChoiceBox fx:id="comAxis" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="127.0" HBox.hgrow="NEVER">
-                  <HBox.margin>
-                    <Insets bottom="14.0" right="14.0" top="14.0" />
-                  </HBox.margin>
-                </ChoiceBox>
-                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Number:" HBox.hgrow="NEVER">
-                  <HBox.margin>
-                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
-                  </HBox.margin>
-                  <opaqueInsets>
-                    <Insets />
-                  </opaqueInsets>
-                </Label>
-                <ChoiceBox fx:id="comIndex" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="56.0" HBox.hgrow="NEVER">
-                  <HBox.margin>
-                    <Insets bottom="14.0" right="14.0" top="14.0" />
-                  </HBox.margin>
-                </ChoiceBox>
-              </children>
+<AnchorPane fx:id="rootpane" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
+   <children>
+      <AnchorPane layoutX="1.0" layoutY="1.0" maxHeight="291.0" minHeight="291.0" prefHeight="291.0" styleClass="border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane maxHeight="83.0" minHeight="83.0" prefHeight="83.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="14.0" style="-fx-font-size: 50;" text="PLACE YOUR TILE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+               </children>
+            </AnchorPane>
+            <HBox maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="679.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="83.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" maxHeight="32.0" maxWidth="94.0" minHeight="32.0" minWidth="94.0" prefHeight="32.0" prefWidth="94.0" text="Column or Row?" textAlignment="RIGHT">
+                     <HBox.margin>
+                        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="comAxis" prefHeight="32.0" prefWidth="144.0">
+                     <HBox.margin>
+                        <Insets bottom="14.0" right="28.0" top="14.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+                  <Label alignment="CENTER_RIGHT" maxHeight="32.0" maxWidth="40.0" minHeight="32.0" minWidth="40.0" prefHeight="32.0" prefWidth="40.0" text="Index:" textAlignment="RIGHT">
+                     <HBox.margin>
+                        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="comIndex" maxHeight="32.0" maxWidth="80.0" minHeight="32.0" minWidth="80.0" prefHeight="32.0" prefWidth="80.0">
+                     <HBox.margin>
+                        <Insets bottom="14.0" right="14.0" top="14.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
             </HBox>
-            <VBox prefHeight="111.0" prefWidth="638.0" VBox.vgrow="ALWAYS">
-              <children>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="32.0" prefWidth="446.0" VBox.vgrow="NEVER">
-                  <children>
-                    <Label fx:id="lblLeft" layoutX="14.0" layoutY="17.0" text="left" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0" />
-                    <Label fx:id="lblRight" layoutX="513.0" layoutY="18.0" text="right" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
-                  </children>
-                </AnchorPane>
-                <GridPane fx:id="grdTiles" maxHeight="100.0" maxWidth="400.0" minHeight="100.0" minWidth="400.0" prefHeight="100.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
-                  <VBox.margin>
-                    <Insets />
-                  </VBox.margin>
-                  <columnConstraints>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  </columnConstraints>
-                  <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                  </rowConstraints>
-                </GridPane>
-                    <HBox prefHeight="40.0" prefWidth="200.0">
-                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="cmdConfirm" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdConfirmClicked" prefHeight="29.0" prefWidth="138.0" text="Confirm Shift">
-                          <HBox.margin>
-                            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-                          </HBox.margin>
-                        </Button>
-                        <Button fx:id="cmdReset" contentDisplay="CENTER" layoutX="260.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#cmdResetClicked" prefHeight="29.0" prefWidth="138.0" text="Reset">
-                          <HBox.margin>
-                            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-                          </HBox.margin>
-                        </Button>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                      </children>
-                    </HBox>
-              </children>
-            </VBox>
-          </children>
-        </VBox>
-      </center>
-      <top>
-        <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="83.0" prefWidth="640.0" BorderPane.alignment="CENTER">
-          <children>
-            <Label layoutX="30.0" layoutY="37.0" style="-fx-font-size: 38;" text="PLACE YOUR TILE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-          </children>
-        </AnchorPane>
-      </top>
-    </BorderPane>
-    <VBox layoutX="640.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="128.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="NEVER">
-          <children>
-            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-font-size: 23;" text="Your Tile" textAlignment="CENTER" VBox.vgrow="NEVER">
-              <VBox.margin>
-                <Insets bottom="14.0" />
-              </VBox.margin>
-              <font>
-                <Font size="25.0" />
-              </font>
-            </Label>
-            <ImageView fx:id="imgTile" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
-              <VBox.margin>
-                <Insets />
-              </VBox.margin>
-            </ImageView>
-                  <Button fx:id="cmdRotate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#cmdRotateClick" prefHeight="30.0" prefWidth="100.0" text="Rotate" />
-          </children>
-        </VBox>
-        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-      </children>
-      <padding>
-        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
-      </padding>
-    </VBox>
-  </children>
+            <AnchorPane maxHeight="48.0" minHeight="48.0" prefHeight="48.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="143.0">
+               <children>
+                  <Label fx:id="lblLeft" layoutX="50.0" layoutY="14.0" maxHeight="20.0" maxWidth="50.0" minHeight="20.0" minWidth="50.0" prefHeight="20.0" prefWidth="50.0" text="Left" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <Label fx:id="lblRight" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="66.0" maxHeight="20.0" maxWidth="50.0" minHeight="20.0" minWidth="50.0" prefHeight="20.0" prefWidth="50.0" text="Right" textAlignment="RIGHT" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+               </children>
+            </AnchorPane>
+            <GridPane fx:id="grdTiles" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="191.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+      </AnchorPane>
+      <VBox fx:id="previewPane" layoutX="791.0" maxHeight="1.7976931348623157E308" maxWidth="128.0" minWidth="128.0" prefHeight="200.0" prefWidth="128.0" styleClass="border" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="69.0" prefWidth="126.0" VBox.vgrow="ALWAYS" />
+            <AnchorPane maxHeight="194.0" maxWidth="128.0" minHeight="194.0" minWidth="128.0" prefHeight="194.0" prefWidth="128.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label alignment="CENTER" layoutX="49.0" layoutY="14.0" style="-fx-font-size: 25;" text="YOUR TILE" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                  <ImageView fx:id="imgTile" fitHeight="100.0" fitWidth="100.0" layoutX="23.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="50.0" />
+                  <Button fx:id="cmdRotate" layoutX="31.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#cmdRotateClick" style="-fx-font-size: 16;" text="ROTATE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+               </children>
+            </AnchorPane>
+            <Pane layoutX="11.0" layoutY="11.0" prefHeight="69.0" prefWidth="126.0" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

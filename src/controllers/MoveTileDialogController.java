@@ -4,6 +4,7 @@ package controllers;
 import static controllers.MoveTileDialogController.Axis.COLUMN;
 import static controllers.MoveTileDialogController.Axis.ROW;
 
+import com.sun.rowset.internal.Row;
 import constants.Angle;
 import core.Coordinate;
 import core.Gameboard;
@@ -32,10 +33,10 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    /**
     * Window and Tile sizes used in this class
     */
-   private static final int TILE_PREVIEW_WIDTH = 128;
-   private static final int WINDOW_MIN_WIDTH = 638 + TILE_PREVIEW_WIDTH;
-   private static final int TILE_SIZE = 100;
-   private static final int WINDOW_MAX_HEIGHT = 400 + TILE_SIZE;
+   private static final double TILE_PREVIEW_WIDTH = 128;
+   private static final double WINDOW_MIN_WIDTH = 811;
+   private static final double TILE_SIZE = 100;
+   private static final double WINDOW_MAX_HEIGHT = 293;
    /**
     * Paths to the add tile button assets
     */
@@ -49,7 +50,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    private static final String LEFT = "Left";
    private static final String RIGHT = "Right";
    /**
-    * Field common to most methods in this Controller
+    * Fields common to most methods in this Controller
     */
    private Tile tileToPlace;
    private Gameboard gameboard;
@@ -61,10 +62,15 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    private ImageView addRight;
 
    /**
+    * parameters
+    */
+   private GameboardController controller;
+    private Stage stage;
+
+
+   /**
     * FXML Controls
     */
-   @FXML
-   private Button cmdConfirm;
    @FXML
    private ChoiceBox<Axis> comAxis;
    @FXML
@@ -79,7 +85,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    private AnchorPane rootPane;
    @FXML
    private ImageView imgTile;
-   private Stage stage;
+
 
    /**
     * Creates an ImageView Node from a specified image, applying the appropriate properties
@@ -105,9 +111,10 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    @Override
    public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
       this.stage = stage;
-      this.gameboard = (Gameboard) parameters[1];
 
       this.tileToPlace = (Tile) parameters[0];
+      this.gameboard = (Gameboard) parameters[1];
+      this.controller= (GameboardController) parameters[2];
       initialise();
    }
 
@@ -121,7 +128,6 @@ public class MoveTileDialogController implements InitialisableWithParameters {
       grdTiles.getColumnConstraints().clear();
       comIndex.getItems().clear();
       comAxis.setItems(FXCollections.observableArrayList(COLUMN, ROW));
-      comAxis.getSelectionModel().selectFirst();
       comIndex.getItems().clear();
       comIndex.setDisable(true);
       enableChoiceBoxes();
@@ -154,7 +160,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
       comIndex.getSelectionModel().selectedItemProperty()
            .addListener((observable, oldValue, newValue) -> {
               this.index = newValue;
-              populateGrid();
+              populateGrid(true);
               enableShiftButtons();
            });
    }
@@ -162,23 +168,25 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    /**
     * Adds all the tiles at the selected index to the grid, rotating them if there are in a column
     */
-   private void populateGrid() {
+   private void populateGrid(boolean shiftButtons) {
       formattedTiles = new LinkedList<>();
+      axisContents = new LinkedList<>();
       if (axis == COLUMN) {
          axisContents = getTilesColumn();
          axisContents.forEach(tile -> formattedTiles
               .add(createImageView(tile.getImage(), tile.getAngle().get() - 90)));
       } else if (axis == ROW) {
          axisContents = getTilesRow();
-         formattedTiles.clear();
          axisContents.forEach(tile -> formattedTiles
               .add(createImageView(tile.getImage(), tile.getAngle().get())));
       }
-      this.addLeft = createImageView(new Image(ADD_PATH), 0);
-      this.addRight = createImageView(new Image(ADD_PATH), 180);
-      addRight.setRotate(Angle.UP.get());
-      formattedTiles.addFirst(addLeft);
-      formattedTiles.addLast(addRight);
+      if (shiftButtons) {
+         this.addLeft = createImageView(new Image(ADD_PATH), 0);
+         this.addRight = createImageView(new Image(ADD_PATH), 180);
+         addRight.setRotate(Angle.UP.get());
+         formattedTiles.addFirst(addLeft);
+         formattedTiles.addLast(addRight);
+      }
       defineGridSize();
       for (int i = 0; i < formattedTiles.size(); i++) {
          grdTiles.add(formattedTiles.get(i), i, 0);
@@ -191,29 +199,13 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     */
    private void updateWindowSize() {
       stage.setResizable(false);
-      stage.setMaxHeight(WINDOW_MAX_HEIGHT);
-      stage.setMinHeight(WINDOW_MAX_HEIGHT);
-      rootPane.setMinHeight(WINDOW_MAX_HEIGHT);
-      rootPane.setMaxHeight(WINDOW_MAX_HEIGHT);
-      rootPane.setPrefHeight(WINDOW_MAX_HEIGHT);
-
       double width = (grdTiles.getColumnConstraints().size() * TILE_SIZE) + TILE_PREVIEW_WIDTH;
       if (WINDOW_MIN_WIDTH > width) {
-         stage.setMinWidth(WINDOW_MIN_WIDTH);
-         stage.setMaxWidth(WINDOW_MIN_WIDTH);
-         rootPane.setMinWidth(WINDOW_MIN_WIDTH);
-         rootPane.setMaxWidth(WINDOW_MIN_WIDTH);
-         rootPane.setPrefWidth(WINDOW_MIN_WIDTH);
+         stage.setWidth(WINDOW_MIN_WIDTH);
       } else {
-         stage.setMaxWidth(width);
-         stage.setMinWidth(width);
-         rootPane.setMaxWidth(width);
-         rootPane.setMinWidth(width);
-         rootPane.setPrefWidth(width);
+         stage.setWidth(width);
       }
-      grdTiles.setMaxSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
-      grdTiles.setMinSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
-      grdTiles.setPrefSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
+      stage.centerOnScreen();
    }
 
    /**
@@ -284,69 +276,70 @@ public class MoveTileDialogController implements InitialisableWithParameters {
       addRight.setOnMouseClicked(event -> addToRight());
 
       addRight.setOnMouseEntered(
-           event -> addRight.setImage(new Image(ADD_PATH_ROLLOVER)));
-      addRight.setOnMouseExited(
            event -> addRight.setImage(new Image(ADD_PATH)));
+
+      addRight.setOnMouseExited(
+           event -> addRight.setImage(new Image(ADD_PATH_ROLLOVER)));
       addLeft.setOnMouseEntered(
-           event -> addLeft.setImage(new Image(ADD_PATH_ROLLOVER)));
-      addLeft.setOnMouseExited(
            event -> addLeft.setImage(new Image(ADD_PATH)));
+
+      addLeft.setOnMouseExited(
+           event -> addLeft.setImage(new Image(ADD_PATH_ROLLOVER)));
    }
 
    /**
     * Adds the Tile to the right of the grid
     */
    private void addToRight() {
-      disableChoiceBoxes();
-      disableShiftButtons();
-      formattedTiles.removeLast();
-      formattedTiles.addLast(createImageView(tileToPlace.getImage(), tileToPlace.getAngle().get()));
-
-      gameboard.getSilkBag().addLast(axisContents.removeFirst());
-      if (axis == COLUMN) {
-         axisContents.forEach(tile -> {
-            tile.getCoordinate().increaseY(1);
+      Tile pushedOff = axisContents.removeFirst();
+      gameboard.getSilkBag().addLast(pushedOff);
+      gameboard.getTiles().remove(pushedOff.getCoordinate());
+      axisContents.forEach(tile -> {
+         if (axis == COLUMN) {
             tile.getCoordinate().setX(index);
-         });
-         tileToPlace.setCoordinate(new Coordinate(index, 0));
-         axisContents.addLast(tileToPlace);
-      } else if (axis == ROW) {
-         axisContents.forEach(tile -> {
+            tile.getCoordinate().decreaseY(1);
+         } else if (axis == ROW) {
             tile.getCoordinate().decreaseX(1);
             tile.getCoordinate().setY(index);
-         });
+         }
+         gameboard.getTiles().set(tile.getCoordinate(), tile);
+      });
+      if (axis == COLUMN) {
+         tileToPlace.setCoordinate(new Coordinate(index, gameboard.getHeight()-1 ));
+      } else if (axis == ROW) {
          tileToPlace.setCoordinate(new Coordinate(gameboard.getWidth() - 1, index));
-         axisContents.addLast(tileToPlace);
       }
-      populateGrid();
+      gameboard.getTiles().set(tileToPlace.getCoordinate(), tileToPlace);
+   controller.refresh();
+   stage.close();
    }
 
    /**
     * Adds the tile to the left of the grid
     */
    private void addToLeft() {
-      disableChoiceBoxes();
-      disableShiftButtons();
-      formattedTiles.removeFirst();
-      formattedTiles
-           .addFirst(createImageView(tileToPlace.getImage(), tileToPlace.getAngle().get()));
-      gameboard.getSilkBag().addLast(axisContents.removeLast());
-      if (axis == COLUMN) {
-         axisContents.forEach(tile -> {
-            tile.getCoordinate().decreaseY(1);
+      Tile pushedOff = axisContents.removeLast();
+      gameboard.getSilkBag().addLast(pushedOff);
+      gameboard.getTiles().remove(pushedOff.getCoordinate());
+      axisContents.forEach(tile -> {
+         if (axis == COLUMN) {
             tile.getCoordinate().setX(index);
-         });
-         tileToPlace.setCoordinate(new Coordinate(index, gameboard.getHeight() - 1));
-         axisContents.addLast(tileToPlace);
-      } else if (axis == ROW) {
-         axisContents.forEach(tile -> {
+            tile.getCoordinate().increaseY(1);
+
+         } else if (axis == ROW) {
             tile.getCoordinate().increaseX(1);
             tile.getCoordinate().setY(index);
-         });
+         }
+         gameboard.getTiles().set(tile.getCoordinate(), tile);
+      });
+      if (axis == COLUMN) {
+         tileToPlace.setCoordinate(new Coordinate(index, 0 ));
+      } else if (axis == ROW) {
          tileToPlace.setCoordinate(new Coordinate(0, index));
-         axisContents.addLast(tileToPlace);
       }
-      populateGrid();
+      gameboard.getTiles().set(tileToPlace.getCoordinate(), tileToPlace);
+      controller.refresh();
+      stage.close();
    }
 
    /**
@@ -362,9 +355,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     */
    private void enableChoiceBoxes() {
       comAxis.setDisable(false);
-      comAxis.getSelectionModel().selectFirst();
       comIndex.setDisable(false);
-      comIndex.getSelectionModel().selectFirst();
    }
 
    /**
@@ -401,15 +392,12 @@ public class MoveTileDialogController implements InitialisableWithParameters {
       updateWindowSize();
    }
 
-   public void cmdResetClicked(MouseEvent mouseEvent) {
-      initialise();
-   }
-
+   /*
    public void cmdConfirmClicked(MouseEvent mouseEvent) {
       axisContents.forEach(tile -> gameboard.getTiles().set(tile.getCoordinate(), tile));
       this.stage.close();
    }
-
+*/
    public void cmdRotateClick(MouseEvent mouseEvent) {
       imgTile.setRotate(imgTile.getRotate()+90);
       tileToPlace.setAngle(Angle.toAngle(imgTile.getRotate()));
