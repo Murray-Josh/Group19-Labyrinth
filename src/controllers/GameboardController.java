@@ -288,6 +288,7 @@ public class GameboardController
                 placePlayer(gameboard.getPlayers());
             });
                 if(activePlayerMovementLeft == 0) {
+                        activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                         iterateTempPlayerCounter();
                         playerTurn();
                 }
@@ -328,7 +329,8 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
+//         Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
+        Effect chosenEffect = PlayerEffect.BACKTRACK; // temp for backtrack
         if (chosenEffect instanceof TileEffect) {
             displayTileSelectionDialog(chosenEffect);
 
@@ -339,9 +341,8 @@ public class GameboardController
                  */
             } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
                 Player chosenPlayer = displayPlayerSelectionDialog();
-                /*
-                TODO Apply backtrack to player and whatever needs to happen then
-                 */
+                backTrackLim(chosenPlayer, activePlayer);
+                refresh();
             }
         }
         lstEffects.getItems().remove(chosenEffect);
@@ -394,6 +395,7 @@ public class GameboardController
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 showExitDialog();
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
+                activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 playerTurn();
             } else if (event.getCode().isArrowKey()) {
@@ -418,6 +420,7 @@ public class GameboardController
             }
         }
         else {
+            activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
             iterateTempPlayerCounter();
             skip = true;
             refresh();
