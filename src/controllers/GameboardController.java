@@ -335,20 +335,19 @@ public class GameboardController
         } else if (chosenEffect instanceof PlayerEffect) {
             if (chosenEffect.equals(PlayerEffect.DOUBLE_MOVE)) {
                 /*
-                TODO
-                Apply effect to the player
+                TODO Apply effect to the player
                  */
             } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
                 Player chosenPlayer = displayPlayerSelectionDialog();
                 /*
-                TODO
-                Apply backtrack to player and whatever needs to happen then
+                TODO Apply backtrack to player and whatever needs to happen then
                  */
             }
         }
         lstEffects.getItems().remove(chosenEffect);
         activePlayer.getHand().remove(chosenEffect);
         cmdActivate.setDisable(true);
+        /*TODO: Stop the player from moving! */
     }
 
     public Player displayPlayerSelectionDialog() {
@@ -551,6 +550,13 @@ public class GameboardController
         } else {
             tempPlayerCounter = 0;
         }
+    }
+
+    /*
+    TODO
+    Make this work pretty please!!! <3
+     */
+    public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
     }
 }
 
