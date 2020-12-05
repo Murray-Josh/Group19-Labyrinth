@@ -33,10 +33,9 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     * Window and Tile sizes used in this class
     */
    private static final int TILE_PREVIEW_WIDTH = 128;
-   private static final int WINDOW_MIN_WIDTH = 766;
-   private static final int TILE_SIZE = 80;
-   private static final int WINDOW_MIN_HEIGHT = 219;
-   private static final int WINDOW_MAX_HEIGHT = WINDOW_MIN_HEIGHT + TILE_SIZE;
+   private static final int WINDOW_MIN_WIDTH = 638 + TILE_PREVIEW_WIDTH;
+   private static final int TILE_SIZE = 100;
+   private static final int WINDOW_MAX_HEIGHT = 400 + TILE_SIZE;
    /**
     * Paths to the add tile button assets
     */
@@ -184,29 +183,37 @@ public class MoveTileDialogController implements InitialisableWithParameters {
       for (int i = 0; i < formattedTiles.size(); i++) {
          grdTiles.add(formattedTiles.get(i), i, 0);
       }
-
+      updateWindowSize();
    }
 
    /**
     * Calculates and sets the Window size based on the amount of tiles in the Grid
     */
    private void updateWindowSize() {
-      final double GRID_WIDTH = grdTiles.getColumnConstraints().size() * TILE_SIZE;
-      if (grdTiles.getRowConstraints().size() == 0) {
-         rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT);
-      } else if (GRID_WIDTH < WINDOW_MIN_WIDTH) {
-         rootPane.setMinSize(WINDOW_MIN_WIDTH, WINDOW_MAX_HEIGHT);
-         grdTiles.setMinSize(GRID_WIDTH, TILE_SIZE);
+      stage.setResizable(false);
+      stage.setMaxHeight(WINDOW_MAX_HEIGHT);
+      stage.setMinHeight(WINDOW_MAX_HEIGHT);
+      rootPane.setMinHeight(WINDOW_MAX_HEIGHT);
+      rootPane.setMaxHeight(WINDOW_MAX_HEIGHT);
+      rootPane.setPrefHeight(WINDOW_MAX_HEIGHT);
+
+      double width = (grdTiles.getColumnConstraints().size() * TILE_SIZE) + TILE_PREVIEW_WIDTH;
+      if (WINDOW_MIN_WIDTH > width) {
+         stage.setMinWidth(WINDOW_MIN_WIDTH);
+         stage.setMaxWidth(WINDOW_MIN_WIDTH);
+         rootPane.setMinWidth(WINDOW_MIN_WIDTH);
+         rootPane.setMaxWidth(WINDOW_MIN_WIDTH);
+         rootPane.setPrefWidth(WINDOW_MIN_WIDTH);
       } else {
-         rootPane.setMinSize(GRID_WIDTH + TILE_PREVIEW_WIDTH, WINDOW_MAX_HEIGHT);
-         grdTiles.setMinSize(GRID_WIDTH, TILE_SIZE);
+         stage.setMaxWidth(width);
+         stage.setMinWidth(width);
+         rootPane.setMaxWidth(width);
+         rootPane.setMinWidth(width);
+         rootPane.setPrefWidth(width);
       }
-
-      rootPane.setMaxSize(rootPane.getMaxWidth(), WINDOW_MAX_HEIGHT);
-      rootPane.setPrefSize(rootPane.getMinWidth(), WINDOW_MAX_HEIGHT);
-
-      grdTiles.setMaxSize(GRID_WIDTH, TILE_SIZE);
-      grdTiles.setPrefSize(GRID_WIDTH, TILE_SIZE);
+      grdTiles.setMaxSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
+      grdTiles.setMinSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
+      grdTiles.setPrefSize(grdTiles.getColumnConstraints().size() * TILE_SIZE, TILE_SIZE);
    }
 
    /**
@@ -378,6 +385,8 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     * AddLeft and AddRight Buttons
     */
    private void defineGridSize() {
+      grdTiles.getColumnConstraints().clear();
+      grdTiles.getRowConstraints().clear();
       final int PERCENT_WIDTH = 100 / axisContents.size() + 2;
 
       RowConstraints row = new RowConstraints();

@@ -336,7 +336,7 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        showTileShifts(new Tile(TileType.CORNER, this.style, Angle.UP, false), this.gameboard);
+        showTileShifts(new Tile(TileType.GOAL, this.style, Angle.UP, false), this.gameboard);
     }
 
 

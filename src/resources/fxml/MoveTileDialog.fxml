@@ -6,33 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" minHeight="360.0" minWidth="765.0" prefHeight="366.0" prefWidth="765.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
+<AnchorPane fx:id="rootPane" maxHeight="319.0" minHeight="319.0" minWidth="761.0" prefHeight="319.0" prefWidth="761.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
   <children>
-    <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="640.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
-      <bottom>
-        <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-          <children>
-            <Button fx:id="cmdConfirm" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdConfirmClicked" prefHeight="29.0" prefWidth="138.0" text="Confirm Shift">
-              <HBox.margin>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-              </HBox.margin>
-            </Button>
-            <Button fx:id="cmdReset" contentDisplay="CENTER" layoutX="260.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#cmdResetClicked" prefHeight="29.0" prefWidth="138.0" text="Reset">
-              <HBox.margin>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-              </HBox.margin>
-            </Button>
-            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-          </children>
-        </HBox>
-      </bottom>
+    <BorderPane prefHeight="360.0" prefWidth="640.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
       <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
           <children>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="638.0" VBox.vgrow="NEVER">
               <children>
-                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Row or Column?" HBox.hgrow="ALWAYS">
+                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Row or Column?" HBox.hgrow="NEVER">
                   <HBox.margin>
                     <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
@@ -40,12 +22,12 @@
                     <Insets />
                   </opaqueInsets>
                 </Label>
-                <ChoiceBox fx:id="comAxis" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <ChoiceBox fx:id="comAxis" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="127.0" HBox.hgrow="NEVER">
                   <HBox.margin>
                     <Insets bottom="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
                 </ChoiceBox>
-                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Number:" HBox.hgrow="ALWAYS">
+                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Number:" HBox.hgrow="NEVER">
                   <HBox.margin>
                     <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
@@ -53,22 +35,22 @@
                     <Insets />
                   </opaqueInsets>
                 </Label>
-                <ChoiceBox fx:id="comIndex" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <ChoiceBox fx:id="comIndex" maxWidth="1.7976931348623157E308" prefHeight="32.0" prefWidth="56.0" HBox.hgrow="NEVER">
                   <HBox.margin>
                     <Insets bottom="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
                 </ChoiceBox>
               </children>
             </HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+            <VBox prefHeight="111.0" prefWidth="638.0" VBox.vgrow="ALWAYS">
               <children>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="32.0" prefWidth="638.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="32.0" prefWidth="446.0" VBox.vgrow="NEVER">
                   <children>
                     <Label fx:id="lblLeft" layoutX="14.0" layoutY="17.0" text="left" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0" />
                     <Label fx:id="lblRight" layoutX="513.0" layoutY="18.0" text="right" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
                   </children>
                 </AnchorPane>
-                <GridPane fx:id="grdTiles" VBox.vgrow="ALWAYS">
+                <GridPane fx:id="grdTiles" maxHeight="100.0" maxWidth="400.0" minHeight="100.0" minWidth="400.0" prefHeight="100.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                   <VBox.margin>
                     <Insets />
                   </VBox.margin>
@@ -82,6 +64,22 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                   </rowConstraints>
                 </GridPane>
+                    <HBox prefHeight="40.0" prefWidth="200.0">
+                      <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="cmdConfirm" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdConfirmClicked" prefHeight="29.0" prefWidth="138.0" text="Confirm Shift">
+                          <HBox.margin>
+                            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                          </HBox.margin>
+                        </Button>
+                        <Button fx:id="cmdReset" contentDisplay="CENTER" layoutX="260.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#cmdResetClicked" prefHeight="29.0" prefWidth="138.0" text="Reset">
+                          <HBox.margin>
+                            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                          </HBox.margin>
+                        </Button>
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                      </children>
+                    </HBox>
               </children>
             </VBox>
           </children>
