@@ -102,7 +102,7 @@ public class GameboardController
     private Coordinate temp = null;
     private PlayerMovement pMove = new PlayerMovement(gameboard);
     private boolean skip = false;
-        
+
 
     /**
      * Called from the {@link StageController}, allows the passage of parameters between scenes
@@ -214,15 +214,31 @@ public class GameboardController
     /**
      * playerturn order stuff
      */
-    private void playerTurn() {
-            // Is silk bag working?
+    private void playerTurn()  {
+        // Is silk bag working?
         cmdActivate.setDisable(false);
-        setStatus(SILK_BAG_DRAW);
+        setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
+        drawTile();
+        System.out.println(newTileToPlace.getClass());
+
+        if(newTileToPlace.getClass() == PlayerEffect.class){
+            activePlayer.addToHand((Effect) newTileToPlace);
+
+        }
+        else if(newTileToPlace.getClass() == TileEffect.class){
+            activePlayer.addToHand((Effect) newTileToPlace);
+        }
+        else if(newTileToPlace.getClass() == Tile.class){
+            System.out.println("CLASSS TILES");
+            showTileShifts((Tile) newTileToPlace, gameboard);
+        }
+
+
         String playerMoveText = "";
-        if(skip && tempPlayerCounter != 0) {
-                playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
-        } else if(skip && tempPlayerCounter == 0) {
-                playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
+        if (skip && tempPlayerCounter != 0) {
+            playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
+        } else if (skip && tempPlayerCounter == 0) {
+            playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
         }
         playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
         setStatus(playerMoveText);
@@ -230,6 +246,7 @@ public class GameboardController
         activePlayerMovementLeft = MOVE_COUNT;
         skip = false;
         temp = null;
+
         refresh();
     }
 
@@ -287,11 +304,15 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
-                if(activePlayerMovementLeft == 0) {
-                        activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
-                        iterateTempPlayerCounter();
-                        playerTurn();
-                }
+            /*
+            if (activePlayerMovementLeft == 0) {
+                activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
+                iterateTempPlayerCounter();
+                System.out.println("NEXT TURN REFRESH");
+                playerTurn();
+            }
+
+             */
         } else {
             showError(ErrorMsg.BOARD_REFRESH_ERROR, Title.CRIT_ERROR, false);
             changeScene(Window.SETUP);
@@ -395,6 +416,7 @@ public class GameboardController
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
+                System.out.println("NEXT TURN");
                 playerTurn();
             } else if (event.getCode().isArrowKey()) {
                 temp = activePlayer.getCoordinate();
@@ -416,8 +438,7 @@ public class GameboardController
                 }
                 refresh();
             }
-        }
-        else {
+        } else {
             activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
             iterateTempPlayerCounter();
             skip = true;
@@ -428,13 +449,13 @@ public class GameboardController
 
     private boolean checkTilesAligned() {
         Boolean[] t = pMove.tilesAligned(activePlayer, this.gameboard);
-        for(int i = 0; i < MOVE_COUNT; i++) {
+        for (int i = 0; i < MOVE_COUNT; i++) {
             if (t[i]) {
                 return true;
             }
         }
         return false;
-    }  
+    }
 
     private void showExitDialog() {
         Scene scene = null;
@@ -511,6 +532,7 @@ public class GameboardController
 
     /**
      * Enable the activate button when an item has been clicked
+     *
      * @param mouseEvent Event
      */
     public void lstEffectClick(MouseEvent mouseEvent) {
@@ -542,7 +564,6 @@ public class GameboardController
     }
 
 
-
     public void iterateTempPlayerCounter() {
         if (tempPlayerCounter < this.gameboard.getPlayersCount() - 1) {
             tempPlayerCounter += 1;
@@ -558,6 +579,15 @@ public class GameboardController
     Make this work pretty please!!! <3
      */
     public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+    }
+
+    public void isNextTurn(){
+        if (activePlayerMovementLeft == 0) {
+            activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
+            iterateTempPlayerCounter();
+            System.out.println("NEXT TURN REFRESH");
+            playerTurn();
+        }
     }
 }
 
