@@ -55,6 +55,7 @@ public class GameboardController
     private static final double WINDOW_HEIGHT = 34;
     private static final double WINDOW_WIDTH = 340;
     private static final int PLAYER_SIZE = 60;
+    private final int MOVE_COUNT = 4;
 
     private static final String FORMATTING_PLAYERS =
             "Formatting Players";
@@ -85,20 +86,17 @@ public class GameboardController
     @FXML
     private Button cmdSilkBag;
 
-
     private ArrayList<Player> players;
-
-
     private Level level;
     private Gameboard gameboard;
-
     private int tempPlayerCounter = 0;
-
     private Holdable newTileToPlace;
     private PlayerMovement playerMovement;
     private Player activePlayer;
     private boolean playerMoving;
-    private int activePlayerMovementLeft = 4;
+    private int activePlayerMovementLeft = MOVE_COUNT;
+    private Coordinate temp = null;
+        
 
     /**
      * Called from the {@link StageController}, allows the passage of parameters between scenes
@@ -114,8 +112,7 @@ public class GameboardController
         formatPlayers();
         startKeyListener(scene);
         activePlayer = players.get(tempPlayerCounter);
-        //playerTurn();
-
+        playerTurn();
     }
 
     /**
@@ -212,22 +209,15 @@ public class GameboardController
      * playerturn order stuff
      */
     private void playerTurn() {
-        // Draw from silk bag
+            // Is silk bag working?
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
-        String playerMoveText =
-                "Player: " + tempPlayerCounter + 1 + " move";
-      /*
-      Logic
-      Silk bag set to true
-      Silk bag set to
-       */
-        refresh();
         activePlayer = players.get(tempPlayerCounter);
+        String playerMoveText = "Player: " + (tempPlayerCounter + 1) + " move";
         setStatus(playerMoveText);
-        activePlayerMovementLeft = 4;
-
-
+        activePlayerMovementLeft = MOVE_COUNT;
+        temp = null;
+        refresh();
     }
 
     /**
@@ -271,7 +261,6 @@ public class GameboardController
      */
     public void refresh() {
         if (gameboard != null) {
-            //setStatus(REFRESHING);
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
@@ -286,7 +275,10 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
-            //setStatus(REFRESH_COMPLETE);
+                if(activePlayerMovementLeft == 0) {
+                        iterateTempPlayerCounter();
+                        playerTurn();
+                }
         } else {
             showError(ErrorMsg.BOARD_REFRESH_ERROR, Title.CRIT_ERROR, false);
             changeScene(Window.SETUP);
@@ -349,10 +341,12 @@ public class GameboardController
         if (playerMoving && activePlayerMovementLeft > 0) {
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 showExitDialog();
+            } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
+                iterateTempPlayerCounter();
+                playerTurn();
             } else if (event.getCode().isArrowKey()) {
-                Coordinate temp = activePlayer.getCoordinate();
+                temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
-                refresh();
                 if (winCheck()) {
                     System.out.println(activePlayer + " has won!!");
                     for (Player ps : players) {
@@ -368,12 +362,8 @@ public class GameboardController
                 if (temp != activePlayer.getCoordinate()) {
                     activePlayerMovementLeft -= 1;
                 }
+                refresh();
             }
-        } else if (activePlayerMovementLeft == 0) {
-            iterateTempPlayerCounter();
-            System.out.println(tempPlayerCounter);
-            System.out.println(activePlayer.getPlayerNum());
-            playerTurn();
         }
     }
 
