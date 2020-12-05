@@ -15,21 +15,21 @@ import javafx.scene.image.Image;
 public class MouseStyle extends Style implements Serializable {
 
    static {
-      PLAYER_ONE = new Image("resources/styles/mouse/mouse_one.png");
-      PLAYER_TWO = new Image("resources/styles/mouse/mouse_two.png");
-      PLAYER_THREE = new Image("resources/styles/mouse/mouse_three.png");
-      PLAYER_FOUR = new Image("resources/styles/mouse/mouse_four.png");
-      STRAIGHT_TILE = new Image("resources/styles/mouse/mouse_str.png");
-      STRAIGHT_FIRE = new Image("resources/styles/mouse/mouse_str_fire.png");
-      STRAIGHT_ICE = new Image("resources/styles/mouse/mouse_str_ice.png");
-      CORNER_TILE = new Image("resources/styles/mouse/mouse_corner.png");
-      CORNER_FIRE = new Image("resources/styles/mouse/mouse_corner_fire.png");
-      CORNER_ICE = new Image("resources/styles/mouse/mouse_corner_ice.png");
-      JUNCTION_TILE = new Image("resources/styles/mouse/mouse_junction.png");
-      JUNCTION_FIRE = new Image("resources/styles/mouse/mouse_junction_fire.png");
-      JUNCTION_ICE = new Image("resources/styles/mouse/mouse_junction_ice.png");
-      GOAL_TILE = new Image("resources/styles/mouse/mouse_goal.png");
-      GAMEBOARD = new Image("resources/styles/mouse/mouse_background.png");
+      PLAYER_ONE = new Image("resources/styles/mouse/one.png");
+      PLAYER_TWO = new Image("resources/styles/mouse/two.png");
+      PLAYER_THREE = new Image("resources/styles/mouse/three.png");
+      PLAYER_FOUR = new Image("resources/styles/mouse/four.png");
+      STRAIGHT_TILE = new Image("resources/styles/mouse/str.png");
+      STRAIGHT_FIRE = new Image("resources/styles/mouse/str_fire.png");
+      STRAIGHT_ICE = new Image("resources/styles/mouse/str_ice.png");
+      CORNER_TILE = new Image("resources/styles/mouse/corner.png");
+      CORNER_FIRE = new Image("resources/styles/mouse/corner_fire.png");
+      CORNER_ICE = new Image("resources/styles/mouse/corner_ice.png");
+      JUNCTION_TILE = new Image("resources/styles/mouse/junction.png");
+      JUNCTION_FIRE = new Image("resources/styles/mouse/junction_fire.png");
+      JUNCTION_ICE = new Image("resources/styles/mouse/junction_ice.png");
+      GOAL_TILE = new Image("resources/styles/mouse/goal.png");
+      GAMEBOARD = new Image("resources/styles/mouse/bor.png");
    }
 
    /**
