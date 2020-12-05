@@ -159,10 +159,8 @@ public class GameboardController
      */
     private void placePlayer(Player p) {
         ImageView image = new ImageView(p.getPlayerImage());
-        //if(p!= null) {
-        //    image.setRotate(p.getCurrentDirection().get());
-        //}
         image.setPreserveRatio(false);
+        image.setRotate(p.getCurrentDirection().get());
         image.setFitHeight(PLAYER_SIZE);
         image.setFitWidth(PLAYER_SIZE);
         grdBoard.add(image, p.getCoordinate().getX(), p.getCoordinate().getY());
@@ -326,7 +324,8 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        showTileShifts(new Tile(TileType.GOAL, this.gameboard.getStyle(), Angle.UP, false), this.gameboard);
+        showTileShifts(new Tile(TileType.GOAL, this.gameboard.getStyle(), Angle.UP, false),
+                this.gameboard);
     }
 
 
@@ -337,8 +336,7 @@ public class GameboardController
      */
     public boolean winCheck() {
         return gameboard.getTiles().get(activePlayer.getCoordinate()).getType()
-                .equals(
-                        TileType.GOAL);
+                .equals(TileType.GOAL);
     }
 
     private void startKeyListener(Scene scene) {
@@ -384,10 +382,8 @@ public class GameboardController
         Scene scene = null;
         Stage stage = new Stage();
         try {
-            FXMLLoader loader = new FXMLLoader(StageController.class
-                    .getResource(
-                            Window.EXIT
-                                    .getPath()));
+            FXMLLoader loader = new FXMLLoader(
+                    StageController.class.getResource(Window.EXIT.getPath()));
             Parent root = loader.load();
             InitialisableWithParameters controller = loader.getController();
             scene = new Scene(root);
@@ -442,8 +438,7 @@ public class GameboardController
             Parent root = loader.load();
             InitialisableWithParameters controller = loader.getController();
             scene = new Scene(root);
-            controller.initialiseWithParameters(
-                    new Object[]{tile, gameboard, this}, scene, stage);
+            controller.initialiseWithParameters(new Object[]{tile, gameboard, this}, scene, stage);
             stage.setTitle(Title.MAIN.toString());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
