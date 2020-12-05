@@ -368,6 +368,16 @@ public class GameboardController
             } else if (event.getCode().isArrowKey()) {
                 Coordinate temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
+                if (winCheck()) {
+                    System.out.println(activePlayer + " has won!!");
+                    for (Player ps : players) {
+                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
+                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
+                    }
+                    activePlayer.getProfile().setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
+                    activePlayer.getProfile().setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
+                    StageController.home();
+                }
                 if (temp != activePlayer.getCoordinate()) {
                     activePlayerMovementLeft -= 1;
                 }
