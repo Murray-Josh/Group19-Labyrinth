@@ -70,7 +70,6 @@ public class GameboardController
             "Refreshing Gameboard";
     private static final String REFRESH_COMPLETE =
             "Refreshing Gameboard";
-
     @FXML
     private BorderPane root;
     @FXML
@@ -215,8 +214,7 @@ public class GameboardController
         // Draw from silk bag
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
-        String playerMoveText =
-                "Player: " + this.activePlayer.getPlayerNum()+1 + " move" ;
+
       /*
       Logic
       Silk bag set to true
@@ -238,13 +236,11 @@ public class GameboardController
         if (winCheck()) {
             //somehow end the game
         } else {
-            refresh();
-
             tempPlayerCounter = iterateTempPlayerCounter();
             activePlayer = players.get(tempPlayerCounter);
-            setStatus(playerMoveText);
             activePlayerMovementLeft = 4;
 
+            refresh();
         }
 
     }
@@ -291,7 +287,7 @@ public class GameboardController
      */
     private void refresh() {
         if (gameboard != null) {
-            //setStatus(REFRESHING);
+            setStatus(REFRESHING);
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
@@ -306,7 +302,7 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
-            //setStatus(REFRESH_COMPLETE);
+            setStatus(REFRESH_COMPLETE);
         } else {
             showError(ErrorMsg.BOARD_REFRESH_ERROR, Title.CRIT_ERROR, false);
             changeScene(Window.SETUP);
@@ -372,16 +368,6 @@ public class GameboardController
             } else if (event.getCode().isArrowKey()) {
                 Coordinate temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
-                if (winCheck()) {
-                    System.out.println(activePlayer + " has won!!");
-                    for (Player ps : players) {
-                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
-                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
-                    }
-                    activePlayer.getProfile().setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
-                    activePlayer.getProfile().setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
-                    StageController.home();
-                }
                 if (temp != activePlayer.getCoordinate()) {
                     activePlayerMovementLeft -= 1;
                 }
