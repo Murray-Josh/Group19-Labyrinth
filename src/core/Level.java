@@ -31,6 +31,9 @@ public class Level {
     private static final int MAX_PLAYERS = 4;
     private ArrayList<Tile> fixed = new ArrayList<>();
     private ArrayList<Tile> movables = new ArrayList<>();
+
+
+
     private ArrayList<Effect> actions = new ArrayList<>();
     private int width;
     private int height;
@@ -109,6 +112,21 @@ public class Level {
      */
     public Level(String path) throws FileNotFoundException {
         readGameboardFile(path);
+    }
+
+    /** gets all the action tiles from the level
+     * @return Action Tiles
+     * */
+    public ArrayList<Effect> getActions() {
+        return actions;
+    }
+
+    /**
+     * Sets the action tiles of this level
+     * @param actions The new set of action tiles.
+     */
+    public void setActions(ArrayList<Effect> actions) {
+        this.actions = actions;
     }
 
     /**

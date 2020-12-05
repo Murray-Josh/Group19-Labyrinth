@@ -149,24 +149,28 @@ public class Gameboard implements Serializable {
             for(int j = 0; j < tiles.getHeight(); j++) {
                 if(tiles.get(i,j) == null) {
                     Tile temp = movableTiles.poll();
-                    temp.setCoordinate(new Coordinate(i,j));
-                    tiles.set(i, j, temp);
+                    if (temp != null) {
+                        temp.setCoordinate(new Coordinate(i, j));
+                        tiles.set(i, j, temp);
+                    } else {
+                        throw new NullPointerException("Not enough movable tiles to create a gameboard");
+                    }
                 }
             }
         }
-        /*
-        this.tiles.forEach(tile -> {
-            if (tile == null) {
-                if (!movableTiles.isEmpty()) {
-                    tiles.set(tile.getCoordinate(), movableTiles.poll());
-                } else {
-                    throw new NullPointerException("Not enough movable tiles");
-                }
-            }
-        });
         movable.retainAll(movableTiles);
-        this.silkBag= new SilkBag(movable);
-        */
+        createSilkBag(level, movable);
+    }
+
+    /**
+     * Creates a silkbag object from the leftover tiles and the action tiles from the level
+     * @param level Level file to get the action tiles from
+     * @param movable The leftover movable tiles
+     */
+    private void createSilkBag(Level level, ArrayList<Tile> movable) {
+
+        ArrayList<Holdable> combined = combine(movable, level.getActions());
+        this.silkBag=new SilkBag(combined);
     }
 
     /**

@@ -1,117 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="360.0" minWidth="765.0" prefHeight="366.0"
-  prefWidth="765.0"
-  stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controllers.MoveTileDialogController"
-  fx:id="rootPane">
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="rootPane" minHeight="360.0" minWidth="765.0" prefHeight="366.0" prefWidth="765.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
   <children>
-    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0"
-      AnchorPane.topAnchor="0.0"
-      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="360.0" prefWidth="640.0" styleClass="hbox">
+    <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="640.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
       <bottom>
-        <HBox BorderPane.alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+        <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
           <children>
-            <Button contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdConfirmClicked"
-              prefHeight="29.0" prefWidth="138.0" text="Confirm Shift"
-              fx:id="cmdConfirm">
+            <Button fx:id="cmdConfirm" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#cmdConfirmClicked" prefHeight="29.0" prefWidth="138.0" text="Confirm Shift">
               <HBox.margin>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
               </HBox.margin>
             </Button>
-            <Button contentDisplay="CENTER" layoutX="260.0" layoutY="17.0" mnemonicParsing="false"
-              onMouseClicked="#cmdResetClicked" prefHeight="29.0" prefWidth="138.0"
-              text="Reset" fx:id="cmdReset">
+            <Button fx:id="cmdReset" contentDisplay="CENTER" layoutX="260.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#cmdResetClicked" prefHeight="29.0" prefWidth="138.0" text="Reset">
               <HBox.margin>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
               </HBox.margin>
             </Button>
-            <Pane HBox.hgrow="ALWAYS" prefHeight="200.0" prefWidth="200.0"/>
-            <Pane HBox.hgrow="ALWAYS" layoutX="10.0" layoutY="10.0" prefHeight="200.0"
-              prefWidth="200.0"/>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
           </children>
         </HBox>
       </bottom>
       <center>
-        <VBox BorderPane.alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
           <children>
-            <HBox VBox.vgrow="NEVER" layoutX="10.0" layoutY="10.0" prefHeight="35.0"
-              prefWidth="638.0">
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="638.0" VBox.vgrow="NEVER">
               <children>
-                <ChoiceBox HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" fx:id="comAxis">
+                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Row or Column?" HBox.hgrow="ALWAYS">
                   <HBox.margin>
-                    <Insets bottom="14.0" right="14.0" top="14.0"/>
-                  </HBox.margin>
-                </ChoiceBox>
-                <ChoiceBox HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" fx:id="comIndex">
-                  <HBox.margin>
-                    <Insets bottom="14.0" right="14.0" top="14.0"/>
-                  </HBox.margin>
-                </ChoiceBox>
-                <Label HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" prefHeight="32.0"
-                  text="Number:">
-                  <HBox.margin>
-                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/>
+                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
                   <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                   </opaqueInsets>
                 </Label>
-                <Label HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" prefHeight="32.0"
-                  text="Row or Column?">
+                <ChoiceBox fx:id="comAxis" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                   <HBox.margin>
-                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/>
+                    <Insets bottom="14.0" right="14.0" top="14.0" />
+                  </HBox.margin>
+                </ChoiceBox>
+                <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Number:" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                    <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
                   </HBox.margin>
                   <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                   </opaqueInsets>
                 </Label>
+                <ChoiceBox fx:id="comIndex" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                    <Insets bottom="14.0" right="14.0" top="14.0" />
+                  </HBox.margin>
+                </ChoiceBox>
               </children>
             </HBox>
-            <VBox VBox.vgrow="ALWAYS" prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
               <children>
-                <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="32.0"
-                  prefWidth="638.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="32.0" prefWidth="638.0">
                   <children>
-                    <Label AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0" layoutX="14.0"
-                      layoutY="17.0" text="left"
-                      fx:id="lblLeft"/>
-                    <Label AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" layoutX="513.0"
-                      layoutY="18.0" text="right"
-                      fx:id="lblRight"/>
+                    <Label fx:id="lblLeft" layoutX="14.0" layoutY="17.0" text="left" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0" />
+                    <Label fx:id="lblRight" layoutX="513.0" layoutY="18.0" text="right" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
                   </children>
                 </AnchorPane>
-                <GridPane VBox.vgrow="ALWAYS" fx:id="grdTiles">
+                <GridPane fx:id="grdTiles" VBox.vgrow="ALWAYS">
                   <VBox.margin>
-                    <Insets/>
+                    <Insets />
                   </VBox.margin>
                   <columnConstraints>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0"
-                      prefWidth="100.0"/>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0"
-                      prefWidth="100.0"/>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0"
-                      prefWidth="100.0"/>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0"
-                      prefWidth="100.0"/>
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                   </columnConstraints>
                   <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER"
-                      vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                   </rowConstraints>
                 </GridPane>
               </children>
@@ -120,45 +88,38 @@
         </VBox>
       </center>
       <top>
-        <AnchorPane BorderPane.alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="83.0"
-          prefWidth="640.0">
+        <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="83.0" prefWidth="640.0" BorderPane.alignment="CENTER">
           <children>
-            <Label style="-fx-font-size: 38;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0"
-              layoutX="30.0" layoutY="37.0"
-              text="PLACE YOUR TILE"/>
+            <Label layoutX="30.0" layoutY="37.0" style="-fx-font-size: 38;" text="PLACE YOUR TILE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
           </children>
         </AnchorPane>
       </top>
     </BorderPane>
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" layoutX="640.0"
-      maxWidth="-Infinity"
-      minWidth="-Infinity" prefHeight="360.0" prefWidth="128.0"
-      styleClass="hbox">
+    <VBox layoutX="640.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="128.0" styleClass="hbox" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Pane VBox.vgrow="ALWAYS" prefHeight="200.0" prefWidth="200.0"/>
-        <Pane VBox.vgrow="ALWAYS" prefHeight="200.0" prefWidth="200.0"/>
-        <VBox VBox.vgrow="NEVER" prefHeight="200.0" prefWidth="100.0">
+        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+        <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="NEVER">
           <children>
-            <ImageView VBox.vgrow="NEVER" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true"
-              preserveRatio="true" fx:id="imgTile">
+            <Label alignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-font-size: 23;" text="Your Tile" textAlignment="CENTER" VBox.vgrow="NEVER">
               <VBox.margin>
-                <Insets/>
-              </VBox.margin>
-            </ImageView>
-            <Label style="-fx-font-size: 23;" VBox.vgrow="NEVER" alignment="CENTER" maxWidth="100.0"
-              minWidth="100.0" prefWidth="100.0" text="Your Tile" textAlignment="CENTER">
-              <VBox.margin>
-                <Insets bottom="14.0"/>
+                <Insets bottom="14.0" />
               </VBox.margin>
               <font>
-                <Font size="25.0"/>
+                <Font size="25.0" />
               </font>
             </Label>
+            <ImageView fx:id="imgTile" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+              <VBox.margin>
+                <Insets />
+              </VBox.margin>
+            </ImageView>
+                  <Button fx:id="cmdRotate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#cmdRotateClick" prefHeight="30.0" prefWidth="100.0" text="Rotate" />
           </children>
         </VBox>
+        <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
       </children>
       <padding>
-        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0"/>
+        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
       </padding>
     </VBox>
   </children>

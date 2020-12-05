@@ -1,5 +1,5 @@
 package constants;
-
+import static java.lang.Math.abs;
 /**
  * Specifies and finalised specific angles entities can use
  *
@@ -30,18 +30,13 @@ public enum Angle {
      * @return Angle corresponding to specified value
      */
     public static Angle toAngle(double value) {
+        /* make the inputted value between 0-360 and positive */
+        value = abs(value % 360);
         switch ((int) value) {
-            case 0:
-            case 360:
-                return Angle.DOWN;
-            case 90:
-                return Angle.LEFT;
-            case 180:
-                return Angle.UP;
-            case 270:
-                return Angle.RIGHT;
-            default:
-                throw new IllegalArgumentException("Not an Angle Constant");
+            case 180:return Angle.UP;
+            case 90:return Angle.LEFT;
+            case 270:return Angle.RIGHT;
+            default : return Angle.DOWN;
         }
     }
 

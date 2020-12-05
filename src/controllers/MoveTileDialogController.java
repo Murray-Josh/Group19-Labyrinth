@@ -34,7 +34,7 @@ public class MoveTileDialogController implements InitialisableWithParameters {
     */
    private static final int TILE_PREVIEW_WIDTH = 128;
    private static final int WINDOW_MIN_WIDTH = 766;
-   private static final int TILE_SIZE = 100;
+   private static final int TILE_SIZE = 80;
    private static final int WINDOW_MIN_HEIGHT = 219;
    private static final int WINDOW_MAX_HEIGHT = WINDOW_MIN_HEIGHT + TILE_SIZE;
    /**
@@ -399,6 +399,11 @@ public class MoveTileDialogController implements InitialisableWithParameters {
    public void cmdConfirmClicked(MouseEvent mouseEvent) {
       axisContents.forEach(tile -> gameboard.getTiles().set(tile.getCoordinate(), tile));
       this.stage.close();
+   }
+
+   public void cmdRotateClick(MouseEvent mouseEvent) {
+      imgTile.setRotate(imgTile.getRotate()+90);
+      tileToPlace.setAngle(Angle.toAngle(imgTile.getRotate()));
    }
 
 
