@@ -271,16 +271,14 @@ public class PlayerMovement {
      */
     public void backMovement(Player player){
         Coordinate[] tiles = player.getLastTwoCoordinates();
-        Tile previousTile = gameboard.getTiles().get(tiles[1]);
-        Tile preferredTile = gameboard.getTiles().get(tiles[2]);
-        if(!isOnFire(previousTile) && tiles[1] != null && !isPlayerOnTile(previousTile)){
-            if(!isOnFire(preferredTile) && tiles[2] != null && !isPlayerOnTile(preferredTile)){
-                player.setCoordinate(tiles[2]);
-            } else {
+        Tile previousTile = gameboard.getTiles().get(tiles[0]);
+        Tile preferredTile = gameboard.getTiles().get(tiles[1]);
+        if(!isOnFire(previousTile) && !isPlayerOnTile(previousTile)){
+            if(!isOnFire(preferredTile) && !isPlayerOnTile(preferredTile)){
                 player.setCoordinate(tiles[1]);
+            } else {
+                player.setCoordinate(tiles[0]);
             }
-        } else {
-            player.setCoordinate(tiles[0]);
         }
     }
 
