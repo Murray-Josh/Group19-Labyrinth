@@ -336,9 +336,7 @@ public class GameboardController
 
         } else if (chosenEffect instanceof PlayerEffect) {
             if (chosenEffect.equals(PlayerEffect.DOUBLE_MOVE)) {
-                /*
-                TODO Apply effect to the player
-                 */
+                activePlayerMovementLeft = (2 * MOVE_COUNT) - (MOVE_COUNT - activePlayerMovementLeft);
             } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
                 Player chosenPlayer = displayPlayerSelectionDialog();
                 backTrackLim(chosenPlayer, activePlayer);
