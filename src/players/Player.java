@@ -27,13 +27,14 @@ import java.util.Stack;
 public class Player implements Serializable {
     private ArrayList<Effect> hand;
     private PlayerProfile profile;
-    public Stack<Coordinate> coordinateHistory;     //made this public so i can use it in the backtracking method in player movement, i hope thats okay :)
+    private Stack<Coordinate> coordinateHistory;
     private Style style;
     private int playerNum;
     private Angle currentDirection;
     private PlayerEffect activeEffect;
     private Image playerImage;
     private boolean beenBackTracked;
+    private int[] moves = new int[]{0, 0};
 
 
 
@@ -120,14 +121,33 @@ public class Player implements Serializable {
         return coordinateHistory.peek();
     }
 
+    /**
+     * Gets the coordinates at the start of previous two turns
+     * @return Array of coordinates
+     */
     public Coordinate[] getLastTwoCoordinates() {
-        Stack<Coordinate> temp = coordinateHistory;
-        Coordinate firstTile = temp.pop();
-        Coordinate secondTile = temp.pop();
-        Coordinate thirdTile = temp.pop();
-        return new Coordinate[]{firstTile, secondTile, thirdTile};
+        Stack<Coordinate> temp = (Stack<Coordinate>) coordinateHistory.clone();
+        Coordinate firstTile = null;
+        Coordinate secondTile = null;
+        for (int i = 0; i < moves[0]; i++) {
+            firstTile = temp.pop();
+        }
+        firstTile = temp.peek();
+        for (int j = 0; j < moves[1]; j++) {
+            secondTile = temp.pop();
+        }
+        secondTile = temp.peek();
+        return new Coordinate[]{firstTile, secondTile};
     }
 
+    /**
+     * Sets the number of moves a player took in the past turns
+     * @param i number of moves
+     */
+    public void setMoves(int i) {
+        moves[1] = moves[0];
+        moves[0] = i;
+    }
     /**
      * Sets coordinates of player on gameboard
      *
