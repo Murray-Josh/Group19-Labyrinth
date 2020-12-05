@@ -8,6 +8,7 @@ import constants.ErrorMsg;
 import constants.TileType;
 import constants.Title;
 import constants.Window;
+import core.Coordinate;
 import core.Gameboard;
 import core.Level;
 import core.Save;
@@ -289,7 +290,6 @@ public class GameboardController
             setStatus(REFRESHING);
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
             gameboard.getTiles().forEach(tile -> {
-                System.out.println(tile.toString());
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
                 if(tile.isFixed()) {
@@ -366,9 +366,11 @@ public class GameboardController
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 showExitDialog();
             } else if (event.getCode().isArrowKey()) {
+                Coordinate temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
-                activePlayerMovementLeft -= 1;
-                refresh();
+                if (temp != activePlayer.getCoordinate()) {
+                    activePlayerMovementLeft -= 1;
+                }
             }
         } else if (activePlayerMovementLeft == 0) {
             playerTurn();
