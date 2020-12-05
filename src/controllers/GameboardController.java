@@ -401,10 +401,10 @@ public class GameboardController
                 temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
                 if (winCheck()) {
-                    System.out.println(activePlayer + " has won!!");
-                    for (Player ps : players) {
-                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
-                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
+                    for (int i = 0; i < players.size(); i++) {
+                        Player pl = players.get(i);
+                        pl.getProfile().setNumOfGames(pl.getProfile().getNumOfGames() + 1);
+                        pl.getProfile().setNumOfLosses(pl.getProfile().getNumOfLosses() + 1);
                     }
                     activePlayer.getProfile()
                             .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
