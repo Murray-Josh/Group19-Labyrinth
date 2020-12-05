@@ -12,12 +12,15 @@ import core.Coordinate;
 import core.Gameboard;
 import core.Level;
 import core.Save;
+import holdables.Effect;
 import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
+import holdables.TileEffect;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -25,6 +28,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.effect.InnerShadow;
@@ -78,7 +82,7 @@ public class GameboardController
     @FXML
     private VBox vboxPlayers;
     @FXML
-    private ListView<String> lstEffects;
+    private ListView<Effect> lstEffects;
     @FXML
     private Button cmdActivate;
     @FXML
@@ -224,9 +228,8 @@ public class GameboardController
      * Adds each effect in the active player's hand to the listview of effects
      */
     public void displayPlayerHand() {
-        ArrayList<String> hand = new ArrayList<>();
-        activePlayer.getHand().forEach(item -> hand.add(item.toString()));
-        lstEffects.getItems().setAll(hand);
+        lstEffects.getItems().clear();
+        lstEffects.getItems().setAll(activePlayer.getHand());
     }
 
     /**
@@ -316,8 +319,49 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        showTileShifts(new Tile(TileType.GOAL, this.gameboard.getStyle(), Angle.UP, false),
-                this.gameboard);
+        Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
+        if (chosenEffect instanceof TileEffect) {
+            displayTileSelectionDialog(chosenEffect);
+
+        } else if (chosenEffect instanceof PlayerEffect) {
+            if (chosenEffect.equals(PlayerEffect.DOUBLE_MOVE)) {
+                /*
+                TODO
+                Apply effect to the player
+                 */
+            } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
+                Player chosenPlayer = displayPlayerSelectionDialog();
+                /*
+                TODO
+                Apply backtrack to player and whatever needs to happen then
+                 */
+            }
+        }
+        lstEffects.getItems().remove(chosenEffect);
+        activePlayer.getHand().remove(chosenEffect);
+        cmdActivate.setDisable(true);
+    }
+
+    public Player displayPlayerSelectionDialog() {
+        ChoiceDialog dialog = new ChoiceDialog();
+        dialog.setGraphic(null);
+        dialog.setHeaderText("Select a Player to Backtrack");
+        dialog.setContentText(null);
+        dialog.setTitle("Backtrack Player Selection");
+        dialog.getDialogPane().getStylesheets().add("./resources/css/dialog.css");
+        dialog.getItems().addAll(gameboard.getPlayers());
+        dialog.getItems().remove(activePlayer);
+        Optional<Player> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            dialog.close();
+            return null;
+        }
+    }
+
+    private void displayTileSelectionDialog(Effect chosenEffect) {
+
     }
 
 
@@ -441,8 +485,16 @@ public class GameboardController
         }
     }
 
+    /**
+     * Enable the activate button when an item has been clicked
+     * @param mouseEvent Event
+     */
     public void lstEffectClick(MouseEvent mouseEvent) {
-        lstEffects.getSelectionModel().getSelectedItem();
+        if (lstEffects.getSelectionModel().getSelectedItem() != null) {
+            cmdActivate.setDisable(false);
+        } else {
+            cmdActivate.setDisable(true);
+        }
     }
 
 

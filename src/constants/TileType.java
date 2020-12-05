@@ -39,4 +39,19 @@ public enum TileType {
         this.SOUTH = south;
         this.WEST = west;
     }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case CORNER:
+                return "Corner Tile";
+            case JUNCTION:
+                return "Junction Tile";
+            case GOAL:
+                return "Goal Tile";
+            case STRAIGHT:
+                return "Straight Tile";
+            default:return "Not a Tile Type";
+        }
+    }
 }

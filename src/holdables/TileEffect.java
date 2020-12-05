@@ -50,7 +50,7 @@ public enum TileEffect implements Holdable, Effect {
     public String toString() {
         switch (this) {
             case FIRE:
-                return "Set on Fire";
+                return "Ignite";
             case ICE:
                 return "Freeze";
             case NONE:
