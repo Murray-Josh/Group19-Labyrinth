@@ -56,6 +56,7 @@ public class GameboardController
     private static final int TILE_SIZE = 80;
     private static final double WINDOW_HEIGHT = 34;
     private static final double WINDOW_WIDTH = 340;
+    private static final int PLAYER_SIZE = 60;
 
     private static final String FORMATTING_PLAYERS =
             "Formatting Players";
@@ -161,8 +162,8 @@ public class GameboardController
     private void placePlayer(Player p) {
         ImageView image = new ImageView(p.getPlayerImage());
         image.setPreserveRatio(false);
-        image.setFitHeight(TILE_SIZE);
-        image.setFitWidth(TILE_SIZE);
+        image.setFitHeight(PLAYER_SIZE);
+        image.setFitWidth(PLAYER_SIZE);
         grdBoard.add(image, p.getCoordinate().getX(), p.getCoordinate().getY());
     }
 
@@ -216,7 +217,7 @@ public class GameboardController
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
         String playerMoveText =
-                "Player: " + this.activePlayer.getPlayerNum()+1 + " move" ;
+                "Player: " + tempPlayerCounter+1 + " move" ;
       /*
       Logic
       Silk bag set to true
@@ -240,7 +241,6 @@ public class GameboardController
         } else {
             refresh();
 
-            tempPlayerCounter = iterateTempPlayerCounter();
             activePlayer = players.get(tempPlayerCounter);
             setStatus(playerMoveText);
             activePlayerMovementLeft = 4;
