@@ -254,7 +254,11 @@ public class GameboardController
     }
 
 
-
+   /**
+    * limits each player to being able to be the target of backtrack only once per game
+    * @param targetPlayer
+    * @param player
+    */
     /**
      * Sets up the correct number of rows and columns according to parameters
      *
