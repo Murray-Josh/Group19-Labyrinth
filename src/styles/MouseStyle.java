@@ -22,12 +22,12 @@ public class MouseStyle extends Style implements Serializable {
       STRAIGHT_TILE = new Image("resources/styles/mouse/str.png");
       STRAIGHT_FIRE = new Image("resources/styles/mouse/str_fire.png");
       STRAIGHT_ICE = new Image("resources/styles/mouse/str_ice.png");
-      CORNER_TILE = new Image("resources/styles/mouse/corner.png");
-      CORNER_FIRE = new Image("resources/styles/mouse/corner_fire.png");
-      CORNER_ICE = new Image("resources/styles/mouse/corner_ice.png");
-      JUNCTION_TILE = new Image("resources/styles/mouse/junction.png");
-      JUNCTION_FIRE = new Image("resources/styles/mouse/junction_fire.png");
-      JUNCTION_ICE = new Image("resources/styles/mouse/junction_ice.png");
+      CORNER_TILE = new Image("resources/styles/mouse/cor.png");
+      CORNER_FIRE = new Image("resources/styles/mouse/cor_fire.png");
+      CORNER_ICE = new Image("resources/styles/mouse/cor_ice.png");
+      JUNCTION_TILE = new Image("resources/styles/mouse/jun.png");
+      JUNCTION_FIRE = new Image("resources/styles/mouse/jun_fire.png");
+      JUNCTION_ICE = new Image("resources/styles/mouse/jun_ice.png");
       GOAL_TILE = new Image("resources/styles/mouse/goal.png");
       GAMEBOARD = new Image("resources/styles/mouse/bor.png");
    }
