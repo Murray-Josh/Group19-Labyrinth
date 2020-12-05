@@ -14,11 +14,7 @@ public enum TileType {
     STRAIGHT(false, true, false, true),
     CORNER(false, true, true, false),
     JUNCTION(false, true, true, true),
-    GOAL(true, true, true, true),
-    DOUBLE_MOVE(false, false, false, false),
-    BACKTRACK(false, false, false, false),
-    FIRE(false, false, false, false),
-    ICE(false, false, false, false);
+    GOAL(true, true, true, true);
 
     private final boolean NORTH;
     private final boolean EAST;
@@ -38,20 +34,5 @@ public enum TileType {
         this.EAST = east;
         this.SOUTH = south;
         this.WEST = west;
-    }
-
-    @Override
-    public String toString() {
-        switch (this) {
-            case CORNER:
-                return "Corner Tile";
-            case JUNCTION:
-                return "Junction Tile";
-            case GOAL:
-                return "Goal Tile";
-            case STRAIGHT:
-                return "Straight Tile";
-            default:return "Not a Tile Type";
-        }
     }
 }
