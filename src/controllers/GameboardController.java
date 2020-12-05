@@ -12,11 +12,9 @@ import core.Coordinate;
 import core.Gameboard;
 import core.Level;
 import core.Save;
-import holdables.Effect;
 import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
-import holdables.TileEffect;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -119,6 +117,7 @@ public class GameboardController
         //playerTurn();
 
     }
+
     /**
      * Creates a Container that holds the player and their data
      *
@@ -160,6 +159,9 @@ public class GameboardController
      */
     private void placePlayer(Player p) {
         ImageView image = new ImageView(p.getPlayerImage());
+        //if(p!= null) {
+        //    image.setRotate(p.getCurrentDirection().get());
+        //}
         image.setPreserveRatio(false);
         image.setFitHeight(PLAYER_SIZE);
         image.setFitWidth(PLAYER_SIZE);
@@ -216,35 +218,17 @@ public class GameboardController
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
         String playerMoveText =
-                "Player: " + tempPlayerCounter+1 + " move" ;
+                "Player: " + tempPlayerCounter + 1 + " move";
       /*
       Logic
       Silk bag set to true
       Silk bag set to
+       */
+        refresh();
+        activePlayer = players.get(tempPlayerCounter);
+        setStatus(playerMoveText);
+        activePlayerMovementLeft = 4;
 
-
-
-
-       playerMoving = true;
-       System.out.println("HELLO" );
-
-      if (activePlayerMovementLeft == 0){
-          playerMoving = false;
-      }
-
-        */
-
-        // finish
-        if (winCheck()) {
-            //somehow end the game
-        } else {
-            refresh();
-
-            activePlayer = players.get(tempPlayerCounter);
-            setStatus(playerMoveText);
-            activePlayerMovementLeft = 4;
-
-        }
 
     }
 
@@ -257,12 +241,11 @@ public class GameboardController
         lstEffects.getItems().setAll(hand);
     }
 
-
-   /**
-    * limits each player to being able to be the target of backtrack only once per game
-    * @param targetPlayer
-    * @param player
-    */
+    /**
+     * limits each player to being able to be the target of backtrack only once per game
+     * @param targetPlayer
+     * @param player
+     */
     /**
      * Sets up the correct number of rows and columns according to parameters
      *
@@ -295,8 +278,8 @@ public class GameboardController
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
-                if(tile.isFixed()) {
-                        image.setEffect(innerShadow);
+                if (tile.isFixed()) {
+                    image.setEffect(innerShadow);
                 }
                 image.setRotate(tile.getAngle().get());
                 image.setPreserveRatio(false);
@@ -378,8 +361,10 @@ public class GameboardController
                         ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
                         ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
                     }
-                    activePlayer.getProfile().setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
-                    activePlayer.getProfile().setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
+                    activePlayer.getProfile()
+                            .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
+                    activePlayer.getProfile()
+                            .setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
                     StageController.home();
                 }
                 if (temp != activePlayer.getCoordinate()) {
@@ -387,6 +372,9 @@ public class GameboardController
                 }
             }
         } else if (activePlayerMovementLeft == 0) {
+            iterateTempPlayerCounter();
+            System.out.println(tempPlayerCounter);
+            System.out.println(activePlayer.getPlayerNum());
             playerTurn();
         }
     }
@@ -492,13 +480,13 @@ public class GameboardController
         }
     }
 
-    public int iterateTempPlayerCounter() {
-        if (tempPlayerCounter < this.gameboard.getPlayersCount()-1) {
-            return tempPlayerCounter + 1;
+    public void iterateTempPlayerCounter() {
+        if (tempPlayerCounter < this.gameboard.getPlayersCount() - 1) {
+            tempPlayerCounter += 1;
         } else if (tempPlayerCounter == this.gameboard.getPlayersCount()) {
-            return 0;
+            tempPlayerCounter = 0;
         } else {
-            return 0;
+            tempPlayerCounter = 0;
         }
     }
 }

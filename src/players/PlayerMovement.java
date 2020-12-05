@@ -1,10 +1,12 @@
 package players;
 
+import constants.Angle;
 import core.Coordinate;
 import core.Gameboard;
 import holdables.PlayerEffect;
 import holdables.TileEffect;
 //import players.TurnCounter;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
 import javafx.scene.input.KeyEvent;
@@ -99,15 +101,20 @@ public class PlayerMovement {
                 switch(direction) {
                     case 0:
                         player.setCoordinate(tile.getSouthTile(gameboard).getCoordinate());
+                        //player.setCurrentDirection(Angle.LEFT);
                         break;
                     case 1:
                         player.setCoordinate(tile.getWestTile(gameboard).getCoordinate());
+                        //player.setCurrentDirection(Angle.UP);
+
                         break;
                     case 2:
                         player.setCoordinate(tile.getNorthTile(gameboard).getCoordinate());
+                        //player.setCurrentDirection(Angle.RIGHT);
                         break;
                     case 3:
                         player.setCoordinate(tile.getEastTile(gameboard).getCoordinate());
+                        //player.setCurrentDirection(Angle.DOWN);
                         break;
                 };
                 count++;
