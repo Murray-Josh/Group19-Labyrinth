@@ -107,7 +107,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      */
     @Override
     public int compareTo(PlayerProfile comparisonProfile) {
-        return this.getNumOfWins() - comparisonProfile.getNumOfWins();
+        return comparisonProfile.getNumOfWins() - this.getNumOfWins();
     }
 
     /**
