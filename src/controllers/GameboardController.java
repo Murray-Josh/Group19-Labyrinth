@@ -100,6 +100,8 @@ public class GameboardController
     private boolean playerMoving;
     private int activePlayerMovementLeft = MOVE_COUNT;
     private Coordinate temp = null;
+    private PlayerMovement pMove = new PlayerMovement(gameboard);
+    private boolean skip = false;
         
 
     /**
@@ -216,10 +218,17 @@ public class GameboardController
             // Is silk bag working?
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
-        activePlayer = players.get(tempPlayerCounter);
-        String playerMoveText = "Player: " + (tempPlayerCounter + 1) + " move";
+        String playerMoveText = "";
+        if(skip && tempPlayerCounter != 0) {
+                playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
+        } else if(skip && tempPlayerCounter == 0) {
+                playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
+        }
+        playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
         setStatus(playerMoveText);
+        activePlayer = players.get(tempPlayerCounter);
         activePlayerMovementLeft = MOVE_COUNT;
+        skip = false;
         temp = null;
         refresh();
     }
@@ -382,7 +391,7 @@ public class GameboardController
     private void handleKeyPress(KeyEvent event) {
         Player p = getActivePlayer();
         playerMoving = true;
-        if (playerMoving && activePlayerMovementLeft > 0) {
+        if (playerMoving && activePlayerMovementLeft > 0 && checkTilesAligned()) {
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 showExitDialog();
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
@@ -409,8 +418,23 @@ public class GameboardController
                 refresh();
             }
         }
+        else {
+            iterateTempPlayerCounter();
+            skip = true;
+            refresh();
+            playerTurn();
+        }
     }
 
+    private boolean checkTilesAligned() {
+        Boolean[] t = pMove.tilesAligned(activePlayer, this.gameboard);
+        for(int i = 0; i < MOVE_COUNT; i++) {
+            if (t[i]) {
+                return true;
+            }
+        }
+        return false;
+    }  
 
     private void showExitDialog() {
         Scene scene = null;

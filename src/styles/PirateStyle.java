@@ -14,21 +14,21 @@ import javafx.scene.image.Image;
 public final class PirateStyle extends Style implements Serializable {
 
    static {
-      PLAYER_ONE = new Image("resources/styles/pirate/pirate_player_one.png");
-      PLAYER_TWO = new Image("resources/styles/pirate/pirate_player_two.png");
-      PLAYER_THREE = new Image("resources/styles/pirate/pirate_player_three.png");
-      PLAYER_FOUR = new Image("resources/styles/pirate/pirate_player_four.png");
-      STRAIGHT_TILE = new Image("resources/styles/pirate/pirate_straight.png");
-      STRAIGHT_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
-      STRAIGHT_ICE = new Image("resources/styles/pirate/pirate_straight_ice.png");
-      CORNER_TILE = new Image("resources/styles/pirate/pirate_corner.png");
-      CORNER_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
-      CORNER_ICE = new Image("resources/styles/pirate/pirate_corner_ice.png");
-      JUNCTION_TILE = new Image("resources/styles/pirate/pirate_junction.png");
-      JUNCTION_FIRE = new Image("resources/styles/pirate/pirate_fire.png");
-      JUNCTION_ICE = new Image("resources/styles/pirate/pirate_junction_ice.png");
-      GOAL_TILE = new Image("resources/styles/pirate/pirate_goal.png");
-      GAMEBOARD = new Image("resources/styles/pirate/pirate_boarder.png");
+      PLAYER_ONE = new Image("resources/styles/pirate/one.png");
+      PLAYER_TWO = new Image("resources/styles/pirate/two.png");
+      PLAYER_THREE = new Image("resources/styles/pirate/three.png");
+      PLAYER_FOUR = new Image("resources/styles/pirate/four.png");
+      STRAIGHT_TILE = new Image("resources/styles/pirate/str.png");
+      STRAIGHT_FIRE = new Image("resources/styles/pirate/str_fire.png");
+      STRAIGHT_ICE = new Image("resources/styles/pirate/str_ice.png");
+      CORNER_TILE = new Image("resources/styles/pirate/cor.png");
+      CORNER_FIRE = new Image("resources/styles/pirate/cor_fire.png");
+      CORNER_ICE = new Image("resources/styles/pirate/cor_ice.png");
+      JUNCTION_TILE = new Image("resources/styles/pirate/jun.png");
+      JUNCTION_FIRE = new Image("resources/styles/pirate/jun_fire.png");
+      JUNCTION_ICE = new Image("resources/styles/pirate/jun_ice.png");
+      GOAL_TILE = new Image("resources/styles/pirate/goal.png");
+      GAMEBOARD = new Image("resources/styles/pirate/bor.png");
    }
 
 
