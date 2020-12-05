@@ -37,6 +37,7 @@ public class PlayerMovement {
         this.gameboard = gameboard;
     }
 
+
     /**
      * Checks the key input and translates it to coordinate change - controls whether the sprite is moving
      * @param key KeyEvent identifier
@@ -73,7 +74,19 @@ public class PlayerMovement {
                 break;
         }
     }
-    
+
+    //TODO Whenever the player's position changes, you need to tell the controller
+    // to move the player's sprite to the new position
+    /**
+     * moves the player every time their coordinates change
+     * @param player
+     * @param coord
+     */
+    private void move (Player player, Coordinate coord){
+        //this should call movePlayer from game controller
+    }
+
+
     /**
      * Determines if move can be done
      * @param player player to move

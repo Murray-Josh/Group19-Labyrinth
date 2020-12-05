@@ -8,6 +8,7 @@ import constants.ErrorMsg;
 import constants.TileType;
 import constants.Title;
 import constants.Window;
+import core.Coordinate;
 import core.Gameboard;
 import core.Level;
 import core.Save;
@@ -55,6 +56,7 @@ public class GameboardController
     private static final int TILE_SIZE = 80;
     private static final double WINDOW_HEIGHT = 34;
     private static final double WINDOW_WIDTH = 340;
+    private static final int PLAYER_SIZE = 60;
 
     private static final String FORMATTING_PLAYERS =
             "Formatting Players";
@@ -69,6 +71,7 @@ public class GameboardController
             "Refreshing Gameboard";
     private static final String REFRESH_COMPLETE =
             "Refreshing Gameboard";
+
     @FXML
     private BorderPane root;
     @FXML
@@ -158,8 +161,8 @@ public class GameboardController
     private void placePlayer(Player p) {
         ImageView image = new ImageView(p.getPlayerImage());
         image.setPreserveRatio(false);
-        image.setFitHeight(TILE_SIZE);
-        image.setFitWidth(TILE_SIZE);
+        image.setFitHeight(PLAYER_SIZE);
+        image.setFitWidth(PLAYER_SIZE);
         grdBoard.add(image, p.getCoordinate().getX(), p.getCoordinate().getY());
     }
 
@@ -212,7 +215,8 @@ public class GameboardController
         // Draw from silk bag
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW);
-
+        String playerMoveText =
+                "Player: " + tempPlayerCounter+1 + " move" ;
       /*
       Logic
       Silk bag set to true
@@ -234,11 +238,12 @@ public class GameboardController
         if (winCheck()) {
             //somehow end the game
         } else {
-            tempPlayerCounter = iterateTempPlayerCounter();
+            refresh();
+
             activePlayer = players.get(tempPlayerCounter);
+            setStatus(playerMoveText);
             activePlayerMovementLeft = 4;
 
-            refresh();
         }
 
     }
@@ -253,7 +258,11 @@ public class GameboardController
     }
 
 
-
+   /**
+    * limits each player to being able to be the target of backtrack only once per game
+    * @param targetPlayer
+    * @param player
+    */
     /**
      * Sets up the correct number of rows and columns according to parameters
      *
@@ -281,10 +290,9 @@ public class GameboardController
      */
     public void refresh() {
         if (gameboard != null) {
-            setStatus(REFRESHING);
+            //setStatus(REFRESHING);
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
             gameboard.getTiles().forEach(tile -> {
-                System.out.println(tile.toString());
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
                 if(tile.isFixed()) {
@@ -297,7 +305,7 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
-            setStatus(REFRESH_COMPLETE);
+            //setStatus(REFRESH_COMPLETE);
         } else {
             showError(ErrorMsg.BOARD_REFRESH_ERROR, Title.CRIT_ERROR, false);
             changeScene(Window.SETUP);
@@ -361,9 +369,22 @@ public class GameboardController
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 showExitDialog();
             } else if (event.getCode().isArrowKey()) {
+                Coordinate temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
-                activePlayerMovementLeft -= 1;
                 refresh();
+                if (winCheck()) {
+                    System.out.println(activePlayer + " has won!!");
+                    for (Player ps : players) {
+                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
+                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
+                    }
+                    activePlayer.getProfile().setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
+                    activePlayer.getProfile().setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
+                    StageController.home();
+                }
+                if (temp != activePlayer.getCoordinate()) {
+                    activePlayerMovementLeft -= 1;
+                }
             }
         } else if (activePlayerMovementLeft == 0) {
             playerTurn();
