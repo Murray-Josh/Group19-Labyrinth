@@ -3,9 +3,8 @@ package controllers;
 import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
-import core.Logic;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
@@ -93,9 +92,9 @@ public class LoadGameController implements Initializable {
    public void cmdLoadClick(ActionEvent actionEvent) {
       if (selected == null &&
            lstSaves.getSelectionModel().getSelectedItem() == null) {
-         showError(ErrorMsg.SAVE_NOT_SELECTED, title, false);
+         showError(ErrorMessage.SAVE_NOT_SELECTED, title, false);
       } else {
-         Logic.createGame(selected);
+         /*TODO Make the game */
       }
    }
 

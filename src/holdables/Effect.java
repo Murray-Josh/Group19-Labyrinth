@@ -10,6 +10,7 @@ import styles.Style;
  * @version 3.0
  */
 public interface Effect extends Holdable {
+
     String toString();
 
     Image getImage(Style style);

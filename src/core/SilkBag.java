@@ -11,8 +11,9 @@ import java.util.List;
 /**
  * This class represents the Silk Bag: an array list and its methods.
  *
+ * @author Joseph Omar
  * @author Jordy Martinson
- * @version 1.0
+ * @version 2.0
  */
 public class SilkBag extends ArrayDeque<Holdable> implements Serializable {
     public SilkBag(List<? extends Holdable> items) {

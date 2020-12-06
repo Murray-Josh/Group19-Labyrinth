@@ -42,7 +42,7 @@ public enum Title {
     /**
      * Critical Error (Only when the program exits after
      */
-    CRIT_ERROR("Labyrinth encountered a critical error"),
+    CRITICAL_ERROR("Labyrinth encountered a critical error"),
     /**
      * Tile Shifts
      */

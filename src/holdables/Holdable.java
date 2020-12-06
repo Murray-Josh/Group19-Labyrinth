@@ -7,4 +7,5 @@ package holdables;
  * @version 2.0
  */
 public interface Holdable {
+
 }

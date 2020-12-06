@@ -4,7 +4,7 @@ import static controllers.StageController.changeScene;
 import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
 import constants.Window;
 import core.Gameboard;
@@ -92,7 +92,7 @@ public class SetUpGameController implements Initializable {
       try {
          level = new Level("src/resources/file/" + comBoard.getSelectionModel().getSelectedItem());
       } catch (FileNotFoundException e) {
-         showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
+         showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
          initialize(location, resourceBundle);
       }
 
@@ -100,7 +100,7 @@ public class SetUpGameController implements Initializable {
          Gameboard gameboard = new Gameboard(level, style, players);
          changeScene(Window.BOARD, new Object[]{gameboard});
       } catch (Exception e) {
-         showError(ErrorMsg.BOARD_CREATE_ERROR, Title.SETUP, false);
+         showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
          e.printStackTrace();
          initialize(location, resourceBundle);
       }
@@ -148,7 +148,7 @@ public class SetUpGameController implements Initializable {
       PlayerProfile selection = currentChoiceBox.getSelectionModel().getSelectedItem();
       boolean isNone = selection.equals(none);
       if (isNone && (slotNumber == 1 || slotNumber == 2)) {
-         showError(ErrorMsg.PROFILE_NOT_VALID, Title.SETUP, false);
+         showError(ErrorMessage.PROFILE_NOT_VALID, Title.SETUP, false);
          currentChoiceBox.getSelectionModel().select(none);
       } else if (isNone && slotNumber == 3) {
          currentButton.setDisable(true);

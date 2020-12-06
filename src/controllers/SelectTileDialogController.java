@@ -16,14 +16,28 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for the Select Tile Dialog. Allows the player to chose and apply a TileEffect to
+ * a 3X3 grid of tiles.
+ *
+ * @author Joseph Omar
+ * @version 1.2
+ */
 public class SelectTileDialogController implements InitialisableWithParameters {
 
+    /**
+     * Strings to be used in the window formatting
+     */
     private static final String TITLE = "Select a Tile to ";
     private static final String FREEZE = "FREEZE";
     private static final String IGNITE = "IGNITE";
     private static final String FREEZE_LOWER = "Freeze";
     private static final String IGNITE_LOWER = "Ignite";
     private static final String HEADER = "SELECT A TILE TO ";
+
+    /**
+     * FXML controls being modified by the controller
+     */
     @FXML
     public Label lblTitle;
     @FXML
@@ -34,29 +48,39 @@ public class SelectTileDialogController implements InitialisableWithParameters {
     private ChoiceBox<Integer> comRow;
     @FXML
     private Button cmdOK;
+
+    /**
+     * Class-wide fields
+     */
     private Gameboard gameboard;
     private TileEffect effect;
-    private Scene scene;
     private Stage stage;
     private Integer selectedColumn;
     private Integer selectedRow;
-    private Tile selectedTile;
     private GameboardController controller;
     private Matrix<Tile> range;
 
+    /**
+     * Initialises the Select Tile Window using a set of parameters passed from the calling
+     * controller.
+     *
+     * @param parameters Parameters needed by the Select Tiles Window (GameBoard, Effect, Calling
+     *                   Controller)
+     * @param scene      This Window
+     * @param stage      This windows's stage
+     */
     @Override
     public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
         this.gameboard = (Gameboard) parameters[0];
         this.effect = (TileEffect) parameters[1];
         this.controller = (GameboardController) parameters[2];
-        this.scene = scene;
         this.stage = stage;
         if (effect.equals(TileEffect.ICE)) {
             stage.setTitle(TITLE + FREEZE_LOWER);
             cmdOK.setText(FREEZE);
             lblTitle.setText(HEADER + FREEZE);
         } else {
-            stage.setTitle(TITLE + "IGNITE_LOWER");
+            stage.setTitle(TITLE + IGNITE_LOWER);
             cmdOK.setText(IGNITE);
             lblTitle.setText(HEADER + IGNITE);
         }
@@ -67,6 +91,9 @@ public class SelectTileDialogController implements InitialisableWithParameters {
         populateChoiceBoxes();
     }
 
+    /**
+     * Adds all the rows and columns on the gameboard to the choice boxes
+     */
     private void populateChoiceBoxes() {
         comColumn.getItems().clear();
         comRow.getItems().clear();
@@ -78,6 +105,9 @@ public class SelectTileDialogController implements InitialisableWithParameters {
         }
     }
 
+    /**
+     * Creates new event listeners to trigger a method when the selected item is changed
+     */
     private void startChoiceBoxListeners() {
         comColumn.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
@@ -91,10 +121,13 @@ public class SelectTileDialogController implements InitialisableWithParameters {
                 }));
     }
 
+    /**
+     * Uses the selected items from the choice boxes to get a 3x3 grid around the selected tile
+     */
     private void populate() {
         if (selectedColumn != null && selectedRow != null) {
-            this.selectedTile = gameboard.getTiles().get(selectedColumn, selectedRow);
-            range = new Matrix<Tile>(3, 3);
+            Tile selectedTile = gameboard.getTiles().get(selectedColumn, selectedRow);
+            range = new Matrix<>(3, 3);
             range.set(1, 1, selectedTile);
             int selectedX = selectedTile.getCoordinate().getX();
             int selectedY = selectedTile.getCoordinate().getY();
@@ -161,6 +194,13 @@ public class SelectTileDialogController implements InitialisableWithParameters {
         }
     }
 
+    /**
+     * Handles the event of the OK button being clicked. Adding all the affected tiles to a
+     * collection and giving it back to the parent controller, and then closing the dialog.
+     *
+     * @param mouseEvent Event received
+     */
+    @SuppressWarnings("unused")
     public void cmdOKClick(MouseEvent mouseEvent) {
         if (selectedColumn != null && selectedRow != null) {
             ArrayList<Tile> tiles = new ArrayList<>();

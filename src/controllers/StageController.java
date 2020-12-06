@@ -1,6 +1,6 @@
 package controllers;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
 import constants.Window;
 import java.io.IOException;
@@ -108,7 +108,7 @@ public class StageController {
          setNewScene(scene, window.getTitle());
       } catch (IOException e) {
          e.printStackTrace();
-         showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+         showError(ErrorMessage.FXML_NOT_FOUND, Title.ERROR, false);
       } catch (IllegalStateException e) {
          e.printStackTrace();
       }
@@ -117,11 +117,11 @@ public class StageController {
    /**
     * Displays an Error Dialog containing the passed strings
     *
-    * @param error {@link ErrorMsg} template to use
+    * @param error {@link ErrorMessage} template to use
     * @param quit  Whether to quit the application
     * @parm title The title to use (member of {@link Title})
     */
-   public static void showError(ErrorMsg error, Title title, boolean quit) {
+   public static void showError(ErrorMessage error, Title title, boolean quit) {
       Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(),
            ButtonType.OK);
       alert.setTitle(title.toString());
@@ -145,7 +145,7 @@ public class StageController {
          setNewScene(scene, window.getTitle());
       } catch (IOException e) {
          e.printStackTrace();
-         showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+         showError(ErrorMessage.FXML_NOT_FOUND, Title.ERROR, false);
       } catch (IllegalStateException e) {
          e.printStackTrace();
       }

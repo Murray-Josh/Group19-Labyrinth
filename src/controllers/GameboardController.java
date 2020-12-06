@@ -5,7 +5,7 @@ import static controllers.StageController.changeScene;
 import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.TileType;
 import constants.Title;
 import constants.Window;
@@ -304,7 +304,7 @@ public class GameboardController
                 playerTurn();
             }
         } else {
-            showError(ErrorMsg.BOARD_REFRESH_ERROR, Title.CRIT_ERROR, false);
+            showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
         }
     }
@@ -389,7 +389,7 @@ public class GameboardController
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
-            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+            showError(ErrorMessage.FXML_NOT_FOUND, Title.ERROR, false);
             e.printStackTrace();
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -475,7 +475,7 @@ public class GameboardController
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+            showError(ErrorMessage.FXML_NOT_FOUND, Title.ERROR, false);
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
@@ -488,7 +488,7 @@ public class GameboardController
             Save.saveGame(new Object[]{this});
             System.exit(0);
         } catch (IOException e) {
-            showError(ErrorMsg.SAVE_WRITE_ERROR, Title.ERROR, false);
+            showError(ErrorMessage.SAVE_WRITE_ERROR, Title.ERROR, false);
             e.printStackTrace();
         }
     }
@@ -521,7 +521,7 @@ public class GameboardController
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+            showError(ErrorMessage.FXML_NOT_FOUND, Title.ERROR, false);
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }

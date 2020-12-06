@@ -3,7 +3,7 @@ package controllers;
 import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ScoreboardController implements Initializable {
       try {
          profiles = Profiles.getProfiles();
       } catch (Exception e) {
-         showError(ErrorMsg.PROFILE_LOAD_ERROR, Title.SCOREBOARD, false);
+         showError(ErrorMessage.PROFILE_LOAD_ERROR, Title.SCOREBOARD, false);
       } finally {
          if (profiles == null) {
             nullListHandler();

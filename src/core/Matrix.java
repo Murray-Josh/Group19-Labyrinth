@@ -12,6 +12,7 @@ import java.util.Iterator;
  * @version 1.1
  */
 final public class Matrix<T> implements Iterable<T>, Serializable {
+
     private final int width;
     private final int height;
     private final Object[][] data;
@@ -33,6 +34,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      *
      * @param data Data to be placed into the matrix
      */
+    @SuppressWarnings("unused")
     public Matrix(Object[][] data) {
         this.width = data.length;
         this.height = data[0].length;
@@ -96,6 +98,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @param y Y Coordinate of the element
      * @throws IndexOutOfBoundsException If the coordinate is either too big or too small
      */
+    @SuppressWarnings("unused")
     public void remove(int x, int y) throws IndexOutOfBoundsException {
         this.data[x][y] = null;
     }
@@ -116,6 +119,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
      * @param elem The element to check for
      * @return If the element exists in the {@link Matrix}
      */
+    @SuppressWarnings("unused")
     public boolean exists(T elem) {
         for (Object[] i : data) {
             for (Object j : i) {
@@ -151,7 +155,9 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
     @SuppressWarnings("unchecked")
     public ArrayList<T> getRow(int y) {
         ArrayList<T> toReturn = new ArrayList<>();
-        for (Object[] column : data) toReturn.add((T) column[y]);
+        for (Object[] column : data) {
+            toReturn.add((T) column[y]);
+        }
         return toReturn;
     }
 
@@ -185,6 +191,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
     }
 
     private class MatrixIterator implements Iterator {
+
         private int posX = 0;
         private int posY = 0;
 
@@ -193,7 +200,7 @@ final public class Matrix<T> implements Iterable<T>, Serializable {
          */
         @Override
         public boolean hasNext() {
-            return posX < getWidth()+1 && posY < getHeight();
+            return posX < getWidth() + 1 && posY < getHeight();
         }
 
         /**

@@ -3,7 +3,7 @@
  */
 package controllers;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
 import java.net.URL;
 import java.util.Scanner;
@@ -53,7 +53,7 @@ public class FindMessage {
          inurl.close();
       } catch (Exception e) {
          StageController
-              .showError(ErrorMsg.MESSGAGE_FAIL, Title.ERROR, false);
+              .showError(ErrorMessage.MESSAGE_FAIL, Title.ERROR, false);
       }
    }
 

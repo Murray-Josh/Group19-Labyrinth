@@ -1,6 +1,6 @@
 package players;
 
-import constants.ErrorMsg;
+import constants.ErrorMessage;
 import constants.Title;
 import controllers.StageController;
 import javafx.scene.control.ChoiceDialog;
@@ -52,7 +52,7 @@ public class Profiles {
                                 " has successfully been created.", "Profile Creation Complete",
                         Title.CREATE_PROFILE.toString());
             } else {
-                StageController.showError(ErrorMsg.PROFILE_ADD_ERROR, Title.CREATE_PROFILE, false);
+                StageController.showError(ErrorMessage.PROFILE_ADD_ERROR, Title.CREATE_PROFILE, false);
                 showCreate();
             }
         } else {
@@ -116,7 +116,7 @@ public class Profiles {
             profiles = (ArrayList<PlayerProfile>) objIn.readObject();
         } catch (Exception e) {
             e.printStackTrace();
-            StageController.showError(ErrorMsg.PROFILE_READ_ERROR, Title.ERROR, false);
+            StageController.showError(ErrorMessage.PROFILE_READ_ERROR, Title.ERROR, false);
         }
     }
 
@@ -132,7 +132,7 @@ public class Profiles {
             objOut.close();
         } catch (Exception e) {
             e.printStackTrace();
-            StageController.showError(ErrorMsg.PROFILE_WRITE_ERROR, Title.ERROR, false);
+            StageController.showError(ErrorMessage.PROFILE_WRITE_ERROR, Title.ERROR, false);
         }
     }
 

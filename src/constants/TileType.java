@@ -10,6 +10,7 @@ import holdables.Tile;
  * @author Joseph Omar
  * @version 3.0
  */
+@SuppressWarnings("unused")
 public enum TileType {
     STRAIGHT(false, true, false, true),
     CORNER(false, true, true, false),

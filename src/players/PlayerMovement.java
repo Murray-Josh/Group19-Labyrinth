@@ -21,7 +21,7 @@ import java.util.Arrays;
  * @author Isabelle Ludwig
  * @author Jordy Martinson
  * @author Martin Samm
- * @version 1.0
+ * @version 1.14
  */
 
 public class PlayerMovement implements Serializable {

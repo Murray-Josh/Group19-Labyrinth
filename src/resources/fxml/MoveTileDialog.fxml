@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootpane" styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
+<AnchorPane styleClass="hbox" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MoveTileDialogController">
    <children>
       <AnchorPane layoutX="1.0" layoutY="1.0" maxHeight="291.0" minHeight="291.0" prefHeight="291.0" styleClass="border" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="0.0">
          <children>
