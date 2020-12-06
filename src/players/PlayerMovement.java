@@ -98,12 +98,13 @@ public class PlayerMovement implements Serializable {
      * directions can be travelled in
      *
      * @param currentPlayer Player to input
+     * @param gameboard Current instance of the gameboard
      * @return boolean array of accessible direction
      */
-    public Boolean[] tilesAligned(Player currentPlayer, Gameboard g) {
-        this.gameboard = g;
+    public Boolean[] tilesAligned(Player currentPlayer, Gameboard gameboard) {
+        this.gameboard = gameboard;
         Arrays.fill(alignsArray, false);
-        Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
+        Tile currentTile = this.gameboard.getTiles().get(currentPlayer.getCoordinate());
         checkAligns(currentTile, currentMovable);
         Tile[] adjTiles = adjacentTiles(currentTile);
 
