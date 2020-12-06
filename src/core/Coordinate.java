@@ -1,12 +1,14 @@
 package core;
 
+import java.io.Serializable;
+
 /**
  * A 2 dimension grid coordinate consisting of an X and Y value
  *
  * @author Joseph Omar
  * @version 1.2
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
 
     private int x;
     private int y;

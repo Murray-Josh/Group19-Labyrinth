@@ -18,7 +18,10 @@ import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -235,7 +238,7 @@ public class GameboardController
         if(skip && tempPlayerCounter != 0) {
             playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
         } else if(skip && tempPlayerCounter == 0) {
-            playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
+            playerMoveText = "Player " + (tempPlayerCounter + 1) + " could not move! ";
         }
         playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
         setStatus(playerMoveText);
@@ -299,11 +302,16 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
+            /*
             if(activePlayerMovementLeft == 0) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 playerTurn();
             }
+
+             */
+
+
         } else {
             showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
@@ -485,13 +493,7 @@ public class GameboardController
      * Saves the game and exits the application
      */
     public void saveAndExit() {
-        try {
-            Save.saveGame(new Object[]{this});
-            System.exit(0);
-        } catch (IOException e) {
-            showError(ErrorMessage.SAVE_WRITE_ERROR, Title.ERROR, false);
-            e.printStackTrace();
-        }
+
     }
     /**
      * Exits the application without saving
@@ -576,6 +578,7 @@ public class GameboardController
     Make this work pretty please!!! <3
      */
     public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+
     }
 
     public void isNextTurn(){
