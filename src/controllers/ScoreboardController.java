@@ -4,6 +4,7 @@ import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
 import constants.ErrorMessage;
+import constants.LevelType;
 import constants.Title;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,8 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import players.Player;
 import players.PlayerProfile;
 import players.Profiles;
 
@@ -47,6 +50,7 @@ public class ScoreboardController implements Initializable {
    private TableColumn<PlayerProfile, Float> colPercentage;
    @FXML
    private Button cmdBack;
+   private LevelType levelType;
 
    /**
     * Goes back to the main menu
@@ -67,6 +71,7 @@ public class ScoreboardController implements Initializable {
     */
    @Override
    public void initialize(URL location, ResourceBundle resources) {
+      showGameboardChoiceDialog();
       ArrayList<PlayerProfile> profiles = null;
       try {
          profiles = Profiles.getProfiles();
@@ -78,6 +83,23 @@ public class ScoreboardController implements Initializable {
          } else {
             populate(profiles);
          }
+      }
+   }
+
+   private void showGameboardChoiceDialog() {
+      ChoiceDialog dialog = new ChoiceDialog();
+      dialog.setGraphic(null);
+      dialog.setHeaderText("Select a Gameboard");
+      dialog.setContentText(null);
+      dialog.setTitle(Title.SCOREBOARD.toString());
+      dialog.getDialogPane().getStylesheets().add("./resources/css/dialog.css");
+      dialog.getItems().addAll(LevelType.BIG, LevelType.MEDIUM, LevelType.SMALL);
+      Optional<LevelType> result = dialog.showAndWait();
+      if (result.isPresent()) {
+         this.levelType = result.get();
+      } else {
+         dialog.close();
+         home();
       }
    }
 
@@ -121,4 +143,6 @@ public class ScoreboardController implements Initializable {
            data.getValue().getWinPercentage()).asObject());
 
    }
+
+
 }

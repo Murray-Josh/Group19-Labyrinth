@@ -1,6 +1,7 @@
 package core;
 
 import constants.Angle;
+import constants.LevelType;
 import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
@@ -31,6 +32,7 @@ public class Gameboard implements Serializable {
    private final Matrix<Tile> tiles;
    private Style style;
    private SilkBag silkBag;
+   private LevelType levelType;
 
 
    /**
@@ -46,8 +48,9 @@ public class Gameboard implements Serializable {
     *                                   {@link Matrix}
     * @throws NullPointerException      If there aren't enough tiles to be placed on the gameboard
     */
-   public Gameboard(Level level, Style style, ArrayList<PlayerProfile> profiles)
+   public Gameboard(LevelType levelType, Level level, Style style, ArrayList<PlayerProfile> profiles)
         throws IOException, ClassNotFoundException, IndexOutOfBoundsException, NullPointerException {
+      this.levelType = levelType;
       this.style = style;
       this.players = constructPlayers(profiles, level);
       this.width = level.getWidth();

@@ -1,6 +1,12 @@
 package players;
 
+import com.sun.applet2.AppletParameters;
+import constants.LevelType;
+import core.Level;
+import core.ProfileStatistic;
 import java.io.Serializable;
+import java.util.HashMap;
+import sun.java2d.cmm.Profile;
 
 /**
  * Stores wins, losses, number of games played and name of each individual player * @version 2.0.0
@@ -9,12 +15,10 @@ import java.io.Serializable;
  * @author Joseph Omar
  * @version 1.0
  */
-public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
+public class PlayerProfile implements Serializable {
     private static final int PERCENTAGE_MULTIPLIER = 100;
-    private int wins;
-    private int losses;
-    private int games;
     private String name;
+    private HashMap<LevelType, ProfileStatistic> statistics;
 
     /**
      * Creates a new player profile
@@ -23,73 +27,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      */
     public PlayerProfile(String name) {
         this.name = name;
-        this.games = 0;
-        this.losses = 0;
-        this.wins = 0;
-    }
-
-    /**
-     * Creates a new player profile with the specified statistics
-     *
-     * @param name   Name of the profile
-     * @param wins   Number of wins
-     * @param losses Number of Losses
-     * @param games  Number of Games
-     */
-    public PlayerProfile(String name, int wins, int losses, int games) {
-        this.name = name;
-        this.games = games;
-        this.losses = losses;
-        this.wins = wins;
-    }
-
-    /**
-     * Gets number of losses
-     *
-     * @return current amount of losses
-     */
-    public int getNumOfLosses() {
-        return losses;
-    }
-
-    /**
-     * Assign new number of losses
-     *
-     * @param num int
-     */
-    public void setNumOfLosses(int num) {
-        losses = num;
-    }
-
-    /**
-     * Gets number of games
-     *
-     * @return current number of games
-     */
-    public int getNumOfGames() {
-        return games;
-    }
-
-    /**
-     * Assign new number of games
-     *
-     * @param num int
-     */
-    public void setNumOfGames(int num) {
-        games = num;
-    }
-
-    /**
-     * Gets the Players.Player Profile's win percentage
-     *
-     * @return Win Percentage
-     */
-    public float getWinPercentage() {
-        if (wins != 0 && games != 0) {
-            return (wins * PERCENTAGE_MULTIPLIER / games);
-        } else {
-            return 0;
-        }
+        this.statistics = new HashMap<>();
     }
 
     /**
@@ -98,35 +36,7 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
     public String toString() {
         return this.name;
     }
-
-    /**
-     * Compares this profile to another profile
-     *
-     * @param comparisonProfile Profile being compared to
-     * @return 0 if equal, >0 if better, <0 if worse.
-     */
-    @Override
-    public int compareTo(PlayerProfile comparisonProfile) {
-        return comparisonProfile.getNumOfWins() - this.getNumOfWins();
-    }
-
-    /**
-     * Gets number of wins
-     *
-     * @return current amount of wins
-     */
-    public int getNumOfWins() {
-        return wins;
-    }
-
-    /**
-     * Assign new number of wins
-     *
-     * @param num int
-     */
-    public void setNumOfWins(int num) {
-        wins = num;
-    }
+    
 
     /**
      * If this profile matches another profile
@@ -154,5 +64,42 @@ public class PlayerProfile implements Serializable, Comparable<PlayerProfile> {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void editWins(LevelType levelType, int wins) {
+        statistics.get(levelType).setWins(wins);
+    }
+
+    public void editGames(LevelType levelType, int games) {
+        statistics.get(levelType).setGames(games);
+    }
+
+    public void editLosses(LevelType levelType, int losses) {
+        statistics.get(levelType).setLosses(losses);
+    }
+
+    public int getWins(LevelType levelType) {
+        return statistics.get(levelType).getWins();
+    }
+
+    public int getLosses(LevelType levelType) {
+        return statistics.get(levelType).getLosses();
+    }
+
+    public int getGames(LevelType levelType) {
+        return statistics.get(levelType).getGames();
+    }
+
+    public HashMap<LevelType, ProfileStatistic> getStatistics() {
+        return statistics;
+    }
+
+    public ProfileStatistic getStatistic(LevelType levelType) {
+        return statistics.get(levelType);
+    }
+    
+    
+    public void addLevelStatistic(LevelType level,int wins,int losses,int games) {
+        statistics.put(level,new ProfileStatistic(wins, losses, games));
     }
 }
