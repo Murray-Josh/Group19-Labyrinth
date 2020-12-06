@@ -10,10 +10,10 @@ import java.io.Serializable;
  * @version 1.0
  */
 public enum LevelType implements Serializable {
-    BIG("src/resources/file/Big", "Big"),
-    MEDIUM("src/resources/file/Medium", "Medium"),
-    SMALL("src/resources/file/Small", "Small"),
-    WIN("src/resources/file/--{WIN}--", "win_demo");
+    BIG("source/resources/file/Big", "Big"),
+    MEDIUM("source/resources/file/Medium", "Medium"),
+    SMALL("source/resources/file/Small", "Small"),
+    WIN("source/resources/file/--{WIN}--", "win_demo");
     final String PATH;
     final String NAME;
 

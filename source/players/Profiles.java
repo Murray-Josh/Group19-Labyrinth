@@ -21,7 +21,7 @@ import javafx.scene.control.TextInputDialog;
  */
 public class Profiles {
 
-    private static final String PATH = "profiles.ser";
+    private static final String PATH = "source/profiles.ser";
     private static ArrayList<PlayerProfile> profiles = new ArrayList<>();
 
     /**

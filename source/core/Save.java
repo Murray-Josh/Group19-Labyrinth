@@ -58,7 +58,7 @@ public class Save {
         /* Create a file name using the date and time of the save */
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
-        File file = new File("saves/" + dateFormat.format(date) + "_Labyrinth_Save" + extension);
+        File file = new File("source/saves/" + dateFormat.format(date) + "_Labyrinth_Save" + extension);
         if (file.exists()) {
             file.delete();
         }
