@@ -254,4 +254,13 @@ public class Player implements Serializable {
       this.style = style;
    }
 
+   /**
+    * Convert a player to a String
+    * @return Player Name
+    */
+   @Override
+   public String toString() {
+      return this.getProfile().getName();
+   }
+
 }
