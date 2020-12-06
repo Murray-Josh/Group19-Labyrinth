@@ -8,67 +8,65 @@ package players;
  */
 public class TurnCounter {
 
-    private boolean playerOnePlaysNext;
-    private boolean playerTwoPlaysNext;
-    private boolean playerThreePlaysNext;
-    private boolean playerFourPlaysNext;
+   protected Player[] players;
+   private boolean playerOnePlaysNext;
+   private boolean playerTwoPlaysNext;
+   private boolean playerThreePlaysNext;
+   private boolean playerFourPlaysNext;
+   //playerOnePlaysNext = true;
 
-    protected Player[] players;
-    //playerOnePlaysNext = true;
-
-    public void switchPlayer() {
-
-        boolean playerRotation;
-        if (!playerOnePlaysNext) playerOnePlaysNext = true;
-        else playerOnePlaysNext = false;
-        if (playerTwoPlaysNext) {
-            playerTwoPlaysNext = false;
-            playerThreePlaysNext = !playerThreePlaysNext;
-            playerFourPlaysNext = !playerFourPlaysNext;
-        } else {
-            playerTwoPlaysNext = true;
-            playerThreePlaysNext = !playerThreePlaysNext;
-            playerFourPlaysNext = !playerFourPlaysNext;
-        }
-    }
-
-    protected TurnCounter(Player[] players) {
-        this.players = players;
-        reset();
+   protected TurnCounter(Player[] players) {
+      this.players = players;
+      reset();
 
 //Player 1:
-        if (playerOnePlaysNext) {
+      if (playerOnePlaysNext) {
 
-            //player 1 acts.
-            switchPlayer();
-            System.out.println("It is Player One's turn");
-        }
-        //Player 2:
-        if (!playerOnePlaysNext) {
+         //player 1 acts.
+         switchPlayer();
+         System.out.println("It is Player One's turn");
+      }
+      //Player 2:
+      if (!playerOnePlaysNext) {
 
-            //player 2 acts.
-            switchPlayer();
-            System.out.println("It is Player Two's turn");
-        }
-        //Player 3:
-        if (!playerTwoPlaysNext) {
+         //player 2 acts.
+         switchPlayer();
+         System.out.println("It is Player Two's turn");
+      }
+      //Player 3:
+      if (!playerTwoPlaysNext) {
 
-            //player 3 acts.
-            switchPlayer();
-            System.out.println("It is Player Three's turn");
-        }
-        //Player 4:
-        if (!playerThreePlaysNext) {
+         //player 3 acts.
+         switchPlayer();
+         System.out.println("It is Player Three's turn");
+      }
+      //Player 4:
+      if (!playerThreePlaysNext) {
 
-            //player 4 acts.
-            switchPlayer();
-            System.out.println("It is Player Four's turn");
-        }
-    }
+         //player 4 acts.
+         switchPlayer();
+         System.out.println("It is Player Four's turn");
+      }
+   }
 
-    private void reset() {
+   public void switchPlayer() {
 
-    }
+      boolean playerRotation;
+       playerOnePlaysNext = !playerOnePlaysNext;
+      if (playerTwoPlaysNext) {
+         playerTwoPlaysNext = false;
+         playerThreePlaysNext = !playerThreePlaysNext;
+         playerFourPlaysNext = !playerFourPlaysNext;
+      } else {
+         playerTwoPlaysNext = true;
+         playerThreePlaysNext = !playerThreePlaysNext;
+         playerFourPlaysNext = !playerFourPlaysNext;
+      }
+   }
+
+   private void reset() {
+
+   }
 }
 
 //should include skipping turns if player is unable to move due to an effect but my brain stopped working tonight lol

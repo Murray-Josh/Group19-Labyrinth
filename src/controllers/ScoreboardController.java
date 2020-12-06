@@ -29,8 +29,10 @@ import players.Profiles;
  * @author Joseph Omar
  * @version 1.1
  */
+@SuppressWarnings("unused")
 public class ScoreboardController implements Initializable {
 
+   @SuppressWarnings("rawtypes")
    @FXML
    private TableView tblTable;
    @FXML
@@ -49,7 +51,7 @@ public class ScoreboardController implements Initializable {
    /**
     * Goes back to the main menu
     *
-    * @param actionEvent
+    * @param actionEvent Event
     */
    public void cmdBackClick(ActionEvent actionEvent) {
       home();
@@ -82,6 +84,7 @@ public class ScoreboardController implements Initializable {
    /**
     * Handles the if the profiles list read in is null
     */
+   @SuppressWarnings("OptionalGetWithoutIsPresent")
    private void nullListHandler() {
       Alert alert = new Alert(Alert.AlertType.ERROR,
            "There are no profiles to display, would you " +
@@ -102,6 +105,7 @@ public class ScoreboardController implements Initializable {
     *
     * @param profiles Profiles to be added to the scoreboard table
     */
+   @SuppressWarnings("unchecked")
    private void populate(ArrayList<PlayerProfile> profiles) {
       tblTable.getItems().addAll(profiles);
       /* Make the columns use the correct PlayerProfile attributes */

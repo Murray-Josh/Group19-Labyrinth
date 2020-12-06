@@ -1,8 +1,5 @@
 package holdables;
 
-import javafx.scene.image.Image;
-import styles.Style;
-
 /**
  * Defines the Effect types
  *
@@ -11,7 +8,5 @@ import styles.Style;
  */
 public interface Effect extends Holdable {
 
-    String toString();
-
-    Image getImage(Style style);
+   String toString();
 }

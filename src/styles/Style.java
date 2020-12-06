@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  * @author Aaron Davies
  * @version 3.0
  */
+@SuppressWarnings("unused")
 public abstract class Style implements Serializable {
 
    protected static Image PLAYER_ONE;

@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import javafx.scene.input.MouseEvent;
  * @author Joseph Omar
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class LoadGameController implements Initializable {
 
    private static final Title title = Title.SAVE;
@@ -47,7 +49,7 @@ public class LoadGameController implements Initializable {
    /**
     * refreshes the list content
     *
-    * @param actionEvent
+    * @param actionEvent Event
     */
    public void cmdRefreshClick(ActionEvent actionEvent) {
       refresh();
@@ -74,13 +76,13 @@ public class LoadGameController implements Initializable {
     */
    private ArrayList<File> getSaves() {
       File dir = new File("saves");
-      return new ArrayList<>(Arrays.asList(dir.listFiles()));
+      return new ArrayList<>(Arrays.asList(Objects.requireNonNull(dir.listFiles())));
    }
 
    /**
     * Handles the event that occurs when a list item is selected
     *
-    * @param mouseEvent
+    * @param mouseEvent Event
     */
    public void lstSavesClick(MouseEvent mouseEvent) {
       selected = lstSaves.getSelectionModel().getSelectedItem();
@@ -91,13 +93,13 @@ public class LoadGameController implements Initializable {
     * Handles the event that occurs when load game is clicked. It checks if an item is selected and
     * if it is, sends the selected save file to the Logic class
     *
-    * @param actionEvent
+    * @param actionEvent Event
     */
    public void cmdLoadClick(ActionEvent actionEvent) {
       HashMap<Key, Object> data;
       try {
          data = Save.load(selected);
-         changeScene(Window.BOARD, new Object[] {true, data});
+         changeScene(Window.BOARD, new Object[]{true, data});
       } catch (IOException | ClassNotFoundException e) {
          showError(ErrorMessage.SAVE_READ_ERROR, Title.LOAD, false);
          e.printStackTrace();
@@ -107,7 +109,7 @@ public class LoadGameController implements Initializable {
    /**
     * goes back to the main menu
     *
-    * @param actionEvent
+    * @param actionEvent Event
     */
    public void cmdCancelClick(ActionEvent actionEvent) {
       home();
@@ -115,6 +117,6 @@ public class LoadGameController implements Initializable {
 
    @Override
    public void initialize(URL location, ResourceBundle resources) {
-refresh();
+      refresh();
    }
 }

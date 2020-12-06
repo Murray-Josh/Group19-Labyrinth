@@ -7,23 +7,23 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 
-    public static void main(String[] args) {
+   public static void main(String[] args) {
 
-        launch(args);
-
-
-    }
+      launch(args);
 
 
-    /**
-     * Starts the program
-     *
-     * @param primaryStage Stage passed from javafx
-     */
-    @Override
-    public void start(Stage primaryStage) {
-        StageController.start(primaryStage);
-    }
+   }
+
+
+   /**
+    * Starts the program
+    *
+    * @param primaryStage Stage passed from javafx
+    */
+   @Override
+   public void start(Stage primaryStage) {
+      StageController.start(primaryStage);
+   }
 
 
 }

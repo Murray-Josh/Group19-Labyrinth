@@ -29,15 +29,34 @@ import styles.MouseStyle;
 import styles.PirateStyle;
 import styles.Style;
 
+/**
+ * Controls the window that allows the user to set up a new game
+ *
+ * @author Joseph Omar
+ * @version 1.5
+ */
+@SuppressWarnings("unused")
 public class SetUpGameController implements Initializable {
 
+   /**
+    * Strings referencing available styles
+    */
    public static final String CAR = "Car";
    public static final String MOUSE_TRAP = "Mouse Trap";
    public static final String PIRATE = "Pirate";
+
+   /**
+    * Default selection
+    */
    private static final PlayerProfile none = new PlayerProfile("--None--");
+
    private final ObservableList<PlayerProfile> profiles = FXCollections
         .observableArrayList(Profiles.getProfiles());
-   private final ArrayList<PlayerProfile> players = new ArrayList<PlayerProfile>();
+   private final ArrayList<PlayerProfile> players = new ArrayList<>();
+
+   /**
+    * Controls on the Set Up Game window
+    */
    @FXML
    private ChoiceBox<PlayerProfile> comOne;
    @FXML
@@ -63,24 +82,31 @@ public class SetUpGameController implements Initializable {
    private Button cmdLockThree;
    @FXML
    private Button cmdLockFour;
+
+
    private ArrayList<Button> buttons;
    private URL location;
    private ResourceBundle resourceBundle;
 
+   /**
+    * Returns the user to the main menu
+    *
+    * @param actionEvent Event
+    */
    public void cmdBackClick(ActionEvent actionEvent) {
       home();
    }
 
    /**
-    * uses the data inputed onto the form and creates a new gamebaord anfd passes it to the
+    * uses the data inputted onto the form and creates a new gameboard and passes it to the
     * Gameboard window
     *
     * @param actionEvent MouseEvent
     */
    public void cmdStartClick(ActionEvent actionEvent) {
-      Style style = null;
+      Style style;
       Level level = null;
-      String styleString = comStyle.getValue(); 
+      String styleString = comStyle.getValue();
       if (styleString.equals(MOUSE_TRAP)) {
 
          style = new MouseStyle();
@@ -106,6 +132,12 @@ public class SetUpGameController implements Initializable {
       }
    }
 
+   /**
+    * Initialises the Set Up Game Window
+    *
+    * @param location  Location of the FXML file
+    * @param resources Resources needed by the Controller
+    */
    @Override
    public void initialize(URL location, ResourceBundle resources) {
       this.buttons = new ArrayList<>(
@@ -126,22 +158,51 @@ public class SetUpGameController implements Initializable {
       initialiseLevels();
    }
 
+   /**
+    * Lock the selection of Choice Box Four
+    *
+    * @param actionEvent Event
+    */
    public void cmdLockFourClick(ActionEvent actionEvent) {
       lock(cmdLockFour, null, comFour, null, 4);
    }
 
+   /**
+    * Lock the selection of Choice Box Three
+    *
+    * @param actionEvent Event
+    */
    public void cmdLockThreeClick(ActionEvent actionEvent) {
       lock(cmdLockThree, cmdLockFour, comThree, comFour, 3);
    }
 
+   /**
+    * Lock the selection of Choice Box Two
+    *
+    * @param actionEvent Event
+    */
    public void cmdLockTwoClick(ActionEvent actionEvent) {
       lock(cmdLockTwo, cmdLockThree, comTwo, comThree, 2);
    }
 
-   public void cmdLockOneClick(ActionEvent actionEvent) throws Exception {
+   /**
+    * Locks the selection of Choice Box One
+    *
+    * @param actionEvent Event
+    */
+   public void cmdLockOneClick(ActionEvent actionEvent) {
       lock(cmdLockOne, cmdLockTwo, comOne, comTwo, 1);
    }
 
+   /**
+    * Checks if the current selection is valid
+    *
+    * @param currentButton    Current Lock Button
+    * @param nextButton       Next Lock Button
+    * @param currentChoiceBox Current Choice Box
+    * @param nextChoiceBox    Next Choice Box
+    * @param slotNumber       Player number (1-4)
+    */
    private void lock(Button currentButton, Button nextButton,
         ChoiceBox<PlayerProfile> currentChoiceBox, ChoiceBox<PlayerProfile> nextChoiceBox,
         int slotNumber) {
@@ -164,6 +225,16 @@ public class SetUpGameController implements Initializable {
       }
    }
 
+   /**
+    * Updates the remaining choice box based on the selected item of the current choice box.
+    * Disables the current box and lock button and enables the next box and lock button
+    *
+    * @param selection        Current Profile selection
+    * @param currentButton    Current Lock Button
+    * @param currentChoiceBox Current Choice Box
+    * @param nextButton       Next Lock Button
+    * @param nextChoiceBox    Next Choice Box
+    */
    private void updateChoiceBoxes(PlayerProfile selection, Button currentButton,
         ChoiceBox<PlayerProfile> currentChoiceBox, Button nextButton,
         ChoiceBox<PlayerProfile> nextChoiceBox) {
@@ -183,11 +254,17 @@ public class SetUpGameController implements Initializable {
       currentChoiceBox.setValue(forDisplay);
    }
 
+   /**
+    * Adds all the available styles to the choice box
+    */
    private void initialiseStyles() {
       comStyle.getItems().addAll(CAR, MOUSE_TRAP, PIRATE);
       comStyle.getSelectionModel().selectFirst();
    }
 
+   /**
+    * Gets all the level files and adds them to the {@link ChoiceBox}
+    */
    private void initialiseLevels() {
       File path = new File("src/resources/file");
       comBoard.setItems(FXCollections.observableArrayList(path.list()));

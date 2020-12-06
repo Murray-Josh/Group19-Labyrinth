@@ -34,6 +34,7 @@ public class FindMessage {
    /**
     * Returns the message of the day as a string
     */
+   @SuppressWarnings("StringConcatenationInLoop")
    private static void generateMessage() {
       try {
          URL url = new URL("http://cswebcat.swansea.ac.uk/puzzle");
@@ -93,11 +94,10 @@ public class FindMessage {
                   // will loop back to Z and continue counting.
                   int temp = move - j;
                   arrayList[i] = alphabet[alphabet.length - temp];
-                  break;
                } else {
                   arrayList[i] = alphabet[j - move];
-                  break;
                }
+               break;
             } else if ((i + 1) % 2 == 0 && arrayList[i] ==
                  alphabet[j]) { //If the char
                // in the array is an even
@@ -109,11 +109,10 @@ public class FindMessage {
                   // counting.
                   int temp = j + move - alphabet.length;
                   arrayList[i] = alphabet[temp];
-                  break;
                } else {
                   arrayList[i] = alphabet[j + move];
-                  break;
                }
+               break;
             }
          }
          move++;
