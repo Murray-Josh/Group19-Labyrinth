@@ -95,7 +95,6 @@ public class Profiles {
          save();
       }
       load();
-      profiles.sort(PlayerProfile::compareTo);
    }
 
    /**
