@@ -181,13 +181,13 @@ public class Tile implements Serializable, Holdable {
    /**
     * Gets tile north of this tile
     *
-    * @param g Gameboard
+    * @param gameboard Gameboard
     * @return Tile north of this tile
     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
     */
-   public Tile getNorthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
+   public Tile getNorthTile(Gameboard gameboard) throws ArrayIndexOutOfBoundsException {
       try {
-         return g.getTiles()
+         return gameboard.getTiles()
               .get(getCoordinate().getX(), getCoordinate().getY() - 1);
       } catch (ArrayIndexOutOfBoundsException e) {
          return null;
@@ -197,13 +197,13 @@ public class Tile implements Serializable, Holdable {
    /**
     * Gets tile south of this tile
     *
-    * @param g Gameboard
+    * @param gameboard Gameboard
     * @return Tile south of this tile
     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
     */
-   public Tile getSouthTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
+   public Tile getSouthTile(Gameboard gameboard) throws ArrayIndexOutOfBoundsException {
       try {
-         return g.getTiles()
+         return gameboard.getTiles()
               .get(getCoordinate().getX(), getCoordinate().getY() + 1);
       } catch (ArrayIndexOutOfBoundsException e) {
          return null;
@@ -213,13 +213,13 @@ public class Tile implements Serializable, Holdable {
    /**
     * Gets tile east of this tile
     *
-    * @param g Gameboard
+    * @param gameboard Gameboard
     * @return Tile east of this tile
     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
     */
-   public Tile getEastTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
+   public Tile getEastTile(Gameboard gameboard) throws ArrayIndexOutOfBoundsException {
       try {
-         return g.getTiles()
+         return gameboard.getTiles()
               .get(getCoordinate().getX() + 1, getCoordinate().getY());
       } catch (ArrayIndexOutOfBoundsException e) {
          return null;
@@ -229,13 +229,13 @@ public class Tile implements Serializable, Holdable {
    /**
     * Gets tile west of this tile
     *
-    * @param g Gameboard
+    * @param gameboard Gameboard
     * @return Tile west of this tile
     * @throws ArrayIndexOutOfBoundsException Exception if out of array bound
     */
-   public Tile getWestTile(Gameboard g) throws ArrayIndexOutOfBoundsException {
+   public Tile getWestTile(Gameboard gameboard) throws ArrayIndexOutOfBoundsException {
       try {
-         return g.getTiles()
+         return gameboard.getTiles()
               .get(getCoordinate().getX() - 1, getCoordinate().getY());
       } catch (ArrayIndexOutOfBoundsException e) {
          return null;

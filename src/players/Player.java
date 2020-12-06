@@ -123,16 +123,16 @@ public class Player implements Serializable {
    @SuppressWarnings("unchecked")
    public Coordinate[] getLastTwoCoordinates() {
       Stack<Coordinate> temp = (Stack<Coordinate>) coordinateHistory.clone();
-      Coordinate firstTile = null;
-      Coordinate secondTile = null;
+
+
       for (int i = 0; i < moves[0]; i++) {
-         firstTile = temp.pop();
+         temp.pop();
       }
-      firstTile = temp.peek();
+      Coordinate firstTile = temp.peek();
       for (int j = 0; j < moves[1]; j++) {
-         secondTile = temp.pop();
+         temp.pop();
       }
-      secondTile = temp.peek();
+      Coordinate secondTile = temp.peek();
       return new Coordinate[]{firstTile, secondTile};
    }
 

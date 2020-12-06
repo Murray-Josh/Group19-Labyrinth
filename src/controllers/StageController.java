@@ -74,7 +74,7 @@ public class StageController {
    /**
     * Opens the main menu on startup
     *
-    * @param primaryStage
+    * @param primaryStage The main stage for this instance of the application
     */
    public static void start(Stage primaryStage) {
       stage = primaryStage;
@@ -100,7 +100,7 @@ public class StageController {
     * @param window {@link Window} to open
     */
    public static void changeScene(Window window) {
-      Scene scene = null;
+      Scene scene;
       try {
          Parent root = FXMLLoader
               .load(StageController.class.getResource(window.getPath()));
@@ -119,8 +119,9 @@ public class StageController {
     *
     * @param error {@link ErrorMessage} template to use
     * @param quit  Whether to quit the application
-    * @parm title The title to use (member of {@link Title})
+    * @param title The title to use (member of {@link Title})
     */
+   @SuppressWarnings("OptionalGetWithoutIsPresent")
    public static void showError(ErrorMessage error, Title title, boolean quit) {
       Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage(),
            ButtonType.OK);
@@ -134,7 +135,7 @@ public class StageController {
    }
 
    public static void changeScene(Window window, Object[] args) {
-      Scene scene = null;
+      Scene scene;
       try {
          FXMLLoader loader = new FXMLLoader(
               StageController.class.getResource(window.getPath()));

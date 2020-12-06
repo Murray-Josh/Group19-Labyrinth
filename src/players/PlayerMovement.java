@@ -24,12 +24,9 @@ import java.util.Arrays;
 public class PlayerMovement implements Serializable {
 
     private Gameboard gameboard;    
-    ArrayList<Integer> currentMovable = new ArrayList<Integer>();
-    ArrayList<Integer> nextMovable = new ArrayList<Integer>();
-    private Boolean[] alignsArr = new Boolean[4];
-    private int count = 0;
-    private TurnCounter TurnCounter;
-
+    ArrayList<Integer> currentMovable = new ArrayList<>();
+    ArrayList<Integer> nextMovable = new ArrayList<>();
+    private Boolean[] alignsArray = new Boolean[4];
     public PlayerMovement(Gameboard gameboard) {
         this.gameboard = gameboard;
     }
@@ -59,24 +56,8 @@ public class PlayerMovement implements Serializable {
             case RIGHT:
                 moveCheck(player, tile, 3);
                 break;
-            case SPACE:
-            case ENTER:
-                TurnCounter.switchPlayer();
-                break;
         }
     }
-
-    //TODO Whenever the player's position changes, you need to tell the controller
-    // to move the player's sprite to the new position
-    /**
-     * moves the player every time their coordinates change
-     * @param player
-     * @param coord
-     */
-    private void move (Player player, Coordinate coord){
-        //this should call movePlayer from game controller
-    }
-
 
     /**
      * Determines if move can be done
@@ -104,8 +85,7 @@ public class PlayerMovement implements Serializable {
                     player.setCoordinate(tile.getEastTile(gameboard).getCoordinate());
                     player.setCurrentDirection(Angle.DOWN);
                     break;
-            };
-            count++;
+            }
         }
     }
     
@@ -119,7 +99,7 @@ public class PlayerMovement implements Serializable {
      */
     public Boolean[] tilesAligned(Player currentPlayer, Gameboard g){
         this.gameboard = g;
-        Arrays.fill(alignsArr, false);
+        Arrays.fill(alignsArray, false);
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
         checkAligns(currentTile, currentMovable);
         Tile[] adjTiles = adjacentTiles(currentTile);
@@ -133,24 +113,18 @@ public class PlayerMovement implements Serializable {
                     nextTileDir = i - 2;
                 }
 
-                if(nextMovable.contains(nextTileDir)) {
-                    alignsArr[i] = true;
-                }
-                else {
-                    alignsArr[i] = false;
-                }
+                alignsArray[i] = nextMovable.contains(nextTileDir);
             }
         }
-        return alignsArr;
+        return alignsArray;
     }
     
     /**
      * determines which direction a player can move in
      * @param tile Tile to check alignment of
      * @param list List to add movable tiles to
-     * @return arraylist of movable directions
      */
-    private ArrayList<Integer> checkAligns(Tile tile, ArrayList<Integer> list) {
+    private void checkAligns(Tile tile, ArrayList<Integer> list) {
         list.clear();
         switch(tile.getType()) {
             case STRAIGHT:
@@ -217,7 +191,6 @@ public class PlayerMovement implements Serializable {
                 list.add(3);
                 break;
         }
-        return list;
     }
     
     /**

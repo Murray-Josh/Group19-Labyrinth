@@ -23,6 +23,7 @@ import styles.Style;
  * @author Jordy Martinson
  * @version 2.2
  */
+@SuppressWarnings("unused")
 public class Gameboard implements Serializable {
 
 

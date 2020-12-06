@@ -4,9 +4,8 @@ package holdables;
  * Defines the Effect types
  *
  * @author Joseph Omar
- * @version 3.0
+ * @version 1.0
  */
 public interface Effect extends Holdable {
-
    String toString();
 }

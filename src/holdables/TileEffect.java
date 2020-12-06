@@ -20,6 +20,7 @@ public enum TileEffect implements Holdable, Effect {
     *
     * @param range       Range of the Effect
     * @param turnsActive How long it is active
+    *
     */
    TileEffect(int range, int turnsActive) {
       this.RANGE = range;
