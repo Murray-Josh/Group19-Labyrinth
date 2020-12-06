@@ -83,7 +83,6 @@ public class GameboardController
     @FXML
     private VBox vboxPlayers;
     @FXML
-    private ListView<String> lstEffects;
     private ListView<Effect> lstEffects;
     @FXML
     private Button cmdActivate;
@@ -120,6 +119,7 @@ public class GameboardController
         formatPlayers();
         startKeyListener(scene);
         activePlayer = players.get(tempPlayerCounter);
+        System.out.println(activePlayer.getPlayerNum());
         playerTurn();
     }
 
@@ -216,6 +216,7 @@ public class GameboardController
         // Is silk bag working?
         cmdActivate.setDisable(false);
         setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
+        System.out.println("player num" + activePlayer.getPlayerNum());
         drawTile();
         System.out.println(newTileToPlace.getClass());
 
@@ -251,9 +252,6 @@ public class GameboardController
      * Adds each effect in the active player's hand to the listview of effects
      */
     public void displayPlayerHand() {
-        ArrayList<String> hand = new ArrayList<>();
-        activePlayer.getHand().forEach(item -> hand.add(item.toString()));
-        lstEffects.getItems().setAll(hand);
         lstEffects.getItems().clear();
         lstEffects.getItems().setAll(activePlayer.getHand());
     }
