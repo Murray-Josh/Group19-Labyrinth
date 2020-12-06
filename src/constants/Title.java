@@ -7,65 +7,65 @@ package constants;
  * @version 1.0
  */
 public enum Title {
-   /**
-    * Main Menu
-    */
-   MAIN("Labyrinth"),
-   /**
-    * Load Game
-    */
-   LOAD("Load a Saved Game"),
-   /**
-    * Save Game
-    */
-   SAVE("Save Game"),
-   /**
-    * Setup Game
-    */
-   SETUP("Set Up a New Game"),
-   /**
-    * Scoreboard
-    */
-   SCOREBOARD("Scoreboard"),
-   /**
-    * Create Profile
-    */
-   CREATE_PROFILE("Create a Profile"),
-   /**
-    * Delete profile
-    */
-   DELETE_PROFILE("Delete a Profile"),
-   /**
-    * Error
-    */
-   ERROR("Labyrinth encountered an error"),
-   /**
-    * Critical Error (Only when the program exits after
-    */
-   CRITICAL_ERROR("Labyrinth encountered a critical error"),
-   /**
-    * Tile Shifts
-    */
-   PLACE_TILE("Place a Tile");
+    /**
+     * Main Menu
+     */
+    MAIN("Labyrinth"),
+    /**
+     * Load Game
+     */
+    LOAD("Load a Saved Game"),
+    /**
+     * Save Game
+     */
+    SAVE("Save Game"),
+    /**
+     * Setup Game
+     */
+    SETUP("Set Up a New Game"),
+    /**
+     * Scoreboard
+     */
+    SCOREBOARD("Scoreboard"),
+    /**
+     * Create Profile
+     */
+    CREATE_PROFILE("Create a Profile"),
+    /**
+     * Delete profile
+     */
+    DELETE_PROFILE("Delete a Profile"),
+    /**
+     * Error
+     */
+    ERROR("Labyrinth encountered an error"),
+    /**
+     * Critical Error (Only when the program exits after
+     */
+    CRITICAL_ERROR("Labyrinth encountered a critical error"),
+    /**
+     * Tile Shifts
+     */
+    PLACE_TILE("Place a Tile");
 
-   private final String TITLE;
+    private final String TITLE;
 
-   /**
-    * Constructor
-    *
-    * @param title Title of the Window
-    */
-   Title(String title) {
-      this.TITLE = title;
-   }
+    /**
+     * Constructor
+     *
+     * @param title Title of the Window
+     */
+    Title(String title) {
+        this.TITLE = title;
+    }
 
-   /**
-    * Converts TITLE type to string
-    *
-    * @return Title as a string
-    */
-   @Override
-   public String toString() {
-      return this.TITLE;
-   }
+    /**
+     * Converts TITLE type to string
+     *
+     * @return Title as a string
+     */
+    @Override
+    public String toString() {
+        return this.TITLE;
+    }
 }

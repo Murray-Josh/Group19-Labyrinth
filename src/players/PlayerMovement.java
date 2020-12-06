@@ -3,13 +3,12 @@ package players;
 import constants.Angle;
 import core.Coordinate;
 import core.Gameboard;
+import holdables.Tile;
 import holdables.TileEffect;
 import java.io.Serializable;
-
-import javafx.scene.input.KeyCode;
-import holdables.Tile;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.scene.input.KeyCode;
 
 /**
  * Moves the players
@@ -23,23 +22,26 @@ import java.util.Arrays;
 
 public class PlayerMovement implements Serializable {
 
-    private Gameboard gameboard;    
     ArrayList<Integer> currentMovable = new ArrayList<>();
     ArrayList<Integer> nextMovable = new ArrayList<>();
+    private Gameboard gameboard;
     private Boolean[] alignsArray = new Boolean[4];
+
     public PlayerMovement(Gameboard gameboard) {
         this.gameboard = gameboard;
     }
 
 
     /**
-     * Checks the key input and translates it to coordinate change - controls whether the sprite is moving
-     * @param key KeyEvent identifier
+     * Checks the key input and translates it to coordinate change - controls whether the sprite is
+     * moving
+     *
+     * @param key    KeyEvent identifier
      * @param player players turn to move
      */
-    public void keyPressed(KeyCode key, Player player){
+    public void keyPressed(KeyCode key, Player player) {
         Tile tile = gameboard.getTiles().get(player.getCoordinate());
-        switch(key){
+        switch (key) {
             case W:
             case UP:
                 moveCheck(player, tile, 2);
@@ -61,13 +63,14 @@ public class PlayerMovement implements Serializable {
 
     /**
      * Determines if move can be done
-     * @param player player to move
-     * @param tile current tile
+     *
+     * @param player    player to move
+     * @param tile      current tile
      * @param direction direction to move in
      */
     private void moveCheck(Player player, Tile tile, int direction) {
-        if(tilesAligned(player, this.gameboard)[direction]) {
-            switch(direction) {
+        if (tilesAligned(player, this.gameboard)[direction]) {
+            switch (direction) {
                 case 0:
                     player.setCoordinate(tile.getSouthTile(gameboard).getCoordinate());
                     player.setCurrentDirection(Angle.LEFT);
@@ -88,28 +91,29 @@ public class PlayerMovement implements Serializable {
             }
         }
     }
-    
+
     /**
-     * Determines which directions the current tile allows movement in
-     * Then checks the corresponding adjacent tiles to see if they line up
-     * Assigns true or false to array according to which directions can be travelled in
+     * Determines which directions the current tile allows movement in Then checks the corresponding
+     * adjacent tiles to see if they line up Assigns true or false to array according to which
+     * directions can be travelled in
      *
      * @param currentPlayer Player to input
      * @return boolean array of accessible direction
      */
-    public Boolean[] tilesAligned(Player currentPlayer, Gameboard g){
+    public Boolean[] tilesAligned(Player currentPlayer, Gameboard g) {
         this.gameboard = g;
         Arrays.fill(alignsArray, false);
         Tile currentTile = gameboard.getTiles().get(currentPlayer.getCoordinate());
         checkAligns(currentTile, currentMovable);
         Tile[] adjTiles = adjacentTiles(currentTile);
 
-        for(int i = 0; i < adjTiles.length; i++) {
-            if(currentMovable.contains(i) && adjTiles[i] != null && !isPlayerOnTile(adjTiles[i]) && !isOnFire(adjTiles[i])) {
+        for (int i = 0; i < adjTiles.length; i++) {
+            if (currentMovable.contains(i) && adjTiles[i] != null && !isPlayerOnTile(adjTiles[i])
+                    && !isOnFire(adjTiles[i])) {
                 checkAligns(adjTiles[i], nextMovable);
 
                 int nextTileDir = i + 2;
-                if(nextTileDir >= adjTiles.length) {
+                if (nextTileDir >= adjTiles.length) {
                     nextTileDir = i - 2;
                 }
 
@@ -118,17 +122,18 @@ public class PlayerMovement implements Serializable {
         }
         return alignsArray;
     }
-    
+
     /**
      * determines which direction a player can move in
+     *
      * @param tile Tile to check alignment of
      * @param list List to add movable tiles to
      */
     private void checkAligns(Tile tile, ArrayList<Integer> list) {
         list.clear();
-        switch(tile.getType()) {
+        switch (tile.getType()) {
             case STRAIGHT:
-                switch(tile.getAngle()) {
+                switch (tile.getAngle()) {
                     case LEFT:
                     case RIGHT:
                         list.add(0);
@@ -141,7 +146,7 @@ public class PlayerMovement implements Serializable {
                 }
                 break;
             case CORNER:
-                switch(tile.getAngle()) {
+                switch (tile.getAngle()) {
                     case DOWN:
                         list.add(3);
                         list.add(0);
@@ -161,7 +166,7 @@ public class PlayerMovement implements Serializable {
                 }
                 break;
             case JUNCTION:
-                switch(tile.getAngle()) {
+                switch (tile.getAngle()) {
                     case DOWN:
                         list.add(3);
                         list.add(0);
@@ -192,7 +197,7 @@ public class PlayerMovement implements Serializable {
                 break;
         }
     }
-    
+
     /**
      * Stores adjacent tiles as array
      *
@@ -207,7 +212,7 @@ public class PlayerMovement implements Serializable {
         adjTilesArr[3] = currentTile.getEastTile(gameboard);
         return adjTilesArr;
     }
-    
+
     /**
      * Checks if another player is on the tile the player wants to move onto
      *
@@ -215,14 +220,15 @@ public class PlayerMovement implements Serializable {
      * @return If other player is on next tile
      */
     private Boolean isPlayerOnTile(Tile checkTile) {
-        for(int i = 0; i < gameboard.getPlayersCount(); i++) {
-            if(gameboard.getPlayers(i).getCoordinate() == checkTile.getCoordinate()) { //may fail, not entirely sure how the matrix works now
+        for (int i = 0; i < gameboard.getPlayersCount(); i++) {
+            if (gameboard.getPlayers(i).getCoordinate() == checkTile
+                    .getCoordinate()) { //may fail, not entirely sure how the matrix works now
                 return true;
             }
         }
         return false;
     }
-    
+
     /**
      * Checks if the next tile is on fire or not
      *
@@ -234,18 +240,17 @@ public class PlayerMovement implements Serializable {
     }
 
     /**
-     * moves the player to the tile they were two turns ago.
-     * If that tile is on fire, then they move to their previous tile
-     * If their previous tile is on fire, they stay where they are.
+     * moves the player to the tile they were two turns ago. If that tile is on fire, then they move
+     * to their previous tile If their previous tile is on fire, they stay where they are.
      *
      * @param player Selected player
      */
-    public void backMovement(Player player){
+    public void backMovement(Player player) {
         Coordinate[] tiles = player.getLastTwoCoordinates();
         Tile previousTile = gameboard.getTiles().get(tiles[0]);
         Tile preferredTile = gameboard.getTiles().get(tiles[1]);
-        if(!isOnFire(previousTile) && !isPlayerOnTile(previousTile)){
-            if(!isOnFire(preferredTile) && !isPlayerOnTile(preferredTile)){
+        if (!isOnFire(previousTile) && !isPlayerOnTile(previousTile)) {
+            if (!isOnFire(preferredTile) && !isPlayerOnTile(preferredTile)) {
                 player.setCoordinate(tiles[1]);
             } else {
                 player.setCoordinate(tiles[0]);

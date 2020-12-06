@@ -1,12 +1,9 @@
 package players;
 
-import com.sun.applet2.AppletParameters;
 import constants.LevelType;
-import core.Level;
 import core.ProfileStatistic;
 import java.io.Serializable;
 import java.util.HashMap;
-import sun.java2d.cmm.Profile;
 
 /**
  * Stores wins, losses, number of games played and name of each individual player * @version 2.0.0
@@ -17,6 +14,7 @@ import sun.java2d.cmm.Profile;
  */
 @SuppressWarnings("unused")
 public class PlayerProfile implements Serializable {
+
     private static final int PERCENTAGE_MULTIPLIER = 100;
     private String name;
     private HashMap<LevelType, ProfileStatistic> statistics;
@@ -30,7 +28,7 @@ public class PlayerProfile implements Serializable {
         this.name = name;
         this.statistics = new HashMap<>();
         for (LevelType levelType : LevelType.values()) {
-            statistics.put(levelType, new ProfileStatistic(0,0,0));
+            statistics.put(levelType, new ProfileStatistic(0, 0, 0));
         }
     }
 
@@ -40,7 +38,7 @@ public class PlayerProfile implements Serializable {
     public String toString() {
         return this.name;
     }
-    
+
 
     /**
      * If this profile matches another profile
@@ -101,16 +99,16 @@ public class PlayerProfile implements Serializable {
     public ProfileStatistic getStatistic(LevelType levelType) {
         return statistics.get(levelType);
     }
-    
-    
-    public void addLevelStatistic(LevelType level,int wins,int losses,int games) {
-        statistics.put(level,new ProfileStatistic(wins, losses, games));
+
+
+    public void addLevelStatistic(LevelType level, int wins, int losses, int games) {
+        statistics.put(level, new ProfileStatistic(wins, losses, games));
     }
 
     public float getWinPercentage(LevelType levelType) {
         int games = statistics.get(levelType).getGames();
         int wins = statistics.get(levelType).getWins();
-        if (wins != 0 && games !=0) {
+        if (wins != 0 && games != 0) {
             return (float) (wins * PERCENTAGE_MULTIPLIER / games);
         } else {
             return 0;

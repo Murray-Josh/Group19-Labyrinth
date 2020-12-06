@@ -7,5 +7,6 @@ package holdables;
  * @version 1.0
  */
 public interface Effect extends Holdable {
-   String toString();
+
+    String toString();
 }

@@ -17,24 +17,25 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class SilkBag extends ArrayDeque<Holdable> implements Serializable {
 
-   /**
-    * Constructs a new SilkBag
-    * @param items
-    */
-   public SilkBag(List<? extends Holdable> items) {
-      super();
-      Collections.shuffle(items);
-      super.addAll(items);
-   }
+    /**
+     * Constructs a new SilkBag
+     *
+     * @param items
+     */
+    public SilkBag(List<? extends Holdable> items) {
+        super();
+        Collections.shuffle(items);
+        super.addAll(items);
+    }
 
-   /**
-    * Shuffles the {@link SilkBag}
-    */
-   public void shuffle() {
-      ArrayList<Holdable> temp = new ArrayList<>();
-      while (!isEmpty()) {
-         temp.add(poll());
-      }
-      Collections.shuffle(temp);
-   }
+    /**
+     * Shuffles the {@link SilkBag}
+     */
+    public void shuffle() {
+        ArrayList<Holdable> temp = new ArrayList<>();
+        while (!isEmpty()) {
+            temp.add(poll());
+        }
+        Collections.shuffle(temp);
+    }
 }

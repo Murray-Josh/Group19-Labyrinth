@@ -34,89 +34,89 @@ import javafx.scene.input.MouseEvent;
 @SuppressWarnings("unused")
 public class LoadGameController implements Initializable {
 
-   private static final Title title = Title.SAVE;
-   @FXML
-   private Button cmdRefresh;
-   @FXML
-   private Button cmdLoad;
-   @FXML
-   private Button cmdCancel;
-   @FXML
-   private ListView<File> lstSaves;
+    private static final Title title = Title.SAVE;
+    @FXML
+    private Button cmdRefresh;
+    @FXML
+    private Button cmdLoad;
+    @FXML
+    private Button cmdCancel;
+    @FXML
+    private ListView<File> lstSaves;
 
-   private File selected;
+    private File selected;
 
-   /**
-    * refreshes the list content
-    *
-    * @param actionEvent Event
-    */
-   public void cmdRefreshClick(ActionEvent actionEvent) {
-      refresh();
-   }
+    /**
+     * refreshes the list content
+     *
+     * @param actionEvent Event
+     */
+    public void cmdRefreshClick(ActionEvent actionEvent) {
+        refresh();
+    }
 
-   private void refresh() {
-      lstSaves.getItems().clear();
-      getSaves().forEach(file -> {
-         try {
-            System.out.println(file.getCanonicalFile());
-         } catch (IOException e) {
+    private void refresh() {
+        lstSaves.getItems().clear();
+        getSaves().forEach(file -> {
+            try {
+                System.out.println(file.getCanonicalFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        lstSaves.getItems().setAll(FXCollections.observableArrayList(getSaves()));
+    }
+
+
+    /**
+     * Finds all the files in the save folder that have the extension .labyrinth and adds them to a
+     * list
+     *
+     * @return List of save files
+     */
+    private ArrayList<File> getSaves() {
+        File dir = new File("saves");
+        return new ArrayList<>(Arrays.asList(Objects.requireNonNull(dir.listFiles())));
+    }
+
+    /**
+     * Handles the event that occurs when a list item is selected
+     *
+     * @param mouseEvent Event
+     */
+    public void lstSavesClick(MouseEvent mouseEvent) {
+        selected = lstSaves.getSelectionModel().getSelectedItem();
+
+    }
+
+    /**
+     * Handles the event that occurs when load game is clicked. It checks if an item is selected and
+     * if it is, sends the selected save file to the Logic class
+     *
+     * @param actionEvent Event
+     */
+    public void cmdLoadClick(ActionEvent actionEvent) {
+        HashMap<Key, Object> data;
+        try {
+            data = Save.load(selected);
+            changeScene(Window.BOARD, new Object[]{true, data});
+        } catch (IOException | ClassNotFoundException e) {
+            showError(ErrorMessage.SAVE_READ_ERROR, Title.LOAD, false);
             e.printStackTrace();
-         }
-      });
-      lstSaves.getItems().setAll(FXCollections.observableArrayList(getSaves()));
-   }
+        }
+    }
 
+    /**
+     * goes back to the main menu
+     *
+     * @param actionEvent Event
+     */
+    public void cmdCancelClick(ActionEvent actionEvent) {
+        home();
+    }
 
-   /**
-    * Finds all the files in the save folder that have the extension .labyrinth and adds them to a
-    * list
-    *
-    * @return List of save files
-    */
-   private ArrayList<File> getSaves() {
-      File dir = new File("saves");
-      return new ArrayList<>(Arrays.asList(Objects.requireNonNull(dir.listFiles())));
-   }
-
-   /**
-    * Handles the event that occurs when a list item is selected
-    *
-    * @param mouseEvent Event
-    */
-   public void lstSavesClick(MouseEvent mouseEvent) {
-      selected = lstSaves.getSelectionModel().getSelectedItem();
-
-   }
-
-   /**
-    * Handles the event that occurs when load game is clicked. It checks if an item is selected and
-    * if it is, sends the selected save file to the Logic class
-    *
-    * @param actionEvent Event
-    */
-   public void cmdLoadClick(ActionEvent actionEvent) {
-      HashMap<Key, Object> data;
-      try {
-         data = Save.load(selected);
-         changeScene(Window.BOARD, new Object[]{true, data});
-      } catch (IOException | ClassNotFoundException e) {
-         showError(ErrorMessage.SAVE_READ_ERROR, Title.LOAD, false);
-         e.printStackTrace();
-      }
-   }
-
-   /**
-    * goes back to the main menu
-    *
-    * @param actionEvent Event
-    */
-   public void cmdCancelClick(ActionEvent actionEvent) {
-      home();
-   }
-
-   @Override
-   public void initialize(URL location, ResourceBundle resources) {
-      refresh();
-   }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        refresh();
+    }
 }

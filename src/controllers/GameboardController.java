@@ -1,10 +1,14 @@
-
 package controllers;
 
 import static controllers.StageController.changeScene;
 import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
-import static styles.Style.*;
+import static styles.Style.getCornerFire;
+import static styles.Style.getCornerIce;
+import static styles.Style.getJunctionFire;
+import static styles.Style.getJunctionIce;
+import static styles.Style.getStraightFire;
+import static styles.Style.getStraightIce;
 
 import constants.ErrorMessage;
 import constants.LevelType;
@@ -57,7 +61,7 @@ import styles.Style;
 
 /**
  * Controls the Gameboard, the game's progression and its associated GUI
- * @version 1.3
+ *
  * @author Joshua Murray
  * @author Jordy Martinson
  * @author Martin Samm
@@ -65,6 +69,7 @@ import styles.Style;
  * @author Issi Ludwig
  * @author Joseph Omar
  * @author Aaron Davies
+ * @version 1.3
  */
 public class GameboardController
         implements InitialisableWithParameters, Serializable {
@@ -73,15 +78,13 @@ public class GameboardController
     private static final double WINDOW_HEIGHT = 34;
     private static final double WINDOW_WIDTH = 340;
     private static final int PLAYER_SIZE = 60;
-    private final int MOVE_COUNT = 4;
-
     private static final String FORMATTING_PLAYERS =
             "Formatting Players";
     private static final String PLAYER_FORMATTING_COMPLETE =
             "Player Formatting Complete!";
     private static final String SILK_BAG_DRAW =
             "Draw from silk bag";
-
+    private final int MOVE_COUNT = 4;
     @FXML
     private BorderPane root;
     @FXML
@@ -105,64 +108,6 @@ public class GameboardController
     private Coordinate temp = null;
     private boolean skip = false;
 
-
-    /**
-     * Called from the {@link StageController}, allows the passage of parameters between the SetUpGameController and the GameboardController
-     *
-     * @param parameters Parameters needed for this controller
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
-        boolean loadingFromSave = (boolean) parameters[0];
-        if (loadingFromSave) {
-            initialiseFromSave((HashMap<Key, Object>) parameters[1], scene);
-        } else {
-            initialiseFromSetup((Gameboard) parameters[1], scene);
-        }
-        refresh();
-    }
-
-    /**
-     * Initialises the GameboardController and its attributes from a loaded save file
-     * @param data HashMap containing the data from the saved game
-     * @param scene This window's Scene
-     */
-    private void initialiseFromSave(HashMap<Key, Object> data, Scene scene) {
-        this.skip = (boolean) data.get(Key.SKIP);
-        this.playerMovement = (PlayerMovement) data.get(Key.MOVEMENT);
-      this.activePlayerMovementLeft = (int)  data.get(Key.MOVEMENTS_LEFT);
-     this.activePlayer = (Player)   data.get(Key.ACTIVE_PLAYER);
-this.temp = (Coordinate) data.get(Key.TEMPORARY_COORDINATE);
-this.playerCounter = (int) data.get(Key.PLAYER_COUNTER);
-
-this.gameboard = playerMovement.getGameboard();
-this.players=gameboard.getPlayers();
-
-setGridSize(gameboard.getWidth(), gameboard.getHeight());
-refresh();
-formatPlayers();
-startKeyListener(scene);
-
-
-    }
-
-    /**
-     * Initialises the gameboard from new game setup
-     * @param gameboard The gameboard to be played on
-     * @param scene This window's scene
-     */
-    private void initialiseFromSetup(Gameboard gameboard, Scene scene) {
-        this.gameboard = gameboard;
-        setGridSize(gameboard.getWidth(), gameboard.getHeight());
-        playerMovement = new PlayerMovement(gameboard);
-        refresh();
-        formatPlayers();
-        startKeyListener(scene);
-        activePlayer = players.get(playerCounter);
-        playerTurn();
-    }
-
     /**
      * Creates a Container that holds the player, their name and their sprite.
      *
@@ -180,6 +125,66 @@ startKeyListener(scene);
         VBox.setMargin(image, new Insets(4, 0, 4, 0));
         VBox.setMargin(name, new Insets(4, 4, 4, 4));
         return playerPicture;
+    }
+
+    /**
+     * Called from the {@link StageController}, allows the passage of parameters between the
+     * SetUpGameController and the GameboardController
+     *
+     * @param parameters Parameters needed for this controller
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
+        boolean loadingFromSave = (boolean) parameters[0];
+        if (loadingFromSave) {
+            initialiseFromSave((HashMap<Key, Object>) parameters[1], scene);
+        } else {
+            initialiseFromSetup((Gameboard) parameters[1], scene);
+        }
+        refresh();
+    }
+
+    /**
+     * Initialises the GameboardController and its attributes from a loaded save file
+     *
+     * @param data  HashMap containing the data from the saved game
+     * @param scene This window's Scene
+     */
+    private void initialiseFromSave(HashMap<Key, Object> data, Scene scene) {
+        this.skip = (boolean) data.get(Key.SKIP);
+        this.playerMovement = (PlayerMovement) data.get(Key.MOVEMENT);
+        this.activePlayerMovementLeft = (int) data.get(Key.MOVEMENTS_LEFT);
+        this.activePlayer = (Player) data.get(Key.ACTIVE_PLAYER);
+        this.temp = (Coordinate) data.get(Key.TEMPORARY_COORDINATE);
+        this.playerCounter = (int) data.get(Key.PLAYER_COUNTER);
+
+        this.gameboard = playerMovement.getGameboard();
+        this.players = gameboard.getPlayers();
+
+        setGridSize(gameboard.getWidth(), gameboard.getHeight());
+        refresh();
+        formatPlayers();
+        startKeyListener(scene);
+
+
+    }
+
+    /**
+     * Initialises the gameboard from new game setup
+     *
+     * @param gameboard The gameboard to be played on
+     * @param scene     This window's scene
+     */
+    private void initialiseFromSetup(Gameboard gameboard, Scene scene) {
+        this.gameboard = gameboard;
+        setGridSize(gameboard.getWidth(), gameboard.getHeight());
+        playerMovement = new PlayerMovement(gameboard);
+        refresh();
+        formatPlayers();
+        startKeyListener(scene);
+        activePlayer = players.get(playerCounter);
+        playerTurn();
     }
 
     /**
@@ -318,7 +323,7 @@ startKeyListener(scene);
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
-                if(tile.getEffect() != TileEffect.NONE) {
+                if (tile.getEffect() != TileEffect.NONE) {
                     image.setImage(applyTileEffect(tile, image));
                 }
                 if (tile.isFixed()) {
@@ -336,10 +341,11 @@ startKeyListener(scene);
             changeScene(Window.SETUP);
         }
     }
-        
+
     /**
      * Applies a tile effect and style to a given tile
-     * @param tile Tile to affect
+     *
+     * @param tile  Tile to affect
      * @param image Image of tile
      * @return Tile image with effect added
      */
@@ -348,14 +354,14 @@ startKeyListener(scene);
         Image[] iceTiles = new Image[]{getCornerIce(), getStraightIce(), getJunctionIce()};
         Image[] fireTiles = new Image[]{getCornerFire(), getStraightFire(), getJunctionFire()};
 
-        if(tile.getEffect() == TileEffect.ICE) {
+        if (tile.getEffect() == TileEffect.ICE) {
             for (int i = 0; i < types.length; i++) {
                 if (tile.getType() == types[i]) {
                     image.setImage(iceTiles[i]);
                     tile.setFixed();
                 }
             }
-        } else if( tile.getEffect() == TileEffect.FIRE) {
+        } else if (tile.getEffect() == TileEffect.FIRE) {
             for (int i = 0; i < types.length; i++) {
                 if (tile.getType() == types[i]) {
                     image.setImage(fireTiles[i]);
@@ -388,7 +394,7 @@ startKeyListener(scene);
         if (activePlayer.getHand() == null) {
             activePlayer.setHand(new ArrayList<>());
         }
-       this.newTileToPlace = gameboard.getSilkBag().poll();
+        this.newTileToPlace = gameboard.getSilkBag().poll();
     }
 
     /**
@@ -417,7 +423,9 @@ startKeyListener(scene);
     }
 
     /**
-     * Displays a Dialog box asking the player to choose another player to apply the backtrack effect to
+     * Displays a Dialog box asking the player to choose another player to apply the backtrack
+     * effect to
+     *
      * @return Player to apply the effect to
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -441,6 +449,7 @@ startKeyListener(scene);
 
     /**
      * Shows the Dialog allowing the player to select a tile to apply their tile effect to
+     *
      * @param chosenEffect Tile effect to apply to a range of tiles
      */
     private void displayTileSelectionDialog(TileEffect chosenEffect) {
@@ -478,6 +487,7 @@ startKeyListener(scene);
 
     /**
      * Creates an event listener on key press
+     *
      * @param scene This window's scene
      */
     private void startKeyListener(Scene scene) {
@@ -486,6 +496,7 @@ startKeyListener(scene);
 
     /**
      * Handles a KeyPress event based on the game's state
+     *
      * @param event The KeyPress event
      */
     private void handleKeyPress(KeyEvent event) {
@@ -535,18 +546,21 @@ startKeyListener(scene);
                 "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
         for (Player player : players) {
             PlayerProfile profile = player.getProfile();
-           profile.editLosses(gameboard.getLevelType(), profile.getLosses(gameboard.getLevelType()) +1);
-           profile.editGames(gameboard.getLevelType(), profile.getGames(gameboard.getLevelType()) + 1);
+            profile.editLosses(gameboard.getLevelType(),
+                    profile.getLosses(gameboard.getLevelType()) + 1);
+            profile.editGames(gameboard.getLevelType(),
+                    profile.getGames(gameboard.getLevelType()) + 1);
         }
         LevelType levelType = gameboard.getLevelType();
-        PlayerProfile profile =   activePlayer.getProfile();
-        profile.editWins(levelType, profile.getWins(levelType) +1);
-        profile.editLosses(levelType, profile.getLosses(levelType) -1);
+        PlayerProfile profile = activePlayer.getProfile();
+        profile.editWins(levelType, profile.getWins(levelType) + 1);
+        profile.editLosses(levelType, profile.getLosses(levelType) - 1);
         StageController.home();
     }
 
     /**
      * Checks if the player can move to the next tile
+     *
      * @return If the player can move to the next tile
      */
     private boolean checkTilesAligned() {
@@ -591,7 +605,7 @@ startKeyListener(scene);
     public void saveAndExit() {
         try {
             Save.save(skip, activePlayer, playerCounter, activePlayerMovementLeft, temp,
-                 playerMovement);
+                    playerMovement);
             System.exit(0);
         } catch (IOException e) {
             showError(ErrorMessage.SAVE_WRITE_ERROR, Title.SAVE, false);
@@ -649,8 +663,9 @@ startKeyListener(scene);
 
     /**
      * Applies backtrack to the the target player
+     *
      * @param targetPlayer The Target Player
-     * @param player The current Player
+     * @param player       The current Player
      */
     private void applyBackTrack(Player targetPlayer, Player player) {
         if (!targetPlayer.hasBeenBackTracked()) {
@@ -682,13 +697,13 @@ startKeyListener(scene);
             playerCounter = 0;
         }
     }
-        
-     /**
+
+    /**
      * Iterates the countdown for effect timers
      */
     private void effectCountdown() {
         for (Tile tile : gameboard.getTiles()) {
-            if(tile.getEffect() != TileEffect.NONE) {
+            if (tile.getEffect() != TileEffect.NONE) {
                 tile.decrementTimer();
                 if (tile.getEffectTimer() == 0) {
                     tile.setEffect(TileEffect.NONE);
@@ -697,22 +712,23 @@ startKeyListener(scene);
         }
     }
 
-        /**
-         * Applies the given effect to the given list of tiles
-         * @param effect Effect to apply
-         * @param tiles Tiles to apply to
-         */
-        public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
-            for (Tile t : tiles) {
-                t.setEffect(effect);
-                if(t.getEffect().equals(TileEffect.ICE)) {
-                    t.setEffectTimer(1);
-                } else {
-                    t.setEffectTimer(2);
-                }
+    /**
+     * Applies the given effect to the given list of tiles
+     *
+     * @param effect Effect to apply
+     * @param tiles  Tiles to apply to
+     */
+    public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+        for (Tile t : tiles) {
+            t.setEffect(effect);
+            if (t.getEffect().equals(TileEffect.ICE)) {
+                t.setEffectTimer(1);
+            } else {
+                t.setEffectTimer(2);
             }
-            refresh();
         }
+        refresh();
+    }
 
 
 }
