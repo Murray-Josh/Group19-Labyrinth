@@ -13,8 +13,9 @@ import sun.java2d.cmm.Profile;
  *
  * @author Martin Samm
  * @author Joseph Omar
- * @version 1.0
+ * @version 2.0
  */
+@SuppressWarnings("unused")
 public class PlayerProfile implements Serializable {
     private static final int PERCENTAGE_MULTIPLIER = 100;
     private String name;
