@@ -238,7 +238,7 @@ public class GameboardController
         if(skip && tempPlayerCounter != 0) {
             playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
         } else if(skip && tempPlayerCounter == 0) {
-            playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
+            playerMoveText = "Player " + (tempPlayerCounter + 1) + " could not move! ";
         }
         playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
         setStatus(playerMoveText);
@@ -302,11 +302,16 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
+            /*
             if(activePlayerMovementLeft == 0) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 playerTurn();
             }
+
+             */
+
+
         } else {
             showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
