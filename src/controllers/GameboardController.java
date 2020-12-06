@@ -438,6 +438,7 @@ public class GameboardController
                         ps.getProfile().setNumOfGames(ps.getProfile().getNumOfGames() + 1);
                         ps.getProfile().setNumOfLosses(ps.getProfile().getNumOfLosses() + 1);
                     }
+
                     activePlayer.getProfile()
                             .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
                     activePlayer.getProfile()
