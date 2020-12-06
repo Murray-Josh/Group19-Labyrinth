@@ -92,11 +92,8 @@ public class GameboardController
     private Button cmdActivate;
     @FXML
     private Label lblStatus;
-    @FXML
-    private Button cmdSilkBag;
 
     private ArrayList<Player> players;
-    private Level level;
     private Gameboard gameboard;
     private int tempPlayerCounter = 0;
     private Holdable newTileToPlace;
@@ -160,6 +157,7 @@ public class GameboardController
             placePlayer(player);
         }
     }
+
     /**
      * Places single player at new coordinate
      *
@@ -198,6 +196,7 @@ public class GameboardController
     public void setStatus(String message) {
         this.lblStatus.setText(message);
     }
+
     /**
      * Gets the currently active Player
      *
@@ -206,6 +205,7 @@ public class GameboardController
     public Player getActivePlayer() {
         return this.activePlayer;
     }
+
     /**
      * Sets the currently active player
      *
@@ -214,42 +214,42 @@ public class GameboardController
     public void setActivePlayer(Player player) {
         this.activePlayer = player;
     }
+
     /**
      * playerturn order stuff
      */
     private void playerTurn() {
         // Is silk bag working?
-        cmdActivate.setDisable(false);
-        setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
-        System.out.println("player num" + activePlayer.getPlayerNum());
-        drawTile();
-        System.out.println(newTileToPlace.getClass());
+        if (activePlayer != null) {
+            cmdActivate.setDisable(false);
+            setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
+            System.out.println("player num" + activePlayer.getPlayerNum());
+            drawTile();
+            if (newTileToPlace instanceof PlayerEffect || newTileToPlace instanceof TileEffect) {
+                activePlayer.addToHand((Effect) newTileToPlace);
+                displayPlayerHand();
+            } else if (newTileToPlace instanceof Tile) {
+                System.out.println("CLASS TILES");
+                displayTileMovementDialog((Tile) newTileToPlace, gameboard);
+            }
 
-        if(newTileToPlace instanceof PlayerEffect || newTileToPlace instanceof TileEffect){
-            activePlayer.addToHand((Effect) newTileToPlace);
-            displayPlayerHand();
+            String playerMoveText = "";
+            if (skip && tempPlayerCounter != 0) {
+                playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
+            } else if (skip && tempPlayerCounter == 0) {
+                playerMoveText = "Player " + (tempPlayerCounter + 1) + " could not move! ";
+            }
+            playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
+            setStatus(playerMoveText);
+            activePlayer = players.get(tempPlayerCounter);
+            activePlayerMovementLeft = MOVE_COUNT;
+            skip = false;
+            temp = null;
+
+            refresh();
         }
-        else if(newTileToPlace instanceof Tile){
-            System.out.println("CLASS TILES");
-            displayTileMovementDialog((Tile) newTileToPlace, gameboard);
-        }
-
-
-        String playerMoveText = "";
-        if(skip && tempPlayerCounter != 0) {
-            playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
-        } else if(skip && tempPlayerCounter == 0) {
-            playerMoveText = "Player " + (tempPlayerCounter + 4) + " could not move! ";
-        }
-        playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
-        setStatus(playerMoveText);
-        activePlayer = players.get(tempPlayerCounter);
-        activePlayerMovementLeft = MOVE_COUNT;
-        skip = false;
-        temp = null;
-
-        refresh();
     }
+
     /**
      * Adds each effect in the active player's hand to the listview of effects
      */
@@ -284,6 +284,7 @@ public class GameboardController
         }
         setWindowSize();
     }
+
     /**
      * Refreshes the GridPane, updating each tile from the {@link Gameboard}
      */
@@ -303,16 +304,21 @@ public class GameboardController
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
+            /*
             if(activePlayerMovementLeft == 0) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 playerTurn();
             }
+
+             */
+
         } else {
             showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
         }
     }
+
     /**
      * Sets the height of the window based on the size of the gameboard
      */
@@ -328,15 +334,18 @@ public class GameboardController
         root.setMinSize(gridPaneWidth + WINDOW_WIDTH, gridPaneHeight + WINDOW_HEIGHT);
         root.setPrefSize(gridPaneWidth + WINDOW_WIDTH, gridPaneHeight + WINDOW_HEIGHT);
     }
+
     public void drawTile() {
         if (activePlayer.getHand() == null) {
             activePlayer.setHand(new ArrayList<>());
         }
         setNewTileToPlace(gameboard.getSilkBag().poll());
     }
+
     public void setNewTileToPlace(Holdable newTileToPlace) {
         this.newTileToPlace = newTileToPlace;
     }
+
     /**
      * Handles the Activate button click event
      *
@@ -348,7 +357,8 @@ public class GameboardController
             displayTileSelectionDialog((TileEffect) chosenEffect);
         } else if (chosenEffect instanceof PlayerEffect) {
             if (chosenEffect.equals(PlayerEffect.DOUBLE_MOVE)) {
-                activePlayerMovementLeft = (2 * MOVE_COUNT) - (MOVE_COUNT - activePlayerMovementLeft);
+                activePlayerMovementLeft =
+                        (2 * MOVE_COUNT) - (MOVE_COUNT - activePlayerMovementLeft);
             } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
                 Player chosenPlayer = displayPlayerSelectionDialog();
                 applyBackTrack(chosenPlayer, activePlayer);
@@ -411,9 +421,11 @@ public class GameboardController
         return gameboard.getTiles().get(activePlayer.getCoordinate()).getType()
                 .equals(TileType.GOAL);
     }
+
     private void startKeyListener(Scene scene) {
         scene.setOnKeyReleased(this::handleKeyPress);
     }
+
     private void handleKeyPress(KeyEvent event) {
         Player p = getActivePlayer();
         playerMoving = true;
@@ -429,16 +441,7 @@ public class GameboardController
                 temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
                 if (winCheck()) {
-                    showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!" , "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
-                    for (Player ps : players) {
-                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
-                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
-                    }
-                    activePlayer.getProfile()
-                            .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
-                    activePlayer.getProfile()
-                            .setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
-                    StageController.home();
+                    winGame();
                 }
                 if (temp != activePlayer.getCoordinate()) {
                     activePlayerMovementLeft -= 1;
@@ -453,6 +456,22 @@ public class GameboardController
             playerTurn();
         }
     }
+
+    private void winGame() {
+        showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!",
+                "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
+        for (Player ps : players) {
+            ps.getProfile().setNumOfGames(ps.getProfile().getNumOfGames() + 1);
+            ps.getProfile().setNumOfLosses(ps.getProfile().getNumOfLosses() + 1);
+        }
+
+        activePlayer.getProfile()
+                .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
+        activePlayer.getProfile()
+                .setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
+        StageController.home();
+    }
+
     private boolean checkTilesAligned() {
         Boolean[] t = pMove.tilesAligned(activePlayer, this.gameboard);
         for (int i = 0; i < MOVE_COUNT; i++) {
@@ -485,18 +504,21 @@ public class GameboardController
             e.printStackTrace();
         }
     }
+
     /**
      * Saves the game and exits the application
      */
     public void saveAndExit() {
 
     }
+
     /**
      * Exits the application without saving
      */
     public void exit() {
         System.exit(0);
     }
+
     /**
      * Shows the Place Tile dialog
      *
@@ -577,7 +599,7 @@ public class GameboardController
 
     }
 
-    public void isNextTurn(){
+    public void isNextTurn() {
         if (activePlayerMovementLeft == 0) {
             activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
             iterateTempPlayerCounter();
@@ -585,4 +607,6 @@ public class GameboardController
             playerTurn();
         }
     }
+
+
 }
