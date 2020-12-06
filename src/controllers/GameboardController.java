@@ -6,7 +6,6 @@ import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
 import static styles.Style.*;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import constants.ErrorMessage;
 import constants.LevelType;
 import constants.TileType;
@@ -14,7 +13,6 @@ import constants.Title;
 import constants.Window;
 import core.Coordinate;
 import core.Gameboard;
-import core.Level;
 import core.Save;
 import core.Save.Key;
 import holdables.Effect;
@@ -22,10 +20,7 @@ import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +56,15 @@ import players.PlayerProfile;
 import styles.Style;
 
 /**
- * TODO Test Drawing Draw Players test move dialog make apply effects work method to apply effect to
- * a player events for selected effect image, draw a border? maybe listview? logic for activate
+ * Controls the Gameboard, the game's progression and its associated GUI
+ * @version 1.3
+ * @author Joshua Murray
+ * @author Jordy Martinson
+ * @author Martin Samm
+ * @author Fungwah Westley
+ * @author Issi Ludwig
+ * @author Joseph Omar
+ * @author Aaron Davies
  */
 public class GameboardController
         implements InitialisableWithParameters, Serializable {
@@ -79,13 +81,6 @@ public class GameboardController
             "Player Formatting Complete!";
     private static final String SILK_BAG_DRAW =
             "Draw from silk bag";
-    private static final String PLACE_TILE =
-            "Place your tile";
-
-    private static final String REFRESHING =
-            "Refreshing Gameboard";
-    private static final String REFRESH_COMPLETE =
-            "Refreshing Gameboard";
 
     @FXML
     private BorderPane root;
@@ -102,11 +97,10 @@ public class GameboardController
 
     private ArrayList<Player> players;
     private Gameboard gameboard;
-    private int tempPlayerCounter = 0;
+    private int playerCounter = 0;
     private Holdable newTileToPlace;
     private PlayerMovement playerMovement;
     private Player activePlayer;
-    private boolean playerMoving;
     private int activePlayerMovementLeft = MOVE_COUNT;
     private Coordinate temp = null;
     private PlayerMovement pMove;
@@ -114,9 +108,9 @@ public class GameboardController
 
 
     /**
-     * Called from the {@link StageController}, allows the passage of parameters between scenes
+     * Called from the {@link StageController}, allows the passage of parameters between the SetUpGameController and the GameboardController
      *
-     * @param parameters Parameters for this Controller
+     * @param parameters Parameters needed for this controller
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -130,13 +124,18 @@ public class GameboardController
         refresh();
     }
 
+    /**
+     * Initialises the GameboardController and its attributes from a loaded save file
+     * @param data HashMap containing the data from the saved game
+     * @param scene This window's Scene
+     */
     private void initialiseFromSave(HashMap<Key, Object> data, Scene scene) {
         this.skip = (boolean) data.get(Key.SKIP);
         this.playerMovement = (PlayerMovement) data.get(Key.MOVEMENT);
       this.activePlayerMovementLeft = (int)  data.get(Key.MOVEMENTS_LEFT);
      this.activePlayer = (Player)   data.get(Key.ACTIVE_PLAYER);
 this.temp = (Coordinate) data.get(Key.TEMPORARY_COORDINATE);
-this.tempPlayerCounter = (int) data.get(Key.PLAYER_COUNTER);
+this.playerCounter = (int) data.get(Key.PLAYER_COUNTER);
 
 this.gameboard = playerMovement.getGameboard();
 this.players=gameboard.getPlayers();
@@ -149,6 +148,11 @@ startKeyListener(scene);
 
     }
 
+    /**
+     * Initialises the gameboard from new game setup
+     * @param gameboard The gameboard to be played on
+     * @param scene This window's scene
+     */
     private void initialiseFromSetup(Gameboard gameboard, Scene scene) {
         this.gameboard = gameboard;
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
@@ -157,17 +161,17 @@ startKeyListener(scene);
         refresh();
         formatPlayers();
         startKeyListener(scene);
-        activePlayer = players.get(tempPlayerCounter);
+        activePlayer = players.get(playerCounter);
         playerTurn();
     }
 
     /**
-     * Creates a Container that holds the player and their data
+     * Creates a Container that holds the player, their name and their sprite.
      *
      * @param player Player to create a Container for
-     * @return Formatted Vbox
+     * @return Formatted Player in a VBox
      */
-    private static VBox createPlayerContainer(Player player, Style style) {
+    private static VBox createPlayerContainer(Player player) {
         ImageView image = new ImageView(Style.getPlayerImage(player.getPlayerNum()));
         image.setPreserveRatio(false);
         image.setFitHeight(TILE_SIZE);
@@ -180,16 +184,13 @@ startKeyListener(scene);
         return playerPicture;
     }
 
-    public void cmdActionClick(MouseEvent mouseEvent) {
-    }
-
     /**
-     * Places players at new coordinates
+     * Places multiple players at their coordinates
      *
-     * @param pList List of players to place
+     * @param players List of players to place
      */
-    private void placePlayer(ArrayList<Player> pList) {
-        for (Player player : pList) {
+    private void placePlayer(ArrayList<Player> players) {
+        for (Player player : players) {
             placePlayer(player);
         }
     }
@@ -197,15 +198,15 @@ startKeyListener(scene);
     /**
      * Places single player at new coordinate
      *
-     * @param p Player to place
+     * @param player Player to place
      */
-    private void placePlayer(Player p) {
-        ImageView image = new ImageView(Style.getPlayerImage(p.getPlayerNum()));
+    private void placePlayer(Player player) {
+        ImageView image = new ImageView(Style.getPlayerImage(player.getPlayerNum()));
         image.setPreserveRatio(false);
-        image.setRotate(p.getCurrentDirection().get());
+        image.setRotate(player.getCurrentDirection().get());
         image.setFitHeight(PLAYER_SIZE);
         image.setFitWidth(PLAYER_SIZE);
-        grdBoard.add(image, p.getCoordinate().getX(), p.getCoordinate().getY());
+        grdBoard.add(image, player.getCoordinate().getX(), player.getCoordinate().getY());
     }
 
     /**
@@ -216,7 +217,7 @@ startKeyListener(scene);
         this.vboxPlayers.setAlignment(Pos.CENTER);
         players = new ArrayList<>(this.gameboard.getPlayers());
         players.forEach(player -> {
-            VBox playerPicture = createPlayerContainer(player, this.gameboard.getStyle());
+            VBox playerPicture = createPlayerContainer(player);
             this.vboxPlayers.getChildren().add(playerPicture);
         });
         setStatus(PLAYER_FORMATTING_COMPLETE);
@@ -243,40 +244,35 @@ startKeyListener(scene);
     }
 
     /**
-     * Sets the currently active player
-     *
-     * @param player Player to set as active
-     */
-    public void setActivePlayer(Player player) {
-        this.activePlayer = player;
-    }
-
-    /**
-     * playerturn order stuff
+     * Systematically goes through the events that occur during a player's turn.
      */
     private void playerTurn() {
         if (activePlayer != null) {
             cmdActivate.setDisable(false);
-            activePlayer = players.get(tempPlayerCounter);
+            /*Set the active player to the player counter's value */
+            activePlayer = players.get(playerCounter);
             setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
             System.out.println("player num" + activePlayer.getPlayerNum());
-            drawTile();
+            drawTileFromSilkBag();
+
+            /* If the Tile is an Effect Tile */
             if (newTileToPlace instanceof PlayerEffect || newTileToPlace instanceof TileEffect) {
                 activePlayer.addToHand((Effect) newTileToPlace);
                 lstEffects.getItems().clear();
                 displayPlayerHand();
+                /* If the tile is a gameboard tile*/
             } else if (newTileToPlace instanceof Tile) {
                 System.out.println("CLASS TILES");
                 displayTileMovementDialog((Tile) newTileToPlace, gameboard);
             }
 
             String playerMoveText = "";
-            if (skip && tempPlayerCounter != 0) {
-                playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
-            } else if (skip && tempPlayerCounter == 0) {
-                playerMoveText = "Player " + (tempPlayerCounter + players.size()) + " could not move! ";
+            if (skip && playerCounter != 0) {
+                playerMoveText = "Player " + (playerCounter) + " could not move! ";
+            } else if (skip && playerCounter == 0) {
+                playerMoveText = "Player " + (playerCounter + players.size()) + " could not move! ";
             }
-            playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
+            playerMoveText += "Player " + (playerCounter + 1) + "'s move";
             setStatus(playerMoveText);
 
             activePlayerMovementLeft = MOVE_COUNT;
@@ -295,11 +291,6 @@ startKeyListener(scene);
         lstEffects.getItems().setAll(activePlayer.getHand());
     }
 
-    /**
-     * limits each player to being able to be the target of backtrack only once per game
-     * @param targetPlayer
-     * @param player
-     */
     /**
      * Sets up the correct number of rows and columns according to parameters
      *
@@ -328,6 +319,7 @@ startKeyListener(scene);
     public void refresh() {
         if (gameboard != null) {
             InnerShadow innerShadow = new InnerShadow(5, Color.BLACK);
+            /* For Each Tile in the Gameboard*/
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
@@ -344,14 +336,6 @@ startKeyListener(scene);
                 grdBoard.add(image, tile.getCoordinate().getX(), tile.getCoordinate().getY());
                 placePlayer(gameboard.getPlayers());
             });
-            /*
-            if(activePlayerMovementLeft == 0) {
-                activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
-                iterateTempPlayerCounter();
-                playerTurn();
-            }
-
-             */
         } else {
             showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
@@ -402,21 +386,20 @@ startKeyListener(scene);
         root.setPrefSize(gridPaneWidth + WINDOW_WIDTH, gridPaneHeight + WINDOW_HEIGHT);
     }
 
-    public void drawTile() {
+    /**
+     * Draws a tile from the Gameboard's Silk Bag
+     */
+    public void drawTileFromSilkBag() {
         if (activePlayer.getHand() == null) {
             activePlayer.setHand(new ArrayList<>());
         }
-        setNewTileToPlace(gameboard.getSilkBag().poll());
-    }
-
-    public void setNewTileToPlace(Holdable newTileToPlace) {
-        this.newTileToPlace = newTileToPlace;
+       this.newTileToPlace = gameboard.getSilkBag().poll();
     }
 
     /**
      * Handles the Activate button click event
      *
-     * @param mouseEvent
+     * @param mouseEvent Event
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
         Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
@@ -435,9 +418,13 @@ startKeyListener(scene);
         lstEffects.getItems().remove(chosenEffect);
         activePlayer.getHand().remove(chosenEffect);
         cmdActivate.setDisable(true);
-        /*TODO: Stop the player from moving! */
     }
 
+    /**
+     * Displays a Dialog box asking the player to choose another player to apply the backtrack effect to
+     * @return Player to apply the effect to
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public Player displayPlayerSelectionDialog() {
         ChoiceDialog dialog = new ChoiceDialog();
         dialog.setGraphic(null);
@@ -456,8 +443,12 @@ startKeyListener(scene);
         }
     }
 
+    /**
+     * Shows the Dialog allowing the player to select a tile to apply their tile effect to
+     * @param chosenEffect Tile effect to apply to a range of tiles
+     */
     private void displayTileSelectionDialog(TileEffect chosenEffect) {
-        Scene scene = null;
+        Scene scene;
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -480,36 +471,52 @@ startKeyListener(scene);
 
 
     /**
-     * Will work when goalTile is variable in gameboard
+     * Checks if the active player is on a goal tile
      *
-     * @return
+     * @return Is the active player on the goal tile
      */
     public boolean winCheck() {
         return gameboard.getTiles().get(activePlayer.getCoordinate()).getType()
                 .equals(TileType.GOAL);
     }
 
+    /**
+     * Creates an event listener on key press
+     * @param scene This window's scene
+     */
     private void startKeyListener(Scene scene) {
         scene.setOnKeyReleased(this::handleKeyPress);
     }
 
+    /**
+     * Handles a KeyPress event based on the game's state
+     * @param event The KeyPress event
+     */
     private void handleKeyPress(KeyEvent event) {
-        Player p = getActivePlayer();
-        playerMoving = true;
-        if (playerMoving && activePlayerMovementLeft > 0 && checkTilesAligned()) {
+        Player player = getActivePlayer();
+
+        /* If the player can move */
+        if (activePlayerMovementLeft > 0 && checkTilesAligned()) {
+            /*If the key pressed is escape */
             if (event.getCode().equals(KeyCode.ESCAPE)) {
                 displayExitDialog();
+
+                /*Ends the active player's turn */
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 System.out.println("NEXT TURN");
                 playerTurn();
+
+                /*If the key is an arrow key */
             } else if (event.getCode().isArrowKey()) {
                 temp = activePlayer.getCoordinate();
-                playerMovement.keyPressed(event.getCode(), p);
+                playerMovement.keyPressed(event.getCode(), player);
+                /* Check if the tile the player has moved to is the goal tile */
                 if (winCheck()) {
                     winGame();
                 }
+                /* Reduce the number of moves they have left on their turn by one */
                 if (temp != activePlayer.getCoordinate()) {
                     activePlayerMovementLeft -= 1;
                 }
@@ -524,6 +531,9 @@ startKeyListener(scene);
         }
     }
 
+    /**
+     * Changes the player's statistics
+     */
     private void winGame() {
         showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!",
                 "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
@@ -549,7 +559,7 @@ startKeyListener(scene);
     }
 
     private void displayExitDialog() {
-        Scene scene = null;
+        Scene scene;
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -576,7 +586,7 @@ startKeyListener(scene);
      */
     public void saveAndExit() {
         try {
-            Save.save(skip, activePlayer, tempPlayerCounter, activePlayerMovementLeft, temp,
+            Save.save(skip, activePlayer, playerCounter, activePlayerMovementLeft, temp,
                  playerMovement);
             System.exit(0);
         } catch (IOException e) {
@@ -598,7 +608,7 @@ startKeyListener(scene);
      * @param tile Tile to place onto the board
      */
     public void displayTileMovementDialog(Tile tile, Gameboard gameboard) {
-        Scene scene = null;
+        Scene scene;
         Stage stage = new Stage();
         try {
             FXMLLoader loader = new FXMLLoader(StageController.class
@@ -626,13 +636,10 @@ startKeyListener(scene);
      *
      * @param mouseEvent Event
      */
+    @SuppressWarnings("unused")
     public void lstEffectClick(MouseEvent mouseEvent) {
         lstEffects.getSelectionModel().getSelectedItem();
-        if (lstEffects.getSelectionModel().getSelectedItem() != null) {
-            cmdActivate.setDisable(false);
-        } else {
-            cmdActivate.setDisable(true);
-        }
+        cmdActivate.setDisable(lstEffects.getSelectionModel().getSelectedItem() == null);
     }
 
 
@@ -655,12 +662,12 @@ startKeyListener(scene);
 
 
     public void iterateTempPlayerCounter() {
-        if (tempPlayerCounter < this.gameboard.getPlayersCount() - 1) {
-            tempPlayerCounter += 1;
-        } else if (tempPlayerCounter == this.gameboard.getPlayersCount()) {
-            tempPlayerCounter = 0;
+        if (playerCounter < this.gameboard.getPlayersCount() - 1) {
+            playerCounter += 1;
+        } else if (playerCounter == this.gameboard.getPlayersCount()) {
+            playerCounter = 0;
         } else {
-            tempPlayerCounter = 0;
+            playerCounter = 0;
         }
     }
 
@@ -676,15 +683,6 @@ startKeyListener(scene);
             t.setEffect(effect);
         }
         refresh();
-    }
-
-    public void isNextTurn() {
-        if (activePlayerMovementLeft == 0) {
-            activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
-            iterateTempPlayerCounter();
-            System.out.println("NEXT TURN REFRESH");
-            playerTurn();
-        }
     }
 
 

@@ -36,6 +36,10 @@ final String PATH;
     }
 
 
+    /**
+     * Converts level to String
+     * @return level as String
+     */
     @Override
     public String toString() {
         return NAME;
