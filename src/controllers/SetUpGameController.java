@@ -122,7 +122,6 @@ public class SetUpGameController implements Initializable {
          showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
          initialize(location, resourceBundle);
       }
-
       try {
          Gameboard gameboard = new Gameboard(comBoard.getValue(),level, style, players);
          changeScene(Window.BOARD, new Object[]{false, gameboard});
