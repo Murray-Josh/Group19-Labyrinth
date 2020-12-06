@@ -32,7 +32,6 @@ public class Player implements Serializable {
     private int playerNum;
     private Angle currentDirection;
     private PlayerEffect activeEffect;
-    private Image playerImage;
     private boolean beenBackTracked;
     private int[] moves = new int[]{0, 0};
 
@@ -53,7 +52,6 @@ public class Player implements Serializable {
         setStyle(style);
         setPlayerNum(playerNum);
         setCurrentDirection(UP);
-        setPlayerImage(playerNum);
         setBeenBackTracked(false);
     }
 
@@ -228,13 +226,6 @@ public class Player implements Serializable {
         this.activeEffect = activeEffect;
     }
 
-    /**
-     * Set image of player
-     * @param playerNumber Player number to set image of
-     */
-    public void setPlayerImage(int playerNumber) {
-        this.playerImage = Style.getPlayerImage(playerNumber);
-    }
 
     /**
      * Set whether player has been back tracked
@@ -248,11 +239,4 @@ public class Player implements Serializable {
         return beenBackTracked;
     }
 
-    /**
-     * Get image of a player
-     * @return Image of player
-     */
-    public Image getPlayerImage() {
-        return playerImage;
-    }
 }

@@ -74,7 +74,6 @@ public class Gameboard implements Serializable {
             p.setProfile(profile);
             p.setStart(level.getPlayerPosition(index));
             p.setStyle(this.style);
-            p.setPlayerImage(index);
             p.setActiveEffect(PlayerEffect.NONE);
             p.setCurrentDirection(Angle.UP);
             p.setPlayerNum(index);

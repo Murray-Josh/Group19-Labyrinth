@@ -51,6 +51,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
 import players.PlayerMovement;
+import styles.Style;
 
 /**
  * TODO Test Drawing Draw Players test move dialog make apply effects work method to apply effect to
@@ -133,8 +134,8 @@ public class GameboardController
      * @param player Player to create a Container for
      * @return Formatted Vbox
      */
-    private static VBox createPlayerContainer(Player player) {
-        ImageView image = new ImageView(player.getPlayerImage());
+    private static VBox createPlayerContainer(Player player, Style style) {
+        ImageView image = new ImageView(Style.getPlayerImage(player.getPlayerNum()));
         image.setPreserveRatio(false);
         image.setFitHeight(TILE_SIZE);
         image.setFitWidth(TILE_SIZE);
@@ -165,7 +166,7 @@ public class GameboardController
      * @param p Player to place
      */
     private void placePlayer(Player p) {
-        ImageView image = new ImageView(p.getPlayerImage());
+        ImageView image = new ImageView(Style.getPlayerImage(p.getPlayerNum()));
         image.setPreserveRatio(false);
         image.setRotate(p.getCurrentDirection().get());
         image.setFitHeight(PLAYER_SIZE);
@@ -181,7 +182,7 @@ public class GameboardController
         this.vboxPlayers.setAlignment(Pos.CENTER);
         players = new ArrayList<>(this.gameboard.getPlayers());
         players.forEach(player -> {
-            VBox playerPicture = createPlayerContainer(player);
+            VBox playerPicture = createPlayerContainer(player, this.gameboard.getStyle());
             this.vboxPlayers.getChildren().add(playerPicture);
         });
         setStatus(PLAYER_FORMATTING_COMPLETE);
