@@ -546,6 +546,7 @@ startKeyListener(scene);
         PlayerProfile profile =   activePlayer.getProfile();
         profile.editWins(levelType, profile.getWins(levelType) +1);
         profile.editLosses(levelType, profile.getLosses(levelType) -1);
+        StageController.home();
     }
 
     private boolean checkTilesAligned() {
