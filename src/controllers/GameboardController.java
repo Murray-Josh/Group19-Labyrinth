@@ -660,7 +660,11 @@ public class GameboardController
         cmdActivate.setDisable(lstEffects.getSelectionModel().getSelectedItem() == null);
     }
 
-
+    /**
+     * limits each player to being able to be the target of backtrack only once per game
+     * @param targetPlayer
+     * @param player
+     */
     /**
      * Applies backtrack to the the target player
      *
