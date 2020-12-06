@@ -283,6 +283,9 @@ public class PlayerMovement implements Serializable {
         }
     }
 
+    public Gameboard getGameboard() {
+        return gameboard;
+    }
 
 //TODO make any movement away from start square of turn a move and if you move back towards that square, you get the move back
 

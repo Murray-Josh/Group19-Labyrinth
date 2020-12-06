@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import players.Player;
@@ -17,27 +16,34 @@ import players.PlayerMovement;
  * Saves objects to file
  *
  * @author Joseph Omar
- * @version 2.0.0
+ * @version 3.1
  */
 public class Save {
 
+   private static final String extension = ".ser";
 
-    public enum Key {
-        SKIP, ACTIVE_PLAYER, PLAYER_COUNTER, MOVEMENTS_LEFT, TEMPORARY_COORDINATE, MOVEMENT
-    }
-
-    private static final String extension = ".ser";
+   /**
+    * Saves a game to a file
+    *
+    * @param skip          Skip player
+    * @param activePlayer  Current player field
+    * @param playerCounter Player counter field
+    * @param movementsLeft Movements left field
+    * @param temp          Temp coordinate field
+    * @param movement      Current Player Movement instance
+    * @throws IOException If the file could not be written
+    */
    public static void save(boolean skip, Player activePlayer,
         int playerCounter, int movementsLeft, Coordinate temp, PlayerMovement movement)
         throws IOException {
-        HashMap<Key, Object> data = new HashMap<>();
-        data.put(Key.SKIP, skip);
-        data.put(Key.ACTIVE_PLAYER, activePlayer);
-        data.put(Key.PLAYER_COUNTER, playerCounter);
-        data.put(Key.MOVEMENTS_LEFT, movementsLeft);
-        data.put(Key.TEMPORARY_COORDINATE, temp);
-        data.put(Key.MOVEMENT, movement);
-        saveGame(data);
+      HashMap<Key, Object> data = new HashMap<>();
+      data.put(Key.SKIP, skip);
+      data.put(Key.ACTIVE_PLAYER, activePlayer);
+      data.put(Key.PLAYER_COUNTER, playerCounter);
+      data.put(Key.MOVEMENTS_LEFT, movementsLeft);
+      data.put(Key.TEMPORARY_COORDINATE, temp);
+      data.put(Key.MOVEMENT, movement);
+      saveGame(data);
    }
 
    /**
@@ -51,7 +57,7 @@ public class Save {
       /* Create a file name using the date and time of the save */
       Date date = new Date();
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
-      File file = new File(dateFormat.format(date) + extension);
+      File file = new File(dateFormat.format(date) + "Labyrinth_Save"+ extension);
       if (file.exists()) {
          file.delete();
       }
@@ -64,13 +70,11 @@ public class Save {
       objectOutputStream.close();
    }
 
-
    /**
-    * Reads the specified Core.Save File and creates an array of Objects containing the data in the
-    * file
+    * Reads the specified Save file and returns a hashmap of the objects contained within
     *
     * @param filename The file name to load from
-    * @return Objects in the specified file
+    * @return Hashmap of objects in the file
     * @throws IOException            If the file cannot be found
     * @throws ClassNotFoundException If the classes for the objects in the file are not present in
     *                                the application
@@ -84,10 +88,21 @@ public class Save {
       } else {
          FileInputStream fileInputStream = new FileInputStream(filename);
          ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+         HashMap<Key, Object> toReturn = (HashMap<Key, Object>) objectInputStream.readObject();
          fileInputStream.close();
          objectInputStream.close();
-         return (HashMap<Key, Object>) objectInputStream.readObject();
+
+         return toReturn;
       }
+   }
+
+
+   /**
+    * Creates constant global key values allowing a class to decode the save and get the correct
+    * data
+    */
+   public enum Key {
+      SKIP, ACTIVE_PLAYER, PLAYER_COUNTER, MOVEMENTS_LEFT, TEMPORARY_COORDINATE, MOVEMENT
    }
 }
 

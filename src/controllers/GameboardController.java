@@ -5,6 +5,7 @@ import static controllers.StageController.changeScene;
 import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import constants.ErrorMessage;
 import constants.TileType;
 import constants.Title;
@@ -13,6 +14,7 @@ import core.Coordinate;
 import core.Gameboard;
 import core.Level;
 import core.Save;
+import core.Save.Key;
 import holdables.Effect;
 import holdables.Holdable;
 import holdables.PlayerEffect;
@@ -25,6 +27,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,8 +115,38 @@ public class GameboardController
      * @param parameters Parameters for this Controller
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void initialiseWithParameters(Object[] parameters, Scene scene, Stage stage) {
-        this.gameboard = (Gameboard) parameters[0];
+        boolean loadingFromSave = (boolean) parameters[0];
+        if (loadingFromSave) {
+            initialiseFromSave((HashMap<Key, Object>) parameters[1], scene);
+        } else {
+            initialiseFromSetup((Gameboard) parameters[1], scene);
+        }
+        playerTurn();
+    }
+
+    private void initialiseFromSave(HashMap<Key, Object> data, Scene scene) {
+        this.skip = (boolean) data.get(Key.SKIP);
+        this.playerMovement = (PlayerMovement) data.get(Key.MOVEMENT);
+      this.activePlayerMovementLeft = (int)  data.get(Key.MOVEMENTS_LEFT);
+     this.activePlayer = (Player)   data.get(Key.ACTIVE_PLAYER);
+this.temp = (Coordinate) data.get(Key.TEMPORARY_COORDINATE);
+this.tempPlayerCounter = (int) data.get(Key.PLAYER_COUNTER);
+
+this.gameboard = playerMovement.getGameboard();
+this.players=gameboard.getPlayers();
+
+setGridSize(gameboard.getWidth(), gameboard.getHeight());
+refresh();
+formatPlayers();
+startKeyListener(scene);
+
+
+    }
+
+    private void initialiseFromSetup(Gameboard gameboard, Scene scene) {
+        this.gameboard = gameboard;
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
         playerMovement = new PlayerMovement(gameboard);
         pMove = new PlayerMovement(gameboard);
@@ -121,7 +154,6 @@ public class GameboardController
         formatPlayers();
         startKeyListener(scene);
         activePlayer = players.get(tempPlayerCounter);
-        System.out.println(activePlayer.getPlayerNum());
         playerTurn();
     }
 
@@ -509,7 +541,14 @@ public class GameboardController
      * Saves the game and exits the application
      */
     public void saveAndExit() {
-
+        try {
+            Save.save(skip, activePlayer, tempPlayerCounter, activePlayerMovementLeft, temp,
+                 playerMovement);
+            System.exit(0);
+        } catch (IOException e) {
+            showError(ErrorMessage.SAVE_WRITE_ERROR, Title.SAVE, false);
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -98,7 +98,7 @@ public class SetUpGameController implements Initializable {
 
       try {
          Gameboard gameboard = new Gameboard(level, style, players);
-         changeScene(Window.BOARD, new Object[]{gameboard});
+         changeScene(Window.BOARD, new Object[]{false, gameboard});
       } catch (Exception e) {
          showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
          e.printStackTrace();
