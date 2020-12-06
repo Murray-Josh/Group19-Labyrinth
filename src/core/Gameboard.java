@@ -33,7 +33,7 @@ public class Gameboard implements Serializable {
     private final ArrayList<Player> players;
     private final int width;
     private final int height;
-    private final Style style;
+    private Style style;
     private SilkBag silkBag;
     private final Matrix<Tile> tiles;
 
@@ -239,4 +239,10 @@ public class Gameboard implements Serializable {
     public Style getStyle() {
         return style;
     }
+
+    /**
+     * Sets the gamebaord style
+     * @param style New Style
+     */
+    public void setStyle(Style style){this.style=style;}
 }

@@ -18,7 +18,10 @@ import holdables.Holdable;
 import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -484,13 +487,7 @@ public class GameboardController
      * Saves the game and exits the application
      */
     public void saveAndExit() {
-        try {
-            Save.saveGame(new Object[]{this});
-            System.exit(0);
-        } catch (IOException e) {
-            showError(ErrorMessage.SAVE_WRITE_ERROR, Title.ERROR, false);
-            e.printStackTrace();
-        }
+
     }
     /**
      * Exits the application without saving
@@ -575,6 +572,7 @@ public class GameboardController
     Make this work pretty please!!! <3
      */
     public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+
     }
 
     public void isNextTurn(){
