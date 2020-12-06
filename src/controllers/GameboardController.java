@@ -427,8 +427,8 @@ public class GameboardController
                 if (winCheck()) {
                     showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!" , "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
                     for (Player ps : players) {
-                        ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
-                        ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
+                        ps.getProfile().setNumOfGames(ps.getProfile().getNumOfGames() + 1);
+                        ps.getProfile().setNumOfLosses(ps.getProfile().getNumOfLosses() + 1);
                     }
                     activePlayer.getProfile()
                             .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
