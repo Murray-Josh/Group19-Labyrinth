@@ -5,6 +5,7 @@ import static controllers.StageController.home;
 import static controllers.StageController.showError;
 
 import constants.ErrorMessage;
+import constants.LevelType;
 import constants.Title;
 import constants.Window;
 import core.Gameboard;
@@ -67,7 +68,7 @@ public class SetUpGameController implements Initializable {
    private ChoiceBox<PlayerProfile> comFour;
    private ArrayList<ChoiceBox<PlayerProfile>> boxes;
    @FXML
-   private ChoiceBox<String> comBoard;
+   private ChoiceBox<LevelType> comBoard;
    @FXML
    private ChoiceBox<String> comStyle;
    @FXML
@@ -116,14 +117,14 @@ public class SetUpGameController implements Initializable {
          style = new PirateStyle();
       }
       try {
-         level = new Level("src/resources/file/" + comBoard.getSelectionModel().getSelectedItem());
+         level = new Level(comBoard.getSelectionModel().getSelectedItem().getPath());
       } catch (FileNotFoundException e) {
          showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
          initialize(location, resourceBundle);
       }
 
       try {
-         Gameboard gameboard = new Gameboard(level, style, players);
+         Gameboard gameboard = new Gameboard(comBoard.getValue(),level, style, players);
          changeScene(Window.BOARD, new Object[]{false, gameboard});
       } catch (Exception e) {
          showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
@@ -266,7 +267,7 @@ public class SetUpGameController implements Initializable {
     * Gets all the level files and adds them to the {@link ChoiceBox}
     */
    private void initialiseLevels() {
-      File path = new File("src/resources/file");
+      //File path = new File("src/resources/file");
       comBoard.setItems(FXCollections.observableArrayList(path.list()));
    }
 }
