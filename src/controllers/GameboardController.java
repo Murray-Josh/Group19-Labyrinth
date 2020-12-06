@@ -4,6 +4,7 @@ package controllers;
 import static controllers.StageController.changeScene;
 import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
+import static styles.Style.*;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import constants.ErrorMessage;
@@ -40,6 +41,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -269,7 +271,7 @@ startKeyListener(scene);
             if (skip && tempPlayerCounter != 0) {
                 playerMoveText = "Player " + (tempPlayerCounter) + " could not move! ";
             } else if (skip && tempPlayerCounter == 0) {
-                playerMoveText = "Player " + (tempPlayerCounter + 1) + " could not move! ";
+                playerMoveText = "Player " + (tempPlayerCounter + players.size()) + " could not move! ";
             }
             playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
             setStatus(playerMoveText);
@@ -326,6 +328,9 @@ startKeyListener(scene);
             gameboard.getTiles().forEach(tile -> {
                 ImageView image = new ImageView();
                 image.setImage(tile.getImage());
+                if(tile.getEffect() != TileEffect.NONE) {
+                    image.setImage(applyTileEffect(tile, image));
+                }
                 if (tile.isFixed()) {
                     image.setEffect(innerShadow);
                 }
@@ -344,11 +349,38 @@ startKeyListener(scene);
             }
 
              */
-
         } else {
             showError(ErrorMessage.BOARD_REFRESH_ERROR, Title.CRITICAL_ERROR, false);
             changeScene(Window.SETUP);
         }
+    }
+        
+    /**
+     * Applies a tile effect and style to a given tile
+     * @param tile Tile to affect
+     * @param image Image of tile
+     * @return Tile image with effect added
+     */
+    private Image applyTileEffect(Tile tile, ImageView image) {
+        TileType[] types = new TileType[]{TileType.CORNER, TileType.STRAIGHT, TileType.JUNCTION};
+        Image[] iceTiles = new Image[]{getCornerIce(), getStraightIce(), getJunctionIce()};
+        Image[] fireTiles = new Image[]{getCornerFire(), getStraightFire(), getJunctionFire()};
+
+        if(tile.getEffect() == TileEffect.ICE) {
+            for (int i = 0; i < types.length; i++) {
+                if (tile.getType() == types[i]) {
+                    image.setImage(iceTiles[i]);
+                    tile.setFixed();
+                }
+            }
+        } else if( tile.getEffect() == TileEffect.FIRE) {
+            for (int i = 0; i < types.length; i++) {
+                if (tile.getType() == types[i]) {
+                    image.setImage(fireTiles[i]);
+                }
+            }
+        }
+        return image.getImage();
     }
 
     /**
@@ -630,12 +662,16 @@ startKeyListener(scene);
         }
     }
 
-    /*
-    TODO
-    Make this work pretty please!!! <3
+    /**
+     * Applies the given effect to the given list of tiles
+     * @param effect Effect to apply
+     * @param tiles Tiles to apply to
      */
     public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
-
+        for (Tile t : tiles) {
+            t.setEffect(effect);
+        }
+        refresh();
     }
 
     public void isNextTurn() {
