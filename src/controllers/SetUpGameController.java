@@ -123,7 +123,7 @@ public class SetUpGameController implements Initializable {
          initialize(location, resourceBundle);
       }
       try {
-         Gameboard gameboard = new Gameboard(comBoard.getValue(),level, style, players);
+         Gameboard gameboard = new Gameboard(comBoard.getSelectionModel().getSelectedItem(),level, style, players);
          changeScene(Window.BOARD, new Object[]{false, gameboard});
       } catch (Exception e) {
          showError(ErrorMessage.BOARD_CREATE_ERROR, Title.SETUP, false);
@@ -267,8 +267,10 @@ public class SetUpGameController implements Initializable {
     * Gets all the level files and adds them to the {@link ChoiceBox}
     */
    private void initialiseLevels() {
-      //File path = new File("src/resources/file");
-      comBoard.setItems(FXCollections.observableArrayList(path.list()));
+      comBoard.getItems().clear();
+   for (LevelType levelType : LevelType.values()) {
+      comBoard.getItems().add(levelType);
+   }
    }
 }
 
