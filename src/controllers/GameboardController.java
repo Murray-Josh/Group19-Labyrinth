@@ -303,6 +303,7 @@ public class GameboardController
                 placePlayer(gameboard.getPlayers());
             });
             if(activePlayerMovementLeft == 0) {
+                activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
                 playerTurn();
             }
