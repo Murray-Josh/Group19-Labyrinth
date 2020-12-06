@@ -3,14 +3,11 @@ package players;
 import constants.Angle;
 import core.Coordinate;
 import core.Gameboard;
-import holdables.PlayerEffect;
 import holdables.TileEffect;
 import java.io.Serializable;
-import players.TurnCounter;
-import javafx.scene.image.Image;
+
 import javafx.scene.input.KeyCode;
 import holdables.Tile;
-import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
