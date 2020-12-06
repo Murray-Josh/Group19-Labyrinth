@@ -29,6 +29,7 @@ public class Tile implements Serializable, Holdable {
    private Angle angle;
    private TileEffect effect = NONE;
    private boolean fixed;
+   private int effectTimer = 1;
 
 
    /**
@@ -297,4 +298,25 @@ public class Tile implements Serializable, Holdable {
    public void setFixed(boolean fixed) {
       this.fixed = fixed;
    }
+   
+   /**
+   * Sets effect timer
+   * @param effectTimer Timer for effects
+   */
+   public void setEffectTimer(int effectTimer) {
+   this.effectTimer = effectTimer;
+   }
+
+   /**
+   * Gets remaining effect timer
+   * @return Effect
+   */
+   public int getEffectTimer() {
+   return this.effectTimer;
+   }
+
+   /**
+   * Reduces effect timer by one
+   */
+   public void decrementTimer() { this.effectTimer -= 1;}
 }
