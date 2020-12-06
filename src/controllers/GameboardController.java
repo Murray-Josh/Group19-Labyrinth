@@ -247,7 +247,6 @@ startKeyListener(scene);
     private void playerTurn() {
         if (activePlayer != null) {
             cmdActivate.setDisable(false);
-            /*Set the active player to the player counter's value */
             activePlayer = players.get(playerCounter);
             setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
             System.out.println("player num" + activePlayer.getPlayerNum());
@@ -272,11 +271,9 @@ startKeyListener(scene);
             }
             playerMoveText += "Player " + (playerCounter + 1) + "'s move";
             setStatus(playerMoveText);
-
             activePlayerMovementLeft = MOVE_COUNT;
             skip = false;
             temp = null;
-
             refresh();
         }
     }
@@ -678,26 +675,44 @@ startKeyListener(scene);
     public void iteratePlayerCounter() {
         if (playerCounter < this.gameboard.getPlayersCount() - 1) {
             playerCounter += 1;
-        } else if (playerCounter == this.gameboard.getPlayersCount()) {
+        } else if (playerCounter == this.gameboard.getPlayersCount() - 1) {
             playerCounter = 0;
+            effectCountdown();
         } else {
             playerCounter = 0;
         }
     }
-
-    /**
-     * Applies the given effect to the given list of tiles
-     * @param effect Effect to apply
-     * @param tiles Tiles to apply to
+        
+     /**
+     * Iterates the countdown for effect timers
      */
-    public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
-
-
-        for (Tile t : tiles) {
-            t.setEffect(effect);
+    private void effectCountdown() {
+        for (Tile tile : gameboard.getTiles()) {
+            if(tile.getEffect() != TileEffect.NONE) {
+                tile.decrementTimer();
+                if (tile.getEffectTimer() == 0) {
+                    tile.setEffect(TileEffect.NONE);
+                }
+            }
         }
-        refresh();
     }
+
+        /**
+         * Applies the given effect to the given list of tiles
+         * @param effect Effect to apply
+         * @param tiles Tiles to apply to
+         */
+        public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+            for (Tile t : tiles) {
+                t.setEffect(effect);
+                if(t.getEffect().equals(TileEffect.ICE)) {
+                    t.setEffectTimer(1);
+                } else {
+                    t.setEffectTimer(2);
+                }
+            }
+            refresh();
+        }
 
 
 }
