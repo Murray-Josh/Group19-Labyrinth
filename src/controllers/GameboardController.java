@@ -127,7 +127,7 @@ public class GameboardController
         } else {
             initialiseFromSetup((Gameboard) parameters[1], scene);
         }
-        playerTurn();
+        refresh();
     }
 
     private void initialiseFromSave(HashMap<Key, Object> data, Scene scene) {
@@ -255,9 +255,9 @@ startKeyListener(scene);
      * playerturn order stuff
      */
     private void playerTurn() {
-        // Is silk bag working?
         if (activePlayer != null) {
             cmdActivate.setDisable(false);
+            activePlayer = players.get(tempPlayerCounter);
             setStatus(SILK_BAG_DRAW + " player " + activePlayer.getPlayerNum());
             System.out.println("player num" + activePlayer.getPlayerNum());
             drawTile();
@@ -278,7 +278,7 @@ startKeyListener(scene);
             }
             playerMoveText += "Player " + (tempPlayerCounter + 1) + "'s move";
             setStatus(playerMoveText);
-            activePlayer = players.get(tempPlayerCounter);
+
             activePlayerMovementLeft = MOVE_COUNT;
             skip = false;
             temp = null;
