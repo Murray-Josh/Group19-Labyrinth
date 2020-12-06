@@ -136,17 +136,20 @@ public class ScoreboardController implements Initializable {
               .comparingInt((PlayerProfile p) -> p.getWins(levelType));
       tblTable.getItems().addAll(profiles);
       /* Make the columns use the correct PlayerProfile attributes */
-      colNickname.setCellValueFactory(
-           data -> new ReadOnlyObjectWrapper<>(data.getValue()));
-      colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getGames(levelType)).asObject());
-      colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getWins(levelType)).asObject());
-      colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getLosses(levelType)).asObject());
-      colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(
-           data.getValue().getWinPercentage(levelType)).asObject());
-
+      try {
+         colNickname.setCellValueFactory(
+                 data -> new ReadOnlyObjectWrapper<>(data.getValue()));
+         colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                 data.getValue().getGames(levelType)).asObject());
+         colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                 data.getValue().getWins(levelType)).asObject());
+         colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
+                 data.getValue().getLosses(levelType)).asObject());
+         colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(
+                 data.getValue().getWinPercentage(levelType)).asObject());
+      }catch (NullPointerException e) {
+         e.printStackTrace();
+      }
 
    }
 

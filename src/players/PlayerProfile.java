@@ -28,6 +28,9 @@ public class PlayerProfile implements Serializable {
     public PlayerProfile(String name) {
         this.name = name;
         this.statistics = new HashMap<>();
+        for (LevelType levelType : LevelType.values()) {
+            statistics.put(levelType, new ProfileStatistic(0,0,0));
+        }
     }
 
     /**
@@ -107,7 +110,7 @@ public class PlayerProfile implements Serializable {
         int games = statistics.get(levelType).getGames();
         int wins = statistics.get(levelType).getWins();
         if (wins != 0 && games !=0) {
-            return (wins * PERCENTAGE_MULTIPLIER / games);
+            return (float) (wins * PERCENTAGE_MULTIPLIER / games);
         } else {
             return 0;
         }
