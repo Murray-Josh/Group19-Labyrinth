@@ -32,6 +32,9 @@ public class Gameboard implements Serializable {
    private final Matrix<Tile> tiles;
    private Style style;
    private SilkBag silkBag;
+
+
+
    private LevelType levelType;
 
 
@@ -237,5 +240,21 @@ public class Gameboard implements Serializable {
     */
    public void setStyle(Style style) {
       this.style = style;
+   }
+
+   /**
+    * Gets this gameboard's level type
+    * @return Level type of the gameboard
+    */
+   public LevelType getLevelType() {
+      return levelType;
+   }
+
+   /**
+    * sets the gameboard's level type
+    * @param levelType Level type of the gameboard
+    */
+   public void setLevelType(LevelType levelType) {
+      this.levelType = levelType;
    }
 }

@@ -102,4 +102,14 @@ public class PlayerProfile implements Serializable {
     public void addLevelStatistic(LevelType level,int wins,int losses,int games) {
         statistics.put(level,new ProfileStatistic(wins, losses, games));
     }
+
+    public float getWinPercentage(LevelType levelType) {
+        int games = statistics.get(levelType).getGames();
+        int wins = statistics.get(levelType).getWins();
+        if (wins != 0 && games !=0) {
+            return (wins * PERCENTAGE_MULTIPLIER / games);
+        } else {
+            return 0;
+        }
+    }
 }

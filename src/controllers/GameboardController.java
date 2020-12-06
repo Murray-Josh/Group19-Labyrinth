@@ -8,6 +8,7 @@ import static styles.Style.*;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import constants.ErrorMessage;
+import constants.LevelType;
 import constants.TileType;
 import constants.Title;
 import constants.Window;
@@ -56,6 +57,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
 import players.PlayerMovement;
+import players.PlayerProfile;
 import styles.Style;
 
 /**
@@ -261,6 +263,7 @@ startKeyListener(scene);
             drawTile();
             if (newTileToPlace instanceof PlayerEffect || newTileToPlace instanceof TileEffect) {
                 activePlayer.addToHand((Effect) newTileToPlace);
+                lstEffects.getItems().clear();
                 displayPlayerHand();
             } else if (newTileToPlace instanceof Tile) {
                 System.out.println("CLASS TILES");
@@ -525,15 +528,14 @@ startKeyListener(scene);
         showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!",
                 "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
         for (Player ps : players) {
-            ps.getProfile().setNumOfGames(ps.getProfile().getNumOfGames() + 1);
-            ps.getProfile().setNumOfLosses(ps.getProfile().getNumOfLosses() + 1);
+            PlayerProfile profile = ps.getProfile();
+           profile.editLosses(gameboard.getLevelType(), profile.getLosses(gameboard.getLevelType()) +1);
+           profile.editGames(gameboard.getLevelType(), profile.getGames(gameboard.getLevelType()) + 1);
         }
-
-        activePlayer.getProfile()
-                .setNumOfLosses(activePlayer.getProfile().getNumOfLosses() - 1);
-        activePlayer.getProfile()
-                .setNumOfWins(activePlayer.getProfile().getNumOfWins() + 1);
-        StageController.home();
+        LevelType levelType = gameboard.getLevelType();
+        PlayerProfile profile =   activePlayer.getProfile();
+        profile.editWins(levelType, profile.getWins(levelType) +1);
+        profile.editLosses(levelType, profile.getLosses(levelType) -1);
     }
 
     private boolean checkTilesAligned() {
@@ -668,6 +670,8 @@ startKeyListener(scene);
      * @param tiles Tiles to apply to
      */
     public void applyEffect(TileEffect effect, ArrayList<Tile> tiles) {
+
+
         for (Tile t : tiles) {
             t.setEffect(effect);
         }

@@ -2,16 +2,19 @@ package controllers;
 
 import static controllers.StageController.home;
 import static controllers.StageController.showError;
+import static java.lang.Integer.compare;
 
 import constants.ErrorMessage;
 import constants.LevelType;
 import constants.Title;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyFloatWrapper;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +42,7 @@ public class ScoreboardController implements Initializable {
    @FXML
    private TableView tblTable;
    @FXML
-   private TableColumn<PlayerProfile, String> colNickname;
+   private TableColumn<PlayerProfile, PlayerProfile> colNickname;
    @FXML
    private TableColumn<PlayerProfile, Integer> colGames;
    @FXML
@@ -129,18 +132,21 @@ public class ScoreboardController implements Initializable {
     */
    @SuppressWarnings("unchecked")
    private void populate(ArrayList<PlayerProfile> profiles) {
+      Comparator<PlayerProfile> comparator = Comparator
+              .comparingInt((PlayerProfile p) -> p.getWins(levelType));
       tblTable.getItems().addAll(profiles);
       /* Make the columns use the correct PlayerProfile attributes */
       colNickname.setCellValueFactory(
-           data -> new ReadOnlyStringWrapper(data.getValue().getName()));
+           data -> new ReadOnlyObjectWrapper<>(data.getValue()));
       colGames.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getNumOfGames()).asObject());
+           data.getValue().getGames(levelType)).asObject());
       colWins.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getNumOfWins()).asObject());
+           data.getValue().getWins(levelType)).asObject());
       colLosses.setCellValueFactory(data -> new ReadOnlyIntegerWrapper(
-           data.getValue().getNumOfLosses()).asObject());
+           data.getValue().getLosses(levelType)).asObject());
       colPercentage.setCellValueFactory(data -> new ReadOnlyFloatWrapper(
-           data.getValue().getWinPercentage()).asObject());
+           data.getValue().getWinPercentage(levelType)).asObject());
+
 
    }
 
