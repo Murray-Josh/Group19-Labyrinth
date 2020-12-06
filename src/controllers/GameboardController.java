@@ -103,7 +103,6 @@ public class GameboardController
     private Player activePlayer;
     private int activePlayerMovementLeft = MOVE_COUNT;
     private Coordinate temp = null;
-    private PlayerMovement pMove;
     private boolean skip = false;
 
 
@@ -157,7 +156,6 @@ startKeyListener(scene);
         this.gameboard = gameboard;
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
         playerMovement = new PlayerMovement(gameboard);
-        pMove = new PlayerMovement(gameboard);
         refresh();
         formatPlayers();
         startKeyListener(scene);
@@ -401,6 +399,7 @@ startKeyListener(scene);
      *
      * @param mouseEvent Event
      */
+    @SuppressWarnings("unused")
     public void cmdActivateClick(MouseEvent mouseEvent) {
         Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
         if (chosenEffect instanceof TileEffect) {
@@ -504,7 +503,7 @@ startKeyListener(scene);
                 /*Ends the active player's turn */
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
-                iterateTempPlayerCounter();
+                iteratePlayerCounter();
                 System.out.println("NEXT TURN");
                 playerTurn();
 
@@ -524,7 +523,7 @@ startKeyListener(scene);
             }
         } else {
             activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
-            iterateTempPlayerCounter();
+            iteratePlayerCounter();
             skip = true;
             refresh();
             playerTurn();
@@ -532,13 +531,13 @@ startKeyListener(scene);
     }
 
     /**
-     * Changes the player's statistics
+     * Changes the player's statistics and returns to the main menu
      */
     private void winGame() {
         showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!",
                 "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
-        for (Player ps : players) {
-            PlayerProfile profile = ps.getProfile();
+        for (Player player : players) {
+            PlayerProfile profile = player.getProfile();
            profile.editLosses(gameboard.getLevelType(), profile.getLosses(gameboard.getLevelType()) +1);
            profile.editGames(gameboard.getLevelType(), profile.getGames(gameboard.getLevelType()) + 1);
         }
@@ -549,16 +548,23 @@ startKeyListener(scene);
         StageController.home();
     }
 
+    /**
+     * Checks if the player can move to the next tile
+     * @return If the player can move to the next tile
+     */
     private boolean checkTilesAligned() {
-        Boolean[] t = pMove.tilesAligned(activePlayer, this.gameboard);
+        Boolean[] tilesAligned = playerMovement.tilesAligned(activePlayer, this.gameboard);
         for (int i = 0; i < MOVE_COUNT; i++) {
-            if (t[i]) {
+            if (tilesAligned[i]) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Shows the Exit Game Dialog
+     */
     private void displayExitDialog() {
         Scene scene;
         Stage stage = new Stage();
@@ -644,6 +650,11 @@ startKeyListener(scene);
     }
 
 
+    /**
+     * Applies backtrack to the the target player
+     * @param targetPlayer The Target Player
+     * @param player The current Player
+     */
     private void applyBackTrack(Player targetPlayer, Player player) {
         if (!targetPlayer.hasBeenBackTracked()) {
             playerMovement.backMovement(targetPlayer);
@@ -661,8 +672,10 @@ startKeyListener(scene);
         }
     }
 
-
-    public void iterateTempPlayerCounter() {
+    /**
+     * Increases the player counter or loops back to 0 if the counter is at its maximum value
+     */
+    public void iteratePlayerCounter() {
         if (playerCounter < this.gameboard.getPlayersCount() - 1) {
             playerCounter += 1;
         } else if (playerCounter == this.gameboard.getPlayersCount()) {
