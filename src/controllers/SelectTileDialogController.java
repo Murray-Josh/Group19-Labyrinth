@@ -122,16 +122,16 @@ public class SelectTileDialogController implements InitialisableWithParameters {
             }
             /*Three to right*/
             if (selectedX != gameboard.getWidth() - 1) {
-                range.set(2, 1, gameboard.getTiles().get(selectedX - 1, selectedY));
+                range.set(2, 1, gameboard.getTiles().get(selectedX + 1, selectedY));
                 if (selectedY != 0) {
                     if (selectedY == gameboard.getHeight() - 1) {
-                        range.set(2, 0, gameboard.getTiles().get(selectedX - 1, selectedY - 1));
+                        range.set(2, 0, gameboard.getTiles().get(selectedX + 1, selectedY - 1));
                     } else {
-                        range.set(2, 2, gameboard.getTiles().get(selectedX - 1, selectedY + 1));
-                        range.set(2, 0, gameboard.getTiles().get(selectedX - 1, selectedY - 1));
+                        range.set(2, 2, gameboard.getTiles().get(selectedX + 1, selectedY + 1));
+                        range.set(2, 0, gameboard.getTiles().get(selectedX + 1, selectedY - 1));
                     }
                 } else {
-                    range.set(2, 2, gameboard.getTiles().get(selectedX - 1, selectedY + 1));
+                    range.set(2, 2, gameboard.getTiles().get(selectedX + 1, selectedY + 1));
                 }
             }
 

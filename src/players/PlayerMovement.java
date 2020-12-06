@@ -5,6 +5,7 @@ import core.Coordinate;
 import core.Gameboard;
 import holdables.PlayerEffect;
 import holdables.TileEffect;
+import java.io.Serializable;
 import players.TurnCounter;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -23,7 +24,7 @@ import java.util.Arrays;
  * @version 1.0
  */
 
-public class PlayerMovement {
+public class PlayerMovement implements Serializable {
 
     private Gameboard gameboard;    
     ArrayList<Integer> currentMovable = new ArrayList<Integer>();

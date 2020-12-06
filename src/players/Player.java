@@ -90,8 +90,7 @@ public class Player implements Serializable {
      * @param effect Holdables.Effect card
      */
     public void addToHand(Effect effect) {
-        this.hand.add(effect);
-
+            this.hand.add(effect);
     }
 
     /**

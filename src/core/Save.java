@@ -24,9 +24,8 @@ public class Save {
     public static void saveGame(Object[] obj) throws IOException {
         /* Create a file name using the date and time of the save */
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
         File file = new File(dateFormat.format(date) + extension);
-        /* If there already is a Core.Save File with the same timestamp, change the filetype to .<filename>.old */
         if (file.exists()) {
             file.delete();
         }
@@ -48,16 +47,13 @@ public class Save {
      * @throws NullPointerException   If the file does not exist
      */
     public static Object[] loadGame(File filename) throws IOException, ClassNotFoundException, NullPointerException {
-        Object[] toReturn = new Object[2];
         if (!filename.exists()) {
             throw new NullPointerException("The file located at <" + filename + "> does not exist.");
         } else {
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            toReturn[0] = objectInputStream.readObject();
-            toReturn[1] = objectInputStream.readObject();
+            return (Object[]) objectInputStream.readObject();
         }
-        return toReturn;
     }
 }
 

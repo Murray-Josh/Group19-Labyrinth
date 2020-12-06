@@ -2,9 +2,9 @@
 package controllers;
 
 import static controllers.StageController.changeScene;
+import static controllers.StageController.showConfirmation;
 import static controllers.StageController.showError;
 
-import constants.Angle;
 import constants.ErrorMsg;
 import constants.TileType;
 import constants.Title;
@@ -19,6 +19,7 @@ import holdables.PlayerEffect;
 import holdables.Tile;
 import holdables.TileEffect;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
@@ -47,14 +48,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import players.Player;
 import players.PlayerMovement;
-import styles.Style;
 
 /**
  * TODO Test Drawing Draw Players test move dialog make apply effects work method to apply effect to
  * a player events for selected effect image, draw a border? maybe listview? logic for activate
  */
 public class GameboardController
-        implements InitialisableWithParameters {
+        implements InitialisableWithParameters, Serializable {
 
     private static final int TILE_SIZE = 80;
     private static final double WINDOW_HEIGHT = 34;
@@ -101,7 +101,7 @@ public class GameboardController
     private boolean playerMoving;
     private int activePlayerMovementLeft = MOVE_COUNT;
     private Coordinate temp = null;
-    private PlayerMovement pMove = new PlayerMovement(gameboard);
+    private PlayerMovement pMove;
     private boolean skip = false;
 
 
@@ -115,6 +115,7 @@ public class GameboardController
         this.gameboard = (Gameboard) parameters[0];
         setGridSize(gameboard.getWidth(), gameboard.getHeight());
         playerMovement = new PlayerMovement(gameboard);
+        pMove = new PlayerMovement(gameboard);
         refresh();
         formatPlayers();
         startKeyListener(scene);
@@ -220,16 +221,13 @@ public class GameboardController
         drawTile();
         System.out.println(newTileToPlace.getClass());
 
-        if(newTileToPlace.getClass() == PlayerEffect.class){
+        if(newTileToPlace instanceof PlayerEffect || newTileToPlace instanceof TileEffect){
             activePlayer.addToHand((Effect) newTileToPlace);
-
+            displayPlayerHand();
         }
-        else if(newTileToPlace.getClass() == TileEffect.class){
-            activePlayer.addToHand((Effect) newTileToPlace);
-        }
-        else if(newTileToPlace.getClass() == Tile.class){
-            System.out.println("CLASSS TILES");
-            showTileShifts((Tile) newTileToPlace, gameboard);
+        else if(newTileToPlace instanceof Tile){
+            System.out.println("CLASS TILES");
+            displayTileMovementDialog((Tile) newTileToPlace, gameboard);
         }
 
 
@@ -326,7 +324,10 @@ public class GameboardController
         root.setPrefSize(gridPaneWidth + WINDOW_WIDTH, gridPaneHeight + WINDOW_HEIGHT);
     }
     public void drawTile() {
-        setNewTileToPlace(gameboard.getSilkBag().getFirst());
+        if (activePlayer.getHand() == null) {
+            activePlayer.setHand(new ArrayList<>());
+        }
+        setNewTileToPlace(gameboard.getSilkBag().poll());
     }
     public void setNewTileToPlace(Holdable newTileToPlace) {
         this.newTileToPlace = newTileToPlace;
@@ -337,18 +338,15 @@ public class GameboardController
      * @param mouseEvent
      */
     public void cmdActivateClick(MouseEvent mouseEvent) {
-        showTileShifts(new Tile(TileType.GOAL, this.gameboard.getStyle(), Angle.UP, false),
-                this.gameboard);
         Effect chosenEffect = lstEffects.getSelectionModel().getSelectedItem();
         if (chosenEffect instanceof TileEffect) {
-            displayTileSelectionDialog(chosenEffect);
-
+            displayTileSelectionDialog((TileEffect) chosenEffect);
         } else if (chosenEffect instanceof PlayerEffect) {
             if (chosenEffect.equals(PlayerEffect.DOUBLE_MOVE)) {
                 activePlayerMovementLeft = (2 * MOVE_COUNT) - (MOVE_COUNT - activePlayerMovementLeft);
             } else if (chosenEffect.equals(PlayerEffect.BACKTRACK)) {
                 Player chosenPlayer = displayPlayerSelectionDialog();
-                backTrackLim(chosenPlayer, activePlayer);
+                applyBackTrack(chosenPlayer, activePlayer);
                 refresh();
             }
         }
@@ -376,8 +374,26 @@ public class GameboardController
         }
     }
 
-    private void displayTileSelectionDialog(Effect chosenEffect) {
-
+    private void displayTileSelectionDialog(TileEffect chosenEffect) {
+        Scene scene = null;
+        Stage stage = new Stage();
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    StageController.class.getResource(Window.TILE_EFFECT.getPath()));
+            Parent root = loader.load();
+            InitialisableWithParameters controller = loader.getController();
+            scene = new Scene(root);
+            controller.initialiseWithParameters(
+                    new Object[]{gameboard, chosenEffect, this}, scene, stage);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            showError(ErrorMsg.FXML_NOT_FOUND, Title.ERROR, false);
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -398,7 +414,7 @@ public class GameboardController
         playerMoving = true;
         if (playerMoving && activePlayerMovementLeft > 0 && checkTilesAligned()) {
             if (event.getCode().equals(KeyCode.ESCAPE)) {
-                showExitDialog();
+                displayExitDialog();
             } else if (event.getCode().equals(KeyCode.SPACE) && temp != null) {
                 activePlayer.setMoves(MOVE_COUNT - activePlayerMovementLeft);
                 iterateTempPlayerCounter();
@@ -408,7 +424,7 @@ public class GameboardController
                 temp = activePlayer.getCoordinate();
                 playerMovement.keyPressed(event.getCode(), p);
                 if (winCheck()) {
-                    System.out.println(activePlayer + " has won!!");
+                    showConfirmation("Congratulations " + activePlayer.getProfile().getName() + "!" , "Player " + activePlayer.getPlayerNum() + " Has Won!", Title.MAIN.toString());
                     for (Player ps : players) {
                         ps.getProfile().setNumOfGames(p.getProfile().getNumOfGames() + 1);
                         ps.getProfile().setNumOfLosses(p.getProfile().getNumOfLosses() + 1);
@@ -442,7 +458,7 @@ public class GameboardController
         return false;
     }
 
-    private void showExitDialog() {
+    private void displayExitDialog() {
         Scene scene = null;
         Stage stage = new Stage();
         try {
@@ -469,7 +485,7 @@ public class GameboardController
      */
     public void saveAndExit() {
         try {
-            Save.saveGame(new Object[]{gameboard, this, playerMovement});
+            Save.saveGame(new Object[]{this});
             System.exit(0);
         } catch (IOException e) {
             showError(ErrorMsg.SAVE_WRITE_ERROR, Title.ERROR, false);
@@ -487,7 +503,7 @@ public class GameboardController
      *
      * @param tile Tile to place onto the board
      */
-    public void showTileShifts(Tile tile, Gameboard gameboard) {
+    public void displayTileMovementDialog(Tile tile, Gameboard gameboard) {
         Scene scene = null;
         Stage stage = new Stage();
         try {
@@ -526,7 +542,7 @@ public class GameboardController
     }
 
 
-    private void backTrackLim(Player targetPlayer, Player player) {
+    private void applyBackTrack(Player targetPlayer, Player player) {
         if (!targetPlayer.hasBeenBackTracked()) {
             playerMovement.backMovement(targetPlayer);
             targetPlayer.setBeenBackTracked(true);

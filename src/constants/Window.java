@@ -13,7 +13,8 @@ public enum Window {
     SETUP("../resources/fxml/SetUpGame.fxml", Title.SETUP),
     BOARD("../resources/fxml/Gameboard.fxml", Title.MAIN),
     TILE_SHIFT("../resources/fxml/MoveTileDialog.fxml", Title.PLACE_TILE),
-    EXIT("../resources/fxml/ExitDialog.fxml", Title.MAIN);
+    EXIT("../resources/fxml/ExitDialog.fxml", Title.MAIN),
+    TILE_EFFECT("../resources/fxml/SelectTileDialog.fxml", Title.MAIN);
 
     private final String PATH;
     private final Title TITLE;
